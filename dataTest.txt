@@ -1,0 +1,17 @@
+-- Tạo cơ sở dữ liệu mới tên 'test'
+CREATE DATABASE test;
+
+-- Chuyển sang sử dụng cơ sở dữ liệu 'test'
+USE test;
+
+-- Tạo bảng 'user' với các cột id, username, email, và password
+CREATE TABLE user (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    password VARCHAR(100) NOT NULL
+);
+INSERT INTO user (username, email, password) VALUES
+('john_doe', 'john@example.com', 'password123'),
+('jane_doe', 'jane@example.com', 'password456'),
+('admin', 'admin@example.com', 'adminpassword');
