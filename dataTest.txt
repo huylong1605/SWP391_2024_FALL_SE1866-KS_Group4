@@ -117,12 +117,13 @@ CREATE TABLE subject_Schedule (
 INSERT INTO Role (Role_name) VALUES
 ('Admin'),
 ('Teacher'),
-('Student');
+('Student'),
+('Parent');
 
 INSERT INTO User (Fullname, date_Of_birth, Email, Password, gender, phoneNumber, address, image, Status, Code, Role_id) VALUES
-('Nguyen Van A', '1980-01-01', 'nguyenvana@example.com', 'password1', 1, '0912345678', '123 Street', 'image1.jpg', 1, 'A123', 1),
-('Tran Thi B', '1990-02-02', 'tranthib@example.com', 'password2', 0, '0987654321', '456 Avenue', 'image2.jpg', 1, 'B456', 2),
-('Le Van C', '2000-03-03', 'levanc@example.com', 'password3', 1, '0923456789', '789 Boulevard', 'image3.jpg', 1, 'C789', 3);
+('Nguyen Van A', '1980-01-01', 'nguyenvana@example.com', 'password1', 1, '0912345678', '123 Street', 'image1.jpg', 1, 'A123', 4),
+('Tran Thi B', '1990-02-02', 'tranthib@example.com', 'password2', 0, '0987654321', '456 Avenue', 'image2.jpg', 1, 'B456', 4),
+('Le Van C', '2000-03-03', 'levanc@example.com', 'password3', 1, '0923456789', '789 Boulevard', 'image3.jpg', 1, 'C789', 4);
 
 INSERT INTO Room (Room_number, Status, capacity) VALUES
 ('101', 1, 30),
