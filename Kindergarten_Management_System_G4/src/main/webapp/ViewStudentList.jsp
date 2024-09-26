@@ -212,7 +212,7 @@
         <section class="student-list">
             <div class="table-actions">
                 <select>
-                    <option>Show 10 entries</option>
+                    <option>Show 10 entries </option>
                     <option>Show 20 entries</option>
                     <option>Show 50 entries</option>
                 </select>
