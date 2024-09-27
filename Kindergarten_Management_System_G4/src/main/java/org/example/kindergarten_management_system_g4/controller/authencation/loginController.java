@@ -1,6 +1,7 @@
 package org.example.kindergarten_management_system_g4.controller.authencation;
 
 import org.example.kindergarten_management_system_g4.dao.AuthenDAO.LoginDAO;
+import org.example.kindergarten_management_system_g4.javaMail.EmailService;
 import org.example.kindergarten_management_system_g4.model.User;
 
 import javax.servlet.ServletException;
@@ -23,6 +24,7 @@ public class loginController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        EmailService emailService = new EmailService();
         String email = req.getParameter("Email");
         String password = req.getParameter("password");
 
@@ -35,12 +37,13 @@ public class loginController extends HttpServlet {
 
                 if (user.getRoleId() == 4) {
                      req.getRequestDispatcher("index.jsp").forward(req, resp);
+
                   /*  resp.sendRedirect("index.jsp");*/
                 } else if (user.getRoleId() == 1) {
                     resp.sendRedirect("ListProduct");
 
                 }
-
+                emailService.send(email, "hello " +user.getFullname(), "You have logged in to the Kindergarten Management System ");
             } else {
                 req.setAttribute("Email", email);
                 req.setAttribute("password", password);
