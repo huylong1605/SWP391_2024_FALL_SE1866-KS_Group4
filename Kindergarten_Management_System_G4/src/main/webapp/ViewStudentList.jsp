@@ -197,20 +197,19 @@
         <p><strong>Name:</strong> <span id="modalStudentName"></span></p>
         <p><strong>DOB:</strong> <span id="modalStudentDob"></span></p>
         <p><strong>Gender:</strong> <span id="modalStudentGender"></span></p>
-        <p><strong>Class ID:</strong> <span id="modalClassId"></span></p>
-        <p><strong>User ID:</strong> <span id="modalUserId"></span></p>
+        <p><strong>Class ID:</strong> <span id="modalAddress"></span></p>
+        <p><strong>User ID:</strong> <span id="modalPhoneNumber"></span></p>
     </div>
 </div>
 
 <script>
-    function showModal(studentId, name, dob, gender, classId, userId) {
+    function showModal(studentId, name, dob, gender, address, phoneNumber) {
         document.getElementById('modalStudentId').innerText = studentId;
         document.getElementById('modalStudentName').innerText = name;
         document.getElementById('modalStudentDob').innerText = dob;
         document.getElementById('modalStudentGender').innerText = gender;
-        document.getElementById('modalClassId').innerText = classId;
-        document.getElementById('modalUserId').innerText = userId;
-
+        document.getElementById('modalAddress').innerText = address;
+        document.getElementById('modalPhoneNumber').innerText = phoneNumber;
         document.getElementById('studentModal').style.display = "block";
     }
 

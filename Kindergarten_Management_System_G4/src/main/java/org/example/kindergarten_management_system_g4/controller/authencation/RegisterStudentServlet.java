@@ -1,4 +1,4 @@
-package org.example.kindergarten_management_system_g4;
+package org.example.kindergarten_management_system_g4.controller.authencation;
 
 import org.example.kindergarten_management_system_g4.dao.StudentDAO;
 import org.example.kindergarten_management_system_g4.model.Student;
@@ -25,14 +25,11 @@ public class RegisterStudentServlet extends HttpServlet {
         String name = req.getParameter("name");
         LocalDate dob = LocalDate.parse(req.getParameter("dob"));
         boolean gender = Boolean.parseBoolean(req.getParameter("gender"));
-        int classId = Integer.parseInt(req.getParameter("classId"));
-        int userId = Integer.parseInt(req.getParameter("userId"));
-
-        Student newStudent = new Student(0, dob, gender, name, classId, userId); // studentId will be auto-generated
+        Student newStudent = new Student(0, dob, gender, name); // studentId will be auto-generated
 
         try {
             studentDAO.addStudent(newStudent); // Make sure to implement this method in StudentDAO
-            resp.sendRedirect("studentList.jsp"); // Redirect to student list after successful registration
+            req.getRequestDispatcher("/ViewStudentList.jsp").forward(req, resp);
         } catch (Exception e) {
             e.printStackTrace();
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Registration failed");

@@ -2,6 +2,7 @@ package org.example.kindergarten_management_system_g4.dao;
 
 import org.example.kindergarten_management_system_g4.connection.DBConnection;
 import org.example.kindergarten_management_system_g4.model.Student;
+import org.example.kindergarten_management_system_g4.model.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,33 +13,49 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StudentDAO {
-    private static final String SELECT_ALL_STUDENTS = "SELECT * FROM student";
-
     public List<Student> getAllStudents() throws ClassNotFoundException {
         List<Student> students = new ArrayList<>();
 
+        // Sử dụng JOIN để kết hợp bảng student và user
+        String SELECT_ALL_STUDENTS_WITH_USER =
+                "SELECT s.Student_ID, s.Date_of_birth, s.gender, s.Student_name, " +
+                        "u.address, u.phoneNumber " +
+                        "FROM student s " +
+                        "JOIN user u ON s.User_id = u.User_id";
+
         try (Connection connection = DBConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_STUDENTS)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_STUDENTS_WITH_USER)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
+
             while (resultSet.next()) {
+                // Lấy thông tin từ bảng student
                 int studentId = resultSet.getInt("Student_ID");
                 LocalDate dob = resultSet.getDate("Date_of_birth").toLocalDate();
                 boolean gender = resultSet.getBoolean("gender");
-                String name = resultSet.getString("Student_name");
-                int classId = resultSet.getInt("class_id");
-                int userId = resultSet.getInt("User_id");
+                String studentName = resultSet.getString("Student_name");
 
-                Student student = new Student(studentId, dob, gender, name, classId, userId);
+                // Lấy thông tin từ bảng user
+                String address = resultSet.getString("address");
+                String phoneNumber = resultSet.getString("phoneNumber");
+                System.out.println("Address: " + address + ", Phone: " + phoneNumber);
+
+                // Tạo đối tượng Student với các trường cần thiết
+                Student student = new Student(studentId, dob, gender, studentName, address, phoneNumber);
                 students.add(student);
             }
-            System.out.println("Executing query: " + preparedStatement);
+
+            System.out.println("Query executed: " + preparedStatement);
         } catch (SQLException e) {
             printSQLException(e);
         }
+
         System.out.println(students);
         return students;
     }
+
+
+
 
     private void printSQLException(SQLException ex) {
         for (Throwable e : ex) {
@@ -56,7 +73,7 @@ public class StudentDAO {
         }
     }
     public void addStudent(Student student) throws ClassNotFoundException {
-        String INSERT_STUDENT = "INSERT INTO student (Student_name, Date_of_birth, gender, class_id, User_id) VALUES (?, ?, ?, ?, ?)";
+        String INSERT_STUDENT = "INSERT INTO student (Student_name, Date_of_birth, gender) VALUES (?, ?, ?)";
 
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_STUDENT)) {
@@ -64,8 +81,8 @@ public class StudentDAO {
             preparedStatement.setString(1, student.getName());
             preparedStatement.setDate(2, java.sql.Date.valueOf(student.getDob()));
             preparedStatement.setBoolean(3, student.isGender());
-            preparedStatement.setInt(4, student.getClassId());
-            preparedStatement.setInt(5, student.getUserId());
+//            preparedStatement.setInt(4, student.getClassId());
+//            preparedStatement.setInt(5, student.getUserId());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
