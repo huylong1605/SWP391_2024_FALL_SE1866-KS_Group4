@@ -85,13 +85,59 @@
             font-size: 18px;
             color: #e74c3c;
         }
+
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            padding-top: 60px;
+        }
+
+        /* Modal content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .action-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
 <div class="sidebar">
     <div class="logo">
-        <h2>PreSkool</h2>
+        <h2>Kider</h2>
     </div>
     <nav>
         <ul>
@@ -119,6 +165,7 @@
                 <th>Gender</th>
                 <th>Class ID</th>
                 <th>User ID</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -130,6 +177,7 @@
                     <td>${student.gender ? 'Male' : 'Female'}</td>
                     <td>${student.classId}</td>
                     <td>${student.userId}</td>
+                    <td><button class="action-btn" onclick="showModal('${student.studentId}', '${student.name}', '${student.dob}', '${student.gender ? 'Male' : 'Female'}', '${student.classId}', '${student.userId}')">View</button></td>
                 </tr>
             </c:forEach>
         </tbody>
@@ -139,6 +187,45 @@
         <p class="no-students">No students found.</p>
     </c:if>
 </div>
+
+<!-- Modal -->
+<div id="studentModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Student Information</h2>
+        <p><strong>ID:</strong> <span id="modalStudentId"></span></p>
+        <p><strong>Name:</strong> <span id="modalStudentName"></span></p>
+        <p><strong>DOB:</strong> <span id="modalStudentDob"></span></p>
+        <p><strong>Gender:</strong> <span id="modalStudentGender"></span></p>
+        <p><strong>Class ID:</strong> <span id="modalClassId"></span></p>
+        <p><strong>User ID:</strong> <span id="modalUserId"></span></p>
+    </div>
+</div>
+
+<script>
+    function showModal(studentId, name, dob, gender, classId, userId) {
+        document.getElementById('modalStudentId').innerText = studentId;
+        document.getElementById('modalStudentName').innerText = name;
+        document.getElementById('modalStudentDob').innerText = dob;
+        document.getElementById('modalStudentGender').innerText = gender;
+        document.getElementById('modalClassId').innerText = classId;
+        document.getElementById('modalUserId').innerText = userId;
+
+        document.getElementById('studentModal').style.display = "block";
+    }
+
+    function closeModal() {
+        document.getElementById('studentModal').style.display = "none";
+    }
+
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+        const modal = document.getElementById('studentModal');
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
 
 </body>
 </html>

@@ -55,4 +55,22 @@ public class StudentDAO {
             }
         }
     }
+    public void addStudent(Student student) throws ClassNotFoundException {
+        String INSERT_STUDENT = "INSERT INTO student (Student_name, Date_of_birth, gender, class_id, User_id) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_STUDENT)) {
+
+            preparedStatement.setString(1, student.getName());
+            preparedStatement.setDate(2, java.sql.Date.valueOf(student.getDob()));
+            preparedStatement.setBoolean(3, student.isGender());
+            preparedStatement.setInt(4, student.getClassId());
+            preparedStatement.setInt(5, student.getUserId());
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+    }
+
 }
