@@ -1,6 +1,6 @@
 package org.example.kindergarten_management_system_g4;
 
-import org.example.kindergarten_management_system_g4.dao.AuthenDAO.StudentDAO;
+import org.example.kindergarten_management_system_g4.dao.StudentDAO;
 import org.example.kindergarten_management_system_g4.model.Student;
 
 import javax.servlet.ServletException;

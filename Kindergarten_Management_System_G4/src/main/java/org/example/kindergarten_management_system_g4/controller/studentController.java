@@ -1,6 +1,6 @@
-package org.example.kindergarten_management_system_g4.controller.authencation;
+package org.example.kindergarten_management_system_g4.controller;
 
-import org.example.kindergarten_management_system_g4.dao.AuthenDAO.StudentDAO;
+import org.example.kindergarten_management_system_g4.dao.StudentDAO;
 import org.example.kindergarten_management_system_g4.model.Student;
 
 import javax.servlet.ServletException;
@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet(name = "StudentController", value = "/students")

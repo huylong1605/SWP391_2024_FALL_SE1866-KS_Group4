@@ -51,7 +51,7 @@
             <a href="" class="nav-item nav-link">About Us</a>
             <a href="" class="nav-item nav-link">Contact Us</a>
         </div>
-        <a href="${pageContext.request.contextPath}/Login.jsp" class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Sign in</a>
+        <a href="${pageContext.request.contextPath}/WEB-INF/Login.jsp" class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Sign in</a>
         <a href="" class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Sign up</a>
     </div>
 </nav>

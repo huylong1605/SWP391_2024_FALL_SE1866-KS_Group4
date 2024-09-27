@@ -3,6 +3,8 @@ package org.example.kindergarten_management_system_g4.controller.authencation;
 import org.example.kindergarten_management_system_g4.dao.AuthenDAO.LoginDAO;
 import org.example.kindergarten_management_system_g4.javaMail.EmailService;
 import org.example.kindergarten_management_system_g4.model.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,33 +29,37 @@ public class loginController extends HttpServlet {
         EmailService emailService = new EmailService();
         String email = req.getParameter("Email");
         String password = req.getParameter("password");
-
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         try {
-            User user = loginDAO.getUser(email, password);
-            if (user != null) {
-                HttpSession session = req.getSession();
-                session.setAttribute("user", user); // Lưu user vào session
-                //session.setMaxInactiveInterval(100);
+            String hashedPassword = loginDAO.Password(email);
+            if (passwordEncoder.matches(password, hashedPassword)) {
+                User user = loginDAO.getUser(email);
+                if (user != null) {
+                    HttpSession session = req.getSession();
+                    session.setAttribute("user", user); // Lưu user vào session
+                    //session.setMaxInactiveInterval(100);
 
-                if (user.getRoleId() == 4) {
-                     req.getRequestDispatcher("index.jsp").forward(req, resp);
+                    if (user.getRoleId() == 4) {
+                        req.getRequestDispatcher("index.jsp").forward(req, resp);
 
-                  /*  resp.sendRedirect("index.jsp");*/
-                } else if (user.getRoleId() == 1) {
-                    resp.sendRedirect("ListProduct");
+                        /*  resp.sendRedirect("index.jsp");*/
+                    } else if (user.getRoleId() == 1) {
+                        resp.sendRedirect("ListProduct");
+
+                    }
 
                 }
-                emailService.send(email, "hello " +user.getFullname(), "You have logged in to the Kindergarten Management System ");
-            } else {
+                emailService.send(email, "hello " + user.getFullname(), "You have logged in to the Kindergarten Management System ");
+                }else {
                 req.setAttribute("Email", email);
                 req.setAttribute("password", password);
                 req.setAttribute("message1", "Username or password incorrect");
                 req.getRequestDispatcher("Login.jsp").forward(req, resp);
             }
         } catch (ClassNotFoundException e) {
-            System.err.println("Database driver not found: " + e.getMessage());
+            throw new RuntimeException(e);
         }
-}
+    }
         @Override
         protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             super.doGet(req, resp);
