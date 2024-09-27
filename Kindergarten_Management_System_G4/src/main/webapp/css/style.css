@@ -13,6 +13,9 @@
     z-index: 99;
 }
 
+body{
+    overflow-x: hidden;
+}
 
 /*** Spinner ***/
 #spinner {
@@ -64,6 +67,7 @@
     font-weight: normal;
     border-radius: 50px;
 }
+
 
 
 /*** Heading ***/
