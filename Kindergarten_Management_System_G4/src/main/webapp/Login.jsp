@@ -69,7 +69,7 @@
     </style>
 </head>
 <body>
-
+<%@ include file="/Views/common/header.jsp" %>
 <div class="login-container">
     <form class="login-form" action="login" method="POST">
         <h2>Login</h2>
@@ -107,7 +107,7 @@
         </div>
     </form>
 </div>
-
+<%@ include file="/Views/common/footer.jsp" %>
 <!-- Bootstrap JS and dependencies -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
