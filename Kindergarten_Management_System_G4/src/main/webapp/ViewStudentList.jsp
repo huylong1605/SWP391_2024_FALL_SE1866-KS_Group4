@@ -1,41 +1,25 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: admin
-  Date: 9/27/2024
-  Time: 12:55 AM
-  To change this template use File | Settings | File Templates.
---%>
-<!DOCTYPE html>
-<html lang="en">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student List - PreSkool</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="script.js" defer></script>
+    <title>Student List</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: Arial, sans-serif;
-        }
-
-        .container {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
             display: flex;
         }
 
-        /* Sidebar styling */
+        /* Sidebar styles */
         .sidebar {
             width: 250px;
-            background-color: #34495e; /* Màu tối hơn để dễ nhìn hơn */
-            height: 100vh;
+            background-color: #34495e;
+            height: 100vh; /* Full height */
             color: #ecf0f1;
             padding-top: 20px;
+            position: fixed; /* Fixed sidebar */
         }
 
         .sidebar .logo {
@@ -54,199 +38,107 @@
         .sidebar nav ul li {
             padding: 15px 20px;
             display: flex;
-            align-items: center;
         }
 
         .sidebar nav ul li a {
             color: #ecf0f1;
             text-decoration: none;
             font-size: 16px;
-            display: flex;
-            align-items: center;
+            display: block;
             width: 100%;
-        }
-
-        .sidebar nav ul li a i {
-            margin-right: 15px; /* Khoảng cách giữa icon và text */
-            font-size: 18px;
-        }
-
-        .sidebar nav ul li:hover {
-            background-color: #2c3e50;
-            border-left: 4px solid #3498db; /* Hiệu ứng nhấn mạnh phần được chọn */
         }
 
         .sidebar nav ul li a:hover {
+            background-color: #2c3e50;
             color: #3498db;
         }
 
-        .sidebar nav ul li ul {
-            padding-left: 15px;
-        }
-
-        .sidebar nav ul li ul li {
-            padding: 10px 0;
-        }
-
-        .sidebar nav ul li ul li a {
-            font-size: 14px;
-        }
-
-        .sidebar nav ul li ul li a:hover {
-            color: #2980b9;
-        }
-        main {
-            flex-grow: 1;
+        /* Main content styles */
+        .main {
+            margin-left: 250px; /* Space for sidebar */
             padding: 20px;
+            width: calc(100% - 250px); /* Adjust width */
         }
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 20px;
-        }
-
-        .header input {
-            padding: 5px;
-            margin-right: 10px;
-        }
-
-        .header button {
-            padding: 5px 10px;
-            background-color: #3498DB;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        .header .user {
-            display: flex;
-            align-items: center;
-        }
-
-        .header .user img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-left: 10px;
-        }
-
-        .student-list {
-            background-color: #ecf0f1;
-            padding: 20px;
-            border-radius: 10px;
-        }
-
-        .table-actions {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-        }
-
+        /* Table styles */
         table {
             width: 100%;
             border-collapse: collapse;
-        }
-
-        table, th, td {
-            border: 1px solid #bdc3c7;
+            margin-top: 20px;
         }
 
         th, td {
+            border: 1px solid #bdc3c7;
             padding: 10px;
             text-align: left;
         }
 
-        thead {
-            background-color: #2980B9;
+        th {
+            background-color: #2980b9;
             color: white;
+        }
+
+        /* No students message */
+        .no-students {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            color: #e74c3c;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <aside class="sidebar">
-        <div class="logo">
-            <h2>PreSkool</h2>
-        </div>
-        <nav>
-            <ul>
-                <li>
-                    <a href="#">
-                        <i class="fas fa-tachometer-alt"></i> <!-- Thêm icon -->
-                        Dashboard
-                    </a>
-                </li>
-                <li>
-                    <a href="#">Students</a>
-                    <ul>
-                        <li><a href="#">Student List</a></li>
-                        <li><a href="#">Student View</a></li>
-                        <li><a href="#">Student Add</a></li>
-                        <li><a href="#">Student Edit</a></li>
-                    </ul>
-                </li>
-                <li><a href="#">Teachers</a></li>
-                <li><a href="#">Departments</a></li>
-                <li><a href="#">Subjects</a></li>
-                <li><a href="#">Invoices</a></li>
-                <li><a href="#">Accounts</a></li>
-                <li><a href="#">Holiday</a></li>
-                <li><a href="#">Fee</a></li>
-            </ul>
-        </nav>
-    </aside>
-    <main>
-        <header class="header">
-            <input type="text" placeholder="Search by ID..." />
-            <input type="text" placeholder="Search by Name..." />
-            <input type="text" placeholder="Search by Phone..." />
-            <button>Search</button>
-            <div class="user">
-                <span>Ryan Taylor</span>
-                <img src="avatar.png" alt="User Avatar">
-            </div>
-        </header>
 
-        <section class="student-list">
-            <div class="table-actions">
-                <select>
-                    <option>Show 10 entries </option>
-                    <option>Show 20 entries</option>
-                    <option>Show 50 entries</option>
-                </select>
-                <button>Download</button>
-            </div>
-
-            <table>
-                <thead>
-                <tr>
-                    <th><input type="checkbox"></th>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Class</th>
-                    <th>DOB</th>
-                    <th>Parent Name</th>
-                    <th>Mobile Number</th>
-                    <th>Address</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>PRE2209</td>
-                    <td>Aaliyah</td>
-                    <td>10 A</td><td>2 Feb 2002</td>
-                    <td>Jeffrey Wong</td>
-                    <td>097 3584 5870</td>
-                    <td>911 Deer Ridge Drive, USA</td>
-                </tr>
-                <!-- Repeat similar rows for other students -->
-                </tbody>
-            </table>
-        </section>
-    </main>
+<div class="sidebar">
+    <div class="logo">
+        <h2>PreSkool</h2>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Students</a></li>
+            <li><a href="#">Teachers</a></li>
+            <li><a href="#">Classes</a></li>
+            <li><a href="#">Subjects</a></li>
+            <li><a href="#">Invoices</a></li>
+            <li><a href="#">Accounts</a></li>
+            <li><a href="#">Logout</a></li>
+        </ul>
+    </nav>
 </div>
+
+<div class="main">
+    <h1 style="text-align: center; margin-top: 20px;">List of Students</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>DOB</th>
+                <th>Gender</th>
+                <th>Class ID</th>
+                <th>User ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:forEach var="student" items="${students}">
+                <tr>
+                    <td>${student.studentId}</td>
+                    <td>${student.name}</td>
+                    <td>${student.dob}</td>
+                    <td>${student.gender ? 'Male' : 'Female'}</td>
+                    <td>${student.classId}</td>
+                    <td>${student.userId}</td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
+
+    <c:if test="${empty students}">
+        <p class="no-students">No students found.</p>
+    </c:if>
+</div>
+
 </body>
 </html>
