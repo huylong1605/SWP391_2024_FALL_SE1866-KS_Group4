@@ -10,10 +10,22 @@ public class Student {
     private int classId;
     private int userId;
 
+    private String address;
+
+    private String phoneNumber;
+
+
     public Student() {
 
     }
-
+    public Student(int studentId, LocalDate dob, boolean gender, String name,String address, String phoneNumber) {
+        this.studentId = studentId;
+        this.dob = dob;
+        this.gender = gender;
+        this.name = name;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+    }
     public Student(int studentId, LocalDate dob, boolean gender, String name, int classId, int userId) {
         this.studentId = studentId;
         this.dob = dob;
@@ -22,7 +34,12 @@ public class Student {
         this.classId = classId;
         this.userId = userId;
     }
-
+    public Student(int studentId, LocalDate dob, boolean gender, String name) {
+        this.studentId = studentId;
+        this.dob = dob;
+        this.gender = gender;
+        this.name = name;
+    }
     public int getStudentId() {
         return studentId;
     }

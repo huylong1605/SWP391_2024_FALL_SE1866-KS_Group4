@@ -78,14 +78,6 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="classId">Class ID:</label>
-            <input type="number" id="classId" name="classId" required>
-        </div>
-        <div class="form-group">
-            <label for="userId">User ID:</label>
-            <input type="number" id="userId" name="userId" required>
-        </div>
-        <div class="form-group">
             <button type="submit">Register</button>
         </div>
     </form>
