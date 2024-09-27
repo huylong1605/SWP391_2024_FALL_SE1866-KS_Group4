@@ -54,7 +54,7 @@ aside, main{
     min-width: 70px;
     z-index: 1000;
     transition: all .25s ease-in-out;
-    background-color: #0e2238;
+    background-color: #cf1d59;
     display: flex;
     flex-direction: column;
 }
