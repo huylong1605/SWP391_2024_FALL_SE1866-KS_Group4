@@ -4,6 +4,7 @@ import org.example.kindergarten_management_system_g4.connection.DBConnection;
 import org.example.kindergarten_management_system_g4.model.Student;
 import org.example.kindergarten_management_system_g4.model.User;
 
+import javax.servlet.http.HttpSession;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,14 +39,14 @@ public class StudentDAO {
                 // Lấy thông tin từ bảng user
                 String address = resultSet.getString("address");
                 String phoneNumber = resultSet.getString("phoneNumber");
-                System.out.println("Address: " + address + ", Phone: " + phoneNumber);
+
 
                 // Tạo đối tượng Student với các trường cần thiết
                 Student student = new Student(studentId, dob, gender, studentName, address, phoneNumber);
                 students.add(student);
             }
 
-            System.out.println("Query executed: " + preparedStatement);
+
         } catch (SQLException e) {
             printSQLException(e);
         }
@@ -73,7 +74,7 @@ public class StudentDAO {
         }
     }
     public void addStudent(Student student) throws ClassNotFoundException {
-        String INSERT_STUDENT = "INSERT INTO student (Student_name, Date_of_birth, gender) VALUES (?, ?, ?)";
+        String INSERT_STUDENT = "INSERT INTO student (Student_name, Date_of_birth, gender) VALUES (?, ?,?)";
 
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_STUDENT)) {
@@ -81,8 +82,7 @@ public class StudentDAO {
             preparedStatement.setString(1, student.getName());
             preparedStatement.setDate(2, java.sql.Date.valueOf(student.getDob()));
             preparedStatement.setBoolean(3, student.isGender());
-//            preparedStatement.setInt(4, student.getClassId());
-//            preparedStatement.setInt(5, student.getUserId());
+//            preparedStatement.setInt(4, student.getUserId());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
