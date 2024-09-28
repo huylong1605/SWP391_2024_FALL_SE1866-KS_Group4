@@ -47,7 +47,6 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
-
         <div class="navbar-nav mx-auto">
             <a href="${pageContext.request.contextPath}/Views/LandingPage/LandingPage.jsp" class="nav-item nav-link active">Home</a>
             <a href="${pageContext.request.contextPath}/Views/Admin/Admin-Dashbosh.jsp" class="nav-item nav-link">Admin Manage</a>
@@ -55,28 +54,27 @@
             <a href="" class="nav-item nav-link">Contact Us</a>
         </div>
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <c:if test="${sessionScope.user != null}">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Hello, ${sessionScope.user.fullname}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="logout">Logout</a>
-                    </li>
-                </c:if>
-            </ul>
-        </div>
-        <div class="collapse navbar-collapse" >
-            <ul class="navbar-nav ml-auto">
-                <c:if test="${sessionScope.user == null}">
 
-                    <a href="${pageContext.request.contextPath}/WEB-INF/Login.jsp" class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Sign in</a>
-                    <a href="register.jsp" class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Sign up</a>
-                </c:if>
-            </ul>
-        </div>
 
+        <ul class="navbar-nav ml-auto">
+            <c:if test="${sessionScope.user != null}">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Hello, ${sessionScope.user.fullname}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="logout">Logout</a>
+                </li>
+            </c:if>
+        </ul>
+    </div>
+    <div class="collapse navbar-collapse" >
+        <ul class="navbar-nav ml-auto">
+            <c:if test="${sessionScope.user == null}">
+
+                <a href="${pageContext.request.contextPath}/WEB-INF/Login.jsp" class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Sign in</a>
+                <a href="register.jsp" class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Sign up</a>
+            </c:if>
+        </ul>
     </div>
 </nav>
 </body>
