@@ -50,29 +50,32 @@ public class RegisterDAO {
 
     }
 
-    public int insertUser(User u) throws ClassNotFoundException {
-
-        int result = 0;
+    public boolean insertUser(User u) throws ClassNotFoundException {
+        boolean isInserted = false; // Khởi tạo mặc định là false
         try (Connection connection = DBConnection.getConnection();
-
              PreparedStatement preparedStatement = connection.prepareStatement(InsertUser)) {
 
             preparedStatement.setString(1, u.getFullname());
             preparedStatement.setString(2, u.getEmail());
             preparedStatement.setString(3, u.getPassword());
             preparedStatement.setInt(4, u.getGender());
-
             preparedStatement.setString(5, u.getPhoneNumber());
             preparedStatement.setString(6, u.getAddress());
 
             System.out.println(preparedStatement);
-            result = preparedStatement.executeUpdate();
 
+            int result = preparedStatement.executeUpdate(); // Thực thi câu lệnh
+
+            if (result > 0) {
+                // Nếu số dòng bị ảnh hưởng > 0, thêm thành công
+                isInserted = true;
+            }
         } catch (SQLException e) {
             printSQLException(e);
         }
-        return result;
+        return isInserted; // Trả về kết quả kiểm tra
     }
+
 
     private void printSQLException(SQLException ex) {
         for (Throwable e : ex) {

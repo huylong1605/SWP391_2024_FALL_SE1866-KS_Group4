@@ -78,6 +78,7 @@ public class RegisterController extends HttpServlet {
             if(checkPhone ) {
                 req.setAttribute("phone_exits", "Phone already exists!");
                 req.getRequestDispatcher("register.jsp").forward(req, resp);
+                return;
             }
 
 
@@ -90,6 +91,7 @@ public class RegisterController extends HttpServlet {
             if(checkEmail ) {
                 req.setAttribute("email_exits", "Email already exists!");
                 req.getRequestDispatcher("register.jsp").forward(req, resp);
+                return;
             }
 
 
@@ -109,20 +111,25 @@ public class RegisterController extends HttpServlet {
         user.setAddress(address);
 
         try {
-            registerDao.insertUser(user);
-            emailService.send(email, "Congratulations " + fullname, " You have successfully logged into the Kindergarten Management System by email " + email);
-            req.setAttribute("registerSuccessful", "register successful, log in now!");
-            req.getRequestDispatcher("Login.jsp").forward(req, resp);
-        } catch (ClassNotFoundException e) {
-            req.setAttribute("fullname", fullname);
-            req.setAttribute("email", email);
-            req.setAttribute("phone", phone);
-            req.setAttribute("password", password);
-            req.setAttribute("confirmPassword", confirmPassword);
-            req.setAttribute("gender", gender);
-            req.setAttribute("Address", address);
+            boolean isInserted = registerDao.insertUser(user);
+            if (isInserted) {
+                emailService.send(email, "Congratulations " + fullname, " You have successfully logged into the Kindergarten Management System by email " + email);
+                req.setAttribute("registerSuccessful", "register successful, log in now!");
+                req.getRequestDispatcher("Login.jsp").forward(req, resp);
+            }else{
+                req.setAttribute("fullname", fullname);
+                req.setAttribute("email", email);
+                req.setAttribute("phone", phone);
+                req.setAttribute("password", password);
+                req.setAttribute("confirmPassword", confirmPassword);
+                req.setAttribute("gender", gender);
+                req.setAttribute("Address", address);
 
-            req.getRequestDispatcher("register.jsp").forward(req, resp);
+                req.getRequestDispatcher("register.jsp").forward(req, resp);
+            }
+
+        } catch (ClassNotFoundException e) {
+             e.printStackTrace();
         }
     }
 
