@@ -19,25 +19,28 @@
         }
         .login-form {
             background-color: #ffffff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.1);
             max-width: 400px;
             width: 100%;
         }
         .login-form h2 {
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             text-align: center;
+            font-size: 28px;
+            color: #007bff;
         }
         .form-group label {
             font-weight: 600;
+            font-size: 14px;
         }
         .password-container {
             position: relative;
         }
         .password-container input[type="password"],
         .password-container input[type="text"] {
-            padding-right: 40px; /* Space for the eye icon */
+            padding-right: 40px;
         }
         .password-container .bi-eye,
         .password-container .bi-eye-slash {
@@ -59,52 +62,49 @@
         .btn-primary {
             background-color: #007bff;
             border: none;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
         }
         .btn-primary:hover {
             background-color: #0056b3;
         }
         .text-muted {
             color: #6c757d;
+            font-size: 14px;
+        }
+        .login-form p {
+            color: red;
+            font-weight: bold;
+        }
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            border-radius: 8px;
         }
     </style>
 </head>
 <body>
 <%@ include file="/Views/common/header.jsp" %>
 <div class="login-container">
-    <form class="login-form" action="login" method="POST">
-        <h2>Login</h2>
-        <p style="color: red;">${ss}</p
-        <p style="color: greenyellow;">${PasswordUpdate}</p>
+    <form class="login-form" action="forgetPassword" method="POST">
+        <h2>Forget Password</h2>
+        <p>${ss}</p>
 
         <div class="form-group">
             <label for="Email">Email:</label>
             <input type="text" class="form-control" id="Email" name="Email" value="${Email}" required>
         </div>
+        <p style="color: red;">${emailNull}</p>
 
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <div class="password-container">
-                <input type="password" class="form-control" id="password" name="password" value="${password}" required>
-                <i class="bi bi-eye-slash" id="togglePasswordIcon" onclick="togglePassword()"></i>
-            </div>
-        </div>
 
-        <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
-            <label class="form-check-label" for="rememberMe">Remember me</label>
-        </div>
 
-        <p style="color: red;">${message1}</p>
+        <button type="submit" class="btn btn-primary btn-block">Submit</button>
 
-        <button type="submit" class="btn btn-primary btn-block">Login</button>
-       <br>
-        <!-- Đưa "Forgot Password?" xuống dưới nút "Login" -->
-        <div class="forgot-password">
-            <a href="forgotPassword.jsp">Forgot Password?</a>
-        </div>
+        <br>
 
         <div class="text-center mt-3">
-            <p class="text-muted">Don't have an account? <a href="register.jsp">Register here</a></p>
+            <a href="Login.jsp" class="text-primary">Back to Login</a>
         </div>
     </form>
 </div>
@@ -113,23 +113,5 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-<script>
-    function togglePassword() {
-        var passwordField = document.getElementById("password");
-        var toggleIcon = document.getElementById("togglePasswordIcon");
-
-        if (passwordField.type === "password") {
-            passwordField.type = "text";
-            toggleIcon.classList.remove("bi-eye-slash");
-            toggleIcon.classList.add("bi-eye");
-        } else {
-            passwordField.type = "password";
-            toggleIcon.classList.remove("bi-eye");
-            toggleIcon.classList.add("bi-eye-slash");
-        }
-    }
-</script>
-
 </body>
 </html>
