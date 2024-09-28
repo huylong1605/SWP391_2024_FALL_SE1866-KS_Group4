@@ -48,7 +48,7 @@ public class RegisterController extends HttpServlet {
         String phone = req.getParameter("phone");
 
         String gender = req.getParameter("gender");
-
+        String address = req.getParameter("Address");
 
 
         if (!password.equals(confirmPassword)) {
@@ -106,10 +106,12 @@ public class RegisterController extends HttpServlet {
         user.setPassword(hashedPassword);
         user.setGender(Integer.parseInt(gender));
         user.setPhoneNumber(phone);
+        user.setAddress(address);
 
         try {
             registerDao.insertUser(user);
             emailService.send(email, "Congratulations " + fullname, " You have successfully logged into the Kindergarten Management System by email " + email);
+            req.setAttribute("registerSuccessful", "register successful, log in now!");
             req.getRequestDispatcher("Login.jsp").forward(req, resp);
         } catch (ClassNotFoundException e) {
             req.setAttribute("fullname", fullname);
@@ -118,6 +120,7 @@ public class RegisterController extends HttpServlet {
             req.setAttribute("password", password);
             req.setAttribute("confirmPassword", confirmPassword);
             req.setAttribute("gender", gender);
+            req.setAttribute("Address", address);
 
             req.getRequestDispatcher("register.jsp").forward(req, resp);
         }

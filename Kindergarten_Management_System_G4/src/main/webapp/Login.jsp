@@ -75,6 +75,7 @@
         <h2>Login</h2>
         <p style="color: red;">${ss}</p
         <p style="color: greenyellow;">${PasswordUpdate}</p>
+        <p style="color:  #49ef49;">${registerSuccessful}</p>
 
         <div class="form-group">
             <label for="Email">Email:</label>

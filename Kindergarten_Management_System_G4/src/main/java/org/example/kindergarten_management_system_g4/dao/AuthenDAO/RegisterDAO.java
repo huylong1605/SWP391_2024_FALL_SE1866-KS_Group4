@@ -13,7 +13,7 @@ import static java.sql.DriverManager.getConnection;
 public class RegisterDAO {
     private static final String check_phone = "SELECT * FROM user WHERE phoneNumber=?";
     private static final String check_email = "SELECT * FROM user WHERE email=?";
-    private static final String InsertUser = "INSERT INTO user(Fullname, email, password, gender, phoneNumber) VALUES (?, ?, ?, ?, ?)";
+    private static final String InsertUser = "INSERT INTO user(Fullname, email, password, gender, phoneNumber, address) VALUES (?, ?, ?, ?, ?, ?)";
 
 
     public boolean checkLPhone(String phone) throws ClassNotFoundException {
@@ -63,6 +63,7 @@ public class RegisterDAO {
             preparedStatement.setInt(4, u.getGender());
 
             preparedStatement.setString(5, u.getPhoneNumber());
+            preparedStatement.setString(6, u.getAddress());
 
             System.out.println(preparedStatement);
             result = preparedStatement.executeUpdate();
