@@ -163,23 +163,26 @@
                 <th>Name</th>
                 <th>DOB</th>
                 <th>Gender</th>
-                <th>Class ID</th>
-                <th>User ID</th>
+                <th>Address</th>
+                <th>Phone Number</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            <c:forEach var="student" items="${students}">
-                <tr>
-                    <td>${student.studentId}</td>
-                    <td>${student.name}</td>
-                    <td>${student.dob}</td>
-                    <td>${student.gender ? 'Male' : 'Female'}</td>
-                    <td>${student.classId}</td>
-                    <td>${student.userId}</td>
-                    <td><button class="action-btn" onclick="showModal('${student.studentId}', '${student.name}', '${student.dob}', '${student.gender ? 'Male' : 'Female'}', '${student.classId}', '${student.userId}')">View</button></td>
-                </tr>
-            </c:forEach>
+       <c:set var="counter" value="1" />
+       <c:forEach var="student" items="${students}">
+           <tr>
+               <td>${counter}</td>
+               <td>${student.name}</td>
+               <td>${student.dob}</td>
+               <td>${student.gender ? 'Male' : 'Female'}</td>
+               <td>${student.address}</td>
+               <td>${student.phoneNumber}</td>
+               <td><button class="action-btn" onclick="showModal('${student.studentId}', '${student.name}', '${student.dob}', '${student.gender ? 'Male' : 'Female'}', '${student.address}', '${student.phoneNumber}')">View</button></td>
+           </tr>
+           <c:set var="counter" value="${counter + 1}" />
+       </c:forEach>
+
         </tbody>
     </table>
 
@@ -197,8 +200,8 @@
         <p><strong>Name:</strong> <span id="modalStudentName"></span></p>
         <p><strong>DOB:</strong> <span id="modalStudentDob"></span></p>
         <p><strong>Gender:</strong> <span id="modalStudentGender"></span></p>
-        <p><strong>Class ID:</strong> <span id="modalAddress"></span></p>
-        <p><strong>User ID:</strong> <span id="modalPhoneNumber"></span></p>
+        <p><strong>Address:</strong> <span id="modalAddress"></span></p>
+        <p><strong>Phone Number:</strong> <span id="modalPhoneNumber"></span></p>
     </div>
 </div>
 
