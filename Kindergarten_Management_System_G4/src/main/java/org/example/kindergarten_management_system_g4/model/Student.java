@@ -34,12 +34,22 @@ public class Student {
         this.classId = classId;
         this.userId = userId;
     }
+    public Student(int studentId, LocalDate dob, boolean gender, String name, int userId) {
+        this.studentId = studentId;
+        this.dob = dob;
+        this.gender = gender;
+        this.name = name;
+        this.userId = userId;
+    }
     public Student(int studentId, LocalDate dob, boolean gender, String name) {
         this.studentId = studentId;
         this.dob = dob;
         this.gender = gender;
         this.name = name;
     }
+
+
+
     public int getStudentId() {
         return studentId;
     }
