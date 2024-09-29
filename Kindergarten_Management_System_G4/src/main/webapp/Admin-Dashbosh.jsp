@@ -32,7 +32,7 @@
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
-<%@include file="../common/header.jsp"%>
+<%@include file="./Views/common/header.jsp"%>
 <div class="">
   <div class="wrapper">
     <aside id="sidebar">
@@ -114,14 +114,14 @@
                     <tbody>
                     <c:forEach var="user" items="${accounts}">
                       <tr>
-                        <td>${user.userID}</td> <!-- Display user ID -->
-                        <td>${user.roleId}</td> <!-- Display user role -->
-                        <td class="text-center">${user.fullname}</td> <!-- Display user fullname -->
-                        <td class="text-center">${user.email}</td> <!-- Display user email -->
+                        <td>${user.userID}</td> <!-- Đúng: Sử dụng "userID" -->
+                        <td>${user.roleId}</td> <!-- Đúng: Sử dụng "roleId" -->
+                        <td class="text-center">${user.fullname}</td> <!-- Đúng: Sử dụng "fullname" -->
+                        <td class="text-center">${user.email}</td> <!-- Đúng: Sử dụng "email" -->
                         <td class="align-middle text-center">
-                    <span class="badge badge-sm bg-gradient-${user.status == 1 ? 'Active' : 'Deactive'}">
-                        ${user.status == 1 ? 'Active' : 'Deactive'}
-                    </span>
+                <span class="badge badge-sm bg-gradient-${user.status == 1 ? 'Active' : 'Deactive'}">
+                    ${user.status == 1 ? 'Active' : 'Deactive'}
+                </span>
                         </td>
                         <td class="align-middle">
                           <a href="" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
@@ -131,7 +131,8 @@
                       </tr>
                     </c:forEach>
                     </tbody>
-<%--                    <tbody>--%>
+
+                  <%--                    <tbody>--%>
 <%--                    <c:forEach var="user" items="${accounts}" >--%>
 <%--                    <tr>--%>
 <%--                      <td>--%>
@@ -178,6 +179,6 @@
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
 <script src="${pageContext.request.contextPath}/js/script.js"></script>
-<%@include file="../common/footer.jsp"%>
+<%@include file="./Views/common/footer.jsp"%>
 </body>
 </html>
