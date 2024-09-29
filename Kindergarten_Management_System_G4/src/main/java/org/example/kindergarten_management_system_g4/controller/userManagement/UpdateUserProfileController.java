@@ -37,7 +37,7 @@ public class UpdateUserProfileController extends HttpServlet {
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND, "User not found");
             }
         } else {
-            resp.sendRedirect("Login.jsp");
+            resp.sendRedirect("/Login.jsp");
         }
     }
 
