@@ -8,10 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 
 @WebServlet(name = "login", value = "/login")
@@ -29,6 +26,7 @@ public class loginController extends HttpServlet {
         EmailService emailService = new EmailService();
         String email = req.getParameter("Email");
         String password = req.getParameter("password");
+        String remember = req.getParameter("rememberMe");
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         try {
             String hashedPassword = loginDAO.Password(email);
@@ -39,6 +37,31 @@ public class loginController extends HttpServlet {
                     session.setAttribute("user", user); // Lưu user vào session
                     //session.setMaxInactiveInterval(100);
 
+                    Cookie cookieEmail;
+                    Cookie cookiePass;
+                    Cookie cookieRemember;
+                    if("1".equals(remember)) {
+                        cookieEmail = new Cookie("cookieEmail", email);
+                        cookiePass = new Cookie("cookiePass", password);
+                        cookieRemember = new Cookie("cookieRemember", "1");
+
+                        cookieEmail.setMaxAge(60); // 1 phút
+                        cookiePass.setMaxAge(60); // 1 phút
+                        cookieRemember.setMaxAge(60);
+
+                    }else{
+                        cookieEmail = new Cookie("cookieEmail", "");
+                        cookiePass = new Cookie("cookiePass", "");
+                        cookieRemember = new Cookie("cookieRemember", "");
+
+                         cookieEmail.setMaxAge(0); // Xóa cookie
+                         cookiePass.setMaxAge(0); // Xóa cookie
+                         cookieRemember.setMaxAge(0);
+
+                    }
+                    resp.addCookie(cookieEmail);
+                    resp.addCookie(cookiePass);
+                    resp.addCookie(cookieRemember);
 
                     if (user.getRoleId() == 4) {
                         req.getRequestDispatcher("index.jsp").forward(req, resp);

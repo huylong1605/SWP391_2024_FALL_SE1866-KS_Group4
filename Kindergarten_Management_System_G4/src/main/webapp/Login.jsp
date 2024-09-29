@@ -70,6 +70,22 @@
 </head>
 <body>
 <%@ include file="/Views/common/header.jsp" %>
+<%
+    String email ="", pass = "", remember = "";
+    Cookie[] cookies = request.getCookies();
+    if(cookies != null) {
+        for (Cookie cook : cookies) {
+            if (cook.getName().equals("cookieEmail")) {
+                email = cook.getValue();
+
+            } else if (cook.getName().equals("cookiePass")) {
+                pass = cook.getValue();
+            } else if (cook.getName().equals("cookieRemember")) {
+                remember = cook.getValue();
+            }
+        }
+    }
+%>
 <div class="login-container">
     <form class="login-form" action="login" method="POST">
         <h2>Login</h2>
@@ -79,25 +95,47 @@
 
         <div class="form-group">
             <label for="Email">Email:</label>
-            <input type="text" class="form-control" id="Email" name="Email" value="${Email}" required>
+            <input type="text" class="form-control" id="Email" name="Email" value="<%= email%>" <%--value="${Email}"--%> required>
         </div>
 
         <div class="form-group">
             <label for="password">Password:</label>
             <div class="password-container">
-                <input type="password" class="form-control" id="password" name="password" value="${password}" required>
+                <input type="password" class="form-control" id="password" name="password" value="<%= pass%>" <%--value="${password}"--%> required>
                 <i class="bi bi-eye-slash" id="togglePasswordIcon" onclick="togglePassword()"></i>
             </div>
         </div>
 
         <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
+            <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe" value="1"
+                    <%
+                        if (remember != null && remember.equals("1")) {
+                    %>
+                   checked="checked"
+                    <%
+                        }
+                    %>
+                   />
+
             <label class="form-check-label" for="rememberMe">Remember me</label>
         </div>
 
         <p style="color: red;">${message1}</p>
 
         <button type="submit" class="btn btn-primary btn-block">Login</button>
+      <%--  <div class="text-center mt-3">
+            <a href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid
+
+&redirect_uri=http://localhost:8080/Kindergarten_Management_System/login_Gg
+
+&response_type=code
+
+&client_id=1028444732076-4llkdccstoav2g4bkdf3s75cj86kvl82.apps.googleusercontent.com
+
+&approval_prompt=force" class="btn btn-google btn-block">
+                <img src="https://img.icons8.com/color/16/000000/google-logo.png"/> Login with Google
+            </a>
+        </div>--%>
        <br>
         <!-- Đưa "Forgot Password?" xuống dưới nút "Login" -->
         <div class="forgot-password">
