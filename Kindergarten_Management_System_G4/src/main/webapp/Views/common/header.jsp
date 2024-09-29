@@ -58,6 +58,7 @@
 
         <ul class="navbar-nav ml-auto">
             <c:if test="${sessionScope.user != null}">
+                
                 <li class="nav-item">
                     <a class="nav-link" href="#">Hello, ${sessionScope.user.fullname}</a>
 
