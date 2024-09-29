@@ -75,15 +75,18 @@
                         <h4 class="font-weight-bolder mb-0">Manage Account</h4>
                     </nav>
 
-                    <div  class="btn-search" style="margin-top: 20px;">
-                        <input type="text" name="" id="">
-                        <button>Search</button>
+                    <div class="btn-search" style="margin-top: 20px;">
+                        <form action="${pageContext.request.contextPath}/Views/Admin/accountManage" method="post">
+                            <input type="text" name="searchName" placeholder="Search by name">
+                            <input type="hidden" name="action" value="search">
+                            <button type="submit">Search</button>
+                        </form>
                     </div>
 
                     <div style="margin-top: 20px;">
                         <label for="">Fillter:</label>
                         <select>
-                            <option value="">Teacher</option>
+                            <option id="" value="">Teacher</option>
                             <option value="">Parent</option>
                             <option value="">Enrollment</option>
                         </select>
@@ -167,9 +170,17 @@
                                         </c:forEach>
                                         </tbody>
                                     </table>
+
                                 </div>
+
                             </div>
+
                         </div>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary">
+                            <a href="${pageContext.request.contextPath}/Views/Admin/CreateAccount.jsp" class="text-light">Create Account</a>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -184,11 +195,20 @@
 
         xhr.onload = function() {
             if (xhr.status === 200) {
-                const currentColor = element.querySelector('i').style.color;
-                element.querySelector('i').style.color = currentColor === 'rgb(2, 159, 2)' ? 'red' : '#029f02';
+                // Lấy icon và statusText từ DOM
+                const icon = element.querySelector('i');
                 const statusText = element.closest('tr').querySelector('td:nth-child(5)');
-                statusText.textContent = statusText.textContent === 'Active' ? 'Deactive' : 'Active';
-                statusText.style.color = statusText.style.color === 'lawngreen' ? 'red' : 'lawngreen';
+
+                // Thay đổi màu sắc của icon
+                if (icon.style.color === 'rgb(2, 159, 2)') {
+                    icon.style.color = 'red';
+                    statusText.textContent = 'Deactive';
+                    statusText.style.color = 'red';
+                } else {
+                    icon.style.color = '#029f02';
+                    statusText.textContent = 'Active';
+                    statusText.style.color = 'lawngreen';
+                }
             } else {
                 console.error('Error toggling status: ' + xhr.statusText);
             }
@@ -196,6 +216,27 @@
         xhr.send("userId=" + userId);
     }
 </script>
+
+<%--<script>--%>
+<%--    function toggleStatus(userId, element) {--%>
+<%--        const xhr = new XMLHttpRequest();--%>
+<%--        xhr.open("POST", "${pageContext.request.contextPath}/Views/Admin/accountManage", true);--%>
+<%--        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");--%>
+
+<%--        xhr.onload = function() {--%>
+<%--            if (xhr.status === 200) {--%>
+<%--                const currentColor = element.querySelector('i').style.color;--%>
+<%--                element.querySelector('i').style.color = currentColor === 'rgb(2, 159, 2)' ? 'red' : '#029f02';--%>
+<%--                const statusText = element.closest('tr').querySelector('td:nth-child(5)');--%>
+<%--                statusText.textContent = statusText.textContent === 'Active' ? 'Deactive' : 'Active';--%>
+<%--                statusText.style.color = statusText.style.color === 'lawngreen' ? 'red' : 'lawngreen';--%>
+<%--            } else {--%>
+<%--                console.error('Error toggling status: ' + xhr.statusText);--%>
+<%--            }--%>
+<%--        };--%>
+<%--        xhr.send("userId=" + userId);--%>
+<%--    }--%>
+<%--</script>--%>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
