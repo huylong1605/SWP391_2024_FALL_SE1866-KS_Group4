@@ -1,4 +1,4 @@
-package org.example.kindergarten_management_system_g4.controller.authencation;
+package org.example.kindergarten_management_system_g4.controller.studentManagement;
 
 import org.example.kindergarten_management_system_g4.dao.StudentDAO;
 import org.example.kindergarten_management_system_g4.model.Student;

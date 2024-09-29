@@ -39,12 +39,13 @@ public class loginController extends HttpServlet {
                     session.setAttribute("user", user); // Lưu user vào session
                     //session.setMaxInactiveInterval(100);
 
+
                     if (user.getRoleId() == 4) {
                         req.getRequestDispatcher("index.jsp").forward(req, resp);
 
                         /*  resp.sendRedirect("index.jsp");*/
                     } else if (user.getRoleId() == 1) {
-                        resp.sendRedirect("ListProduct");
+                        req.getRequestDispatcher("/Views/Admin/Admin-Dashbosh.jsp").forward(req, resp);
 
                     }
 

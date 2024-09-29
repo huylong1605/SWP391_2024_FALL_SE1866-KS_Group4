@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,8 +53,28 @@
             <a href="" class="nav-item nav-link">About Us</a>
             <a href="" class="nav-item nav-link">Contact Us</a>
         </div>
-        <a href="${pageContext.request.contextPath}/WEB-INF/Login.jsp" class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Sign in</a>
-        <a href="" class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Sign up</a>
+
+
+
+        <ul class="navbar-nav ml-auto">
+            <c:if test="${sessionScope.user != null}">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Hello, ${sessionScope.user.fullname}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="logout">Logout</a>
+                </li>
+            </c:if>
+        </ul>
+    </div>
+    <div class="collapse navbar-collapse" >
+        <ul class="navbar-nav ml-auto">
+            <c:if test="${sessionScope.user == null}">
+
+                <a href="${pageContext.request.contextPath}/WEB-INF/Login.jsp" class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Sign in</a>
+                <a href="register.jsp" class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Sign up</a>
+            </c:if>
+        </ul>
     </div>
 </nav>
 </body>
