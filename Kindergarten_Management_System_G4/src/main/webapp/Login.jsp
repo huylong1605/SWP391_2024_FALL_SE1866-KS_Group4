@@ -95,7 +95,7 @@
 
         <div class="form-group">
             <label for="Email">Email:</label>
-            <input type="text" class="form-control" id="Email" name="Email" value="<%= email%>" <%--value="${Email}"--%> required>
+            <input type="email" class="form-control" id="Email" name="Email" value="<%= email%>" <%--value="${Email}"--%> required>
         </div>
 
         <div class="form-group">
