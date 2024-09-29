@@ -102,6 +102,18 @@
                     <p style="color:red;"><%= request.getAttribute("phone_not_match") %></p>
                     <% } %>
                 </div>
+                <div class="form-group">
+                    <label>Gender:</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" id="male" value="1" ${gender == '1' ? 'checked' : ''}>
+                        <label class="form-check-label" for="male">Male</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="gender" id="female" value="0" ${gender == '0' ? 'checked' : ''}>
+                        <label class="form-check-label" for="female">Female</label>
+                    </div>
+                    <p style="color: red"> ${gender_null} </p>
+                </div>
 
 
             </div>
@@ -126,17 +138,14 @@
                     <p style="color: red"> ${Password_not_match} </p>
                 </div>
                 <div class="form-group">
-                    <label>Gender:</label>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="gender" id="male" value="1" ${gender == '1' ? 'checked' : ''}>
-                        <label class="form-check-label" for="male">Male</label>
+                    <label for="confirmPassword">Address</label>
+                    <div class="password-container">
+                        <input type="text" class="form-control" id="Address" name="Address" value="${param.Address}" required>
+
                     </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="gender" id="female" value="0" ${gender == '0' ? 'checked' : ''}>
-                        <label class="form-check-label" for="female">Female</label>
-                    </div>
-                    <p style="color: red"> ${gender_null} </p>
+                    <p style="color: red"> ${Password_not_match} </p>
                 </div>
+
 
             </div>
         </div>
