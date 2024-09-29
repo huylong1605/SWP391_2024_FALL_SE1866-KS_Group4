@@ -37,7 +37,7 @@ public class UpdateUserProfileController extends HttpServlet {
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND, "User not found");
             }
         } else {
-            resp.sendRedirect("Login.jsp");
+            resp.sendRedirect("/Login.jsp");
         }
     }
 
@@ -72,7 +72,7 @@ public class UpdateUserProfileController extends HttpServlet {
         if (updateSuccess) {
             resp.sendRedirect("viewprofile");
         } else {
-            req.setAttribute("errorMessage", "Cập nhật thông tin thất bại.");
+            req.setAttribute("errorMessage", "Update fail.");
             req.getRequestDispatcher("updateProfile.jsp").forward(req, resp);
         }
     }
