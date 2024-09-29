@@ -21,7 +21,7 @@
 <body class="g-sidenav-show  bg-gray-200">
 <%@include file="../common/header.jsp"%>
 <div class="wrapper">
-  <aside id="sidebar">
+  <aside id="sidebar" class="expand">
     <div class="d-flex">
       <button class="toggle-btn" type="button">
         <i class="lni lni-grid-alt"></i>
@@ -32,13 +32,13 @@
     </div>
     <ul class="sidebar-nav">
       <li class="sidebar-item">
-        <a href="${pageContext.request.contextPath}/manageAccount.jsp" class="sidebar-link">
+        <a href="${pageContext.request.contextPath}/Views/Admin/accountManage" class="sidebar-link">
           <i class="lni lni-user"></i>
           <span>Manage Account</span>
         </a>
       </li>
       <li class="sidebar-item">
-        <a href="notifications" class="sidebar-link">
+        <a href="${pageContext.request.contextPath}/Views/Admin/notifications" class="sidebar-link">
           <i class="lni lni-agenda"></i>
           <span>Manage Notification</span>
         </a>

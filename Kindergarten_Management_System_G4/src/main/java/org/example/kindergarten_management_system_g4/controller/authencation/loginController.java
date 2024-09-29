@@ -68,7 +68,7 @@ public class loginController extends HttpServlet {
 
                         /*  resp.sendRedirect("index.jsp");*/
                     } else if (user.getRoleId() == 1) {
-                        req.getRequestDispatcher("/Views/Admin/Admin-Dashbosh.jsp").forward(req, resp);
+                        req.getRequestDispatcher("/Views/Admin/accountManage.jsp").forward(req, resp);
 
                     }
 

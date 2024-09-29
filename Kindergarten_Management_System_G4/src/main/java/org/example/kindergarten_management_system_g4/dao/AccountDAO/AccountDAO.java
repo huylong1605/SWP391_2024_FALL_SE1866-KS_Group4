@@ -16,7 +16,7 @@ public class AccountDAO {
     public List<User> getAllAccounts() throws SQLException {
         List<User> accounts = new ArrayList<>();
         Connection connection = DBConnection.getConnection();
-        String sql = "SELECT User_id, Role_id, Fullname, Email, Status from kindergartenmanagementsystem.user;";
+        String sql = "SELECT User_id, Role_id, Fullname, Email, Status, address from user;";
         PreparedStatement ps = connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
 
@@ -32,6 +32,17 @@ public class AccountDAO {
 
         return accounts;
     }
+
+    public void toggleAccountStatus(int userId) throws SQLException {
+        String sql = "UPDATE user SET Status = CASE WHEN Status = 1 THEN 0 ELSE 1 END WHERE User_id = ?;";
+
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, userId);
+            ps.executeUpdate();
+        }
+    }
+
 
 
     public static void main(String[] args) {
