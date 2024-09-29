@@ -38,7 +38,7 @@
         </a>
       </li>
       <li class="sidebar-item">
-        <a href="${pageContext.request.contextPath}/manageNotification.jsp" class="sidebar-link">
+        <a href="notifications" class="sidebar-link">
           <i class="lni lni-agenda"></i>
           <span>Manage Notification</span>
         </a>

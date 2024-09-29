@@ -1,9 +1,7 @@
-package org.example.kindergarten_management_system_g4.controller;
+package org.example.kindergarten_management_system_g4.controller.Notification;
 
-import org.example.kindergarten_management_system_g4.dao.NotificationDAO;
-import org.example.kindergarten_management_system_g4.dao.StudentDAO;
+import org.example.kindergarten_management_system_g4.dao.NotificationDAO.NotificationDAO;
 import org.example.kindergarten_management_system_g4.model.Notification;
-import org.example.kindergarten_management_system_g4.model.Student;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

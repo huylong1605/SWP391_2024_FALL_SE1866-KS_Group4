@@ -1,6 +1,5 @@
-package org.example.kindergarten_management_system_g4.dao;
+package org.example.kindergarten_management_system_g4.dao.NotificationDAO;
 
-import org.example.kindergarten_management_system_g4.connection.DBConnection;
 import org.example.kindergarten_management_system_g4.model.Notification;
 
 import java.sql.*;
