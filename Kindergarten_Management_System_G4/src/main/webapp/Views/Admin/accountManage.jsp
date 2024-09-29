@@ -106,8 +106,8 @@
                                     <table class="table align-items-center mb-0">
                                         <thead>
                                         <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User Id</th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Role</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">User Id</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Role</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Full Name</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Email</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
@@ -117,8 +117,25 @@
                                         <tbody>
                                         <c:forEach var="user" items="${accounts}">
                                             <tr>
-                                                <td>${user.userID}</td>
-                                                <td>${user.roleId}</td>
+                                                <td class="text-center">${user.userID}</td>
+                                                <c:choose>
+                                                    <c:when test="${user.roleId == 1}">
+                                                        <td class="text-center">Admin</td>
+                                                    </c:when>
+                                                    <c:when test="${user.roleId == 2}">
+                                                        <td class="text-center">Teacher</td>
+                                                    </c:when>
+                                                    <c:when test="${user.roleId == 3}">
+                                                        <td class="text-center">Principal</td>
+                                                    </c:when>
+                                                    <c:when test="${user.roleId == 4}">
+                                                        <td class="text-center">Parent</td>
+                                                    </c:when>
+                                                    <c:when test="${user.roleId == 5}">
+                                                        <td class="text-center">Enrollment</td>
+                                                    </c:when>
+                                                </c:choose>
+
                                                 <td class="text-center">${user.fullname}</td>
                                                 <td class="text-center">${user.email}</td>
                                                 <c:choose>
@@ -134,7 +151,6 @@
 
                                                 </c:otherwise>
                                                 </c:choose>
-
                                                 <td class="align-middle">
                                                     <a href="javascript:void(0);"
                                                        onclick="toggleStatus(${user.userID}, this)"
@@ -143,7 +159,7 @@
                                                        data-original-title="Toggle status">
                                                         <i class="fa-solid fa-toggle-on" style="color: ${user.status == 1 ? '#029f02' : 'red'}; font-size: 30px; margin: 5px"></i>
                                                     </a>
-                                                    <a href="${pageContext.request.contextPath}/Views/Admin/accountDetail.jsp" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                                    <a href="${pageContext.request.contextPath}/Views/Admin/accountManage/Detail?userId=${user.userID}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                                                         <i class="fa-solid fa-circle-info" style="color: blue; font-size: 30px; margin: 5px"></i>
                                                     </a>
                                                 </td>

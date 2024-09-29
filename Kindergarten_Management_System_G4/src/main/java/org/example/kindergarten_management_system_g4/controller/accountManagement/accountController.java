@@ -22,13 +22,11 @@ public class accountController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
-            List<User> accounts = accountDAO.getAllAccounts();
-            req.setAttribute("accounts", accounts);
-            req.getRequestDispatcher("/Views/Admin/accountManage.jsp").forward(req, resp);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Cant not take list");
+        String path = req.getServletPath();
+        if (path.equals("/Views/Admin/accountManage/Detail")) {
+            showAccountDetails(req, resp);
+        } else {
+            listAccounts(req, resp);
         }
     }
 
@@ -47,6 +45,29 @@ public class accountController extends HttpServlet {
             }
         } else {
             super.doPost(req, resp);
+        }
+    }
+
+    private void listAccounts(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            List<User> accounts = accountDAO.getAllAccounts(); // Gọi phương thức từ AccountDAO
+            req.setAttribute("accounts", accounts);
+            req.getRequestDispatcher("/Views/Admin/accountManage.jsp").forward(req, resp);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Cannot take list");
+        }
+    }
+
+    private void showAccountDetails(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int userId = Integer.parseInt(req.getParameter("userId"));
+        try {
+            User account = accountDAO.getAccountById(userId);
+            req.setAttribute("account", account);
+            req.getRequestDispatcher("/Views/Admin/accountDetail.jsp").forward(req, resp);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to fetch account details");
         }
     }
 }

@@ -81,25 +81,38 @@
                 </div>
             </nav>
             <!-- End Navbar -->
-            <div class="container-fluid px-2 px-md-4">
+            <div class="container-fluid px-2 px-md-4" style="width: 1260px;">
                 <div class="page-header min-height-300 border-radius-xl mt-4" style="background-image: url('https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');">
-                    <span class="mask  bg-gradient-primary  opacity-6"></span>
+                    <span class="mask  bg-gradient-primary  opacity-2"></span>
                 </div>
                 <div class="card card-body mx-3 mx-md-4 mt-n6" style="z-index: 1">
                     <div class="row gx-4 mb-2">
                         <div class="col-auto">
                             <div class="avatar avatar-xl position-relative">
-                                <img src="../assets/img/bruce-mars.jpg" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+                                <img src="${pageContext.request.contextPath}/img/team-5.jpg" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
                             </div>
                         </div>
                         <div class="col-auto my-auto">
                             <div class="h-100">
-                                <h5 class="mb-1">
-                                    Richard Davis
-                                </h5>
-                                <p class="mb-0 font-weight-normal text-sm">
-                                    CEO / Co-Founder
-                                </p>
+                                <h5 class="mb-1">${account.fullname}</h5>
+                                <c:choose>
+                                    <c:when test="${account.roleId == 1}">
+                                        <td class="mb-0 font-weight-normal text-sm">Admin</td>
+                                    </c:when>
+                                    <c:when test="${account.roleId == 2}">
+                                        <td class="mb-0 font-weight-normal text-sm">Teacher</td>
+                                    </c:when>
+                                    <c:when test="${account.roleId == 3}">
+                                        <td class="mb-0 font-weight-normal text-sm">Principal</td>
+                                    </c:when>
+                                    <c:when test="${account.roleId == 4}">
+                                        <td class="mb-0 font-weight-normal text-sm">Parent</td>
+                                    </c:when>
+                                    <c:when test="${account.roleId == 5}">
+                                        <td class="mb-0 font-weight-normal text-sm">Enrollment</td>
+                                    </c:when>
+                                </c:choose>
+<%--                                <p class="mb-0 font-weight-normal text-sm">Role ID: ${account.roleId}</p>--%>
                             </div>
                         </div>
 
@@ -109,20 +122,46 @@
                             <div class="col-12 col-xl-6">
                                 <div class="card card-plain h-100">
                                     <div class="card-header pb-0 p-3">
-                                        <h6 class="mb-0">Platform Settings</h6>
+                                        <h6 class="mb-0">Information</h6>
                                     </div>
                                     <div class="card-body p-3">
-                                        <h6 class="text-uppercase text-body text-xs font-weight-bolder">Account</h6>
                                         <ul class="list-group">
-                                            <li class="list-group-item border-0 px-0">
-
-                                            </li>
-                                        </ul>
-                                        <h6 class="text-uppercase text-body text-xs font-weight-bolder mt-4">Application</h6>
-                                        <ul class="list-group">
-                                            <li class="list-group-item border-0 px-0">
-
-                                            </li>
+                                        <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; ${account.fullname}</li>
+                                            <c:choose>
+                                                <c:when test="${account.roleId == 1}">
+                                                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Role:</strong> &nbsp; Admin</li>
+                                                </c:when>
+                                                <c:when test="${account.roleId == 2}">
+                                                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Role:</strong> &nbsp; Teacher</li>
+                                                </c:when>
+                                                <c:when test="${account.roleId == 3}">
+                                                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Role:</strong> &nbsp; Principal</li>
+                                                </c:when>
+                                                <c:when test="${account.roleId == 4}">
+                                                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Role:</strong> &nbsp; Parent</li>
+                                                </c:when>
+                                                <c:when test="${account.roleId == 5}">
+                                                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Role:</strong> &nbsp; Enrollment</li>
+                                                </c:when>
+                                            </c:choose>
+<%--                                        <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Role:</strong> &nbsp; ${account.roleId}</li>--%>
+                                            <c:choose>
+                                                <c:when test="${account.gender == 1}">
+                                                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Gender:</strong> &nbsp; Male</li>
+                                                </c:when>
+                                                <c:when test="${account.gender == 0}">
+                                                    <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Gender:</strong> &nbsp; Female</li>
+                                                </c:when>
+                                            </c:choose>
+                                        <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Date Of Birth:</strong> &nbsp; ${account.dateOfBirth}</li>
+                                            <c:choose>
+                                                <c:when test="${account.status == 1}">
+                                                    <li class="list-group-item border-0 ps-0 text-sm" style="color: lawngreen"><strong class="text-dark">Status:</strong> &nbsp; Active</li>
+                                                </c:when>
+                                                <c:when test="${account.status == 0}">
+                                                    <li class="list-group-item border-0 ps-0 text-sm" style="color: red"><strong class="text-dark">Status:</strong> &nbsp; Deactive</li>
+                                                </c:when>
+                                            </c:choose>
                                         </ul>
                                     </div>
                                 </div>
@@ -130,27 +169,19 @@
                             <div class="col-12 col-xl-6">
                                 <div class="card card-plain h-100">
                                     <div class="card-header pb-0 p-3">
-                                        <div class="row">
-                                            <div class="col-md-8 d-flex align-items-center">
-                                                <h6 class="mb-0">Profile Information</h6>
-                                            </div>
-                                        </div>
+                                        <h6 class="mb-0">Contact</h6>
                                     </div>
                                     <div class="card-body p-3">
-                                        <p class="text-sm">
-                                            Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality).
-                                        </p>
-                                        <hr class="horizontal gray-light my-4">
                                         <ul class="list-group">
-                                            <li class="list-group-item border-0 ps-0 pt-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; Alec M. Thompson</li>
-                                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; (44) 123 1234 123</li>
-                                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; alecthompson@mail.com</li>
-                                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Location:</strong> &nbsp; USA</li>
+                                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Mobile:</strong> &nbsp; ${account.phoneNumber}</li>
+                                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Email:</strong> &nbsp; ${account.email}</li>
+                                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Address:</strong> &nbsp; ${account.address}</li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>

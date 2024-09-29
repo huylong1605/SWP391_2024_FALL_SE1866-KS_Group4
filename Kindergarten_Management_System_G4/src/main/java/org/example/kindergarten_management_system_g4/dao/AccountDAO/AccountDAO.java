@@ -43,31 +43,70 @@ public class AccountDAO {
         }
     }
 
+    public User getAccountById(int userId) throws SQLException {
+        User account = null;
+        Connection connection = DBConnection.getConnection();
+        String sql = "SELECT * FROM user WHERE User_id = ?;";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setInt(1, userId);
+        ResultSet rs = ps.executeQuery();
 
+        if (rs.next()) {
+            account = new User();
+            account.setUserID(rs.getInt("User_id"));
+            account.setRoleId(rs.getInt("Role_id"));
+            account.setFullname(rs.getString("Fullname"));
+            account.setEmail(rs.getString("Email"));
+            account.setStatus(rs.getInt("Status"));
+            account.setAddress(rs.getString("Address")); // Giả sử bạn có trường địa chỉ
+            account.setPhoneNumber(rs.getString("PhoneNumber"));
+            account.setDateOfBirth(rs.getString("date_Of_birth"));
+            account.setPassword(rs.getString("Password"));
+            account.setImage(rs.getString("Image"));
+            account.setGender(rs.getInt("Gender"));
+        }
+
+        return account;
+    }
 
     public static void main(String[] args) {
         AccountDAO accountDAO = new AccountDAO();
-        try {
-            List<User> accounts = accountDAO.getAllAccounts();
-            // Kiểm tra nếu danh sách rỗng
-            if (accounts.isEmpty()) {
-                System.out.println("Danh sách tài khoản trống.");
-            } else {
-                System.out.println("Có " + accounts.size() + " tài khoản trong danh sách.");
 
-                // Lặp và in ra từng tài khoản
-                for (User account : accounts) {
-                    System.out.println("User ID: " + account.getUserID());
-                    System.out.println("Role ID: " + account.getRoleId());
-                    System.out.println("Full Name: " + account.getFullname());
-                    System.out.println("Email: " + account.getEmail());
-                    System.out.println("Status: " + account.getStatus());
-                    System.out.println("----------------------------");
-                }
+        // Kiểm tra với một userId bất kỳ
+        int userId = 3; // Bạn có thể thay đổi giá trị này để kiểm tra với các userId khác
+
+        try {
+            // Kiểm tra phương thức getAccountById()
+            User user = accountDAO.getAccountById(userId);
+            if (user != null) {
+                System.out.println("Người dùng tồn tại với ID: " + userId);
+                System.out.println("Thông tin người dùng:");
+                System.out.println("Fullname: " + user.getFullname());
+                System.out.println("Email: " + user.getEmail());
+                System.out.println("Status: " + user.getStatus());
+                System.out.println("Fullname: " + user.getPhoneNumber());
+                System.out.println("Email: " + user.getDateOfBirth());
+                System.out.println("Status: " + user.getRoleId());
+            } else {
+                System.out.println("Không tìm thấy người dùng với ID: " + userId);
             }
+
+            // Kiểm tra phương thức isUserExists()
+            boolean exists = accountDAO.isUserExists(userId);
+            if (exists) {
+                System.out.println("Người dùng với ID " + userId + " tồn tại.");
+            } else {
+                System.out.println("Người dùng với ID " + userId + " không tồn tại.");
+            }
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Lỗi SQL: " + e.getMessage());
         }
+    }
+
+    public boolean isUserExists(int userId) throws SQLException {
+        User account = getAccountById(userId);
+        return account != null;
     }
 
 }
