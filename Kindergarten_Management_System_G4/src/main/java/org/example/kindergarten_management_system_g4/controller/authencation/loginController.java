@@ -68,12 +68,12 @@ public class loginController extends HttpServlet {
 
                         /*  resp.sendRedirect("index.jsp");*/
                     } else if (user.getRoleId() == 1) {
-                        resp.sendRedirect("Views/Admin/Admin-Dashbosh.jsp");
+                        req.getRequestDispatcher("/Views/Admin/accountManage.jsp").forward(req, resp);
 
                     }
 
                 }
-               /* emailService.send(email, "hello " + user.getFullname(), "You have logged in to the Kindergarten Management System ");*/
+                emailService.send(email, "hello " + user.getFullname(), "You have logged in to the Kindergarten Management System ");
                 }else {
                 req.setAttribute("Email", email);
                 req.setAttribute("password", password);
