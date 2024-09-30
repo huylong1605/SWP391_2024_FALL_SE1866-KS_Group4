@@ -12,7 +12,7 @@ import javax.servlet.http.*;
 import java.io.IOException;
 
 @WebServlet(name = "login", value = "/login")
-public class loginController extends HttpServlet {
+public class LoginController extends HttpServlet {
     private LoginDAO loginDAO;
 
     @Override

@@ -5,7 +5,6 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import org.example.kindergarten_management_system_g4.dao.AuthenDAO.RegisterDAO;
-import org.example.kindergarten_management_system_g4.model.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,7 +17,7 @@ import java.security.GeneralSecurityException;
 import java.util.Collections;
 
 @WebServlet(name = "login_Gg", value = "/login_Gg")
-public class Login_Gg extends HttpServlet {
+public class LoginwithGoogle extends HttpServlet {
 
     private RegisterDAO registerDao;
 
@@ -29,7 +28,7 @@ public class Login_Gg extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String code = req.getParameter("code");
-        LoginGgToken loginGoogle = new LoginGgToken();
+        GoogleToken loginGoogle = new GoogleToken();
         String accessToken = loginGoogle.getToken(code);
         GoogleIdToken.Payload payload = null;
         try {

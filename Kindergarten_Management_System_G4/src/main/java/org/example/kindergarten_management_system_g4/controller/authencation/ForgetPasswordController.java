@@ -1,7 +1,6 @@
 package org.example.kindergarten_management_system_g4.controller.authencation;
 
 import org.example.kindergarten_management_system_g4.dao.AuthenDAO.ForgetPasswordDAO;
-import org.example.kindergarten_management_system_g4.dao.AuthenDAO.LoginDAO;
 import org.example.kindergarten_management_system_g4.javaMail.EmailService;
 
 import javax.servlet.ServletException;
@@ -14,7 +13,7 @@ import java.util.Random;
 
 
 @WebServlet(name = "forgetPassword", value = "/forgetPassword")
-public class ForgetPassword extends HttpServlet {
+public class ForgetPasswordController extends HttpServlet {
 
     private ForgetPasswordDAO forgetPasswordDAO;
 

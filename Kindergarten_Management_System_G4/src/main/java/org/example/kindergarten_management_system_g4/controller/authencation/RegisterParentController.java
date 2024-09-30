@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 
 
 @WebServlet(name = "Register", value = "/register")
-public class RegisterController extends HttpServlet {
+public class RegisterParentController extends HttpServlet {
 
     private static final String PHONE_NUMBER_PATTERN = "^0[35789]\\d{8}$";
     private static final Pattern pattern = Pattern.compile(PHONE_NUMBER_PATTERN);

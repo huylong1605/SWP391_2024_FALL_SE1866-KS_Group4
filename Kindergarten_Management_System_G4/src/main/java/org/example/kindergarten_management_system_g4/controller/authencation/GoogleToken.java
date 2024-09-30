@@ -9,7 +9,7 @@ import org.example.kindergarten_management_system_g4.constant.Iconstant;
 
 import java.io.IOException;
 
-public class LoginGgToken {
+public class GoogleToken {
     public static String getToken(final String code) throws ClientProtocolException, IOException {
         String response = Request.Post(Iconstant.GOOGLE_LINK_GET_TOKEN)
                 .bodyForm(Form.form().add("client_id", Iconstant.GOOGLE_CLIENT_ID)
