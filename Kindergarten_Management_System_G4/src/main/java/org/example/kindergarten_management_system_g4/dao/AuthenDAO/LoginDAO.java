@@ -16,16 +16,17 @@ public class LoginDAO {
 
 
     public User getUser(String Email) throws ClassNotFoundException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
-        try (Connection connection = DBConnection.getConnection();
-
-             PreparedStatement preparedStatement = connection.prepareStatement(CHECK_LOGIN)) {
-
+        try {
+            connection = DBConnection.getConnection();
+            preparedStatement = connection.prepareStatement(CHECK_LOGIN);
             preparedStatement.setString(1, Email);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-
                 User user = new User();
                 user.setUserID(resultSet.getInt("User_id"));
                 user.setFullname(resultSet.getString("Fullname"));
@@ -37,31 +38,88 @@ public class LoginDAO {
             System.out.println("Executing query: " + preparedStatement);
         } catch (SQLException e) {
             printSQLException(e);
+        } finally {
+            // Đóng ResultSet
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                printSQLException(e);
+            }
+
+            // Đóng PreparedStatement
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                printSQLException(e);
+            }
+
+            // Đóng Connection
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                printSQLException(e);
+            }
         }
+
         return null;
     }
 
+
     public String getPassword(String email) throws ClassNotFoundException {
-
         String password = "";
-        try (Connection connection = DBConnection.getConnection();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_PASSWORD)) {
-
-
+        try {
+            connection = DBConnection.getConnection();
+            preparedStatement = connection.prepareStatement(GET_PASSWORD);
             preparedStatement.setString(1, email);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
                 password = resultSet.getString(1);  // Corrected column index
             }
 
-
         } catch (SQLException e) {
             printSQLException(e);
+        } finally {
+            // Đóng ResultSet
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+            } catch (SQLException e) {
+                printSQLException(e);
+            }
+
+            // Đóng PreparedStatement
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                printSQLException(e);
+            }
+
+            // Đóng Connection
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                printSQLException(e);
+            }
         }
         return password;
     }
+
 
 
     private void printSQLException(SQLException ex) {

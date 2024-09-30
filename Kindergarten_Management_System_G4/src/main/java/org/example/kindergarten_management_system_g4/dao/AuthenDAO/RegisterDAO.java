@@ -16,43 +16,109 @@ public class RegisterDAO {
 
 
     public boolean checkPhone(String phone) throws ClassNotFoundException {
+        boolean exists = false;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
 
-        try (Connection connection = DBConnection.getConnection();
-
-             PreparedStatement preparedStatement = connection.prepareStatement(CHECK_PHONE)) {
-
+        try {
+            connection = DBConnection.getConnection();
+            preparedStatement = connection.prepareStatement(CHECK_PHONE);
             preparedStatement.setString(1, phone);
+            rs = preparedStatement.executeQuery();
 
-            ResultSet rs = preparedStatement.executeQuery();
-            return rs.next();
+            exists = rs.next(); // Kiểm tra xem có bản ghi nào không
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+        } finally {
+            // Đóng ResultSet
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            // Đóng PreparedStatement
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            // Đóng Connection
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
+        return exists; // Trả về kết quả kiểm tra
     }
+
 
     public boolean checkEmail(String email) throws ClassNotFoundException {
+        boolean exists = false;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
 
-        try (Connection connection = DBConnection.getConnection();
-
-             PreparedStatement preparedStatement = connection.prepareStatement(CHECK_EMAIL)) {
-
+        try {
+            connection = DBConnection.getConnection();
+            preparedStatement = connection.prepareStatement(CHECK_EMAIL);
             preparedStatement.setString(1, email);
+            rs = preparedStatement.executeQuery();
 
-            ResultSet rs = preparedStatement.executeQuery();
-            return rs.next();
+            exists = rs.next(); // Kiểm tra xem có bản ghi nào không
         } catch (SQLException e) {
             printSQLException(e);
-            return false;
+        } finally {
+            // Đóng ResultSet
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            // Đóng PreparedStatement
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            // Đóng Connection
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
+        return exists; // Trả về kết quả kiểm tra
     }
+
 
     public boolean insertUser(User u) throws ClassNotFoundException {
         boolean isInserted = false; // Khởi tạo mặc định là false
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER)) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = DBConnection.getConnection();
+            preparedStatement = connection.prepareStatement(INSERT_USER);
 
             preparedStatement.setString(1, u.getFullname());
             preparedStatement.setString(2, u.getEmail());
@@ -71,18 +137,41 @@ public class RegisterDAO {
             }
         } catch (SQLException e) {
             printSQLException(e);
+        } finally {
+            // Đóng PreparedStatement
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            // Đóng Connection
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+
         return isInserted; // Trả về kết quả kiểm tra
     }
 
+
     public boolean insertUserLoginGG(String mail, String name) throws ClassNotFoundException {
         boolean isInserted = false; // Khởi tạo mặc định là false
-        try (Connection connection = DBConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER_LOGIN_GG)) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = DBConnection.getConnection();
+            preparedStatement = connection.prepareStatement(INSERT_USER_LOGIN_GG);
 
             preparedStatement.setString(1, name);
-            preparedStatement.setString(2, name);
-
+            preparedStatement.setString(2, mail); // Sửa lỗi từ name thành mail
 
             System.out.println(preparedStatement);
 
@@ -94,9 +183,29 @@ public class RegisterDAO {
             }
         } catch (SQLException e) {
             printSQLException(e);
+        } finally {
+            // Đóng PreparedStatement
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            // Đóng Connection
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+
         return isInserted; // Trả về kết quả kiểm tra
     }
+
 
   /*  public User getUserByMail(String email) throws ClassNotFoundException {
 

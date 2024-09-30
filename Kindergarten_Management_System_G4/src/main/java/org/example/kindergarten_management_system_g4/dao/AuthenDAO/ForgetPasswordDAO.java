@@ -38,54 +38,97 @@ public class ForgetPasswordDAO {
 
     public int insertCode(String code, String email) throws ClassNotFoundException {
         int result = 0;
-        String Mail = "";
-        try (Connection connection = DBConnection.getConnection();
+        Connection connection = null; // Khai báo biến cục bộ cho Connection
+        PreparedStatement preparedStatement = null; // Khai báo biến cục bộ cho PreparedStatement
 
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_CODE)) {
+        try {
+            connection = DBConnection.getConnection(); // Mở kết nối
+            preparedStatement = connection.prepareStatement(INSERT_CODE); // Tạo PreparedStatement
 
-
+            // Thiết lập các giá trị cho câu lệnh SQL
             preparedStatement.setString(1, code);
             preparedStatement.setString(2, email);
 
-            System.out.println(preparedStatement);
-            result = preparedStatement.executeUpdate();
-
+            System.out.println(preparedStatement); // Debug câu lệnh SQL
+            result = preparedStatement.executeUpdate(); // Thực hiện lệnh INSERT
 
         } catch (SQLException e) {
-            printSQLException(e);
+            printSQLException(e); // Xử lý ngoại lệ liên quan đến SQL
+        } finally {
+            // Đóng tài nguyên trong khối finally
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close(); // Đóng PreparedStatement
+                }
+                if (connection != null) {
+                    connection.close(); // Đóng Connection
+                }
+            } catch (SQLException ex) {
+                printSQLException(ex); // Xử lý ngoại lệ khi đóng tài nguyên
+            }
         }
-        return result;
+
+        return result; // Trả về số bản ghi được cập nhật
     }
 
+
     public String findCode(String email) throws ClassNotFoundException {
-
         String code = "";
-        try (Connection connection = DBConnection.getConnection();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
-             PreparedStatement preparedStatement = connection.prepareStatement(GET_CODE)) {
-
+        try {
+            connection = DBConnection.getConnection();
+            preparedStatement = connection.prepareStatement(GET_CODE);
 
             preparedStatement.setString(1, email);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
                 code = resultSet.getString(1);  // Corrected column index
             }
 
-
         } catch (SQLException e) {
             printSQLException(e);
+        } finally {
+            // Đóng ResultSet
+            if (resultSet != null) {
+                try {
+                    resultSet.close();
+                } catch (SQLException e) {
+                    printSQLException(e);
+                }
+            }
+            // Đóng PreparedStatement
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    printSQLException(e);
+                }
+            }
+            // Đóng Connection
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    printSQLException(e);
+                }
+            }
         }
         return code;
     }
 
+
     public int newPass(String email, String newPass) throws ClassNotFoundException {
-
         int result = 0;
-        try (Connection connection = DBConnection.getConnection();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
 
-             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PASS_USER)) {
-
+        try {
+            connection = DBConnection.getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_PASS_USER);
 
             preparedStatement.setString(1, newPass);
             preparedStatement.setString(2, email);
@@ -95,9 +138,27 @@ public class ForgetPasswordDAO {
 
         } catch (SQLException e) {
             printSQLException(e);
+        } finally {
+            // Đóng PreparedStatement
+            if (preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    printSQLException(e);
+                }
+            }
+            // Đóng Connection
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    printSQLException(e);
+                }
+            }
         }
         return result;
     }
+
 
     private void printSQLException(SQLException ex) {
         for (Throwable e : ex) {
