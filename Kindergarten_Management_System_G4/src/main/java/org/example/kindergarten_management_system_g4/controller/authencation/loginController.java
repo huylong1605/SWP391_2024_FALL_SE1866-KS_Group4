@@ -35,7 +35,7 @@ public class loginController extends HttpServlet {
                 if (user != null) {
                     HttpSession session = req.getSession();
                     session.setAttribute("user", user); // Lưu user vào session
-                    //session.setMaxInactiveInterval(100);
+                    //session.setMaxInactiveInterval(3600);
 
                     Cookie cookieEmail;
                     Cookie cookiePass;

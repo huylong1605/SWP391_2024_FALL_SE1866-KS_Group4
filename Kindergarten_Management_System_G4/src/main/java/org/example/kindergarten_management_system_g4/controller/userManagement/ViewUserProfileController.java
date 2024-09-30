@@ -39,7 +39,7 @@ public class ViewUserProfileController extends HttpServlet {
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND, "User not found");
             }
         } else {
-            resp.sendRedirect("login");
+            resp.sendRedirect("/Login.jsp");
         }
     }
 }

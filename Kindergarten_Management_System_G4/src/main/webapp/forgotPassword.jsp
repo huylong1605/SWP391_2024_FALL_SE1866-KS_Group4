@@ -93,7 +93,7 @@
 
         <div class="form-group">
             <label for="Email">Email:</label>
-            <input type="text" class="form-control" id="Email" name="Email" value="${Email}" required>
+            <input type="Email" class="form-control" id="Email" name="Email" value="${Email}" required>
         </div>
         <p style="color: red;">${emailNull}</p>
 
