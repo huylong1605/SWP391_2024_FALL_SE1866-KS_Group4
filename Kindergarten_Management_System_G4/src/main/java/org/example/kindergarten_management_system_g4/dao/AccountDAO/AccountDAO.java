@@ -3,6 +3,8 @@ package org.example.kindergarten_management_system_g4.dao.AccountDAO;
 
 import org.example.kindergarten_management_system_g4.connection.DBConnection;
 import org.example.kindergarten_management_system_g4.model.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -81,23 +83,24 @@ public class AccountDAO {
         return account != null;
     }
 
-    public boolean createAccount(String fullname, String email, int roleId) throws SQLException {
+    public void createAccount(String fullname, String email, int roleId) throws SQLException {
         String password = generateRandomPassword();
-
-
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(password);
+        // Lưu tài khoản vào cơ sở dữ liệu
         String sql = "INSERT INTO user (Fullname, Email, Password, Role_id, Status) VALUES (?, ?, ?, ?, ?)";
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, fullname);
             ps.setString(2, email);
-            ps.setString(3, password);
+            ps.setString(3, hashedPassword);
             ps.setInt(4, roleId);
-            ps.setInt(5, 1);
+            ps.setInt(5, 1); // Trạng thái mặc định là "Active"
             ps.executeUpdate();
         }
 
-
-        return sendEmail(email, password);
+        // Gửi email
+        sendEmail(email, password);
     }
 
     private String generateRandomPassword() {
@@ -112,7 +115,7 @@ public class AccountDAO {
         return password.toString();
     }
 
-    private boolean sendEmail(String recipient, String password) {
+    private void sendEmail(String recipient, String password) {
         String host = "smtp.gmail.com"; // Địa chỉ máy chủ SMTP
         final String username = "tcnatsu150977@gmail.com"; // Địa chỉ email gửi
         final String passwordSender = "yqxf ijdq ypze lhed"; // Mật khẩu email
@@ -137,18 +140,15 @@ public class AccountDAO {
             message.setSubject("Kindergatent-sofware");
             String emailBody = "Your password is: " + password + "\n" +
                     "Welcome! You have become a member of Kindergarten. " +
-                    "Click this link to login: http://localhost:8080/Kindergarten/Login.jsp";
+                    "Click this link to login: http://localhost:8080/Kindergarten_Management_System/Login.jsp";
 
             message.setText(emailBody);
 
             Transport.send(message);
-            System.out.println("Email đã được gửi thành công đến " + recipient);
-            return true;
-            // Thông báo khi gửi thành công
+            System.out.println("Email đã được gửi thành công đến " + recipient); // Thông báo khi gửi thành công
         } catch (MessagingException e) {
             e.printStackTrace();
             System.out.println("Lỗi khi gửi email: " + e.getMessage()); // Thông báo lỗi nếu có
-            return false;
         }
 
     }
