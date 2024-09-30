@@ -84,11 +84,7 @@ public class accountController extends HttpServlet {
             }
 
             try {
-                if (accountDAO.createAccount(fullname, email, roleId)) {
-                    req.setAttribute("successMessage", "Send email successfully!");
-                } else {
-                    req.setAttribute("errorMessage", "Send failed.");
-                }
+               accountDAO.createAccount(fullname, email, roleId);
                 resp.sendRedirect(req.getContextPath() + "/Views/Admin/accountManage");
                 return;
             } catch (SQLException e) {
