@@ -84,7 +84,11 @@ public class accountController extends HttpServlet {
             }
 
             try {
-                accountDAO.createAccount(fullname, email, roleId);
+                if (accountDAO.createAccount(fullname, email, roleId)) {
+                    req.setAttribute("successMessage", "Send email successfully!");
+                } else {
+                    req.setAttribute("errorMessage", "Send failed.");
+                }
                 resp.sendRedirect(req.getContextPath() + "/Views/Admin/accountManage");
                 return;
             } catch (SQLException e) {
@@ -92,6 +96,7 @@ public class accountController extends HttpServlet {
                 resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to create account");
                 return;
             }
+
         }
 
         if ("search".equals(action)) {

@@ -81,10 +81,10 @@ public class AccountDAO {
         return account != null;
     }
 
-    public void createAccount(String fullname, String email, int roleId) throws SQLException {
+    public boolean createAccount(String fullname, String email, int roleId) throws SQLException {
         String password = generateRandomPassword();
 
-        // Lưu tài khoản vào cơ sở dữ liệu
+
         String sql = "INSERT INTO user (Fullname, Email, Password, Role_id, Status) VALUES (?, ?, ?, ?, ?)";
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -92,12 +92,12 @@ public class AccountDAO {
             ps.setString(2, email);
             ps.setString(3, password);
             ps.setInt(4, roleId);
-            ps.setInt(5, 1); // Trạng thái mặc định là "Active"
+            ps.setInt(5, 1);
             ps.executeUpdate();
         }
 
-        // Gửi email
-        sendEmail(email, password);
+
+        return sendEmail(email, password);
     }
 
     private String generateRandomPassword() {
@@ -112,7 +112,7 @@ public class AccountDAO {
         return password.toString();
     }
 
-    private void sendEmail(String recipient, String password) {
+    private boolean sendEmail(String recipient, String password) {
         String host = "smtp.gmail.com"; // Địa chỉ máy chủ SMTP
         final String username = "tcnatsu150977@gmail.com"; // Địa chỉ email gửi
         final String passwordSender = "yqxf ijdq ypze lhed"; // Mật khẩu email
@@ -142,10 +142,13 @@ public class AccountDAO {
             message.setText(emailBody);
 
             Transport.send(message);
-            System.out.println("Email đã được gửi thành công đến " + recipient); // Thông báo khi gửi thành công
+            System.out.println("Email đã được gửi thành công đến " + recipient);
+            return true;
+            // Thông báo khi gửi thành công
         } catch (MessagingException e) {
             e.printStackTrace();
             System.out.println("Lỗi khi gửi email: " + e.getMessage()); // Thông báo lỗi nếu có
+            return false;
         }
 
     }
