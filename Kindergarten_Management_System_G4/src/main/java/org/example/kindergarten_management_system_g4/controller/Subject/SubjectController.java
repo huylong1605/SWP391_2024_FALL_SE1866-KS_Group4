@@ -1,7 +1,5 @@
 package org.example.kindergarten_management_system_g4.controller.Subject;
 
-
-
 import org.example.kindergarten_management_system_g4.dao.SubjectDAO.SubjectDAO;
 import org.example.kindergarten_management_system_g4.model.Subject;
 
@@ -26,31 +24,40 @@ public class SubjectController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
-        // Perform filtering based on the provided parameters
-        List<Subject> filteredsubjectList = subjectDAO.getAllSubjects();
-
-        // Forward the filtered subject list and pagination parameters to the JSP
-        request.setAttribute("subjectList", filteredsubjectList);
-        request.getRequestDispatcher("subject-manage.jsp").forward(request, response);
+        String action = request.getParameter("action");
+        if (action != null) {
+            switch (action) {
+                case "delete":
+                    String id = request.getParameter("subjectId");
+                    subjectDAO.deleteSubject(Integer.parseInt(id));
+                    response.sendRedirect("subject?success");
+                    break;
+            }
+        } else {
+            List<Subject> filteredsubjectList = subjectDAO.getAllSubjects();
+            request.setAttribute("subjectList", filteredsubjectList);
+            request.getRequestDispatcher("subject-manage.jsp").forward(request, response);
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Determine action (add or update)
+        // (add or update)
         String action = request.getParameter("action");
+
+
         if (action != null) {
             switch (action) {
+                // them mon hoc
                 case "add":
                     addsubject(request, response);
-                    break;
+                    break;//   cap nhat
                 case "update":
                     updatesubject(request, response);
                     break;
             }
         } else {
-            // Handle missing action parameter
+            // tra loi 400 neu k co action
             response.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
@@ -60,15 +67,21 @@ public class SubjectController extends HttpServlet {
         String subjectCode = request.getParameter("subjectCode");
         String subjectName = request.getParameter("subjectName");
         String description = request.getParameter("description");
+        String userId = request.getParameter("userId");
 
         Subject newSubject = new Subject();
         newSubject.setSubjectCode(subjectCode);
         newSubject.setSubjectName(subjectName);
         newSubject.setDescription(description);
+        newSubject.setUserId(Integer.parseInt(userId));
 
-
-        boolean success = subjectDAO.createSubject(newSubject);
-
+        // check subject code existed
+        boolean success = false;
+        if(subjectDAO.getSubjectByIdCode(0, subjectCode) == null)  {
+            success = subjectDAO.createSubject(newSubject);
+        }
+         
+       
         if (success) {
             // Redirect to subject list page after successful addition
             response.sendRedirect("subject?success");
@@ -86,7 +99,12 @@ public class SubjectController extends HttpServlet {
         Subject subject = new Subject(subjectId, subjectCode, subjectName, description, userId);
 
         // Update the subject
-        boolean success = subjectDAO.updateSubject(subject);
+        boolean success = false;
+
+        // check subject by id
+        if(subjectDAO.getSubjectByIdCode(subjectId, subjectCode) == null)  {
+            success = subjectDAO.updateSubject(subject);
+        }
         if (success) {
             // Redirect to subject list page after successful update
             response.sendRedirect("subject?success");

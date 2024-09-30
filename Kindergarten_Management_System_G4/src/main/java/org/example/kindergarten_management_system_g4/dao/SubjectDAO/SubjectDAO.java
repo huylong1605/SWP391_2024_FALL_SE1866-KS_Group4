@@ -67,11 +67,32 @@ public class SubjectDAO {
         return false;
     }
 
-    // Retrieve a Subject by ID
     public Subject getSubjectById(int subjectId) {
         String sql = "SELECT * FROM Subject WHERE Subject_ID = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, subjectId);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return new Subject(
+                        resultSet.getInt("Subject_ID"),
+                        resultSet.getString("subject_Code"),
+                        resultSet.getString("subject_name"),
+                        resultSet.getString("Description"),
+                        resultSet.getInt("User_id")
+                );
+            }
+        }catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+    
+    public Subject getSubjectByIdCode(int subjectId, String code) {
+        String sql = "SELECT * FROM Subject WHERE Subject_ID != ? and subject_Code = ?";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, subjectId);
+            statement.setString(2, code);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
