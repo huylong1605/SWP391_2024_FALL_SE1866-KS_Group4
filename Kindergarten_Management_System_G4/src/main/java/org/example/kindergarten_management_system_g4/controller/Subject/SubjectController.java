@@ -69,20 +69,20 @@ public class SubjectController extends HttpServlet {
 
         String codePattern = "^[A-Za-z]{2}[A-Za-z0-9]{3,4}$";
         if (!subjectCode.matches(codePattern)) {
-            session.setAttribute("errorMessage", "Error: Subject code must start with at least 2 letters and max 5-6 characters long.");
+            session.setAttribute("errorMessage", "Alert: Subject code must start with at least 2 letters, max 6 characters and no space !");
             response.sendRedirect("subject");
             return;
         }
 
         String namePattern = "^[A-Za-z\\s]+$";
         if (!subjectName.matches(namePattern)) {
-            session.setAttribute("errorMessage", "Error: Subject name should not contain numbers.");
+            session.setAttribute("errorMessage", "Alert: Subject name should not contain numbers !");
             response.sendRedirect("subject");
             return;
         }
 
         if (Integer.parseInt(userId) <= 0) {
-            session.setAttribute("errorMessage", "Error: ID user must be a interger number.");
+            session.setAttribute("errorMessage", "Alert: ID user must be a integer number !");
             response.sendRedirect("subject");
             return;
         }
@@ -118,20 +118,20 @@ public class SubjectController extends HttpServlet {
         subject.setStatus(status);
         String codePattern = "^[A-Za-z]{2}[A-Za-z0-9]{3,4}$";
         if (!subjectCode.matches(codePattern)) {
-            session.setAttribute("errorMessage", "Error: Subject code must start with at least 2 letters and max 5-6 characters long !");
+            session.setAttribute("errorMessage", "Alert: Subject code must start with at least 2 letters, max 5-6 characters and no space !");
             response.sendRedirect("subject");
             return;
         }
 
         String namePattern = "^[A-Za-z\\s]+$";
         if (!subjectName.matches(namePattern)) {
-            session.setAttribute("errorMessage", "Subject name should not contain numbers.");
+            session.setAttribute("errorMessage", "Alert: Subject name should not contain numbers or space !");
             response.sendRedirect("subject");
             return;
         }
 
         if (userId  <= 0) {
-            session.setAttribute("errorMessage", "Error: ID user must be a interger number.");
+            session.setAttribute("errorMessage", "Alert: ID user must be a integer number !");
             response.sendRedirect("subject");
             return;
         }

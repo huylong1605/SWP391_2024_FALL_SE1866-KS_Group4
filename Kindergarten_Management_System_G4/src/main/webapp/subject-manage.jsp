@@ -17,7 +17,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 </head>
 
-
 <body>
 <!-- Sidebar -->
 <%@ include file="subject-manage-sidebar.jsp" %>
@@ -48,23 +47,6 @@
 
     <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addsubjectModal">Add subject</button>
 
-    <!--filter form-->
-    <form id="searchForm" action="subject" method="get" class="form-inline mb-3">
-        <div class="form-group mr-2">
-            <input type="text" class="form-control" name="search" placeholder="Search"value="${search}">
-        </div>
-        <div class="form-group mr-2">
-            <select class="form-control" name="status">
-                <option value="">Select Status</option>
-                <option value="true" ${status eq 'true' ? 'selected' : ''}>Inactive</option>
-                <option value="false" ${status eq 'false' ? 'selected' : ''}>Active</option>
-            </select>
-        </div>
-        <input type="hidden" name="page" id="pageInput" value="1">
-        <button type="submit" class="btn btn-success">Search</button>
-
-    </form>
-
     <table id="subjectTable" class="table table-striped">
         <thead>
         <tr>
@@ -84,12 +66,14 @@
                 <td>${subject.subjectName}</td>
                 <td>${subject.description}</td>
                 <td>
-                    <span class="btn btn-secondary">${subject.status}</span>
+                    <span class="btn btn-success">${subject.status}</span>
                 </td>
                 <td>
+                    <div style="display: flex; gap: 5px;">
                     <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#subjectInfoModal_${subject.subjectId}">Info</button>
-                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editsubjectModal_${subject.subjectId}">Edit</button>
-                    <a type="button" class="btn btn-danger btn-sm" href="subject?action=delete&subjectId=${subject.subjectId}" onclick="return confirm('Are you sure to delete?')">Delete</a>
+                    <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editsubjectModal_${subject.subjectId}">Edit</button>
+                    <a type="button" class="btn btn-danger btn-sm" href="subject?action=delete&subjectId=${subject.subjectId}" onclick="return confirm('Are you sure to delete this subject?')">Delete</a>
+                    </div>
                 </td>
             </tr>
         </c:forEach>
@@ -239,7 +223,8 @@
 <script>
     $(document).ready(function () {
         $('#subjectTable').DataTable({
-            "autoWidth": false
+            "autoWidth": false,
+            "searching": false
         });
     });
 </script>
