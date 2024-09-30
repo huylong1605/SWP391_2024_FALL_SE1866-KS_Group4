@@ -60,6 +60,12 @@
                         <span>Manage Notification</span>
                     </a>
                 </li>
+                <li class="sidebar-item">
+                    <a href="${pageContext.request.contextPath}/subject" class="sidebar-link">
+                        <i class="lni lni-graduation"></i>
+                        <span>Manage Subject</span>
+                    </a>
+                </li>
             </ul>
 
         </aside>

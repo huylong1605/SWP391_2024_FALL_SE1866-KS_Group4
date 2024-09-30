@@ -3,6 +3,8 @@ package org.example.kindergarten_management_system_g4.dao.AccountDAO;
 
 import org.example.kindergarten_management_system_g4.connection.DBConnection;
 import org.example.kindergarten_management_system_g4.model.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -83,14 +85,15 @@ public class AccountDAO {
 
     public void createAccount(String fullname, String email, int roleId) throws SQLException {
         String password = generateRandomPassword();
-
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(password);
         // Lưu tài khoản vào cơ sở dữ liệu
         String sql = "INSERT INTO user (Fullname, Email, Password, Role_id, Status) VALUES (?, ?, ?, ?, ?)";
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, fullname);
             ps.setString(2, email);
-            ps.setString(3, password);
+            ps.setString(3, hashedPassword);
             ps.setInt(4, roleId);
             ps.setInt(5, 1); // Trạng thái mặc định là "Active"
             ps.executeUpdate();
@@ -137,7 +140,7 @@ public class AccountDAO {
             message.setSubject("Kindergatent-sofware");
             String emailBody = "Your password is: " + password + "\n" +
                     "Welcome! You have become a member of Kindergarten. " +
-                    "Click this link to login: http://localhost:8080/Kindergarten/Login.jsp";
+                    "Click this link to login: http://localhost:8080/Kindergarten_Management_System/Login.jsp";
 
             message.setText(emailBody);
 
