@@ -11,15 +11,15 @@ import java.sql.SQLException;
 public class LoginDAO {
 
 
-    private static final String Check_Login = "SELECT * FROM user WHERE Email=?";
-    private static final String PASS = "SELECT password FROM user WHERE Email = ?";
+    private static final String CHECK_LOGIN = "SELECT * FROM user WHERE Email=?";
+    private static final String GET_PASSWORD = "SELECT password FROM user WHERE Email = ?";
 
 
     public User getUser(String Email) throws ClassNotFoundException {
 
         try (Connection connection = DBConnection.getConnection();
 
-             PreparedStatement preparedStatement = connection.prepareStatement(Check_Login)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(CHECK_LOGIN)) {
 
             preparedStatement.setString(1, Email);
 
@@ -41,12 +41,12 @@ public class LoginDAO {
         return null;
     }
 
-    public String Password(String email) throws ClassNotFoundException {
+    public String getPassword(String email) throws ClassNotFoundException {
 
-        String password ="";
+        String password = "";
         try (Connection connection = DBConnection.getConnection();
 
-             PreparedStatement preparedStatement = connection.prepareStatement(PASS)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_PASSWORD)) {
 
 
             preparedStatement.setString(1, email);
@@ -55,7 +55,6 @@ public class LoginDAO {
             if (resultSet.next()) {
                 password = resultSet.getString(1);  // Corrected column index
             }
-
 
 
         } catch (SQLException e) {

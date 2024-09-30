@@ -17,6 +17,7 @@
             min-height: 100vh;
             background-color: #f8f9fa;
         }
+
         .login-form {
             background-color: #ffffff;
             padding: 30px;
@@ -25,20 +26,25 @@
             max-width: 400px;
             width: 100%;
         }
+
         .login-form h2 {
             margin-bottom: 25px;
             text-align: center;
         }
+
         .form-group label {
             font-weight: 600;
         }
+
         .password-container {
             position: relative;
         }
+
         .password-container input[type="password"],
         .password-container input[type="text"] {
             padding-right: 40px; /* Space for the eye icon */
         }
+
         .password-container .bi-eye,
         .password-container .bi-eye-slash {
             position: absolute;
@@ -49,20 +55,25 @@
             font-size: 1.2rem;
             color: #6c757d;
         }
+
         .form-check-label {
             margin-left: 5px;
         }
+
         .forgot-password {
             text-align: center;
             margin-top: 15px;
         }
+
         .btn-primary {
             background-color: #007bff;
             border: none;
         }
+
         .btn-primary:hover {
             background-color: #0056b3;
         }
+
         .text-muted {
             color: #6c757d;
         }
@@ -71,9 +82,9 @@
 <body>
 <%@ include file="/Views/common/header.jsp" %>
 <%
-    String email ="", pass = "", remember = "";
+    String email = "", pass = "", remember = "";
     Cookie[] cookies = request.getCookies();
-    if(cookies != null) {
+    if (cookies != null) {
         for (Cookie cook : cookies) {
             if (cook.getName().equals("cookieEmail")) {
                 email = cook.getValue();
@@ -95,13 +106,15 @@
 
         <div class="form-group">
             <label for="Email">Email:</label>
-            <input type="email" class="form-control" id="Email" name="Email" value="<%= email%>" <%--value="${Email}"--%> required>
+            <input type="email" class="form-control" id="Email" name="Email"
+                   value="<%= email%>" <%--value="${Email}"--%> required>
         </div>
 
         <div class="form-group">
             <label for="password">Password:</label>
             <div class="password-container">
-                <input type="password" class="form-control" id="password" name="password" value="<%= pass%>" <%--value="${password}"--%> required>
+                <input type="password" class="form-control" id="password" name="password"
+                       value="<%= pass%>" <%--value="${password}"--%> required>
                 <i class="bi bi-eye-slash" id="togglePasswordIcon" onclick="togglePassword()"></i>
             </div>
         </div>
@@ -115,7 +128,7 @@
                     <%
                         }
                     %>
-                   />
+            />
 
             <label class="form-check-label" for="rememberMe">Remember me</label>
         </div>
@@ -123,20 +136,20 @@
         <p style="color: red;">${message1}</p>
 
         <button type="submit" class="btn btn-primary btn-block">Login</button>
-      <%--  <div class="text-center mt-3">
-            <a href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid
+        <%--  <div class="text-center mt-3">
+              <a href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid
 
-&redirect_uri=http://localhost:8080/Kindergarten_Management_System/login_Gg
+  &redirect_uri=http://localhost:8080/Kindergarten_Management_System/login_Gg
 
-&response_type=code
+  &response_type=code
 
-&client_id=1028444732076-4llkdccstoav2g4bkdf3s75cj86kvl82.apps.googleusercontent.com
+  &client_id=1028444732076-4llkdccstoav2g4bkdf3s75cj86kvl82.apps.googleusercontent.com
 
-&approval_prompt=force" class="btn btn-google btn-block">
-                <img src="https://img.icons8.com/color/16/000000/google-logo.png"/> Login with Google
-            </a>
-        </div>--%>
-       <br>
+  &approval_prompt=force" class="btn btn-google btn-block">
+                  <img src="https://img.icons8.com/color/16/000000/google-logo.png"/> Login with Google
+              </a>
+          </div>--%>
+        <br>
         <!-- Đưa "Forgot Password?" xuống dưới nút "Login" -->
         <div class="forgot-password">
             <a href="forgotPassword.jsp">Forgot Password?</a>

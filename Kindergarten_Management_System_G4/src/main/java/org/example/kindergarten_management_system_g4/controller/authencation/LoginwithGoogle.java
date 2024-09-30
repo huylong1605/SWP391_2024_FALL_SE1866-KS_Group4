@@ -25,6 +25,7 @@ public class LoginwithGoogle extends HttpServlet {
         super.init();
         registerDao = new RegisterDAO();
     }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String code = req.getParameter("code");
@@ -32,7 +33,7 @@ public class LoginwithGoogle extends HttpServlet {
         String accessToken = loginGoogle.getToken(code);
         GoogleIdToken.Payload payload = null;
         try {
-                payload = verifyGoogleToken(accessToken);
+            payload = verifyGoogleToken(accessToken);
             String email = payload.getEmail();
             System.out.println(email);
         } catch (GeneralSecurityException e) {
@@ -40,13 +41,13 @@ public class LoginwithGoogle extends HttpServlet {
         }
 
 
-
         if (code != null || !code.isEmpty()) {
             req.setAttribute("codes", accessToken);
             RequestDispatcher dis = req.getRequestDispatcher("Index.jsp");
             dis.forward(req, resp);
         }
-}
+    }
+
     public GoogleIdToken.Payload verifyGoogleToken(String tokenString) throws GeneralSecurityException, IOException {
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new JacksonFactory())
                 .setAudience(Collections.singletonList("1028444732076-4llkdccstoav2g4bkdf3s75cj86kvl82.apps.googleusercontent.com"))// Đảm bảo Client ID chính xác
@@ -59,6 +60,7 @@ public class LoginwithGoogle extends HttpServlet {
             throw new GeneralSecurityException("Invalid ID token.");
         }
     }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doPost(req, resp);

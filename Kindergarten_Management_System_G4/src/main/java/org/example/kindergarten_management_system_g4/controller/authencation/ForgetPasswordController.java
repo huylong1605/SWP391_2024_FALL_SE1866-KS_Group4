@@ -27,38 +27,39 @@ public class ForgetPasswordController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
     }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            String email = req.getParameter("Email");
-            EmailService emailService = new EmailService();
+        String email = req.getParameter("Email");
+        EmailService emailService = new EmailService();
 
-            String code = getRanDom();
-            try {
-                String Mail = forgetPasswordDAO.FindMail(email);
-                if (Mail.isEmpty() || Mail == null) {
+        String code = getRanDom();
+        try {
+            String Mail = forgetPasswordDAO.findMail(email);
+            if (Mail.isEmpty() || Mail == null) {
 
-                    req.setAttribute("emailNull", "email is not exist");
-                    req.getRequestDispatcher("forgotPassword.jsp").forward(req, resp);
+                req.setAttribute("emailNull", "email is not exist");
+                req.getRequestDispatcher("forgotPassword.jsp").forward(req, resp);
 
 
-                } else{
+            } else {
 
-                    emailService.send(email, "Code", code);
+                emailService.send(email, "Code", code);
 
-                    System.out.println("Email before redirect: " + email); // In ra để kiểm tra
-                    resp.sendRedirect("verificationCode.jsp?email=" + email);
-                    forgetPasswordDAO.InsertCode(code, email);
-                }
-
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
+                System.out.println("Email before redirect: " + email); // In ra để kiểm tra
+                resp.sendRedirect("verificationCode.jsp?email=" + email);
+                forgetPasswordDAO.insertCode(code, email);
             }
-        }
 
-    public String getRanDom(){
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String getRanDom() {
         Random rd = new Random();
         int num = rd.nextInt(999999);
-        return String.format("%06d",num);
+        return String.format("%06d", num);
     }
 }
 

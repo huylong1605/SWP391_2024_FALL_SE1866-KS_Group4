@@ -27,6 +27,10 @@ public class RegisterParentController extends HttpServlet {
 
     private RegisterDAO registerDao;
 
+    public static boolean isValidEmail(String email) {
+        return emailPattern.matcher(email).matches();
+    }
+
     public void init() throws ServletException {
         super.init();
         registerDao = new RegisterDAO();
@@ -40,7 +44,7 @@ public class RegisterParentController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         EmailService emailService = new EmailService();
-           String fullname = req.getParameter("fullname");
+        String fullname = req.getParameter("fullname");
 
         String password = req.getParameter("password");
         String confirmPassword = req.getParameter("confirmPassword");
@@ -57,12 +61,12 @@ public class RegisterParentController extends HttpServlet {
             req.getRequestDispatcher("register.jsp").forward(req, resp);
             return;
         }
-        if (!VietNamPhone(phone)){
+        if (!vietnamPhone(phone)) {
             req.setAttribute("phone_not_match", "phone do not match!");
             req.getRequestDispatcher("register.jsp").forward(req, resp);
             return;
         }
-        if(!isValidEmail(email)){
+        if (!isValidEmail(email)) {
             req.setAttribute("email_not_match", "phone do not match!");
             req.getRequestDispatcher("register.jsp").forward(req, resp);
             return;
@@ -74,8 +78,8 @@ public class RegisterParentController extends HttpServlet {
             return;
         }
         try {
-            boolean checkPhone = registerDao.checkLPhone(phone);
-            if(checkPhone ) {
+            boolean checkPhone = registerDao.checkPhone(phone);
+            if (checkPhone) {
                 req.setAttribute("phone_exits", "Phone already exists!");
                 req.getRequestDispatcher("register.jsp").forward(req, resp);
                 return;
@@ -88,7 +92,7 @@ public class RegisterParentController extends HttpServlet {
 
         try {
             boolean checkEmail = registerDao.checkEmail(email);
-            if(checkEmail ) {
+            if (checkEmail) {
                 req.setAttribute("email_exits", "Email already exists!");
                 req.getRequestDispatcher("register.jsp").forward(req, resp);
                 return;
@@ -116,7 +120,7 @@ public class RegisterParentController extends HttpServlet {
                 emailService.send(email, "Congratulations " + fullname, " You have successfully logged into the Kindergarten Management System by email " + email);
                 req.setAttribute("registerSuccessful", "register successful, log in now!");
                 req.getRequestDispatcher("Login.jsp").forward(req, resp);
-            }else{
+            } else {
                 req.setAttribute("fullname", fullname);
                 req.setAttribute("email", email);
                 req.setAttribute("phone", phone);
@@ -129,18 +133,13 @@ public class RegisterParentController extends HttpServlet {
             }
 
         } catch (ClassNotFoundException e) {
-             e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
-
-    private  boolean VietNamPhone(String phone) {
+    private boolean vietnamPhone(String phone) {
         // Regex cho số điện thoại Việt Nam
         Matcher matcher = pattern.matcher(phone);
         return matcher.matches();
-    }
-
-    public static boolean isValidEmail(String email) {
-        return emailPattern.matcher(email).matches();
     }
 }

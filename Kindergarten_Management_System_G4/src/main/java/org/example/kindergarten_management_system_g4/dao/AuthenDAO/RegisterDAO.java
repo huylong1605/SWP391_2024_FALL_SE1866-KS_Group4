@@ -8,20 +8,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static java.sql.DriverManager.getConnection;
-
 public class RegisterDAO {
-    private static final String check_phone = "SELECT * FROM user WHERE phoneNumber=?";
-    private static final String check_email = "SELECT * FROM user WHERE email=?";
-    private static final String InsertUser = "INSERT INTO user(Fullname, email, password, gender, phoneNumber, address) VALUES (?, ?, ?, ?, ?, ?)";
-    private static final String InsertUserLoginGG = "INSERT INTO user(Fullname, email) VALUES (?, ?)";
+    private static final String CHECK_PHONE = "SELECT * FROM user WHERE phoneNumber=?";
+    private static final String CHECK_EMAIL = "SELECT * FROM user WHERE email=?";
+    private static final String INSERT_USER = "INSERT INTO user(Fullname, email, password, gender, phoneNumber, address) VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_USER_LOGIN_GG = "INSERT INTO user(Fullname, email) VALUES (?, ?)";
 
 
-    public boolean checkLPhone(String phone) throws ClassNotFoundException {
+    public boolean checkPhone(String phone) throws ClassNotFoundException {
 
         try (Connection connection = DBConnection.getConnection();
 
-             PreparedStatement preparedStatement = connection.prepareStatement(check_phone )) {
+             PreparedStatement preparedStatement = connection.prepareStatement(CHECK_PHONE)) {
 
             preparedStatement.setString(1, phone);
 
@@ -38,7 +36,7 @@ public class RegisterDAO {
 
         try (Connection connection = DBConnection.getConnection();
 
-             PreparedStatement preparedStatement = connection.prepareStatement(check_email )) {
+             PreparedStatement preparedStatement = connection.prepareStatement(CHECK_EMAIL)) {
 
             preparedStatement.setString(1, email);
 
@@ -54,7 +52,7 @@ public class RegisterDAO {
     public boolean insertUser(User u) throws ClassNotFoundException {
         boolean isInserted = false; // Khởi tạo mặc định là false
         try (Connection connection = DBConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(InsertUser)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER)) {
 
             preparedStatement.setString(1, u.getFullname());
             preparedStatement.setString(2, u.getEmail());
@@ -80,7 +78,7 @@ public class RegisterDAO {
     public boolean insertUserLoginGG(String mail, String name) throws ClassNotFoundException {
         boolean isInserted = false; // Khởi tạo mặc định là false
         try (Connection connection = DBConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(InsertUserLoginGG)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER_LOGIN_GG)) {
 
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, name);

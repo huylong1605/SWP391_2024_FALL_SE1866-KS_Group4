@@ -29,7 +29,7 @@ public class LoginController extends HttpServlet {
         String remember = req.getParameter("rememberMe");
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         try {
-            String hashedPassword = loginDAO.Password(email);
+            String hashedPassword = loginDAO.getPassword(email);
             if (passwordEncoder.matches(password, hashedPassword)) {
                 User user = loginDAO.getUser(email);
                 if (user != null) {
@@ -40,7 +40,7 @@ public class LoginController extends HttpServlet {
                     Cookie cookieEmail;
                     Cookie cookiePass;
                     Cookie cookieRemember;
-                    if("1".equals(remember)) {
+                    if ("1".equals(remember)) {
                         cookieEmail = new Cookie("cookieEmail", email);
                         cookiePass = new Cookie("cookiePass", password);
                         cookieRemember = new Cookie("cookieRemember", "1");
@@ -49,14 +49,14 @@ public class LoginController extends HttpServlet {
                         cookiePass.setMaxAge(60); // 1 phút
                         cookieRemember.setMaxAge(60);
 
-                    }else{
+                    } else {
                         cookieEmail = new Cookie("cookieEmail", "");
                         cookiePass = new Cookie("cookiePass", "");
                         cookieRemember = new Cookie("cookieRemember", "");
 
-                         cookieEmail.setMaxAge(0); // Xóa cookie
-                         cookiePass.setMaxAge(0); // Xóa cookie
-                         cookieRemember.setMaxAge(0);
+                        cookieEmail.setMaxAge(0); // Xóa cookie
+                        cookiePass.setMaxAge(0); // Xóa cookie
+                        cookieRemember.setMaxAge(0);
 
                     }
                     resp.addCookie(cookieEmail);
@@ -74,7 +74,7 @@ public class LoginController extends HttpServlet {
 
                 }
                 emailService.send(email, "hello " + user.getFullname(), "You have logged in to the Kindergarten Management System ");
-                }else {
+            } else {
                 req.setAttribute("Email", email);
                 req.setAttribute("password", password);
                 req.setAttribute("message1", "Username or password incorrect");
@@ -84,9 +84,10 @@ public class LoginController extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
-        @Override
-        protected void doGet (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            super.doGet(req, resp);
-        }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doGet(req, resp);
     }
+}
 

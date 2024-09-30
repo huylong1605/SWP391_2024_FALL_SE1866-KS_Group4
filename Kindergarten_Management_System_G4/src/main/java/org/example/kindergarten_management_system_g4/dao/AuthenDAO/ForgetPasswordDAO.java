@@ -7,21 +7,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static java.sql.DriverManager.getConnection;
-
 public class ForgetPasswordDAO {
 
-    private static final String EMAIL = "SELECT email FROM user WHERE email = ?";
-    private static final String InsertCode = "Update user set Code = ? WHERE email = ?";
-    private static final String SelectCode = "SELECT code FROM user WHERE email = ?";
+    private static final String GET_EMAIL = "SELECT email FROM user WHERE email = ?";
+    private static final String INSERT_CODE = "Update user set Code = ? WHERE email = ?";
+    private static final String GET_CODE = "SELECT code FROM user WHERE email = ?";
     private static final String UPDATE_PASS_USER = "UPDATE user SET password = ? WHERE email = ?";
 
-    public String FindMail(String email) throws ClassNotFoundException {
+    public String findMail(String email) throws ClassNotFoundException {
 
-        String Mail ="";
+        String Mail = "";
         try (Connection connection = DBConnection.getConnection();
 
-             PreparedStatement preparedStatement = connection.prepareStatement(EMAIL)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_EMAIL)) {
 
 
             preparedStatement.setString(1, email);
@@ -33,16 +31,17 @@ public class ForgetPasswordDAO {
 
 
         } catch (SQLException e) {
-           printSQLException(e);
+            printSQLException(e);
         }
         return Mail;
     }
-    public int InsertCode(String code ,String email) throws ClassNotFoundException {
+
+    public int insertCode(String code, String email) throws ClassNotFoundException {
         int result = 0;
-        String Mail ="";
+        String Mail = "";
         try (Connection connection = DBConnection.getConnection();
 
-             PreparedStatement preparedStatement = connection.prepareStatement(InsertCode)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_CODE)) {
 
 
             preparedStatement.setString(1, code);
@@ -58,12 +57,12 @@ public class ForgetPasswordDAO {
         return result;
     }
 
-    public String FindCode(String email) throws ClassNotFoundException {
+    public String findCode(String email) throws ClassNotFoundException {
 
-        String code ="";
+        String code = "";
         try (Connection connection = DBConnection.getConnection();
 
-             PreparedStatement preparedStatement = connection.prepareStatement(SelectCode)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_CODE)) {
 
 
             preparedStatement.setString(1, email);
@@ -99,6 +98,7 @@ public class ForgetPasswordDAO {
         }
         return result;
     }
+
     private void printSQLException(SQLException ex) {
         for (Throwable e : ex) {
             if (e instanceof SQLException) {

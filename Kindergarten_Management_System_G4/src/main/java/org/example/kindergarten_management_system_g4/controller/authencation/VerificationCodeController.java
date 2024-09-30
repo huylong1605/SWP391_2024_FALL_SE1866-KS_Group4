@@ -41,7 +41,7 @@ public class VerificationCodeController extends HttpServlet {
 
         String codeConfirm = "";
         try {
-            codeConfirm = forgetPasswordDAO.FindCode(email);
+            codeConfirm = forgetPasswordDAO.findCode(email);
 
         if (codeConfirm.equals(code)){
             newPass = generateRandomString();
