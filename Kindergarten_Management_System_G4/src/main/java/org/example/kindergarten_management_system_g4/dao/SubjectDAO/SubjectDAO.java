@@ -23,12 +23,13 @@ public class SubjectDAO {
 
     // Create or Insert a new Subject
     public boolean createSubject(Subject subject)  {
-        String sql = "INSERT INTO Subject (subject_Code, subject_name, Description, User_id) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Subject (subject_Code, subject_name, Description, User_id, status) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, subject.getSubjectCode());
             statement.setString(2, subject.getSubjectName());
             statement.setString(3, subject.getDescription());
             statement.setInt(4, subject.getUserId());
+            statement.setString(5, subject.getStatus());
 
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -39,13 +40,14 @@ public class SubjectDAO {
 
     // Update an existing Subject
     public boolean updateSubject(Subject subject)  {
-        String sql = "UPDATE Subject SET subject_Code = ?, subject_name = ?, Description = ?, User_id = ? WHERE Subject_ID = ?";
+        String sql = "UPDATE Subject SET subject_Code = ?, subject_name = ?, Description = ?, User_id = ?, status=? WHERE Subject_ID = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, subject.getSubjectCode());
             statement.setString(2, subject.getSubjectName());
             statement.setString(3, subject.getDescription());
             statement.setInt(4, subject.getUserId());
-            statement.setInt(5, subject.getSubjectId());
+            statement.setString(5, subject.getStatus());
+            statement.setInt(6, subject.getSubjectId());
 
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -74,13 +76,15 @@ public class SubjectDAO {
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                return new Subject(
+                Subject s = new Subject(
                         resultSet.getInt("Subject_ID"),
                         resultSet.getString("subject_Code"),
                         resultSet.getString("subject_name"),
                         resultSet.getString("Description"),
                         resultSet.getInt("User_id")
                 );
+                s.setStatus(resultSet.getString("status"));
+                return  s;
             }
         }catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -103,6 +107,7 @@ public class SubjectDAO {
                         resultSet.getString("Description"),
                         resultSet.getInt("User_id")
                 );
+
             }
         }catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -117,13 +122,15 @@ public class SubjectDAO {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                subjects.add(new Subject(
+                Subject s = new Subject(
                         resultSet.getInt("Subject_ID"),
                         resultSet.getString("subject_Code"),
                         resultSet.getString("subject_name"),
                         resultSet.getString("Description"),
                         resultSet.getInt("User_id")
-                ));
+                );
+                s.setStatus(resultSet.getString("status"));
+                subjects.add(s);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
