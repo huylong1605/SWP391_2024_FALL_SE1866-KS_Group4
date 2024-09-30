@@ -132,7 +132,6 @@ public class AccountDAO {
                         return new PasswordAuthentication(username, passwordSender);
                     }
                 });
-
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(username));
