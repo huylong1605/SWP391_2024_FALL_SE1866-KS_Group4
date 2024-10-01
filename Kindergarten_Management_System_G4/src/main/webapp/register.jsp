@@ -89,6 +89,8 @@
                     <label for="fullname">Full Name:</label>
                     <input type="text" class="form-control" id="fullname" name="fullname" value="${param.fullname}"
                            required>
+                    <p style="color: red"> ${fullname_too_long} </p>
+
 
                 </div>
 
@@ -144,7 +146,7 @@
                                value="${param.password}" required>
                         <i class="bi bi-eye-slash" id="togglePasswordIcon" onclick="togglePassword()"></i>
                     </div>
-                    <p style="color: red"> ${message1} </p>
+                    <p style="color: red"> ${password_too_long} </p>
                 </div>
 
                 <div class="form-group">
@@ -159,11 +161,11 @@
                 <div class="form-group">
                     <label for="confirmPassword">Address</label>
                     <div class="password-container">
-                        <input type="text" class="form-control" id="Address" name="Address" value="${param.Address}"
+                        <input type="text" class="form-control" id="Address" name="address" value="${param.address}"
                                required>
 
                     </div>
-                    <p style="color: red"> ${Password_not_match} </p>
+                    <p style="color: red"> ${address_too_long} </p>
                 </div>
 
 
