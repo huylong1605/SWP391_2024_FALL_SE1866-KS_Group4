@@ -38,6 +38,44 @@ public class SubjectDAO {
         return false;
     }
 
+
+    //  Ktra duplicate Code
+    public boolean checkDuplicateSubjectCode(String subjectCode) {
+        String query = "SELECT COUNT(*) FROM subjects WHERE subject_Code = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setString(1, subjectCode);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // Ktra duplicate Name
+    public boolean checkDuplicateSubjectName(String subjectName) {
+        String query = "SELECT COUNT(*) FROM subjects WHERE subject_name = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setString(1, subjectName);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+
+
+
+
     // Update an existing Subject
     public boolean updateSubject(Subject subject)  {
         String sql = "UPDATE Subject SET subject_Code = ?, subject_name = ?, Description = ?, User_id = ?, status=? WHERE Subject_ID = ?";

@@ -67,25 +67,74 @@ public class SubjectController extends HttpServlet {
         String userId = request.getParameter("userId");
         String status = request.getParameter("status");
 
-        String codePattern = "^[A-Za-z]{2}[A-Za-z0-9]{3,4}$";
-        if (!subjectCode.matches(codePattern)) {
-            session.setAttribute("errorMessage", "Alert: Subject code must start with at least 2 letters, max 6 characters and no space !");
-            response.sendRedirect("subject");
-            return;
-        }
-
+        // Check kí tự đúng form
+        // yc at least 1 char
+        String codePattern = "^[A-Z]{2}[A-Za-z0-9]{3,4}$";
         String namePattern = "^[A-Za-z\\s]+$";
-        if (!subjectName.matches(namePattern)) {
-            session.setAttribute("errorMessage", "Alert: Subject name should not contain numbers !");
+        String descriptionPattern = "^[^!@#$%^&*]+$";
+
+        // Ktra kí tự khi nhập
+        if (!subjectCode.matches(codePattern)) {
+            session.setAttribute("errorMessage", "Alert: Subject code must start with at least 2 uppercase letters, max 6 characters and should not contain space or special characters!");
             response.sendRedirect("subject");
             return;
         }
 
-        if (Integer.parseInt(userId) <= 0) {
+        // Check subjectName k chứa số hoặc kí tự db
+        if (!subjectName.matches(namePattern)) {
+            session.setAttribute("errorMessage", "Alert: Subject name contain numbers or special characters!!");
+            response.sendRedirect("subject");
+            return;
+        }
+
+
+        // Check độ dài của subjectName
+        if (subjectName.length() > 50) {
+            session.setAttribute("errorMessage", "Alert: Subject name should not exceed 50 characters!");
+            response.sendRedirect("subject");
+            return;
+        }
+
+        // Clean khoảng trắng cho subject name
+        String cleanedSubjectName = subjectName.trim().replaceAll("\\s+", " ");
+        subjectName = cleanedSubjectName;
+
+
+        // Kiểm tra trùng lặp subjectCode và subjectName
+
+        boolean isDuplicateCode = subjectDAO.checkDuplicateSubjectCode(subjectCode);
+        boolean isDuplicateName = subjectDAO.checkDuplicateSubjectName(subjectName);
+
+        if (isDuplicateCode) {
+            session.setAttribute("errorMessage", "Alert: Subject code already exists!");
+            response.sendRedirect("subject");
+            return;
+        }
+
+        if (isDuplicateName) {
+            session.setAttribute("errorMessage", "Alert: Subject name already exists!");
+            response.sendRedirect("subject");
+            return;
+        }
+
+        // Ktra description
+        if (!description.matches(descriptionPattern)) {
+            session.setAttribute("errorMessage", "Alert: Description contains special characters!");
+            response.sendRedirect("subject");
+            return;
+        }
+
+        // Clean khoảng trắng cho description
+        description = description.trim().replaceAll("\\s+", " ");
+
+        // Check UserID > 0
+        if (Integer.parseInt(userId) < 0 ) {
             session.setAttribute("errorMessage", "Alert: ID user must be a integer number !");
             response.sendRedirect("subject");
             return;
         }
+
+
 
         Subject newSubject = new Subject();
         newSubject.setSubjectCode(subjectCode);
@@ -106,6 +155,8 @@ public class SubjectController extends HttpServlet {
         }
     }
 
+//    -----------------------------------------------------------------------------------------------------
+
     private void updatesubject(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         int subjectId = Integer.parseInt(request.getParameter("subjectId"));
@@ -116,25 +167,75 @@ public class SubjectController extends HttpServlet {
         String status = request.getParameter("status");
         Subject subject = new Subject(subjectId, subjectCode, subjectName, description, userId);
         subject.setStatus(status);
-        String codePattern = "^[A-Za-z]{2}[A-Za-z0-9]{3,4}$";
-        if (!subjectCode.matches(codePattern)) {
-            session.setAttribute("errorMessage", "Alert: Subject code must start with at least 2 letters, max 5-6 characters and no space !");
-            response.sendRedirect("subject");
-            return;
-        }
 
+
+        String codePattern = "^[A-Z]{2}[A-Za-z0-9]{3,4}$";
         String namePattern = "^[A-Za-z\\s]+$";
-        if (!subjectName.matches(namePattern)) {
-            session.setAttribute("errorMessage", "Alert: Subject name should not contain numbers or space !");
+        String descriptionPattern = "^[^!@#$%^&*]+$";
+
+
+
+        // Ktra kí tự khi nhập
+        if (!subjectCode.matches(codePattern)) {
+            session.setAttribute("errorMessage", "Alert: Subject code must start with at least 2 uppercase letters, max 6 characters and should not contain space or special characters !");
             response.sendRedirect("subject");
             return;
         }
 
-        if (userId  <= 0) {
+        // Check subjectName k chứa số hoặc kí tự db
+        if (!subjectName.matches(namePattern)) {
+            session.setAttribute("errorMessage", "Alert: Subject name contain numbers or special characters!!");
+            response.sendRedirect("subject");
+            return;
+        }
+
+
+        // Check độ dài của subjectName
+        if (subjectName.length() > 50) {
+            session.setAttribute("errorMessage", "Alert: Subject name should not exceed 50 characters!");
+            response.sendRedirect("subject");
+            return;
+        }
+
+        // Clean khoảng trắng cho subject name
+        String cleanedSubjectName = subjectName.trim().replaceAll("\\s+", " ");
+        subjectName = cleanedSubjectName;
+
+
+        // Kiểm tra trùng lặp subjectCode và subjectName
+        boolean isDuplicateCode = subjectDAO.checkDuplicateSubjectCode(subjectCode);
+        boolean isDuplicateName = subjectDAO.checkDuplicateSubjectName(subjectName);
+
+        if (isDuplicateCode) {
+            session.setAttribute("errorMessage", "Alert: Subject code already exists!");
+            response.sendRedirect("subject");
+            return;
+        }
+
+        if (isDuplicateName) {
+            session.setAttribute("errorMessage", "Alert: Subject name already exists!");
+            response.sendRedirect("subject");
+            return;
+        }
+
+//         Ktra description
+        if (!description.matches(descriptionPattern)) {
+            session.setAttribute("errorMessage", "Alert: Description contains special characters!");
+            response.sendRedirect("subject");
+            return;
+        }
+
+        // Clean khoảng trắng cho description
+        description = description.trim().replaceAll("\\s+", " ");
+
+        // Check UserID > 0
+        if (userId < 0 ) {
             session.setAttribute("errorMessage", "Alert: ID user must be a integer number !");
             response.sendRedirect("subject");
             return;
         }
+
+
 
         // Update the subject
         boolean success = false;
