@@ -12,7 +12,7 @@
 <%@include file="../common/header.jsp"%>
 
 <div class="container">
-    <h2>Edit Notification</h2>
+    <h2 style="font-family: 'Roboto', Helvetica, Arial, sans-serif">Edit Notification</h2>
     <form action="${pageContext.request.contextPath}/editNotification" method="post">
         <input type="hidden" name="id" value="${notification.notificationId}" />
         <div class="mb-3">
