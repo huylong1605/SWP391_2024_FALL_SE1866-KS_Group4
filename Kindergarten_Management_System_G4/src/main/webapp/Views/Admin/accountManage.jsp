@@ -78,7 +78,7 @@
                             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
                             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Account</li>
                         </ol>
-                        <h4 class="font-weight-bolder mb-0">Manage Account</h4>
+                        <h4 class="font-weight-bolder mb-0" style="font-family: 'Roboto', Helvetica, Arial, sans-serif">Manage Account</h4>
                     </nav>
 
                     <div class="btn-search" style="margin-top: 20px;">
