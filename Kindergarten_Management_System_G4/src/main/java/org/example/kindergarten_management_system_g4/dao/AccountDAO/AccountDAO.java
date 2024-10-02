@@ -3,6 +3,8 @@ package org.example.kindergarten_management_system_g4.dao.AccountDAO;
 
 import org.example.kindergarten_management_system_g4.connection.DBConnection;
 import org.example.kindergarten_management_system_g4.model.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -64,7 +66,7 @@ public class AccountDAO {
             account.setFullname(rs.getString("Fullname"));
             account.setEmail(rs.getString("Email"));
             account.setStatus(rs.getInt("Status"));
-            account.setAddress(rs.getString("Address")); // Giả sử bạn có trường địa chỉ
+            account.setAddress(rs.getString("Address"));
             account.setPhoneNumber(rs.getString("PhoneNumber"));
             account.setDateOfBirth(rs.getString("date_Of_birth"));
             account.setPassword(rs.getString("Password"));
@@ -75,34 +77,29 @@ public class AccountDAO {
         return account;
     }
 
-
-    public boolean isUserExists(int userId) throws SQLException {
-        User account = getAccountById(userId);
-        return account != null;
-    }
-
     public void createAccount(String fullname, String email, int roleId) throws SQLException {
         String password = generateRandomPassword();
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(password);
 
-        // Lưu tài khoản vào cơ sở dữ liệu
         String sql = "INSERT INTO user (Fullname, Email, Password, Role_id, Status) VALUES (?, ?, ?, ?, ?)";
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, fullname);
             ps.setString(2, email);
-            ps.setString(3, password);
+            ps.setString(3, hashedPassword);
             ps.setInt(4, roleId);
-            ps.setInt(5, 1); // Trạng thái mặc định là "Active"
+            ps.setInt(5, 1);
             ps.executeUpdate();
         }
 
-        // Gửi email
+
         sendEmail(email, password);
     }
 
     private String generateRandomPassword() {
-        // Tạo mật khẩu ngẫu nhiên
-        int length = 8; // Độ dài mật khẩu
+
+        int length = 8;
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         Random random = new Random();
         StringBuilder password = new StringBuilder();
@@ -113,9 +110,9 @@ public class AccountDAO {
     }
 
     private void sendEmail(String recipient, String password) {
-        String host = "smtp.gmail.com"; // Địa chỉ máy chủ SMTP
-        final String username = "tcnatsu150977@gmail.com"; // Địa chỉ email gửi
-        final String passwordSender = "yqxf ijdq ypze lhed"; // Mật khẩu email
+        String host = "smtp.gmail.com";
+        final String username = "tcnatsu150977@gmail.com";
+        final String passwordSender = "yqxf ijdq ypze lhed";
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -129,7 +126,6 @@ public class AccountDAO {
                         return new PasswordAuthentication(username, passwordSender);
                     }
                 });
-
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(username));
@@ -137,81 +133,163 @@ public class AccountDAO {
             message.setSubject("Kindergatent-sofware");
             String emailBody = "Your password is: " + password + "\n" +
                     "Welcome! You have become a member of Kindergarten. " +
-                    "Click this link to login: http://localhost:8080/Kindergarten/Login.jsp";
+                    "Click this link to login: http://localhost:8080/Kindergarten_Management_System/Login.jsp";
 
             message.setText(emailBody);
 
             Transport.send(message);
-            System.out.println("Email đã được gửi thành công đến " + recipient); // Thông báo khi gửi thành công
+            System.out.println("Email đã được gửi thành công đến " + recipient);
         } catch (MessagingException e) {
             e.printStackTrace();
-            System.out.println("Lỗi khi gửi email: " + e.getMessage()); // Thông báo lỗi nếu có
+            System.out.println("Lỗi khi gửi email: " + e.getMessage());
         }
 
     }
 
     public boolean isEmailExists(String email) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM user WHERE Email = ?"; // Câu truy vấn để kiểm tra email
+        String sql = "SELECT COUNT(*) FROM user WHERE Email = ?";
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, email); // Thiết lập giá trị email cho câu truy vấn
+            ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return rs.getInt(1) > 0; // Nếu số lượng lớn hơn 0, email đã tồn tại
+                return rs.getInt(1) > 0;
             }
         }
         return false;
     }
 
 
-    public static List<User> searchByName(String name) {
-        List<User> users = new ArrayList<>();
-        String query = "SELECT * FROM users WHERE fullname LIKE ?";
+    public int getAccountCount(String searchName, Integer roleId) throws SQLException {
+
+        StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM kindergartenmanagementsystem.user WHERE 1=1");
+
+        if (searchName != null && !searchName.trim().isEmpty()) {
+            sql.append(" AND Fullname LIKE ?");
+        }
+
+        if (roleId != null) {
+            sql.append(" AND Role_id = ?");
+        }
 
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+             PreparedStatement stmt = conn.prepareStatement(sql.toString())) {
 
-            stmt.setString(1, "%" + name + "%");
-            ResultSet rs = stmt.executeQuery();
+            int parameterIndex = 1;
 
-            while (rs.next()) {
-                User user = new User();
-                user.setUserID(rs.getInt("userID"));
-                user.setFullname(rs.getString("fullname"));
-                user.setEmail(rs.getString("email"));
-                user.setStatus(rs.getInt("status"));
-                user.setRoleId(rs.getInt("roleId"));
-                users.add(user);
+            if (searchName != null && !searchName.trim().isEmpty()) {
+                stmt.setString(parameterIndex++, "%" + searchName + "%");
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+            if (roleId != null) {
+                stmt.setInt(parameterIndex++, roleId);
+            }
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
         }
-        return users;
+        return 0;
+    }
+
+
+    public List<User> getAccounts(int currentPage, int pageSize, String searchName, Integer roleId) throws SQLException {
+        List<User> accounts = new ArrayList<>();
+        int offset = (currentPage - 1) * pageSize;
+
+
+        StringBuilder sql = new StringBuilder("SELECT * FROM kindergartenmanagementsystem.user WHERE 1=1");
+
+
+        if (searchName != null && !searchName.isEmpty()) {
+            sql.append(" AND fullname LIKE ?");
+        }
+
+
+        if (roleId != null) {
+            sql.append(" AND role_id = ?");
+        }
+
+
+        sql.append(" LIMIT ?, ?");
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql.toString())) {
+
+            int paramIndex = 1;
+
+
+            if (searchName != null && !searchName.isEmpty()) {
+                stmt.setString(paramIndex++, "%" + searchName + "%");
+            }
+
+
+            if (roleId != null) {
+                stmt.setInt(paramIndex++, roleId);
+            }
+
+
+            stmt.setInt(paramIndex++, offset);
+            stmt.setInt(paramIndex++, pageSize);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    User account = new User();
+
+                    account.setUserID(rs.getInt("User_id"));
+                    account.setRoleId(rs.getInt("Role_id"));
+                    account.setFullname(rs.getString("Fullname"));
+                    account.setEmail(rs.getString("Email"));
+                    account.setStatus(rs.getInt("Status"));
+                    account.setAddress(rs.getString("Address")); // Giả sử bạn có trường địa chỉ
+                    account.setPhoneNumber(rs.getString("PhoneNumber"));
+                    account.setDateOfBirth(rs.getString("date_Of_birth"));
+                    account.setPassword(rs.getString("Password"));
+                    account.setImage(rs.getString("Image"));
+                    account.setGender(rs.getInt("Gender"));
+
+                    accounts.add(account);
+                }
+            }
+        }
+
+        return accounts;
     }
 
 
     public static void main(String[] args) {
-        AccountDAO accountDAO = new AccountDAO();
         try {
 
-            // Thêm đoạn mã kiểm tra email đã tồn tại trước khi tạo tài khoản
-            String newFullname = "Call me Natsu"; // Tên người dùng mới
-            String newEmail = "robert.anime.vn1@gmail.com"; // Email người dùng mới
-            int newRoleId = 4; // Vai trò người dùng mới (thay đổi giá trị này nếu cần)
+            AccountDAO accountDAO = new AccountDAO();
 
-            // Kiểm tra xem email đã tồn tại chưa
-            if (accountDAO.isEmailExists(newEmail)) {
-                System.out.println("Email '" + newEmail + "' đã tồn tại. Không thể tạo tài khoản.");
+            int currentPage = 1;
+            int pageSize = 7;
+            String searchName = "";
+            Integer roleId = 2;
+
+            int accountCount = accountDAO.getAccountCount(searchName, roleId);
+            System.out.println("Số lượng tài khoản: " + accountCount);
+
+            List<User> accounts = accountDAO.getAccounts(currentPage, pageSize, searchName, roleId);
+            System.out.println("Danh sách tài khoản:");
+
+            if (accounts.isEmpty()) {
+                System.out.println("Không tìm thấy tài khoản nào phù hợp.");
             } else {
-                // Nếu email chưa tồn tại, tiến hành tạo tài khoản và gửi email
-                accountDAO.createAccount(newFullname, newEmail, newRoleId);
-                System.out.println("Tài khoản đã được tạo và email đã được gửi thành công!");
+                for (User user : accounts) {
+                    System.out.println(user.toString());
+                }
             }
-
         } catch (SQLException e) {
-            System.out.println("Lỗi SQL: " + e.getMessage());
+            System.err.println("Lỗi truy vấn cơ sở dữ liệu: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Lỗi: " + e.getMessage());
         }
     }
+
+
 
 }
 

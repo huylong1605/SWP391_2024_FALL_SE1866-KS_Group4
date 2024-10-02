@@ -36,11 +36,12 @@
             border-left: 3px solid white;
             color: white;
         }
+
     </style>
 </head>
 <body class="g-sidenav-show bg-gray-200">
 <%@include file="../common/header.jsp"%>
-<div class="">
+<div class="containerAll">
     <div class="wrapper">
         <aside id="sidebar" class="expand">
             <div class="d-flex">
@@ -53,13 +54,13 @@
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="${pageContext.request.contextPath}/Views/Admin/accountManage.jsp" class="sidebar-link">
                         <i class="lni lni-user"></i>
                         <span>Manage Account</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="${pageContext.request.contextPath}/Views/Admin/notifications.jsp" class="sidebar-link">
                         <i class="lni lni-agenda"></i>
                         <span>Manage Notification</span>
                     </a>
@@ -112,7 +113,6 @@
                                         <td class="mb-0 font-weight-normal text-sm">Enrollment</td>
                                     </c:when>
                                 </c:choose>
-<%--                                <p class="mb-0 font-weight-normal text-sm">Role ID: ${account.roleId}</p>--%>
                             </div>
                         </div>
 
