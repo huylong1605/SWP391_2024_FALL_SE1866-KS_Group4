@@ -15,7 +15,7 @@
 <%@include file="../common/header.jsp"%>
 
 <div class="container my-4">
-    <h2>Notification Detail</h2>
+    <h2 style="font-family: 'Roboto', Helvetica, Arial, sans-serif">Notification Detail</h2>
 
     <div class="card">
         <div class="card-header">
