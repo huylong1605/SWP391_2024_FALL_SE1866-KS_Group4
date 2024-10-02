@@ -19,7 +19,7 @@
 
     <div class="card">
         <div class="card-header">
-            <h4>${notification.title}</h4>
+            <h4 style="font-family: 'Roboto', Helvetica, Arial, sans-serif">${notification.title}</h4>
         </div>
         <div class="card-body">
             <p><strong>Date:</strong> ${notification.date}</p>

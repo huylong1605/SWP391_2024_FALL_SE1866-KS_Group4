@@ -113,6 +113,7 @@
                     <div class="form-group" style="width: 95%; padding-left: 5%">
                       <label for="role">Role</label>
                       <select class="form-control" id="role" name="role" required>
+<%--                        <option value="1">Admin</option>--%>
                         <option value="2">Teacher</option>
                         <option value="3">Principal</option>
                         <option value="4">Parent</option>

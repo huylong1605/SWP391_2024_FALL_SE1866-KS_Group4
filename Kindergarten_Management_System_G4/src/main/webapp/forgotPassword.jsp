@@ -93,10 +93,11 @@
 
         <div class="form-group">
             <label for="Email">Email:</label>
-            <input type="text" class="form-control" id="Email" name="Email" value="${Email}" required>
+            <input type="Email" class="form-control" id="Email" name="Email" value="${param.Email}" required
+                   oninvalid="this.setCustomValidity('Please enter email address')"
+                   oninput="this.setCustomValidity('')">
         </div>
         <p style="color: red;">${emailNull}</p>
-
 
 
         <button type="submit" class="btn btn-primary btn-block">Submit</button>

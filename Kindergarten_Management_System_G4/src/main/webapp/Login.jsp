@@ -95,13 +95,17 @@
 
         <div class="form-group">
             <label for="Email">Email:</label>
-            <input type="email" class="form-control" id="Email" name="Email" value="<%= email%>" <%--value="${Email}"--%> required>
+            <input type="email" class="form-control" id="Email" name="Email" value="<%= email%>" required
+                   oninvalid="this.setCustomValidity('Please enter  email address')"
+                   oninput="this.setCustomValidity('')">
         </div>
 
         <div class="form-group">
             <label for="password">Password:</label>
             <div class="password-container">
-                <input type="password" class="form-control" id="password" name="password" value="<%= pass%>" <%--value="${password}"--%> required>
+                <input type="password" class="form-control" id="password" name="password" value="<%= pass%>"  required
+                       oninvalid="this.setCustomValidity('Please enter your password')"
+                       oninput="this.setCustomValidity('')">
                 <i class="bi bi-eye-slash" id="togglePasswordIcon" onclick="togglePassword()"></i>
             </div>
         </div>

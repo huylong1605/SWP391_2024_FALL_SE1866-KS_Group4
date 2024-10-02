@@ -77,40 +77,55 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="fullname">Full Name:</label>
-                    <input type="text" class="form-control" id="fullname" name="fullname" value="${param.fullname}" required>
+                    <input type="text" class="form-control" id="fullname" name="fullname" value="${param.fullname}"
+                           required
+                           oninvalid="this.setCustomValidity('Please enter your full name')"
+                           oninput="this.setCustomValidity('')">
+                    <p style="color: red"> ${fullname_too_long} </p>
+
 
                 </div>
                 <br>
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="email" class="form-control" id="email" name="email" value="${param.email}" required>
+                    <input type="email" class="form-control" id="email" name="email" value="${param.email}" required
+                           oninvalid="this.setCustomValidity('Please enter email address')"
+                           oninput="this.setCustomValidity('')">
                     <% if (request.getAttribute("email_not_match") != null) { %>
-                    <p style="color:red;"><%= request.getAttribute("email_not_match") %></p>
+                    <p style="color:red;"><%= request.getAttribute("email_not_match") %>
+                    </p>
                     <% } %>
                     <% if (request.getAttribute("email_exits") != null) { %>
-                    <p style="color:red;"><%= request.getAttribute("email_exits") %></p>
+                    <p style="color:red;"><%= request.getAttribute("email_exits") %>
+                    </p>
                     <% } %>
                 </div>
                 <br>
                 <div class="form-group">
                     <label for="phone">Phone Number:</label>
-                    <input type="text" class="form-control" id="phone" name="phone" value="${param.phone}" required>
+                    <input type="text" class="form-control" id="phone" name="phone" value="${param.phone}" required
+                           oninvalid="this.setCustomValidity('Please enter phone number')"
+                           oninput="this.setCustomValidity('')">
                     <% if (request.getAttribute("phone_exits") != null) { %>
-                    <p style="color:red;"><%= request.getAttribute("phone_exits") %></p>
+                    <p style="color:red;"><%= request.getAttribute("phone_exits") %>
+                    </p>
                     <% } %>
                     <% if (request.getAttribute("phone_not_match") != null) { %>
-                    <p style="color:red;"><%= request.getAttribute("phone_not_match") %></p>
+                    <p style="color:red;"><%= request.getAttribute("phone_not_match") %>
+                    </p>
                     <% } %>
                 </div>
                 <br>
                 <div class="form-group">
                     <label>Gender:</label>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="gender" id="male" value="1" ${gender == '1' ? 'checked' : ''}>
+                        <input class="form-check-input" type="radio" name="gender" id="male"
+                               value="1" ${gender == '1' ? 'checked' : ''}>
                         <label class="form-check-label" for="male">Male</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="gender" id="female" value="0" ${gender == '0' ? 'checked' : ''}>
+                        <input class="form-check-input" type="radio" name="gender" id="female"
+                               value="0" ${gender == '0' ? 'checked' : ''}>
                         <label class="form-check-label" for="female">Female</label>
                     </div>
                     <p style="color: red"> ${gender_null} </p>
@@ -124,7 +139,10 @@
                 <div class="form-group">
                     <label for="password">Password:</label>
                     <div class="password-container">
-                        <input type="password" class="form-control" id="password" name="password" value="${param.password}" required>
+                        <input type="password" class="form-control" id="password" name="password"
+                               value="${param.password}" required checked
+                               oninvalid="this.setCustomValidity('Please enter Password')"
+                               oninput="this.setCustomValidity('')">
                         <i class="bi bi-eye-slash" id="togglePasswordIcon" onclick="togglePassword()"></i>
                     </div>
 
@@ -136,7 +154,10 @@
                 <div class="form-group">
                     <label for="confirmPassword">Confirm Password:</label>
                     <div class="password-container">
-                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" value="${param.confirmPassword}" required>
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                               value="${param.confirmPassword}" required
+                               oninvalid="this.setCustomValidity('Please confirm Password')"
+                               oninput="this.setCustomValidity('')">
                         <i class="bi bi-eye-slash" id="toggleConfirmPasswordIcon" onclick="toggleConfirmPassword()"></i>
                     </div>
                     <p style="color: red"> ${Password_not_match} </p>
@@ -146,10 +167,13 @@
                 <div class="form-group">
                     <label for="confirmPassword">Address</label>
                     <div class="password-container">
-                        <input type="text" class="form-control" id="Address" name="Address" value="${param.Address}" required>
+                        <input type="text" class="form-control" id="Address" name="address" value="${param.address}"
+                               required
+                               oninvalid="this.setCustomValidity('Please enter address')"
+                               oninput="this.setCustomValidity('')">
 
                     </div>
-                    <p style="color: red"> ${Password_not_match} </p>
+                    <p style="color: red"> ${address_too_long} </p>
                 </div>
 
 

@@ -65,17 +65,20 @@ public class NotificationController extends HttpServlet {
     }
 
 
+
     private void addNotification(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
-        String title = request.getParameter("title");
-        String content = request.getParameter("content");
-        java.util.Date date = new java.util.Date(); // Lấy ngày hiện tại
+
+        String title = request.getParameter("title").trim().replaceAll("\\s+", " ");
+        String content = request.getParameter("content").trim().replaceAll("\\s+", " ");
+        java.util.Date date = new java.util.Date();
         Notification newNotification = new Notification(0, title, content, date);
+        String a = "[^a-zA-Z0-9 ]"; // Ký tự đặc biệt ngoài chữ cái, số và khoảng trắng
 
         try {
             // Kiểm tra xem tiêu đề đã tồn tại chưa
             if (notificationDAO.titleExists(title)) {
-                request.setAttribute("errorMessage", "Tiêu đề đã tồn tại."); // Thiết lập thông báo lỗi
+                request.setAttribute("errorMessage", "Tiêu đề đã tồn tại.");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/addNotification.jsp");
                 dispatcher.forward(request, response);
                 return;
@@ -96,13 +99,17 @@ public class NotificationController extends HttpServlet {
     private void editNotification(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {
         int id = Integer.parseInt(request.getParameter("id"));
-        String title = request.getParameter("title");
-        String content = request.getParameter("content");
+        String title = request.getParameter("title").trim().replaceAll("\\s+", " ");
+        String content = request.getParameter("content").trim().replaceAll("\\s+", " ");
         java.util.Date date = java.sql.Date.valueOf(request.getParameter("date"));
         Notification notification = new Notification(id, title, content, date);
         notificationDAO.updateNotification(notification);
         response.sendRedirect(request.getContextPath() + "/Views/Admin/notifications");
+        String a1 = "[^a-zA-Z0-9 ]";
     }
+
+
+
     private void showEditNotificationForm(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         int notificationId = Integer.parseInt(request.getParameter("id"));
@@ -112,6 +119,8 @@ public class NotificationController extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/Views/Admin/editNotification.jsp");
         dispatcher.forward(request, response);
     }
+
+
     private void listNotifications(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         int page = 1;
@@ -131,6 +140,7 @@ public class NotificationController extends HttpServlet {
     }
 
 
+
     private void viewNotificationDetail(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         int notificationId = Integer.parseInt(request.getParameter("id"));
@@ -140,6 +150,7 @@ public class NotificationController extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/Views/Admin/viewNotification.jsp");
         dispatcher.forward(request, response);
     }
+
 
     private void deleteNotification(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
