@@ -40,9 +40,6 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top px-4 px-lg-5 py-lg-0">
-
-    <a href="/Kindergarten_Management_System_G4/Views/Admin/accountManage" class="navbar-brand"></a>
-
     <a href="${pageContext.request.contextPath}/Views/LandingPage/LandingPage.jsp" class="navbar-brand">
         <h1 class="m-0 text-primary"><i class="fa fa-book-reader me-3"></i>KMS</h1>
     </a>
@@ -56,29 +53,22 @@
             <a href="" class="nav-item nav-link">About Us</a>
             <a href="" class="nav-item nav-link">Contact Us</a>
         </div>
-
-
-
         <ul class="navbar-nav ml-auto">
             <c:if test="${sessionScope.user != null}">
-                
                 <li class="nav-item">
                     <a class="nav-link" href="#">Hello, ${sessionScope.user.fullname}</a>
-
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="logout">Logout</a>
-
                 </li>
-                </form>
             </c:if>
         </ul>
     </div>
     <div class="collapse navbar-collapse" >
         <ul class="navbar-nav ml-auto">
             <c:if test="${sessionScope.user == null}">
-
-                <a href="Login.jsp" class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Sign in</a>
-                <a href="register.jsp" class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Sign up</a>
+                <a href="${pageContext.request.contextPath}/Login.jsp" class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Sign in</a>
+                <a href="${pageContext.request.contextPath}/register.jsp" class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Sign up</a>
             </c:if>
         </ul>
     </div>

@@ -68,6 +68,11 @@
 
     </aside>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg col-md-10">
+      <c:if test="${not empty errorMessage}">
+        <div id="failed-alert-create" style="width: 93%; background-color: #bf0606" class="alert alert-danger text-light text-center mx-auto" role="alert">
+            ${errorMessage}
+        </div>
+      </c:if>
       <!-- Navbar -->
       <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
         <div class="d-flex py-1 px-3 justify-content-between align-items-center" style="width: 100%;">
@@ -94,12 +99,6 @@
                 <div class="table-responsive p-0">
                   <form action="${pageContext.request.contextPath}/Views/Admin/accountManage/Create" method="post">
                     <input type="hidden" name="action" value="create"/>
-
-                    <c:if test="${not empty errorMessage}">
-                      <div class="alert alert-danger" role="alert" style="color: white; background-color: red">
-                          ${errorMessage}
-                      </div>
-                    </c:if>
 
                     <div class="form-group" style="width: 95%; padding-left: 5%">
                       <label for="fullname">Full Name</label>
@@ -155,6 +154,18 @@
     xhr.send("userId=" + userId);
   }
 </script>
+
+<script>
+  window.onload = function() {
+    var alert = document.getElementById("failed-alert-create");
+    if (alert) {
+      setTimeout(function() {
+        alert.style.display = 'none';
+      }, 3000);
+    }
+  };
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>

@@ -36,11 +36,12 @@
             border-left: 3px solid white;
             color: white;
         }
+
     </style>
 </head>
 <body class="g-sidenav-show bg-gray-200">
 <%@include file="../common/header.jsp"%>
-<div class="">
+<div class="containerAll">
     <div class="wrapper">
         <aside id="sidebar" class="expand">
             <div class="d-flex">

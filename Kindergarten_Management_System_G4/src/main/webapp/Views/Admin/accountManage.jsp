@@ -31,10 +31,20 @@
             border-left: 3px solid white;
             color: white;
         }
+        /*.table-responsive {*/
+        /*    max-height: 425px; !*
+        /*    overflow-y: auto; !*
+        /*}*/
+        /*table {*/
+        /*    width: 100%;*/
+        /*    table-layout: fixed;*/
+        /*}*/
+        .wrapper{
+            height: 860px;
+        }
     </style>
 </head>
-
-<body class="g-sidenav-show  bg-gray-200">
+<body class="g-sidenav-show bg-gray-200">
 <%@include file="../common/header.jsp"%>
 <div class="containerAll">
     <div class="wrapper">
@@ -71,6 +81,12 @@
         </aside>
         <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg col-md-10">
             <!-- Navbar -->
+            <c:if test="${not empty sessionScope.successMessage}">
+                <div id="success-alert-create" style="width: 93%; background-color: #06bf06" class="alert alert-success text-light text-center mx-auto" role="alert">
+                        ${sessionScope.successMessage}
+                    <c:remove var="successMessage" scope="session" /> <!-- Xóa thông báo sau khi hiển thị -->
+                </div>
+            </c:if>
             <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
                 <div class="d-flex py-1 px-3 justify-content-between align-items-center" style="width: 100%;">
                     <nav aria-label="breadcrumb">
@@ -82,21 +98,28 @@
                     </nav>
 
                     <div class="btn-search" style="margin-top: 20px;">
-                        <form action="${pageContext.request.contextPath}/Views/Admin/accountManage" method="post">
-                            <input type="text" name="searchName" placeholder="Search by name">
+                        <form action="${pageContext.request.contextPath}/Views/Admin/accountManage" method="get">
+                            <input type="text" name="searchName" placeholder="Search by name" value="${param.searchName}">
                             <input type="hidden" name="action" value="search">
                             <button type="submit">Search</button>
                         </form>
                     </div>
 
                     <div style="margin-top: 20px;">
-                        <label for="">Fillter:</label>
-                        <select>
-                            <option id="" value="">Teacher</option>
-                            <option value="">Parent</option>
-                            <option value="">Enrollment</option>
-                        </select>
+                        <form action="${pageContext.request.contextPath}/Views/Admin/accountManage" method="get">
+                            <label for="roleFilter">Filter by role:</label>
+                            <select name="roleFilter" id="roleFilter" onchange="this.form.submit()">
+                                <option value="">All</option>
+                                <option value="1" ${param.roleFilter == '1' ? 'selected' : ''}>Admin</option>
+                                <option value="2" ${param.roleFilter == '2' ? 'selected' : ''}>Teacher</option>
+                                <option value="3" ${param.roleFilter == '3' ? 'selected' : ''}>Principal</option>
+                                <option value="4" ${param.roleFilter == '4' ? 'selected' : ''}>Parent</option>
+                                <option value="5" ${param.roleFilter == '5' ? 'selected' : ''}>Enrollment</option>
+                            </select>
+                            <input type="hidden" name="action" value="filter">
+                        </form>
                     </div>
+
                 </div>
 
             </nav>
@@ -127,45 +150,30 @@
                                         <c:forEach var="user" items="${accounts}">
                                             <tr>
                                                 <td class="text-center">${user.userID}</td>
-                                                <c:choose>
-                                                    <c:when test="${user.roleId == 1}">
-                                                        <td class="text-center">Admin</td>
-                                                    </c:when>
-                                                    <c:when test="${user.roleId == 2}">
-                                                        <td class="text-center">Teacher</td>
-                                                    </c:when>
-                                                    <c:when test="${user.roleId == 3}">
-                                                        <td class="text-center">Principal</td>
-                                                    </c:when>
-                                                    <c:when test="${user.roleId == 4}">
-                                                        <td class="text-center">Parent</td>
-                                                    </c:when>
-                                                    <c:when test="${user.roleId == 5}">
-                                                        <td class="text-center">Enrollment</td>
-                                                    </c:when>
-                                                </c:choose>
-
+                                                <td class="text-center">
+                                                    <c:choose>
+                                                        <c:when test="${user.roleId == 1}">Admin</c:when>
+                                                        <c:when test="${user.roleId == 2}">Teacher</c:when>
+                                                        <c:when test="${user.roleId == 3}">Principal</c:when>
+                                                        <c:when test="${user.roleId == 4}">Parent</c:when>
+                                                        <c:when test="${user.roleId == 5}">Enrollment</c:when>
+                                                        <c:otherwise>Unknown</c:otherwise>
+                                                    </c:choose>
+                                                </td>
                                                 <td class="text-center">${user.fullname}</td>
                                                 <td class="text-center">${user.email}</td>
-                                                <c:choose>
-                                                <c:when test="${user.status == 1}">
-                                                <td class="align-middle text-center" style="color: lawngreen; font-weight: bold">
-                                                    Active
+                                                <td class="align-middle text-center">
+                                                    <c:choose>
+                                                        <c:when test="${user.status == 1}">
+                                                            <span style="color: lawngreen; font-weight: bold">Active</span>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <span style="color: red; font-weight: bold">Deactive</span>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </td>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <td class="align-middle text-center" style="color: red; font-weight: bold">
-                                                        Deactive
-                                                    </td>
-
-                                                </c:otherwise>
-                                                </c:choose>
                                                 <td class="align-middle">
-                                                    <a href="javascript:void(0);"
-                                                       onclick="toggleStatus(${user.userID}, this)"
-                                                       class="text-secondary font-weight-bold text-xs"
-                                                       data-toggle="tooltip"
-                                                       data-original-title="Toggle status">
+                                                    <a href="javascript:void(0);" onclick="toggleStatus(${user.userID}, this)" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Toggle status">
                                                         <i class="fa-solid fa-toggle-on" style="color: ${user.status == 1 ? '#029f02' : 'red'}; font-size: 30px; margin: 5px"></i>
                                                     </a>
                                                     <a href="${pageContext.request.contextPath}/Views/Admin/accountManage/Detail?userId=${user.userID}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
@@ -176,21 +184,48 @@
                                         </c:forEach>
                                         </tbody>
                                     </table>
-
                                 </div>
-
                             </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <button class="btn btn-primary">
+                                    <a href="${pageContext.request.contextPath}/Views/Admin/CreateAccount.jsp" class="text-light">Create Account</a>
+                                </button>
+                            </div>
+                            <nav class="col-md-7" aria-label="Page navigation">
+                                <ul class="pagination">
+                                    <c:if test="${currentPage > 1}">
+                                        <li class="page-item">
+                                            <a class="page-link" href="${pageContext.request.contextPath}/Views/Admin/accountManage?pageNumber=${currentPage - 1}&searchName=${param.searchName}&roleFilter=${param.roleFilter}" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                    </c:if>
 
+                                    <c:forEach begin="1" end="${totalPages}" var="i">
+                                        <li class="page-item ${currentPage == i ? 'active' : ''}">
+                                            <a class="page-link" href="${pageContext.request.contextPath}/Views/Admin/accountManage?pageNumber=${i}&searchName=${param.searchName}&roleFilter=${param.roleFilter}">${i}</a>
+                                        </li>
+                                    </c:forEach>
+
+                                    <c:if test="${currentPage < totalPages}">
+                                        <li class="page-item">
+                                            <a class="page-link" href="${pageContext.request.contextPath}/Views/Admin/accountManage?pageNumber=${currentPage + 1}&searchName=${param.searchName}&roleFilter=${param.roleFilter}" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </c:if>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
-                    <div>
-                        <button class="btn btn-primary">
-                            <a href="${pageContext.request.contextPath}/Views/Admin/CreateAccount.jsp" class="text-light">Create Account</a>
-                        </button>
-                    </div>
+
                 </div>
+
             </div>
         </main>
+
     </div>
 </div>
 <script>
@@ -223,26 +258,17 @@
     }
 </script>
 
-<%--<script>--%>
-<%--    function toggleStatus(userId, element) {--%>
-<%--        const xhr = new XMLHttpRequest();--%>
-<%--        xhr.open("POST", "${pageContext.request.contextPath}/Views/Admin/accountManage", true);--%>
-<%--        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");--%>
+<script>
+    window.onload = function() {
+        var alert = document.getElementById("success-alert-create");
+        if (alert) {
+            setTimeout(function() {
+                alert.style.display = 'none';
+            }, 3000);
+        }
+    };
+</script>
 
-<%--        xhr.onload = function() {--%>
-<%--            if (xhr.status === 200) {--%>
-<%--                const currentColor = element.querySelector('i').style.color;--%>
-<%--                element.querySelector('i').style.color = currentColor === 'rgb(2, 159, 2)' ? 'red' : '#029f02';--%>
-<%--                const statusText = element.closest('tr').querySelector('td:nth-child(5)');--%>
-<%--                statusText.textContent = statusText.textContent === 'Active' ? 'Deactive' : 'Active';--%>
-<%--                statusText.style.color = statusText.style.color === 'lawngreen' ? 'red' : 'lawngreen';--%>
-<%--            } else {--%>
-<%--                console.error('Error toggling status: ' + xhr.statusText);--%>
-<%--            }--%>
-<%--        };--%>
-<%--        xhr.send("userId=" + userId);--%>
-<%--    }--%>
-<%--</script>--%>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>

@@ -77,12 +77,6 @@ public class AccountDAO {
         return account;
     }
 
-
-    public boolean isUserExists(int userId) throws SQLException {
-        User account = getAccountById(userId);
-        return account != null;
-    }
-
     public void createAccount(String fullname, String email, int roleId) throws SQLException {
         String password = generateRandomPassword();
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -166,54 +160,141 @@ public class AccountDAO {
     }
 
 
-    public static List<User> searchByName(String name) {
-        List<User> users = new ArrayList<>();
-        String query = "SELECT * FROM users WHERE fullname LIKE ?";
+    public int getAccountCount(String searchName, Integer roleId) throws SQLException {
+        // Câu truy vấn SQL với điều kiện tìm kiếm và lọc
+        StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM kindergartenmanagementsystem.user WHERE 1=1");
+
+        if (searchName != null && !searchName.trim().isEmpty()) {
+            sql.append(" AND Fullname LIKE ?");
+        }
+
+        if (roleId != null) {
+            sql.append(" AND Role_id = ?");
+        }
 
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+             PreparedStatement stmt = conn.prepareStatement(sql.toString())) {
 
-            stmt.setString(1, "%" + name + "%");
-            ResultSet rs = stmt.executeQuery();
+            int parameterIndex = 1;
 
-            while (rs.next()) {
-                User user = new User();
-                user.setUserID(rs.getInt("userID"));
-                user.setFullname(rs.getString("fullname"));
-                user.setEmail(rs.getString("email"));
-                user.setStatus(rs.getInt("status"));
-                user.setRoleId(rs.getInt("roleId"));
-                users.add(user);
+            if (searchName != null && !searchName.trim().isEmpty()) {
+                stmt.setString(parameterIndex++, "%" + searchName + "%");
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+            if (roleId != null) {
+                stmt.setInt(parameterIndex++, roleId);
+            }
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1); // Trả về số lượng tài khoản
+                }
+            }
         }
-        return users;
+        return 0; // Nếu không tìm thấy tài khoản
+    }
+
+
+    public List<User> getAccounts(int currentPage, int pageSize, String searchName, Integer roleId) throws SQLException {
+        List<User> accounts = new ArrayList<>();
+        int offset = (currentPage - 1) * pageSize;
+
+        // Câu lệnh SQL cơ bản với LIMIT để phân trang
+        StringBuilder sql = new StringBuilder("SELECT * FROM kindergartenmanagementsystem.user WHERE 1=1");
+
+        // Nếu có tìm kiếm theo tên, thêm điều kiện vào câu lệnh SQL
+        if (searchName != null && !searchName.isEmpty()) {
+            sql.append(" AND fullname LIKE ?");
+        }
+
+        // Nếu có lọc theo vai trò, thêm điều kiện vào câu lệnh SQL
+        if (roleId != null) {
+            sql.append(" AND role_id = ?");
+        }
+
+        // Thêm phần LIMIT để phân trang
+        sql.append(" LIMIT ?, ?");
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql.toString())) {
+
+            int paramIndex = 1;
+
+            // Nếu có tìm kiếm theo tên, thiết lập tham số cho tìm kiếm
+            if (searchName != null && !searchName.isEmpty()) {
+                stmt.setString(paramIndex++, "%" + searchName + "%");
+            }
+
+            // Nếu có lọc theo vai trò, thiết lập tham số cho vai trò
+            if (roleId != null) {
+                stmt.setInt(paramIndex++, roleId);
+            }
+
+            // Thiết lập tham số cho phân trang (LIMIT)
+            stmt.setInt(paramIndex++, offset); // Số bản ghi cần bỏ qua
+            stmt.setInt(paramIndex++, pageSize); // Số bản ghi muốn lấy
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    User account = new User();
+                    // Thiết lập thuộc tính cho user từ ResultSet
+                    account.setUserID(rs.getInt("User_id"));
+                    account.setRoleId(rs.getInt("Role_id"));
+                    account.setFullname(rs.getString("Fullname"));
+                    account.setEmail(rs.getString("Email"));
+                    account.setStatus(rs.getInt("Status"));
+                    account.setAddress(rs.getString("Address")); // Giả sử bạn có trường địa chỉ
+                    account.setPhoneNumber(rs.getString("PhoneNumber"));
+                    account.setDateOfBirth(rs.getString("date_Of_birth"));
+                    account.setPassword(rs.getString("Password"));
+                    account.setImage(rs.getString("Image"));
+                    account.setGender(rs.getInt("Gender"));
+
+                    accounts.add(account);
+                }
+            }
+        }
+
+        return accounts;
     }
 
 
     public static void main(String[] args) {
-        AccountDAO accountDAO = new AccountDAO();
         try {
+            // Tạo một thể hiện của lớp chứa các hàm
+            AccountDAO accountDAO = new AccountDAO();
 
-            // Thêm đoạn mã kiểm tra email đã tồn tại trước khi tạo tài khoản
-            String newFullname = "Call me Natsu"; // Tên người dùng mới
-            String newEmail = "robert.anime.vn1@gmail.com"; // Email người dùng mới
-            int newRoleId = 4; // Vai trò người dùng mới (thay đổi giá trị này nếu cần)
+            // Các tham số cho việc phân trang, tìm kiếm và lọc
+            int currentPage = 1; // Trang hiện tại
+            int pageSize = 7;    // Số bản ghi trên mỗi trang
+            String searchName = ""; // Tìm kiếm theo tên (có thể để trống nếu không cần)
+            Integer roleId = 2; // Lọc theo vai trò (có thể để null nếu không cần)
 
-            // Kiểm tra xem email đã tồn tại chưa
-            if (accountDAO.isEmailExists(newEmail)) {
-                System.out.println("Email '" + newEmail + "' đã tồn tại. Không thể tạo tài khoản.");
+            // Kiểm tra số lượng tài khoản
+            int accountCount = accountDAO.getAccountCount(searchName, roleId);
+            System.out.println("Số lượng tài khoản: " + accountCount);
+
+            // Kiểm tra danh sách tài khoản
+            List<User> accounts = accountDAO.getAccounts(currentPage, pageSize, searchName, roleId);
+            System.out.println("Danh sách tài khoản:");
+
+            // Kiểm tra xem danh sách có rỗng không
+            if (accounts.isEmpty()) {
+                System.out.println("Không tìm thấy tài khoản nào phù hợp.");
             } else {
-                // Nếu email chưa tồn tại, tiến hành tạo tài khoản và gửi email
-                accountDAO.createAccount(newFullname, newEmail, newRoleId);
-                System.out.println("Tài khoản đã được tạo và email đã được gửi thành công!");
+                for (User user : accounts) {
+                    // In thông tin tài khoản, tùy thuộc vào các thuộc tính của lớp User
+                    System.out.println(user.toString()); // Đảm bảo bạn đã ghi đè phương thức toString() trong lớp User
+                }
             }
-
         } catch (SQLException e) {
-            System.out.println("Lỗi SQL: " + e.getMessage());
+            System.err.println("Lỗi truy vấn cơ sở dữ liệu: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Lỗi: " + e.getMessage());
         }
     }
+
+
 
 }
 
