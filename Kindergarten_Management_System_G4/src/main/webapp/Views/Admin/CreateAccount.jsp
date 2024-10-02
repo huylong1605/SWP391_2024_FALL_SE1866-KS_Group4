@@ -103,12 +103,12 @@
 
                     <div class="form-group" style="width: 95%; padding-left: 5%">
                       <label for="fullname">Full Name</label>
-                      <input type="text" class="form-control" id="fullname" name="fullname" required maxlength="12"/>
+                      <input type="text" class="form-control" id="fullname" name="fullname" required />
                     </div>
 
                     <div class="form-group" style="width: 95%; padding-left: 5%">
                       <label for="email">Email</label>
-                      <input type="email" class="form-control" id="email" name="email" required maxlength="50"/>
+                      <input type="email" class="form-control" id="email" name="email" required />
                     </div>
 
                     <div class="form-group" style="width: 95%; padding-left: 5%">

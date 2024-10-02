@@ -17,7 +17,6 @@
             min-height: 100vh;
             background-color: #f8f9fa;
         }
-
         .login-form {
             background-color: #ffffff;
             padding: 40px;
@@ -26,28 +25,23 @@
             max-width: 400px;
             width: 100%;
         }
-
         .login-form h2 {
             margin-bottom: 30px;
             text-align: center;
             font-size: 28px;
             color: #007bff;
         }
-
         .form-group label {
             font-weight: 600;
             font-size: 14px;
         }
-
         .password-container {
             position: relative;
         }
-
         .password-container input[type="password"],
         .password-container input[type="text"] {
             padding-right: 40px;
         }
-
         .password-container .bi-eye,
         .password-container .bi-eye-slash {
             position: absolute;
@@ -58,16 +52,13 @@
             font-size: 1.2rem;
             color: #6c757d;
         }
-
         .form-check-label {
             margin-left: 5px;
         }
-
         .forgot-password {
             text-align: center;
             margin-top: 15px;
         }
-
         .btn-primary {
             background-color: #007bff;
             border: none;
@@ -76,21 +67,17 @@
             border-radius: 8px;
             transition: background-color 0.3s ease;
         }
-
         .btn-primary:hover {
             background-color: #0056b3;
         }
-
         .text-muted {
             color: #6c757d;
             font-size: 14px;
         }
-
         .login-form p {
             color: red;
             font-weight: bold;
         }
-
         .login-form input[type="text"],
         .login-form input[type="password"] {
             border-radius: 8px;
@@ -103,13 +90,14 @@
     <form class="login-form" action="verificationCode" method="POST">
         <h2>Verification Code</h2>
         <p>${ss}</p>
-        <input type="hidden" name="email" value="${param.email}"/>
+        <input type="hidden" name="email" value="${param.email}" />
 
         <div class="form-group">
             <label for="Code">Code:</label>
             <input type="text" class="form-control" id="Code" name="Code" value="${Code}" required>
         </div>
         <p style="color: red;">${CodeNotTrue}</p>
+
 
 
         <button type="submit" class="btn btn-primary btn-block">Submit</button>
