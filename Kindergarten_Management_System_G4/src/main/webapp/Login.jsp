@@ -1,4 +1,15 @@
+
+
 <!DOCTYPE html>
+/*
+* Copyright(C) 2005,  SWP_G4.
+* KMS :
+* Kindergarten Management System
+*
+* Record of change:
+* DATE           Version                  AUTHOR                          DESCRIPTION
+* 10/2/2024       1.1              Nguyễn Huy Long - He160140              Fix ui
+*/
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -124,7 +135,7 @@
             <label class="form-check-label" for="rememberMe">Remember me</label>
         </div>
 
-        <p style="color: red;">${message1}</p>
+        <p style="color: red;">${loginFalse}</p>
 
         <button type="submit" class="btn btn-primary btn-block">Login</button>
       <%--  <div class="text-center mt-3">

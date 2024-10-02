@@ -1,4 +1,14 @@
+
 <!DOCTYPE html>
+/*
+* Copyright(C) 2005,  SWP_G4.
+* KMS :
+* Kindergarten Management System
+*
+* Record of change:
+* DATE           Version                  AUTHOR                          DESCRIPTION
+* 10/2/2024       1.1              Nguyễn Huy Long - He160140              Fix ui
+*/
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -89,11 +99,11 @@
 <div class="login-container">
     <form class="login-form" action="forgetPassword" method="POST">
         <h2>Forget Password</h2>
-        <p>${ss}</p>
+
 
         <div class="form-group">
             <label for="Email">Email:</label>
-            <input type="Email" class="form-control" id="Email" name="Email" value="${param.Email}" required
+            <input type="email" class="form-control" id="Email" name="Email" value="${param.Email}" required
                    oninvalid="this.setCustomValidity('Please enter email address')"
                    oninput="this.setCustomValidity('')">
         </div>

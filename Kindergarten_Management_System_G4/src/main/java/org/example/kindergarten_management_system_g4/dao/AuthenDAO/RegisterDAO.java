@@ -1,3 +1,12 @@
+/*
+ * Copyright(C) 2005,  SWP_G4.
+ * KMS :
+ * Kindergarten Management System
+ *
+ * Record of change:
+ * DATE           Version                  AUTHOR                          DESCRIPTION
+ * 10/2/2024       1.1              Nguyễn Huy Long - He160140            Update Logger
+ */
 package org.example.kindergarten_management_system_g4.dao.AuthenDAO;
 
 import org.example.kindergarten_management_system_g4.connection.DBConnection;
@@ -10,6 +19,11 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Kế thừa từ lớp DBConection
+ * sử lý  rồi đưa các nghiệp vụ của chức năng Đăng ký ở lớp RegisterController
+ * @author Nguyễn Huy Long
+ */
 public class RegisterDAO extends DBConnection {
     private static final Logger logger = Logger.getLogger(RegisterDAO.class.getName());
     private static final String CHECK_PHONE = "SELECT * FROM user WHERE phoneNumber=?";
@@ -17,6 +31,14 @@ public class RegisterDAO extends DBConnection {
     private static final String INSERT_USER = "INSERT INTO user(Fullname, email, password, gender, phoneNumber, address) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String INSERT_USER_LOGIN_GG = "INSERT INTO user(Fullname, email) VALUES (?, ?)";
 
+
+    /**
+     * Kiểm tra xem số điện thoại đã tồn tại trong cơ sở dữ liệu hay chưa.
+     *
+     * @param phone Số điện thoại cần kiểm tra.
+     * @return true nếu số điện thoại đã tồn tại, false nếu không.
+     * @throws ClassNotFoundException nếu không tìm thấy lớp kết nối đến cơ sở dữ liệu.
+     */
     public boolean checkPhone(String phone) throws ClassNotFoundException {
         boolean exists = false;
         Connection connection = null;
@@ -40,6 +62,14 @@ public class RegisterDAO extends DBConnection {
         return exists; // Trả về kết quả kiểm tra
     }
 
+
+    /**
+     * Kiểm tra xem email đã tồn tại trong cơ sở dữ liệu hay chưa.
+     *
+     * @param email Email cần kiểm tra.
+     * @return true nếu email đã tồn tại, false nếu không.
+     * @throws ClassNotFoundException nếu không tìm thấy lớp kết nối đến cơ sở dữ liệu.
+     */
     public boolean checkEmail(String email) throws ClassNotFoundException {
         boolean exists = false;
         Connection connection = null;
@@ -63,6 +93,14 @@ public class RegisterDAO extends DBConnection {
         return exists; // Trả về kết quả kiểm tra
     }
 
+
+    /**
+     * Thêm một người dùng mới vào cơ sở dữ liệu.
+     *
+     * @param u Đối tượng User chứa thông tin của người dùng cần thêm.
+     * @return true nếu thêm thành công, false nếu không.
+     * @throws ClassNotFoundException nếu không tìm thấy lớp kết nối đến cơ sở dữ liệu.
+     */
     public boolean insertUser(User u) throws ClassNotFoundException {
         boolean isInserted = false; // Khởi tạo mặc định là false
         Connection connection = null;
@@ -127,6 +165,13 @@ public class RegisterDAO extends DBConnection {
         return isInserted; // Trả về kết quả kiểm tra
     }
 
+    /**
+     * Đóng các tài nguyên kết nối cơ sở dữ liệu.
+     *
+     * @param resultSet Kết quả truy vấn.
+     * @param preparedStatement Câu lệnh đã chuẩn bị.
+     * @param connection Kết nối đến cơ sở dữ liệu.
+     */
     private void closeResources(ResultSet resultSet, PreparedStatement preparedStatement, Connection connection) {
         // Đóng ResultSet
         try {

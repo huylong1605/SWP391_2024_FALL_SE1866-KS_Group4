@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+/*
+* Copyright(C) 2005,  SWP_G4.
+* KMS :
+* Kindergarten Management System
+*
+* Record of change:
+* DATE           Version                  AUTHOR                          DESCRIPTION
+* 10/2/2024       1.1              Nguyễn Huy Long - He160140              Fix ui
+*/
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -81,7 +90,7 @@
                            required
                            oninvalid="this.setCustomValidity('Please enter your full name')"
                            oninput="this.setCustomValidity('')">
-                    <p style="color: red"> ${fullname_too_long} </p>
+                    <p style="color: red" > ${fullname_too_long} </p>
 
 
                 </div>
@@ -223,6 +232,10 @@
             toggleConfirmIcon.classList.add("bi-eye-slash");
         }
     }
+
+
+
+
 </script>
 
 </body>
