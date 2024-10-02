@@ -6,7 +6,7 @@ public class Subject {
     private String subjectName;
     private String description;
     private int userId;  // This is a foreign key referencing User
-
+    private String status;
     // Constructor
     public Subject() {}
 
@@ -45,6 +45,12 @@ public class Subject {
 
     public String getDescription() {
         return description;
+    }
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    public String getStatus() {
+        return status;
     }
 
     public void setDescription(String description) {

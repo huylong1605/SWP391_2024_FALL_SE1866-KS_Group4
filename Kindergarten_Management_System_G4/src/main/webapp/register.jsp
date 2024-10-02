@@ -80,7 +80,7 @@
                     <input type="text" class="form-control" id="fullname" name="fullname" value="${param.fullname}" required>
 
                 </div>
-
+                <br>
                 <div class="form-group">
                     <label for="email">Email:</label>
                     <input type="email" class="form-control" id="email" name="email" value="${param.email}" required>
@@ -91,7 +91,7 @@
                     <p style="color:red;"><%= request.getAttribute("email_exits") %></p>
                     <% } %>
                 </div>
-
+                <br>
                 <div class="form-group">
                     <label for="phone">Phone Number:</label>
                     <input type="text" class="form-control" id="phone" name="phone" value="${param.phone}" required>
@@ -102,6 +102,7 @@
                     <p style="color:red;"><%= request.getAttribute("phone_not_match") %></p>
                     <% } %>
                 </div>
+                <br>
                 <div class="form-group">
                     <label>Gender:</label>
                     <div class="form-check form-check-inline">
@@ -126,9 +127,12 @@
                         <input type="password" class="form-control" id="password" name="password" value="${param.password}" required>
                         <i class="bi bi-eye-slash" id="togglePasswordIcon" onclick="togglePassword()"></i>
                     </div>
-                    <p style="color: red"> ${message1} </p>
+
+                    <p style="color: red"> ${password_too_long} </p>
+
                 </div>
 
+                <br>
                 <div class="form-group">
                     <label for="confirmPassword">Confirm Password:</label>
                     <div class="password-container">
@@ -137,6 +141,8 @@
                     </div>
                     <p style="color: red"> ${Password_not_match} </p>
                 </div>
+                <br>
+
                 <div class="form-group">
                     <label for="confirmPassword">Address</label>
                     <div class="password-container">
