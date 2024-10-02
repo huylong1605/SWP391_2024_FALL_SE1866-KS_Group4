@@ -64,7 +64,7 @@ public class loginController extends HttpServlet {
                     resp.addCookie(cookieRemember);
 
                     if (user.getRoleId() == 4) {
-                        req.getRequestDispatcher("index.jsp").forward(req, resp);
+                        req.getRequestDispatcher("/Views/HomePage/HomePage.jsp").forward(req, resp);
 
                         /*  resp.sendRedirect("index.jsp");*/
                     } else if (user.getRoleId() == 1) {
