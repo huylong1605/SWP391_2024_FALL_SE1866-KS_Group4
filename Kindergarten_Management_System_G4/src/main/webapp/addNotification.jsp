@@ -27,12 +27,12 @@
     <form action="${pageContext.request.contextPath}/addNotification" method="post">
         <div class="form-group">
             <label for="title">Title</label>
-            <input type="text" class="form-control" id="title" name="title" placeholder="Enter notification title" required>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Enter notification title" required maxlength="150">
         </div>
 
         <div class="form-group">
             <label for="content">Content</label>
-            <textarea class="form-control" id="content" name="content" rows="4" placeholder="Enter notification content" required></textarea>
+            <textarea class="form-control" id="content" name="content" rows="4" placeholder="Enter notification content" required maxlength="4000"></textarea>
         </div>
 
         <button type="submit" class="btn btn-primary mt-3">Add Notification</button>

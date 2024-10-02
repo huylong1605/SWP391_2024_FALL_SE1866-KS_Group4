@@ -17,11 +17,11 @@
         <input type="hidden" name="id" value="${notification.notificationId}" />
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" name="title" value="${notification.title}" required />
+            <input type="text" class="form-control" id="title" name="title" value="${notification.title}" required maxlength="150"/>
         </div>
         <div class="mb-3">
             <label for="content" class="form-label">Content</label>
-            <textarea class="form-control" id="content" name="content" required>${notification.content}</textarea>
+            <textarea class="form-control" id="content" name="content" required maxlength="4000">${notification.content}</textarea>
         </div>
         <div class="mb-3">
             <label for="date" class="form-label">Date</label>
