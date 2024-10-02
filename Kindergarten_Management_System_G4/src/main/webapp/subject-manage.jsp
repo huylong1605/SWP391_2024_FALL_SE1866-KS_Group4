@@ -116,7 +116,11 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
+<<<<<<< HEAD
                     <h5 class="modal-title" id="editsubjectModalLabel_${subject.subjectId}">Edit subject</h5>
+=======
+                    <h5 class="modal-title" id="editsubjectModal_${subject.id}">Edit subject</h5>
+>>>>>>> 6575569b82098c58d2ff62c2aa35716c607cf3b9
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
