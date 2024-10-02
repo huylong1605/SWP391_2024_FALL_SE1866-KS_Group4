@@ -104,4 +104,20 @@ public class User {
         this.roleId = roleId;
     }
 
+
+    public String toString() {
+        return "User{" +
+                "UserID=" + UserID +
+                ", Fullname='" + Fullname + '\'' +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
+                ", Email='" + Email + '\'' +
+                ", gender=" + gender +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", image='" + image + '\'' +
+                ", Status=" + Status +
+                ", roleId=" + roleId +
+                '}';
+    }
+
 }

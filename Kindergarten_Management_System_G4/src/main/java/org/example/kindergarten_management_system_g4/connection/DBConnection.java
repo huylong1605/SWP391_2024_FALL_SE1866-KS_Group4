@@ -10,7 +10,11 @@ public class DBConnection {
 
     private static final String USER = "root";
 
+
     private static final String PASSWORD = "123456";
+
+
+
 
 
     public static Connection getConnection() throws SQLException {
