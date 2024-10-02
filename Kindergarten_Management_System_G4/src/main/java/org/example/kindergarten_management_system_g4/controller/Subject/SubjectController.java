@@ -124,9 +124,6 @@ public class SubjectController extends HttpServlet {
             return;
         }
 
-        // Clean khoảng trắng cho description
-        description = description.trim().replaceAll("\\s+", " ");
-
         // Check UserID > 0
         if (Integer.parseInt(userId) < 0 ) {
             session.setAttribute("errorMessage", "Alert: ID user must be a integer number !");
@@ -224,9 +221,6 @@ public class SubjectController extends HttpServlet {
             response.sendRedirect("subject");
             return;
         }
-
-        // Clean khoảng trắng cho description
-        description = description.trim().replaceAll("\\s+", " ");
 
         // Check UserID > 0
         if (userId < 0 ) {
