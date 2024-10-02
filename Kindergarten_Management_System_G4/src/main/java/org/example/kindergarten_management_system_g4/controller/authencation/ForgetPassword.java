@@ -35,7 +35,7 @@ public class ForgetPassword extends HttpServlet {
 
             String code = getRanDom();
             try {
-                String Mail = forgetPasswordDAO.FindMail(email);
+                String Mail = forgetPasswordDAO.findMail(email);
                 if (Mail.isEmpty() || Mail == null) {
 
                     req.setAttribute("emailNull", "email is not exist");
@@ -48,7 +48,7 @@ public class ForgetPassword extends HttpServlet {
 
                     System.out.println("Email before redirect: " + email); // In ra để kiểm tra
                     resp.sendRedirect("verificationCode.jsp?email=" + email);
-                    forgetPasswordDAO.InsertCode(code, email);
+                    forgetPasswordDAO.insertCode(code, email);
                 }
 
             } catch (ClassNotFoundException e) {

@@ -94,7 +94,9 @@
 
         <div class="form-group">
             <label for="Code">Code:</label>
-            <input type="text" class="form-control" id="Code" name="Code" value="${Code}" required>
+            <input type="text" class="form-control" id="Code" name="Code" value="${Code}" required
+                   oninvalid="this.setCustomValidity('Please enter Code to get new Password')"
+                   oninput="this.setCustomValidity('')">
         </div>
         <p style="color: red;">${CodeNotTrue}</p>
 

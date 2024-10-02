@@ -48,9 +48,9 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav mx-auto">
-            <a href="${pageContext.request.contextPath}/Views/LandingPage/LandingPage.jsp" class="nav-item nav-link active">Home</a>
+            <a href="${pageContext.request.contextPath}/Views/HomePage/HomePage.jsp" class="nav-item nav-link active">Home</a>
             <a href="${pageContext.request.contextPath}/Views/Admin/accountManage" class="nav-item nav-link">Admin Manage</a>
-            <a href="" class="nav-item nav-link">About Us</a>
+            <a href="/" class="nav-item nav-link">About Us</a>
             <a href="" class="nav-item nav-link">Contact Us</a>
         </div>
         <ul class="navbar-nav ml-auto">

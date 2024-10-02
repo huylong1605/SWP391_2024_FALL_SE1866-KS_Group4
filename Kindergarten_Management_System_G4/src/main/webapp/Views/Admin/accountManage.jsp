@@ -76,6 +76,12 @@
                         <span>Manage Subject</span>
                     </a>
                 </li>
+                <li class="sidebar-item">
+                                    <a href="${pageContext.request.contextPath}/viewStudentList" class="sidebar-link">
+                                        <i class="lni lni-graduation"></i>
+                                        <span>View List Student</span>
+                                    </a>
+                                </li>
             </ul>
 
         </aside>

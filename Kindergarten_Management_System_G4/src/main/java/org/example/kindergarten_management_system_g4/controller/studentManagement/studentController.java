@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "StudentController", value = "/students")
+@WebServlet(name = "StudentController", value = "/viewStudentList")
 public class studentController extends HttpServlet {
     private StudentDAO studentDAO;
 
@@ -23,10 +23,24 @@ public class studentController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
+            // Lấy danh sách tất cả sinh viên
             List<Student> students = studentDAO.getAllStudents();
-            req.setAttribute("students", students);
 
-            // Correct path for forwarding to JSP
+            // Thiết lập phân trang
+            int studentsPerPage = 5;
+            int totalStudents = students.size();
+            int totalPages = (int) Math.ceil((double) totalStudents / studentsPerPage);
+            int currentPage = req.getParameter("pageNumber") != null ? Integer.parseInt(req.getParameter("pageNumber")) : 1;
+            int start = (currentPage - 1) * studentsPerPage;
+            int end = Math.min(start + studentsPerPage, totalStudents);
+            List<Student> studentsForPage = students.subList(start, end);
+
+            // Truyền dữ liệu sang JSP
+            req.setAttribute("students", studentsForPage);
+            req.setAttribute("totalPages", totalPages);
+            req.setAttribute("currentPage", currentPage);
+
+            // Chuyển hướng sang trang JSP
             req.getRequestDispatcher("/Views/Admin/viewStudentList.jsp").forward(req, resp);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
