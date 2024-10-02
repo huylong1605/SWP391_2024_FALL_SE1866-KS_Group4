@@ -66,7 +66,7 @@ public class AccountDAO {
             account.setFullname(rs.getString("Fullname"));
             account.setEmail(rs.getString("Email"));
             account.setStatus(rs.getInt("Status"));
-            account.setAddress(rs.getString("Address")); // Giả sử bạn có trường địa chỉ
+            account.setAddress(rs.getString("Address"));
             account.setPhoneNumber(rs.getString("PhoneNumber"));
             account.setDateOfBirth(rs.getString("date_Of_birth"));
             account.setPassword(rs.getString("Password"));
@@ -81,7 +81,7 @@ public class AccountDAO {
         String password = generateRandomPassword();
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(password);
-        // Lưu tài khoản vào cơ sở dữ liệu
+
         String sql = "INSERT INTO user (Fullname, Email, Password, Role_id, Status) VALUES (?, ?, ?, ?, ?)";
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -89,17 +89,17 @@ public class AccountDAO {
             ps.setString(2, email);
             ps.setString(3, hashedPassword);
             ps.setInt(4, roleId);
-            ps.setInt(5, 1); // Trạng thái mặc định là "Active"
+            ps.setInt(5, 1);
             ps.executeUpdate();
         }
 
-        // Gửi email
+
         sendEmail(email, password);
     }
 
     private String generateRandomPassword() {
-        // Tạo mật khẩu ngẫu nhiên
-        int length = 8; // Độ dài mật khẩu
+
+        int length = 8;
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         Random random = new Random();
         StringBuilder password = new StringBuilder();
@@ -110,9 +110,9 @@ public class AccountDAO {
     }
 
     private void sendEmail(String recipient, String password) {
-        String host = "smtp.gmail.com"; // Địa chỉ máy chủ SMTP
-        final String username = "tcnatsu150977@gmail.com"; // Địa chỉ email gửi
-        final String passwordSender = "yqxf ijdq ypze lhed"; // Mật khẩu email
+        String host = "smtp.gmail.com";
+        final String username = "tcnatsu150977@gmail.com";
+        final String passwordSender = "yqxf ijdq ypze lhed";
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -138,22 +138,22 @@ public class AccountDAO {
             message.setText(emailBody);
 
             Transport.send(message);
-            System.out.println("Email đã được gửi thành công đến " + recipient); // Thông báo khi gửi thành công
+            System.out.println("Email đã được gửi thành công đến " + recipient);
         } catch (MessagingException e) {
             e.printStackTrace();
-            System.out.println("Lỗi khi gửi email: " + e.getMessage()); // Thông báo lỗi nếu có
+            System.out.println("Lỗi khi gửi email: " + e.getMessage());
         }
 
     }
 
     public boolean isEmailExists(String email) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM user WHERE Email = ?"; // Câu truy vấn để kiểm tra email
+        String sql = "SELECT COUNT(*) FROM user WHERE Email = ?";
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, email); // Thiết lập giá trị email cho câu truy vấn
+            ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return rs.getInt(1) > 0; // Nếu số lượng lớn hơn 0, email đã tồn tại
+                return rs.getInt(1) > 0;
             }
         }
         return false;
@@ -161,7 +161,7 @@ public class AccountDAO {
 
 
     public int getAccountCount(String searchName, Integer roleId) throws SQLException {
-        // Câu truy vấn SQL với điều kiện tìm kiếm và lọc
+
         StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM kindergartenmanagementsystem.user WHERE 1=1");
 
         if (searchName != null && !searchName.trim().isEmpty()) {
@@ -187,11 +187,11 @@ public class AccountDAO {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return rs.getInt(1); // Trả về số lượng tài khoản
+                    return rs.getInt(1);
                 }
             }
         }
-        return 0; // Nếu không tìm thấy tài khoản
+        return 0;
     }
 
 
@@ -199,20 +199,20 @@ public class AccountDAO {
         List<User> accounts = new ArrayList<>();
         int offset = (currentPage - 1) * pageSize;
 
-        // Câu lệnh SQL cơ bản với LIMIT để phân trang
+
         StringBuilder sql = new StringBuilder("SELECT * FROM kindergartenmanagementsystem.user WHERE 1=1");
 
-        // Nếu có tìm kiếm theo tên, thêm điều kiện vào câu lệnh SQL
+
         if (searchName != null && !searchName.isEmpty()) {
             sql.append(" AND fullname LIKE ?");
         }
 
-        // Nếu có lọc theo vai trò, thêm điều kiện vào câu lệnh SQL
+
         if (roleId != null) {
             sql.append(" AND role_id = ?");
         }
 
-        // Thêm phần LIMIT để phân trang
+
         sql.append(" LIMIT ?, ?");
 
         try (Connection conn = DBConnection.getConnection();
@@ -220,24 +220,24 @@ public class AccountDAO {
 
             int paramIndex = 1;
 
-            // Nếu có tìm kiếm theo tên, thiết lập tham số cho tìm kiếm
+
             if (searchName != null && !searchName.isEmpty()) {
                 stmt.setString(paramIndex++, "%" + searchName + "%");
             }
 
-            // Nếu có lọc theo vai trò, thiết lập tham số cho vai trò
+
             if (roleId != null) {
                 stmt.setInt(paramIndex++, roleId);
             }
 
-            // Thiết lập tham số cho phân trang (LIMIT)
-            stmt.setInt(paramIndex++, offset); // Số bản ghi cần bỏ qua
-            stmt.setInt(paramIndex++, pageSize); // Số bản ghi muốn lấy
+
+            stmt.setInt(paramIndex++, offset);
+            stmt.setInt(paramIndex++, pageSize);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     User account = new User();
-                    // Thiết lập thuộc tính cho user từ ResultSet
+
                     account.setUserID(rs.getInt("User_id"));
                     account.setRoleId(rs.getInt("Role_id"));
                     account.setFullname(rs.getString("Fullname"));
@@ -261,30 +261,25 @@ public class AccountDAO {
 
     public static void main(String[] args) {
         try {
-            // Tạo một thể hiện của lớp chứa các hàm
+
             AccountDAO accountDAO = new AccountDAO();
 
-            // Các tham số cho việc phân trang, tìm kiếm và lọc
-            int currentPage = 1; // Trang hiện tại
-            int pageSize = 7;    // Số bản ghi trên mỗi trang
-            String searchName = ""; // Tìm kiếm theo tên (có thể để trống nếu không cần)
-            Integer roleId = 2; // Lọc theo vai trò (có thể để null nếu không cần)
+            int currentPage = 1;
+            int pageSize = 7;
+            String searchName = "";
+            Integer roleId = 2;
 
-            // Kiểm tra số lượng tài khoản
             int accountCount = accountDAO.getAccountCount(searchName, roleId);
             System.out.println("Số lượng tài khoản: " + accountCount);
 
-            // Kiểm tra danh sách tài khoản
             List<User> accounts = accountDAO.getAccounts(currentPage, pageSize, searchName, roleId);
             System.out.println("Danh sách tài khoản:");
 
-            // Kiểm tra xem danh sách có rỗng không
             if (accounts.isEmpty()) {
                 System.out.println("Không tìm thấy tài khoản nào phù hợp.");
             } else {
                 for (User user : accounts) {
-                    // In thông tin tài khoản, tùy thuộc vào các thuộc tính của lớp User
-                    System.out.println(user.toString()); // Đảm bảo bạn đã ghi đè phương thức toString() trong lớp User
+                    System.out.println(user.toString());
                 }
             }
         } catch (SQLException e) {

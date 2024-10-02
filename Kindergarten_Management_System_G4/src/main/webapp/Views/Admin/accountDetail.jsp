@@ -113,7 +113,6 @@
                                         <td class="mb-0 font-weight-normal text-sm">Enrollment</td>
                                     </c:when>
                                 </c:choose>
-<%--                                <p class="mb-0 font-weight-normal text-sm">Role ID: ${account.roleId}</p>--%>
                             </div>
                         </div>
 

@@ -84,7 +84,7 @@
             <c:if test="${not empty sessionScope.successMessage}">
                 <div id="success-alert-create" style="width: 93%; background-color: #06bf06" class="alert alert-success text-light text-center mx-auto" role="alert">
                         ${sessionScope.successMessage}
-                    <c:remove var="successMessage" scope="session" /> <!-- Xóa thông báo sau khi hiển thị -->
+                    <c:remove var="successMessage" scope="session" />
                 </div>
             </c:if>
             <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">

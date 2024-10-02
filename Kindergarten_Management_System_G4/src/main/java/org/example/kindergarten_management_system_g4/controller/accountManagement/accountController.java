@@ -38,7 +38,7 @@ public class accountController extends HttpServlet {
         String userIdParam = req.getParameter("userId");
         String action = req.getParameter("action");
 
-        // Nếu userIdParam không null, xử lý trạng thái tài khoản
+
         if (userIdParam != null) {
             int userId = Integer.parseInt(userIdParam);
             try {
@@ -52,7 +52,7 @@ public class accountController extends HttpServlet {
             }
         }
 
-        // Nếu action là createAccount, xử lý tạo tài khoản
+
         if ("create".equals(action)) {
             String fullname = req.getParameter("fullname");
             String email = req.getParameter("email");
@@ -65,7 +65,7 @@ public class accountController extends HttpServlet {
 
             int roleId;
             try {
-                roleId = Integer.parseInt(roleIdParam); // Chuyển đổi vai trò thành số nguyên
+                roleId = Integer.parseInt(roleIdParam);
             } catch (NumberFormatException e) {
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid role ID");
                 return;
@@ -85,8 +85,8 @@ public class accountController extends HttpServlet {
 
             try {
                 accountDAO.createAccount(fullname, email, roleId);
-                req.getSession().setAttribute("successMessage", "Create account successfully"); // Lưu thông báo vào session
-                resp.sendRedirect(req.getContextPath() + "/Views/Admin/accountManage"); // Chuyển hướng đến accountManage
+                req.getSession().setAttribute("successMessage", "Create account successfully");
+                resp.sendRedirect(req.getContextPath() + "/Views/Admin/accountManage");
                 return;
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -98,17 +98,16 @@ public class accountController extends HttpServlet {
 
         if ("search".equals(action)) {
             String searchName = req.getParameter("searchName");
-            req.setAttribute("searchName", searchName); // Lưu lại giá trị tìm kiếm
-            // Gọi phương thức để lấy danh sách tài khoản theo tên
+            req.setAttribute("searchName", searchName);
             listAccounts(req, resp);
             return;
         }
 
-        // Xử lý lọc theo vai trò
+
         if ("filter".equals(action)) {
             String roleFilter = req.getParameter("roleFilter");
-            req.setAttribute("roleFilter", roleFilter); // Lưu lại giá trị lọc
-            // Gọi phương thức để lấy danh sách tài khoản theo vai trò
+            req.setAttribute("roleFilter", roleFilter);
+
             listAccounts(req, resp);
             return;
         }
@@ -118,8 +117,8 @@ public class accountController extends HttpServlet {
     }
 
     private void listAccounts(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int pageSize = 7; // Số lượng tài khoản trên mỗi trang
-        int currentPage = 1; // Trang hiện tại
+        int pageSize = 7;
+        int currentPage = 1;
 
         String pageParam = req.getParameter("pageNumber");
         if (pageParam != null) {
@@ -131,7 +130,7 @@ public class accountController extends HttpServlet {
             }
         }
 
-        // Thêm tham số tìm kiếm và lọc
+
         String searchName = req.getParameter("searchName");
         String roleIdParam = req.getParameter("roleFilter");
         Integer roleId = null;
@@ -146,9 +145,9 @@ public class accountController extends HttpServlet {
         }
 
         try {
-            int totalAccounts = accountDAO.getAccountCount(searchName, roleId); // Lấy tổng số tài khoản từ DAO với điều kiện tìm kiếm và lọc
-            int totalPages = (int) Math.ceil((double) totalAccounts / pageSize); // Tính số trang
-            List<User> accounts = accountDAO.getAccounts(currentPage, pageSize, searchName, roleId); // Lấy danh sách tài khoản cho trang hiện tại
+            int totalAccounts = accountDAO.getAccountCount(searchName, roleId);
+            int totalPages = (int) Math.ceil((double) totalAccounts / pageSize);
+            List<User> accounts = accountDAO.getAccounts(currentPage, pageSize, searchName, roleId);
 
             req.setAttribute("accounts", accounts);
             req.setAttribute("currentPage", currentPage);
