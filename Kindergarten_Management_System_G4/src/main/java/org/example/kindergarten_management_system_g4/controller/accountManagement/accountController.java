@@ -38,7 +38,7 @@ public class accountController extends HttpServlet {
         String userIdParam = req.getParameter("userId");
         String action = req.getParameter("action");
 
-        // Nếu userIdParam không null, xử lý trạng thái tài khoản
+
         if (userIdParam != null) {
             int userId = Integer.parseInt(userIdParam);
             try {
@@ -52,7 +52,7 @@ public class accountController extends HttpServlet {
             }
         }
 
-        // Nếu action là createAccount, xử lý tạo tài khoản
+
         if ("create".equals(action)) {
             String fullname = req.getParameter("fullname");
             String email = req.getParameter("email");
@@ -65,7 +65,7 @@ public class accountController extends HttpServlet {
 
             int roleId;
             try {
-                roleId = Integer.parseInt(roleIdParam); // Chuyển đổi vai trò thành số nguyên
+                roleId = Integer.parseInt(roleIdParam);
             } catch (NumberFormatException e) {
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid role ID");
                 return;
@@ -73,7 +73,7 @@ public class accountController extends HttpServlet {
 
             try {
                 if (accountDAO.isEmailExists(email)) {
-                    req.setAttribute("errorMessage", "Email đã tồn tại, vui lòng sử dụng email khác.");
+                    req.setAttribute("errorMessage", "Email has exist, please use another email");
                     req.getRequestDispatcher("/Views/Admin/CreateAccount.jsp").forward(req, resp); // Chuyển hướng lại trang với thông báo
                     return;
                 }
@@ -85,6 +85,7 @@ public class accountController extends HttpServlet {
 
             try {
                 accountDAO.createAccount(fullname, email, roleId);
+                req.getSession().setAttribute("successMessage", "Create account successfully");
                 resp.sendRedirect(req.getContextPath() + "/Views/Admin/accountManage");
                 return;
             } catch (SQLException e) {
@@ -92,28 +93,74 @@ public class accountController extends HttpServlet {
                 resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to create account");
                 return;
             }
+
         }
 
         if ("search".equals(action)) {
-            searchAccounts(req, resp);
-        } else {
-
+            String searchName = req.getParameter("searchName");
+            req.setAttribute("searchName", searchName);
+            listAccounts(req, resp);
+            return;
         }
+
+
+        if ("filter".equals(action)) {
+            String roleFilter = req.getParameter("roleFilter");
+            req.setAttribute("roleFilter", roleFilter);
+
+            listAccounts(req, resp);
+            return;
+        }
+
 
         super.doPost(req, resp);
     }
 
-
     private void listAccounts(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int pageSize = 7;
+        int currentPage = 1;
+
+        String pageParam = req.getParameter("pageNumber");
+        if (pageParam != null) {
+            try {
+                currentPage = Integer.parseInt(pageParam);
+            } catch (NumberFormatException e) {
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid page number");
+                return;
+            }
+        }
+
+
+        String searchName = req.getParameter("searchName");
+        String roleIdParam = req.getParameter("roleFilter");
+        Integer roleId = null;
+
+        if (roleIdParam != null && !roleIdParam.isEmpty()) {
+            try {
+                roleId = Integer.parseInt(roleIdParam); // Chuyển đổi vai trò thành số nguyên
+            } catch (NumberFormatException e) {
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid role ID");
+                return;
+            }
+        }
+
         try {
-            List<User> accounts = accountDAO.getAllAccounts(); // Gọi phương thức từ AccountDAO
+            int totalAccounts = accountDAO.getAccountCount(searchName, roleId);
+            int totalPages = (int) Math.ceil((double) totalAccounts / pageSize);
+            List<User> accounts = accountDAO.getAccounts(currentPage, pageSize, searchName, roleId);
+
             req.setAttribute("accounts", accounts);
+            req.setAttribute("currentPage", currentPage);
+            req.setAttribute("totalPages", totalPages);
+            req.setAttribute("searchName", searchName);
+            req.setAttribute("roleFilter", roleIdParam);
             req.getRequestDispatcher("/Views/Admin/accountManage.jsp").forward(req, resp);
         } catch (SQLException e) {
             e.printStackTrace();
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Cannot take list");
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Cannot fetch account list");
         }
     }
+
 
     private void showAccountDetails(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int userId = Integer.parseInt(req.getParameter("userId"));
@@ -127,13 +174,6 @@ public class accountController extends HttpServlet {
         }
     }
 
-    private void searchAccounts(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String searchName = request.getParameter("searchName");
-        List<User> accounts = AccountDAO.searchByName(searchName); // Sử dụng phương thức tìm kiếm trong DAO
-
-        request.setAttribute("accounts", accounts);
-        request.getRequestDispatcher("/Views/Admin/accountManage.jsp").forward(request, response);;
-    }
 }
 
 
