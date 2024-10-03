@@ -27,7 +27,7 @@ import java.util.logging.Logger;
  */
 public class LoginDAO extends DBConnection {  // Kế thừa từ DBConnection
 
-    private static final Logger logger = Logger.getLogger(LoginDAO.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(LoginDAO.class.getName());
     private static final String CHECK_LOGIN = "SELECT * FROM user WHERE Email=?";
     private static final String GET_PASSWORD = "SELECT password FROM user WHERE Email=?";
 
@@ -44,11 +44,11 @@ public class LoginDAO extends DBConnection {  // Kế thừa từ DBConnection
 
         try {
             connection = getConnection();  // Sử dụng phương thức từ lớp cha để kết nối đến cơ sở dữ liệu
-            logger.log(Level.INFO, "Connecting to database...");
+            LOGGER.log(Level.INFO, "Connecting to database...");
 
             preparedStatement = connection.prepareStatement(CHECK_LOGIN); //Truy vấn SQL để tìm người dùng theo email
             preparedStatement.setString(1, email);
-            logger.log(Level.INFO, "Executing query: {0}", preparedStatement);
+            LOGGER.log(Level.INFO, "Executing query: {0}", preparedStatement);
 
             resultSet = preparedStatement.executeQuery(); // Thực thi truy vấn và lưu kết quả vào resultSet
 
@@ -60,16 +60,16 @@ public class LoginDAO extends DBConnection {  // Kế thừa từ DBConnection
                 user.setEmail(resultSet.getString("Email"));
                 user.setPassword(resultSet.getString("Password"));
                 user.setRoleId(resultSet.getInt("Role_id"));
-                logger.log(Level.INFO, "User found: {0}", user);
+                LOGGER.log(Level.INFO, "User found: {0}", user);
                 return user;  // Trả về đối tượng User
             }
 
             // Ghi log cảnh báo nếu không tìm thấy người dùng với email đã cho
-            logger.log(Level.WARNING, "No user found with email: {0}", email);
+            LOGGER.log(Level.WARNING, "No user found with email: {0}", email);
         } catch (SQLException e) {
 
             // Ghi log khi có ngoại lệ SQL và xử lý lỗi
-            logger.log(Level.SEVERE, "SQL Exception occurred", e);
+            LOGGER.log(Level.SEVERE, "SQL Exception occurred", e);
             printSQLException(e);
         } finally {
 
@@ -94,23 +94,23 @@ public class LoginDAO extends DBConnection {  // Kế thừa từ DBConnection
 
         try {
             connection = getConnection();
-            logger.log(Level.INFO, "Connecting to database...");
+            LOGGER.log(Level.INFO, "Connecting to database...");
 
             preparedStatement = connection.prepareStatement(GET_PASSWORD);
             preparedStatement.setString(1, email);
-            logger.log(Level.INFO, "Executing query: {0}", preparedStatement);
+            LOGGER.log(Level.INFO, "Executing query: {0}", preparedStatement);
 
             resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
                 password = resultSet.getString(1);  // Lưu Password ở đây
-                logger.log(Level.INFO, "Password retrieved for email: {0}", email);  // Ghi log khi lấy được Password
+                LOGGER.log(Level.INFO, "Password retrieved for email: {0}", email);  // Ghi log khi lấy được Password
             } else {
-                logger.log(Level.WARNING, "No password found for email: {0}", email); // Ghi log không tìm thấy Password
+                LOGGER.log(Level.WARNING, "No password found for email: {0}", email); // Ghi log không tìm thấy Password
             }
 
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "SQL Exception occurred", e);
+            LOGGER.log(Level.SEVERE, "SQL Exception occurred", e);
             printSQLException(e);
         } finally {
             closeResources(resultSet, preparedStatement, connection);
@@ -131,10 +131,10 @@ public class LoginDAO extends DBConnection {  // Kế thừa từ DBConnection
         try {
             if (resultSet != null) {
                 resultSet.close();
-                logger.log(Level.INFO, "ResultSet closed");
+                LOGGER.log(Level.INFO, "ResultSet closed");
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error closing ResultSet", e);
+            LOGGER.log(Level.SEVERE, "Error closing ResultSet", e);
             printSQLException(e);
         }
 
@@ -142,10 +142,10 @@ public class LoginDAO extends DBConnection {  // Kế thừa từ DBConnection
         try {
             if (preparedStatement != null) {
                 preparedStatement.close();
-                logger.log(Level.INFO, "PreparedStatement closed");
+                LOGGER.log(Level.INFO, "PreparedStatement closed");
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error closing PreparedStatement", e);
+            LOGGER.log(Level.SEVERE, "Error closing PreparedStatement", e);
             printSQLException(e);
         }
 
@@ -153,10 +153,10 @@ public class LoginDAO extends DBConnection {  // Kế thừa từ DBConnection
         try {
             if (connection != null) {
                 connection.close();
-                logger.log(Level.INFO, "Connection closed");
+                LOGGER.log(Level.INFO, "Connection closed");
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "Error closing Connection", e);
+            LOGGER.log(Level.SEVERE, "Error closing Connection", e);
             printSQLException(e);
         }
     }
@@ -168,12 +168,12 @@ public class LoginDAO extends DBConnection {  // Kế thừa từ DBConnection
     private void printSQLException(SQLException ex) {
         for (Throwable e : ex) {
             if (e instanceof SQLException) {
-                logger.log(Level.SEVERE, "SQLState: " + ((SQLException) e).getSQLState());
-                logger.log(Level.SEVERE, "Error Code: " + ((SQLException) e).getErrorCode());
-                logger.log(Level.SEVERE, "Message: " + e.getMessage());
+                LOGGER.log(Level.SEVERE, "SQLState: " + ((SQLException) e).getSQLState());
+                LOGGER.log(Level.SEVERE, "Error Code: " + ((SQLException) e).getErrorCode());
+                LOGGER.log(Level.SEVERE, "Message: " + e.getMessage());
                 Throwable t = ex.getCause();
                 while (t != null) {
-                    logger.log(Level.SEVERE, "Cause: " + t);
+                    LOGGER.log(Level.SEVERE, "Cause: " + t);
                     t = t.getCause();
                 }
             }

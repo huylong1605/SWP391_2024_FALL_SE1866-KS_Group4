@@ -1,3 +1,13 @@
+/*
+ * Copyright(C) 2005,  SWP_G4.
+ * KMS :
+ * Kindergarten Management System
+ *
+ * Record of change:
+ * DATE           Version                  AUTHOR                          DESCRIPTION
+ * 10/2/2024       1.1              Nguyễn Huy Long - He160140            Update EmailService
+ */
+
 package org.example.kindergarten_management_system_g4.javaMail;
 
 import javax.mail.*;

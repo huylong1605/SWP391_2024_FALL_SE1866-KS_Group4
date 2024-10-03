@@ -35,7 +35,7 @@ import java.util.logging.Logger;
 @WebServlet(name = "Register", value = "/register")
 public class RegisterController extends HttpServlet {
 
-    private static final Logger logger = Logger.getLogger(RegisterController.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(RegisterController.class.getName());
     private static final String PHONE_NUMBER_PATTERN = "^0[35789]\\d{8}$";
     private static final Pattern PHONE_PATTERN = Pattern.compile(PHONE_NUMBER_PATTERN);
     private static final String EMAIL_PATTERN = "^[\\w\\.-]+@[\\w\\.-]+\\.[a-zA-Z]{2,}$";
@@ -50,7 +50,7 @@ public class RegisterController extends HttpServlet {
     public void init() throws ServletException {
         super.init();
         registerDao = new RegisterDAO();
-        logger.info("RegisterParentController initialized.");
+        LOGGER.info("RegisterParentController initialized.");
     }
 
     /**
@@ -62,15 +62,15 @@ public class RegisterController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String fullname = req.getParameter("fullname").trim();
+        String fullname = req.getParameter("fullname").trim().replaceAll("\\s+", " ");
         String password = req.getParameter("password").trim();
         String confirmPassword = req.getParameter("confirmPassword").trim();
         String email = req.getParameter("email").trim();
         String phone = req.getParameter("phone").trim();
         String gender = req.getParameter("gender");
-        String address = req.getParameter("address").trim();
+        String address = req.getParameter("address").trim().replaceAll("\\s+", " ");
 
-        logger.info("Received registration request for email: " + email);
+        LOGGER.info("Received registration request for email: " + email);
 
         if (!validateMaxLength(req, resp, fullname, address, password)) return;
 
@@ -86,17 +86,17 @@ public class RegisterController extends HttpServlet {
         try {
             boolean isInserted = registerDao.insertUser(user);
             if (isInserted) {
-                logger.info("User registered successfully: " + email);
+                LOGGER.info("User registered successfully: " + email);
                 CompletableFuture.runAsync(() -> sendRegistrationEmail(email, fullname));
                 req.setAttribute("registerSuccessful", "Register successful, log in now!");
                 req.getRequestDispatcher("Login.jsp").forward(req, resp);
             } else {
-                logger.warning("Failed to register user: " + email);
+                LOGGER.warning("Failed to register user: " + email);
                 setUserAttributes(req, fullname, email, phone, password, confirmPassword, gender, address);
                 req.getRequestDispatcher("register.jsp").forward(req, resp);
             }
         } catch (ClassNotFoundException e) {
-            logger.log(Level.SEVERE, "Database error while registering user: " + email, e);
+            LOGGER.log(Level.SEVERE, "Database error while registering user: " + email, e);
             throw new RuntimeException(e);
         }
     }
@@ -115,7 +115,7 @@ public class RegisterController extends HttpServlet {
     private boolean validateMaxLength(HttpServletRequest req, HttpServletResponse resp, String fullname, String address, String password) throws ServletException, IOException {
         if (fullname.length() > MAX_LENGTH) {
             req.setAttribute("fullname_too_long", "Full name must be less than " + MAX_LENGTH + " characters!");
-            logger.log(Level.SEVERE, "Full name must be less than " + MAX_LENGTH + " characters!" );
+            LOGGER.log(Level.SEVERE, "Full name must be less than " + MAX_LENGTH + " characters!" );
             req.getRequestDispatcher("register.jsp").forward(req, resp);
             return false;
         }
@@ -200,7 +200,7 @@ public class RegisterController extends HttpServlet {
                 return true;
             }
         } catch (ClassNotFoundException e) {
-            logger.log(Level.SEVERE, "Error checking if user is already registered", e);
+            LOGGER.log(Level.SEVERE, "Error checking if user is already registered", e);
             throw new RuntimeException(e);
         }
 
@@ -225,7 +225,7 @@ public class RegisterController extends HttpServlet {
         user.setGender(Integer.parseInt(gender));
         user.setPhoneNumber(phone);
         user.setAddress(address);
-        logger.info("Created user object for registration: " + email);
+        LOGGER.info("Created user object for registration: " + email);
         return user;
     }
 
@@ -237,7 +237,7 @@ public class RegisterController extends HttpServlet {
     private void sendRegistrationEmail(String email, String fullname) {
         EmailService emailService = new EmailService();
         emailService.send(email, "Congratulations " + fullname, "You have successfully registered with the Kindergarten Management System using the email " + email);
-        logger.info("Sent registration email to: " + email);
+        LOGGER.info("Sent registration email to: " + email);
     }
 
     /**
@@ -277,6 +277,6 @@ public class RegisterController extends HttpServlet {
         req.setAttribute("confirmPassword", confirmPassword);
         req.setAttribute("gender", gender);
         req.setAttribute("address", address);
-        logger.info("Setting user attributes for registration form.");
+        LOGGER.info("Setting user attributes for registration form.");
     }
 }

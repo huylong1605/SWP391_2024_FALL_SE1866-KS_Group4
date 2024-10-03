@@ -10,7 +10,6 @@
 package org.example.kindergarten_management_system_g4.controller.authencation;
 
 import org.example.kindergarten_management_system_g4.dao.AuthenDAO.ForgetPasswordDAO;
-import org.example.kindergarten_management_system_g4.dao.AuthenDAO.LoginDAO;
 import org.example.kindergarten_management_system_g4.javaMail.EmailService;
 
 import javax.servlet.ServletException;
@@ -22,16 +21,13 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.logging.Logger;
 
-/**
- * Sử lý logic cho việc xác thực email khi người dùng quên mật khẩu
- * Gửi mã code qua email của người dùng để tiến hành bước xác thực
- * @author Nguyễn Huy Long
- */
+
+
 @WebServlet(name = "forgetPassword", value = "/forgetPassword")
 public class ForgetPassword extends HttpServlet {
 
     private ForgetPasswordDAO forgetPasswordDAO;
-    private static final Logger logger = Logger.getLogger(LoginController.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(LoginController.class.getName());
 
     @Override
     public void init() throws ServletException {
@@ -72,7 +68,7 @@ public class ForgetPassword extends HttpServlet {
                     emailService.send(email, "Code", code);
 
 
-                    logger.info("Email before redirect: " + email); // In ra để kiểm tra
+                    LOGGER.info("Email before redirect: " + email); // In ra để kiểm tra
                     resp.sendRedirect("verificationCode.jsp?email=" + email);
                     forgetPasswordDAO.insertCode(code, email);   // Thêm code thông qua email ở database
                 }

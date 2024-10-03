@@ -25,7 +25,7 @@ import java.util.logging.Logger;
  * @author Nguyễn Huy Long
  */
 public class RegisterDAO extends DBConnection {
-    private static final Logger logger = Logger.getLogger(RegisterDAO.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(RegisterDAO.class.getName());
     private static final String CHECK_PHONE = "SELECT * FROM user WHERE phoneNumber=?";
     private static final String CHECK_EMAIL = "SELECT * FROM user WHERE email=?";
     private static final String INSERT_USER = "INSERT INTO user(Fullname, email, password, gender, phoneNumber, address) VALUES (?, ?, ?, ?, ?, ?)";
@@ -52,9 +52,9 @@ public class RegisterDAO extends DBConnection {
             resultSet = preparedStatement.executeQuery();
 
             exists = resultSet.next(); // Kiểm tra xem có bản ghi nào không
-            logger.log(Level.INFO, "Check phone: {0}, exists: {1}", new Object[]{phone, exists});
+            LOGGER.log(Level.INFO, "Check phone: {0}, exists: {1}", new Object[]{phone, exists});
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "SQL Exception while checking phone", e);
+            LOGGER.log(Level.SEVERE, "SQL Exception while checking phone", e);
         } finally {
             closeResources(resultSet, preparedStatement, connection);
         }
@@ -83,9 +83,9 @@ public class RegisterDAO extends DBConnection {
             resultSet = preparedStatement.executeQuery();
 
             exists = resultSet.next(); // Kiểm tra xem có bản ghi nào không
-            logger.log(Level.INFO, "Check email: {0}, exists: {1}", new Object[]{email, exists});
+            LOGGER.log(Level.INFO, "Check email: {0}, exists: {1}", new Object[]{email, exists});
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "SQL Exception while checking email", e);
+            LOGGER.log(Level.SEVERE, "SQL Exception while checking email", e);
         } finally {
             closeResources(resultSet, preparedStatement, connection);
         }
@@ -117,17 +117,17 @@ public class RegisterDAO extends DBConnection {
             preparedStatement.setString(5, u.getPhoneNumber());
             preparedStatement.setString(6, u.getAddress());
 
-            logger.log(Level.INFO, "Executing insert user: {0}", preparedStatement);
+            LOGGER.log(Level.INFO, "Executing insert user: {0}", preparedStatement);
 
             int result = preparedStatement.executeUpdate(); // Thực thi câu lệnh
 
             if (result > 0) {
                 // Nếu số dòng bị ảnh hưởng > 0, thêm thành công
                 isInserted = true;
-                logger.log(Level.INFO, "User inserted successfully: {0}", u.getEmail());
+                LOGGER.log(Level.INFO, "User inserted successfully: {0}", u.getEmail());
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "SQL Exception while inserting user", e);
+            LOGGER.log(Level.SEVERE, "SQL Exception while inserting user", e);
         } finally {
             closeResources(null, preparedStatement, connection);
         }
@@ -147,17 +147,17 @@ public class RegisterDAO extends DBConnection {
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, mail); // Sửa lỗi từ name thành mail
 
-            logger.log(Level.INFO, "Executing insert user for Google login: {0}", preparedStatement);
+            LOGGER.log(Level.INFO, "Executing insert user for Google login: {0}", preparedStatement);
 
             int result = preparedStatement.executeUpdate(); // Thực thi câu lệnh
 
             if (result > 0) {
                 // Nếu số dòng bị ảnh hưởng > 0, thêm thành công
                 isInserted = true;
-                logger.log(Level.INFO, "User inserted successfully with Google login: {0}", mail);
+                LOGGER.log(Level.INFO, "User inserted successfully with Google login: {0}", mail);
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "SQL Exception while inserting user for Google login", e);
+            LOGGER.log(Level.SEVERE, "SQL Exception while inserting user for Google login", e);
         } finally {
             closeResources(null, preparedStatement, connection);
         }
@@ -179,7 +179,7 @@ public class RegisterDAO extends DBConnection {
                 resultSet.close();
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "SQL Exception while closing ResultSet", e);
+            LOGGER.log(Level.SEVERE, "SQL Exception while closing ResultSet", e);
         }
 
         // Đóng PreparedStatement
@@ -188,7 +188,7 @@ public class RegisterDAO extends DBConnection {
                 preparedStatement.close();
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "SQL Exception while closing PreparedStatement", e);
+            LOGGER.log(Level.SEVERE, "SQL Exception while closing PreparedStatement", e);
         }
 
         // Đóng Connection
@@ -197,7 +197,7 @@ public class RegisterDAO extends DBConnection {
                 connection.close();
             }
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "SQL Exception while closing Connection", e);
+            LOGGER.log(Level.SEVERE, "SQL Exception while closing Connection", e);
         }
     }
 

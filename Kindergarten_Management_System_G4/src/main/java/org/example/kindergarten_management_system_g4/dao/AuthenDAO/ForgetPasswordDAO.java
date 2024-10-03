@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 
 public class ForgetPasswordDAO extends DBConnection {
     // Tạo logger để ghi lại thông tin và lỗi
-    private static final Logger logger = Logger.getLogger(ForgetPasswordDAO.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ForgetPasswordDAO.class.getName());
 
     // Các câu lệnh SQL sử dụng trong DAO
     private static final String GET_EMAIL = "SELECT email FROM user WHERE email = ?";
@@ -53,13 +53,13 @@ public class ForgetPasswordDAO extends DBConnection {
 
             if (resultSet.next()) {
                 mail = resultSet.getString(1);  // Corrected column index
-                logger.log(Level.INFO, "Found email: {0}", email);
+                LOGGER.log(Level.INFO, "Found email: {0}", email);
             } else {
-                logger.log(Level.WARNING, "No email found for: {0}", email);
+                LOGGER.log(Level.WARNING, "No email found for: {0}", email);
             }
 
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "SQL error occurred while finding email", e);
+            LOGGER.log(Level.SEVERE, "SQL error occurred while finding email", e);
             printSQLException(e);
         }
         return mail;
@@ -80,11 +80,11 @@ public class ForgetPasswordDAO extends DBConnection {
 
             preparedStatement.setString(1, code);
             preparedStatement.setString(2, email);
-            logger.log(Level.INFO, "Inserting code for email: {0}", email);
+            LOGGER.log(Level.INFO, "Inserting code for email: {0}", email);
             result = preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "SQL error occurred while inserting code for email: " + email, e);
+            LOGGER.log(Level.SEVERE, "SQL error occurred while inserting code for email: " + email, e);
             printSQLException(e);
         }
         return result; // Trả về số bản ghi được cập nhật
@@ -106,13 +106,13 @@ public class ForgetPasswordDAO extends DBConnection {
 
             if (resultSet.next()) {
                 code = resultSet.getString(1);  // Corrected column index
-                logger.log(Level.INFO, "Found code for email: {0}", email);
+                LOGGER.log(Level.INFO, "Found code for email: {0}", email);
             } else {
-                logger.log(Level.WARNING, "No code found for email: {0}", email);
+                LOGGER.log(Level.WARNING, "No code found for email: {0}", email);
             }
 
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "SQL error occurred while finding code for email: " + email, e);
+            LOGGER.log(Level.SEVERE, "SQL error occurred while finding code for email: " + email, e);
             printSQLException(e);
         }
         return code;
@@ -133,11 +133,11 @@ public class ForgetPasswordDAO extends DBConnection {
 
             preparedStatement.setString(1, newPass);
             preparedStatement.setString(2, email);
-            logger.log(Level.INFO, "Updating password for email: {0}", email);
+            LOGGER.log(Level.INFO, "Updating password for email: {0}", email);
             result = preparedStatement.executeUpdate(); // Thực thi truy vấn cập nhật mật khẩu
 
         } catch (SQLException e) {
-            logger.log(Level.SEVERE, "SQL error occurred while updating password for email: " + email, e);
+            LOGGER.log(Level.SEVERE, "SQL error occurred while updating password for email: " + email, e);
             printSQLException(e);
         }
         return result;
@@ -151,12 +151,12 @@ public class ForgetPasswordDAO extends DBConnection {
     private void printSQLException(SQLException ex) {
         for (Throwable e : ex) {
             if (e instanceof SQLException) {
-                logger.log(Level.SEVERE, "SQL Exception: {0}", e.getMessage());
-                logger.log(Level.SEVERE, "SQLState: {0}", ((SQLException) e).getSQLState());
-                logger.log(Level.SEVERE, "Error Code: {0}", ((SQLException) e).getErrorCode());
+                LOGGER.log(Level.SEVERE, "SQL Exception: {0}", e.getMessage());
+                LOGGER.log(Level.SEVERE, "SQLState: {0}", ((SQLException) e).getSQLState());
+                LOGGER.log(Level.SEVERE, "Error Code: {0}", ((SQLException) e).getErrorCode());
                 Throwable t = ex.getCause();
                 while (t != null) {
-                    logger.log(Level.SEVERE, "Cause: {0}", t);
+                    LOGGER.log(Level.SEVERE, "Cause: {0}", t);
                     t = t.getCause();
                 }
             }

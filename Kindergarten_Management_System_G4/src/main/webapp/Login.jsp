@@ -1,15 +1,7 @@
 
 
 <!DOCTYPE html>
-/*
-* Copyright(C) 2005,  SWP_G4.
-* KMS :
-* Kindergarten Management System
-*
-* Record of change:
-* DATE           Version                  AUTHOR                          DESCRIPTION
-* 10/2/2024       1.1              Nguyễn Huy Long - He160140              Fix ui
-*/
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -102,13 +94,12 @@
         <h2>Login</h2>
         <p style="color: red;">${ss}</p
         <p style="color: greenyellow;">${PasswordUpdate}</p>
-        <p style="color:  #49ef49;">${registerSuccessful}</p>
+        <p style="color: greenyellow;">${registerSuccessful}</p>
 
         <div class="form-group">
             <label for="Email">Email:</label>
             <input type="email" class="form-control" id="Email" name="Email" value="<%= email%>" required
-                   oninvalid="this.setCustomValidity('Please enter  email address')"
-                   oninput="this.setCustomValidity('')">
+                  >
         </div>
 
         <div class="form-group">

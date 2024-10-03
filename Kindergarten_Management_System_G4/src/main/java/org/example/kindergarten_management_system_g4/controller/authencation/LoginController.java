@@ -32,7 +32,8 @@ public class LoginController extends HttpServlet { // lớp LoginController đ�
     private LoginDAO loginDAO;
 
 
-    private static final Logger logger = Logger.getLogger(LoginController.class.getName());
+
+    private static final Logger LOGGER = Logger.getLogger(LoginController.class.getName());
 
     @Override
     public void init() throws ServletException {
@@ -67,7 +68,7 @@ public class LoginController extends HttpServlet { // lớp LoginController đ�
                 if (user != null) {
                     HttpSession session = req.getSession(); //Sử dụng session để lưu đối tượng người dùng
                     session.setAttribute("user", user); // set session
-                    logger.info("User " + email + " logged in successfully."); // Ghi log đăng nhập thành công
+                    LOGGER.info("User " + email + " logged in successfully."); // Ghi log đăng nhập thành công
 
                     handleCookies(email, password, remember, resp); // Lưu trữ đối tượng cookies cho
                     redirectUserBasedOnRole(user, req, resp); //Điều hướng người dùng khi đăng nhập thành công
@@ -76,11 +77,11 @@ public class LoginController extends HttpServlet { // lớp LoginController đ�
                     CompletableFuture.runAsync(() -> sendLoginNotification(email, user));
                 }
             } else {
-                logger.warning("Login attempt failed for user: " + email); // Ghi log khi đăng nhập thất bại
+                LOGGER.warning("Login attempt failed for user: " + email); // Ghi log khi đăng nhập thất bại
                 handleLoginFailure(req, resp, email, password); //Sử lý khi đăng nhập thất bại
             }
         } catch (ClassNotFoundException e) {
-            logger.severe("Error during login process: " + e.getMessage()); // Ghi log lỗi nghiêm trọng
+            LOGGER.severe("Error during login process: " + e.getMessage()); // Ghi log lỗi nghiêm trọng
             throw new RuntimeException(e);
         }
     }
@@ -109,7 +110,7 @@ public class LoginController extends HttpServlet { // lớp LoginController đ�
             cookieEmail.setMaxAge(60); // 1 phút
             cookiePass.setMaxAge(60);
             cookieRemember.setMaxAge(60);
-            logger.info("Cookies set for user: " + email); // Ghi log khi thiết lập cookie
+            LOGGER.info("Cookies set for user: " + email); // Ghi log khi thiết lập cookie
         } else {
             cookieEmail = new Cookie("cookieEmail", "");
             cookiePass = new Cookie("cookiePass", "");
@@ -118,7 +119,7 @@ public class LoginController extends HttpServlet { // lớp LoginController đ�
             cookieEmail.setMaxAge(0); // Xóa cookie
             cookiePass.setMaxAge(0);
             cookieRemember.setMaxAge(0);
-            logger.info("Cookies cleared for user: " + email); // Ghi log khi xóa cookie
+            LOGGER.info("Cookies cleared for user: " + email); // Ghi log khi xóa cookie
         }
 
         resp.addCookie(cookieEmail);
@@ -175,7 +176,7 @@ public class LoginController extends HttpServlet { // lớp LoginController đ�
     private void sendLoginNotification(String email, User user) {
         EmailService emailService = new EmailService();     //Khởi tạo từ lớp EmailService
         emailService.send(email, "hello " + user.getFullname(), "You have logged in to the Kindergarten Management System ");
-        logger.info("Login notification sent to user: " + email); // Ghi log thông báo email đã được gửi
+        LOGGER.info("Login notification sent to user: " + email); // Ghi log thông báo email đã được gửi
     }
 
     @Override
