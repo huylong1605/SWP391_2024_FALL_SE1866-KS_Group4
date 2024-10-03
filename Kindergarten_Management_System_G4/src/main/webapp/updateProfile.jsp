@@ -68,7 +68,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="phoneNumber">Phone Number*</label>
                                 <div class="col-md-4">
-                                    <input value="${user.phoneNumber}" id="phoneNumber" name="phoneNumber" type="tel" pattern="0\d{9}" placeholder="Số điện thoại" class="form-control" required>
+                                    <input value="${user.phoneNumber}" id="phoneNumber" name="phoneNumber" type="tel" pattern="0\d{9}" max-value="10" placeholder="Phone Number (format 10 digit)" class="form-control" required>
                                 </div>
                             </div>
 
@@ -82,12 +82,12 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="address">Address</label>
                                 <div class="col-md-4">
-                                    <input value="${user.address}" id="address" name="address" type="text" placeholder="Địa chỉ" class="form-control">
+                                    <input value="${user.address}" id="address" name="address" type="text" placeholder="Address" class="form-control" required>
                                 </div>
                             </div>
 
                             <div class="form-group text-center">
-                                <button type="submit" class="btn btn-primary btn-warning">Thay đổi</button>
+                                <button type="submit" class="btn btn-primary btn-warning">Update</button>
                             </div>
                         </fieldset>
                     </form>

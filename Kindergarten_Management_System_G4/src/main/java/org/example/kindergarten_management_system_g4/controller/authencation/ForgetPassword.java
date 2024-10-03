@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 public class ForgetPassword extends HttpServlet {
 
     private ForgetPasswordDAO forgetPasswordDAO;
-    private static final Logger LOGGER = Logger.getLogger(LoginController.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(loginController.class.getName());
 
     @Override
     public void init() throws ServletException {
