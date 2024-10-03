@@ -1,4 +1,6 @@
+
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -89,13 +91,12 @@
 <div class="login-container">
     <form class="login-form" action="forgetPassword" method="POST">
         <h2>Forget Password</h2>
-        <p>${ss}</p>
+
 
         <div class="form-group">
             <label for="Email">Email:</label>
-            <input type="Email" class="form-control" id="Email" name="Email" value="${param.Email}" required
-                   oninvalid="this.setCustomValidity('Please enter email address')"
-                   oninput="this.setCustomValidity('')">
+            <input type="email" class="form-control" id="Email" name="Email" value="${param.Email}" required
+                   ">
         </div>
         <p style="color: red;">${emailNull}</p>
 

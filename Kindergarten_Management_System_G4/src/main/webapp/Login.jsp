@@ -1,4 +1,7 @@
+
+
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -91,13 +94,12 @@
         <h2>Login</h2>
         <p style="color: red;">${ss}</p
         <p style="color: greenyellow;">${PasswordUpdate}</p>
-        <p style="color:  #49ef49;">${registerSuccessful}</p>
+        <p style="color: greenyellow;">${registerSuccessful}</p>
 
         <div class="form-group">
             <label for="Email">Email:</label>
             <input type="email" class="form-control" id="Email" name="Email" value="<%= email%>" required
-                   oninvalid="this.setCustomValidity('Please enter  email address')"
-                   oninput="this.setCustomValidity('')">
+                  >
         </div>
 
         <div class="form-group">
@@ -124,7 +126,7 @@
             <label class="form-check-label" for="rememberMe">Remember me</label>
         </div>
 
-        <p style="color: red;">${message1}</p>
+        <p style="color: red;">${loginFalse}</p>
 
         <button type="submit" class="btn btn-primary btn-block">Login</button>
       <%--  <div class="text-center mt-3">
