@@ -58,7 +58,7 @@ CREATE TABLE Student (
 CREATE TABLE Class_level(
     Class_level_ID INT PRIMARY KEY AUTO_INCREMENT,
     Class_level_name VARCHAR(50),
-
+    AgeRange int,
     Description VARCHAR(50)
     
 );
