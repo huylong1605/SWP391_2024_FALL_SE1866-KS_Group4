@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -22,7 +23,7 @@
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
+            max-width: 800px;
             width: 100%;
         }
         .register-form h2 {
@@ -71,7 +72,29 @@
     <form class="register-form" action="register" method="POST">
         <h2>Register</h2>
         <p style="color: red;">${ss}</p>
+        <p style="color: red" > ${fullname_too_long} </p>
+        <% if (request.getAttribute("email_not_match") != null) { %>
+        <p style="color:red;"><%= request.getAttribute("email_not_match") %>
+        </p>
+        <% } %>
+        <% if (request.getAttribute("email_exits") != null) { %>
+        <p style="color:red;"><%= request.getAttribute("email_exits") %>
+        </p>
+        <% } %>
 
+        <% if (request.getAttribute("phone_exits") != null) { %>
+        <p style="color:red;"><%= request.getAttribute("phone_exits") %>
+        </p>
+        <% } %>
+        <% if (request.getAttribute("phone_not_match") != null) { %>
+        <p style="color:red;"><%= request.getAttribute("phone_not_match") %>
+        </p>
+        <% } %>
+
+        <p style="color: red"> ${password_too_long} </p>
+        <p style="color: red"> ${gender_null} </p>
+        <p style="color: red"> ${Password_not_match} </p>
+        <p style="color: red"> ${address_too_long} </p>
         <div class="row">
             <!-- Bên trái -->
             <div class="col-md-6">
@@ -81,7 +104,7 @@
                            required
                            oninvalid="this.setCustomValidity('Please enter your full name')"
                            oninput="this.setCustomValidity('')">
-                    <p style="color: red"> ${fullname_too_long} </p>
+                    <%--<p style="color: red" > ${fullname_too_long} </p>--%>
 
 
                 </div>
@@ -91,14 +114,14 @@
                     <input type="email" class="form-control" id="email" name="email" value="${param.email}" required
                            oninvalid="this.setCustomValidity('Please enter email address')"
                            oninput="this.setCustomValidity('')">
-                    <% if (request.getAttribute("email_not_match") != null) { %>
+                    <%--<% if (request.getAttribute("email_not_match") != null) { %>
                     <p style="color:red;"><%= request.getAttribute("email_not_match") %>
                     </p>
                     <% } %>
                     <% if (request.getAttribute("email_exits") != null) { %>
                     <p style="color:red;"><%= request.getAttribute("email_exits") %>
                     </p>
-                    <% } %>
+                    <% } %>--%>
                 </div>
                 <br>
                 <div class="form-group">
@@ -106,14 +129,14 @@
                     <input type="text" class="form-control" id="phone" name="phone" value="${param.phone}" required
                            oninvalid="this.setCustomValidity('Please enter phone number')"
                            oninput="this.setCustomValidity('')">
-                    <% if (request.getAttribute("phone_exits") != null) { %>
+                    <%--<% if (request.getAttribute("phone_exits") != null) { %>
                     <p style="color:red;"><%= request.getAttribute("phone_exits") %>
                     </p>
                     <% } %>
                     <% if (request.getAttribute("phone_not_match") != null) { %>
                     <p style="color:red;"><%= request.getAttribute("phone_not_match") %>
                     </p>
-                    <% } %>
+                    <% } %>--%>
                 </div>
                 <br>
                 <div class="form-group">
@@ -128,7 +151,7 @@
                                value="0" ${gender == '0' ? 'checked' : ''}>
                         <label class="form-check-label" for="female">Female</label>
                     </div>
-                    <p style="color: red"> ${gender_null} </p>
+                    <%--<p style="color: red"> ${gender_null} </p>--%>
                 </div>
 
 
@@ -146,7 +169,7 @@
                         <i class="bi bi-eye-slash" id="togglePasswordIcon" onclick="togglePassword()"></i>
                     </div>
 
-                    <p style="color: red"> ${password_too_long} </p>
+                   <%-- <p style="color: red"> ${password_too_long} </p>--%>
 
                 </div>
 
@@ -160,7 +183,7 @@
                                oninput="this.setCustomValidity('')">
                         <i class="bi bi-eye-slash" id="toggleConfirmPasswordIcon" onclick="toggleConfirmPassword()"></i>
                     </div>
-                    <p style="color: red"> ${Password_not_match} </p>
+                    <%--<p style="color: red"> ${Password_not_match} </p>--%>
                 </div>
                 <br>
 
@@ -173,7 +196,7 @@
                                oninput="this.setCustomValidity('')">
 
                     </div>
-                    <p style="color: red"> ${address_too_long} </p>
+                    <%--<p style="color: red"> ${address_too_long} </p>--%>
                 </div>
 
 
@@ -223,6 +246,10 @@
             toggleConfirmIcon.classList.add("bi-eye-slash");
         }
     }
+
+
+
+
 </script>
 
 </body>

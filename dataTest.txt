@@ -17,16 +17,16 @@ CREATE TABLE User (
     phoneNumber VARCHAR(20),
     address VARCHAR(50),
     image VARCHAR(255),
-    Status BIT,
+    Status BIT default 1,
     Code VARCHAR(10),
-    Role_id INT,
+    Role_id INT default 4,
     FOREIGN KEY (Role_id) REFERENCES Role(role_Id)
 );
 
 CREATE TABLE Room (
     Room_ID INT PRIMARY KEY AUTO_INCREMENT,
     Room_number VARCHAR(255),
-    Status BIT,
+    Status BIT default 1,
     capacity INT
 );
 
@@ -35,8 +35,7 @@ CREATE TABLE Subject (
     subject_Code VARCHAR(50),
     Subject_name VARCHAR(50),
     Description VARCHAR(225),
-    User_id INT,
-    FOREIGN KEY (User_id) REFERENCES User(User_id)
+    Status varchar(225)
 );
 
 CREATE TABLE Slot (
@@ -55,26 +54,45 @@ CREATE TABLE Student (
     User_id INT,
     FOREIGN KEY (User_id) REFERENCES User(User_id)
 );
+
+CREATE TABLE Class_level(
+    Class_level_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Class_level_name VARCHAR(50),
+
+    Description VARCHAR(50)
+    
+);
 CREATE TABLE Class (
     Class_ID INT PRIMARY KEY AUTO_INCREMENT,
     Class_name VARCHAR(50),
-    class_level VARCHAR(50),
-    year Date,
+    Class_level_ID INT,   
     User_id INT,
     Room_ID INT,
     FOREIGN KEY (User_id) REFERENCES User(User_id),
-    FOREIGN KEY (Room_ID) REFERENCES Room(Room_ID)
+    FOREIGN KEY (Room_ID) REFERENCES Room(Room_ID),
+    FOREIGN KEY (Class_level_ID) REFERENCES Class_level(Class_level_ID)
+);
+
+
+
+CREATE TABLE Term(
+    Term_ID INT PRIMARY KEY AUTO_INCREMENT,
+    Term_name VARCHAR(50),
+    Start_Date date,
+    End_Date date,
+    Year int
 );
 
 CREATE TABLE Schedule (
     Schedule_ID INT PRIMARY KEY AUTO_INCREMENT,
     day_of_week INT,
     date date,
-    term varchar(20),
+    Term_ID INT,
     class_id INT,
     SlotId INT,
     FOREIGN KEY (class_id) REFERENCES Class(Class_ID),
-    FOREIGN KEY (SlotId) REFERENCES Slot(Id)
+    FOREIGN KEY (SlotId) REFERENCES Slot(Id),
+     FOREIGN KEY (Term_ID) REFERENCES Term(Term_ID)
 );
 
 CREATE TABLE Attendance (
@@ -114,66 +132,80 @@ CREATE TABLE subject_Schedule (
 );
 
 
-INSERT INTO Role (Role_name) VALUES
-('Admin'),
-('Teacher'),
-('Student'),
-('Parent');
+-- Thêm dữ liệu vào bảng Role
+INSERT INTO Role (Role_name) VALUES ('Admin');
+INSERT INTO Role (Role_name) VALUES ('Teacher');
+INSERT INTO Role (Role_name) VALUES ('Student');
+INSERT INTO Role (Role_name) VALUES ('Guest');
 
-INSERT INTO User (Fullname, date_Of_birth, Email, Password, gender, phoneNumber, address, image, Status, Code, Role_id) VALUES
-('Nguyen Van A', '1980-01-01', 'nguyenvana@example.com', 'password1', 1, '0912345678', '123 Street', 'image1.jpg', 1, 'A123', 4),
-('Tran Thi B', '1990-02-02', 'tranthib@example.com', 'password2', 0, '0987654321', '456 Avenue', 'image2.jpg', 1, 'B456', 4),
-('Le Van C', '2000-03-03', 'levanc@example.com', 'password3', 1, '0923456789', '789 Boulevard', 'image3.jpg', 1, 'C789', 4);
+-- Thêm dữ liệu vào bảng User
+INSERT INTO User (Fullname, date_Of_birth, Email, Password, gender, phoneNumber, address, image, Role_id) 
+VALUES ('John Doe', '1990-01-01', 'johndoe@example.com', 'password123', 1, '1234567890', '123 Main St', 'image1.jpg', 1);
 
-INSERT INTO Room (Room_number, Status, capacity) VALUES
-('101', 1, 30),
-('102', 1, 25),
-('103', 0, 20);
+INSERT INTO User (Fullname, date_Of_birth, Email, Password, gender, phoneNumber, address, image, Role_id) 
+VALUES ('Jane Smith', '1995-05-10', 'janesmith@example.com', 'password456', 0, '0987654321', '456 Elm St', 'image2.jpg', 2);
 
-INSERT INTO Subject (subject_Code, Subject_name, Description, User_id) VALUES
-('MATH101', 'Mathematics', 'Basic Mathematics', 2),
-('PHY102', 'Physics', 'Introduction to Physics', 2),
-('CHEM103', 'Chemistry', 'Basic Chemistry Concepts', 2);
+-- Thêm dữ liệu vào bảng Room
+INSERT INTO Room (Room_number, Status, capacity) VALUES ('101', 1, 30);
+INSERT INTO Room (Room_number, Status, capacity) VALUES ('102', 1, 25);
 
-INSERT INTO Slot (Slot_name, Start_time, end_time) VALUES
-('Morning Slot', '2023-01-01', '2023-01-01'),
-('Afternoon Slot', '2023-01-01', '2023-01-01'),
-('Evening Slot', '2023-01-01', '2023-01-01');
+-- Thêm dữ liệu vào bảng Subject
+INSERT INTO Subject (subject_Code, Subject_name, Description, Status) 
+VALUES ('MATH101', 'Mathematics', 'Basic Math course', 'Active');
+INSERT INTO Subject (subject_Code, Subject_name, Description, Status) 
+VALUES ('ENG101', 'English', 'Basic English course', 'Active');
 
-INSERT INTO Student (Date_of_birth, gender, Student_name, class_id, User_id) VALUES
-('2002-05-05', 0, 'Le Thi E', 1, 3),
-('2001-06-06', 1, 'Tran Van F', 2, 3),
-('2003-07-07', 1, 'Nguyen Van G', 3, 3);
+-- Thêm dữ liệu vào bảng Slot
+INSERT INTO Slot (Slot_name, Start_time, end_time) 
+VALUES ('Morning', '2024-10-01', '2024-10-01');
+INSERT INTO Slot (Slot_name, Start_time, end_time) 
+VALUES ('Afternoon', '2024-10-01', '2024-10-01');
 
-INSERT INTO Class (Class_name, class_level, year, User_id, Room_ID) VALUES
-('Class A', 'Beginner', '2022-09-01', 2, 1),
-('Class B', 'Intermediate', '2023-01-01', 2, 2),
-('Class C', 'Advanced', '2023-06-01', 2, 3);
+-- Thêm dữ liệu vào bảng Student
+INSERT INTO Student (Date_of_birth, gender, Student_name, class_id, User_id) 
+VALUES ('2000-09-15', 1, 'Alice Johnson', 1, 1);
 
-INSERT INTO Schedule (day_of_week, date, term, class_id, SlotId) VALUES
-(1, '2023-09-01', 'Fall', 1, 1),
-(2, '2023-09-02', 'Fall', 2, 2),
-(3, '2023-09-03', 'Fall', 3, 3);
+-- Thêm dữ liệu vào bảng Class_level
+INSERT INTO Class_level (Class_level_name, Description) 
+VALUES ('Level 1', 'Basic level');
+INSERT INTO Class_level (Class_level_name, Description) 
+VALUES ('Level 2', 'Intermediate level');
 
-INSERT INTO Attendance (attend_status, Date, Scheduledend_time, Student_ID, SlotId) VALUES
-(1, '2023-09-01', 2, 1, 1),
-(0, '2023-09-02', 2, 2, 2),
-(1, '2023-09-03', 2, 3, 3);
+-- Thêm dữ liệu vào bảng Class
+INSERT INTO Class (Class_name, Class_level_ID, User_id, Room_ID) 
+VALUES ('Class A', 1, 2, 1);
+INSERT INTO Class (Class_name, Class_level_ID, User_id, Room_ID) 
+VALUES ('Class B', 2, 1, 2);
 
-INSERT INTO Notification (title, Content, Date, User_id) VALUES
-('New Class Schedule', 'Class A will start from 1st Sept', '2023-08-15', 2),
-('Exam Announcement', 'Final exam will be on 30th Sept', '2023-09-10', 2),
-('Holiday Notice', 'School will be closed on 25th Dec', '2023-12-01', 2);
+-- Thêm dữ liệu vào bảng Term
+INSERT INTO Term (Term_name, Start_Date, End_Date, Year) 
+VALUES ('Term 1', '2024-09-01', '2024-12-15', '2024');
+INSERT INTO Term (Term_name, Start_Date, End_Date, Year) 
+VALUES ('Term 2', '2025-01-01', '2025-05-15', '2025');
 
-INSERT INTO Feedback (feedback_messes, User_id, Date) VALUES
-('Great teaching method', 3, '2023-09-05'),
-('Need more examples in Physics', 3, '2023-09-10'),
-('Classroom environment is excellent', 3, '2023-09-15');
+-- Thêm dữ liệu vào bảng Schedule
+INSERT INTO Schedule (day_of_week, date, Term_ID, class_id, SlotId) 
+VALUES (1, '2024-09-05', 1, 1, 1);
+INSERT INTO Schedule (day_of_week, date, Term_ID, class_id, SlotId) 
+VALUES (2, '2024-09-06', 1, 2, 2);
 
-INSERT INTO subject_Schedule (Schedule_ID, Subject_ID) VALUES
-(1, 1),
-(2, 2),
-(3, 3);
+-- Thêm dữ liệu vào bảng Attendance
+INSERT INTO Attendance (attend_status, Date, Scheduledend_time, Student_ID, SlotId) 
+VALUES (1, '2024-09-05', 1, 1, 1);
+
+-- Thêm dữ liệu vào bảng Notification
+INSERT INTO Notification (title, Content, Date, User_id) 
+VALUES ('New Term Begins', 'Term 1 starts on September 1st', '2024-09-01', 1);
+
+-- Thêm dữ liệu vào bảng Feedback
+INSERT INTO Feedback (feedback_messes, User_id, Date) 
+VALUES ('Great class!', 2, '2024-09-10');
+
+-- Thêm dữ liệu vào bảng subject_Schedule
+INSERT INTO subject_Schedule (Schedule_ID, Subject_ID) 
+VALUES (1, 1);
+INSERT INTO subject_Schedule (Schedule_ID, Subject_ID) 
+VALUES (2, 2);
 
 
 
