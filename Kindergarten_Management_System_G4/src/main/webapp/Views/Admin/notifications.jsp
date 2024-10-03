@@ -17,7 +17,6 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <link id="pagestyle" href="${pageContext.request.contextPath}/css/material-dashboard.css?v=3.1.0" rel="stylesheet" />
 </head>
-
 <body class="g-sidenav-show  bg-gray-200">
 <%@include file="../common/header.jsp"%>
 <div class="wrapper">
@@ -61,6 +60,20 @@
           <div class="text-end">
             <a href="${pageContext.request.contextPath}/addNotification.jsp" class="btn btn-primary">Add Notification</a>
 
+          </div>
+          <div style="margin-top: 20px;">
+            <form action="${pageContext.request.contextPath}/Views/Admin/accountManage" method="get">
+              <label for="roleFilter">Filter by role:</label>
+              <select name="roleFilter" id="roleFilter" onchange="this.form.submit()">
+                <option value="">All</option>
+                <option value="1" ${param.roleFilter == '1' ? 'selected' : ''}>Admin</option>
+                <option value="2" ${param.roleFilter == '2' ? 'selected' : ''}>Teacher</option>
+                <option value="3" ${param.roleFilter == '3' ? 'selected' : ''}>Principal</option>
+                <option value="4" ${param.roleFilter == '4' ? 'selected' : ''}>Parent</option>
+                <option value="5" ${param.roleFilter == '5' ? 'selected' : ''}>Enrollment</option>
+              </select>
+              <input type="hidden" name="action" value="filter">
+            </form>
           </div>
         </div>
 
@@ -126,6 +139,7 @@
                       </tr>
                     </c:forEach>
                   </c:if>
+
 
 
                   <script>
