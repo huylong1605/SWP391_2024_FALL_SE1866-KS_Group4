@@ -28,12 +28,12 @@ import java.util.logging.Logger;
  * @author Nguyễn Huy Long
  */
 @WebServlet(name = "login", value = "/login")
-public class loginController extends HttpServlet { // lớp LoginController để kiểm tra đăng nhập của người dùng
+public class LoginController extends HttpServlet { // lớp LoginController để kiểm tra đăng nhập của người dùng
     private LoginDAO loginDAO;
 
 
 
-    private static final Logger LOGGER = Logger.getLogger(loginController.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(LoginController.class.getName());
 
     @Override
     public void init() throws ServletException {
