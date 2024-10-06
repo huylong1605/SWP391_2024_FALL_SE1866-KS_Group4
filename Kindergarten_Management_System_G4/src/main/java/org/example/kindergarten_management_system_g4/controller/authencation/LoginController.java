@@ -73,7 +73,7 @@ public class LoginController extends HttpServlet { // lớp LoginController đ�
                     handleCookies(email, password, remember, resp); // Lưu trữ đối tượng cookies cho
                     redirectUserBasedOnRole(user, req, resp); //Điều hướng người dùng khi đăng nhập thành công
 
-                    // Sử dụng  renAsync giúp việc gửi thông tin đến người dùng qua email nhanh hơn
+                    // Sử dụng  runAsync giúp việc gửi thông tin đến người dùng qua email nhanh hơn
                     CompletableFuture.runAsync(() -> sendLoginNotification(email, user));
                 }
             } else {

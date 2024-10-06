@@ -5,7 +5,6 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import org.example.kindergarten_management_system_g4.dao.AuthenDAO.RegisterDAO;
-import org.example.kindergarten_management_system_g4.model.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
