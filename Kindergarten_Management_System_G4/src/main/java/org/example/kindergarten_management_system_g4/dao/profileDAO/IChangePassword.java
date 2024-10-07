@@ -8,7 +8,7 @@
  * 10/5/2024       1.1              Nguyễn Huy Long - He160140                   create interface for change Password
  */
 
-package org.example.kindergarten_management_system_g4.service.authencationSevice;
+package org.example.kindergarten_management_system_g4.dao.profileDAO;
 
 import java.sql.SQLException;
 
@@ -17,7 +17,7 @@ import java.sql.SQLException;
  *
  * @author Nguyễn Huy Long
  */
-public interface ChangePasswordService {
+public interface IChangePassword {
 
     /**
      * Tìm kiếm địa chỉ email trong cơ sở dữ liệu.
@@ -27,7 +27,7 @@ public interface ChangePasswordService {
      * @throws SQLException nếu có lỗi xảy ra trong quá trình truy vấn cơ sở dữ liệu.
      * @throws ClassNotFoundException nếu không tìm thấy lớp cần thiết cho việc kết nối cơ sở dữ liệu.
      */
-    String findEmail(String email) throws SQLException, ClassNotFoundException;
+    String findEmail(String email)  throws SQLException;
 
 
     /**

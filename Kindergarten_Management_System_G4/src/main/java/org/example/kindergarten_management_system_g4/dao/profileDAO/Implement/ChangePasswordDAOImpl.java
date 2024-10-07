@@ -8,11 +8,11 @@
  * 10/5/2024       1.1              Nguyễn Huy Long - He160140               Create connection for changePassword
  */
 
-package org.example.kindergarten_management_system_g4.dao.profileDAO;
+package org.example.kindergarten_management_system_g4.dao.profileDAO.Implement;
 
 import org.example.kindergarten_management_system_g4.connection.DBConnection;
 import org.example.kindergarten_management_system_g4.dao.AuthenDAO.ForgetPasswordDAO;
-import org.example.kindergarten_management_system_g4.service.authencationSevice.ChangePasswordService;
+import org.example.kindergarten_management_system_g4.dao.profileDAO.IChangePassword;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,7 +27,7 @@ import java.util.logging.Logger;
  * để tìm kiếm email, mật khẩu và cập nhật mật khẩu trong cơ sở dữ liệu.
  * @author Nguyễn Huy Long
  */
-public class ChangePasswordDAO extends DBConnection implements ChangePasswordService {
+public class ChangePasswordDAOImpl extends DBConnection implements IChangePassword {
 
     private static final Logger LOGGER = Logger.getLogger(ForgetPasswordDAO.class.getName());
 
