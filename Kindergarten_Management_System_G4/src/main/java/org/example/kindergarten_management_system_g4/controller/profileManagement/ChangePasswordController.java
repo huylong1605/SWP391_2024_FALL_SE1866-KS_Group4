@@ -12,8 +12,8 @@ package org.example.kindergarten_management_system_g4.controller.profileManageme
 
 
 
-import org.example.kindergarten_management_system_g4.dao.profileDAO.ChangePasswordDAO;
-import org.example.kindergarten_management_system_g4.service.authencationSevice.ChangePasswordService;
+import org.example.kindergarten_management_system_g4.dao.profileDAO.Implement.ChangePasswordDAOImpl;
+import org.example.kindergarten_management_system_g4.dao.profileDAO.IChangePassword;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -33,7 +33,7 @@ import java.util.logging.Logger;
  */
 @WebServlet(name = "changePassword", value = "/changePassword")
 public class ChangePasswordController extends HttpServlet {
-    private ChangePasswordService changePasswordService;
+    private IChangePassword changePasswordService;
     private static final int MAX_LENGTH_PASSWORD = 10;    //Giới hạn độ dài cho mật khẩu mới
     private static final Logger LOGGER = Logger.getLogger(ChangePasswordController.class.getName());
 
@@ -41,7 +41,7 @@ public class ChangePasswordController extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        changePasswordService = new ChangePasswordDAO();
+        changePasswordService = new ChangePasswordDAOImpl();
 
     }
 
@@ -124,7 +124,7 @@ public class ChangePasswordController extends HttpServlet {
             req.setAttribute("updateSuccessful", "Your password has been changed");
             req.getRequestDispatcher("changePassword.jsp").forward(req, resp);
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException /*| ClassNotFoundException*/ e) {
             LOGGER.info("SQLException: " +e.getMessage());
             req.setAttribute("errorMessage", "An error occurred while changing password: " + e.getMessage());
             req.getRequestDispatcher("error.jsp").forward(req, resp);

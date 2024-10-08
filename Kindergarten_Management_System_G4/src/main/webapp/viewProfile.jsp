@@ -404,6 +404,7 @@
                         <ul class="nav nav-pills nav-stacked" style="display:flex; flex-direction:column">
                             <li class="active"><a href="viewprofile"> <i class="fa fa-user"></i> User Profile </a></li>
                             <li ><a href="updateprofile"> <i class="fa fa-calendar"></i> Update User Profile </a></li>
+                            <li ><a href="changePassword.jsp"> <i class="fa fa-calendar"></i> Change Password </a></li>
                         </ul>
                     </div>
                 </div>

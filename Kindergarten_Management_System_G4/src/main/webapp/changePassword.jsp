@@ -90,7 +90,7 @@
 
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" name="email" value="${param.email}" required>
+            <input type="email" class="form-control" id="email" name="email" value="${sessionScope.user.email}" required>
         </div>
 
         <br>
