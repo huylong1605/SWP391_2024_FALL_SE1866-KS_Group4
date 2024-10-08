@@ -46,14 +46,14 @@
     <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
+    <div class="collapse navbar-collapse" id="navbarCollapse" style="margin-left: 200px; font-size: 20px">
         <div class="navbar-nav mx-auto">
             <a href="${pageContext.request.contextPath}/Views/HomePage/HomePage.jsp" class="nav-item nav-link active">Home</a>
             <a href="${pageContext.request.contextPath}/Views/Admin/accountManage" class="nav-item nav-link">Admin Manage</a>
             <a href="/" class="nav-item nav-link">About Us</a>
             <a href="" class="nav-item nav-link">Contact Us</a>
         </div>
-        <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ml-auto" style="font-size: 20px">
             <c:if test="${sessionScope.user != null}">
                 <li class="nav-item">
                     <a class="nav-link" href="#">Hello, ${sessionScope.user.fullname}</a>
@@ -64,7 +64,7 @@
             </c:if>
         </ul>
     </div>
-    <div class="collapse navbar-collapse" >
+    <div class="collapse navbar-collapse" style="margin-left: 150px; font-size: 20px">
         <ul class="navbar-nav ml-auto">
             <c:if test="${sessionScope.user == null}">
                 <a href="${pageContext.request.contextPath}/Login.jsp" class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Sign in</a>

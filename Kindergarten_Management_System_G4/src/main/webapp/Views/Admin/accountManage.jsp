@@ -24,7 +24,6 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <!-- CSS Files -->
     <link id="pagestyle" href="${pageContext.request.contextPath}/css/material-dashboard.css?v=3.1.0" rel="stylesheet" />
-
     <style>
         a.sidebar-link:hover {
             background-color: #0303aa;
@@ -125,9 +124,7 @@
                             <input type="hidden" name="action" value="filter">
                         </form>
                     </div>
-
                 </div>
-
             </nav>
             <!-- End Navbar -->
             <div class="container-fluid py-4">
