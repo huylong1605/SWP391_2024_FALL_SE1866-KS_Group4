@@ -140,7 +140,7 @@ public class LoginController extends HttpServlet { // lớp LoginController đ�
      */
     private void redirectUserBasedOnRole(User user, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (user.getRoleId() == 4) {         //Id = 4 điều hướng người dùng đến trang  homepage của parent
-            req.getRequestDispatcher("index.jsp").forward(req, resp);
+            req.getRequestDispatcher("/Views/HomePage/HomePage.jsp").forward(req, resp);
         } else if (user.getRoleId() == 1) {      //Id = 1 điều hướng người dùng đến trang  homepage của Admin
             req.getRequestDispatcher("/Views/Admin/accountManage.jsp").forward(req, resp);
         }
