@@ -8,7 +8,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <head>
         <!-- Basic -->
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -34,7 +33,6 @@
         <link href="${pageContext.request.contextPath}/css/style-Homepage.css" rel="stylesheet" />
         <!-- responsive style -->
         <link href="${pageContext.request.contextPath}/css/responsive.css" rel="stylesheet" />
-    </head>
 
 </head>
 <body>
@@ -56,7 +54,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="detail-box">
-                                    <h1>
+                                    <h1 style="font-family: 'Roboto', Helvetica, Arial, sans-serif">
                                         A Perfect Learning Center <br />
                                         <span>
                         For Your Kids
@@ -84,7 +82,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="detail-box">
-                                    <h1>
+                                    <h1 style="font-family: 'Roboto', Helvetica, Arial, sans-serif">
                                         A Perfect Learning Center <br />
                                         <span>
                         For Your Kids
@@ -112,7 +110,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="detail-box">
-                                    <h1>
+                                    <h1 style="font-family: 'Roboto', Helvetica, Arial, sans-serif">
                                         A Perfect Learning Center <br />
                                         <span>
                         For Your Kids
@@ -140,7 +138,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="detail-box">
-                                    <h1>
+                                    <h1 style="font-family: 'Roboto', Helvetica, Arial, sans-serif">
                                         A Perfect Learning Center <br />
                                         <span>
                         For Your Kids
@@ -168,7 +166,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="detail-box">
-                                    <h1>
+                                    <h1 style="font-family: 'Roboto', Helvetica, Arial, sans-serif">
                                         A Perfect Learning Center <br />
                                         <span>
                         For Your Kids
@@ -207,7 +205,7 @@
 <section class="offer_section hero_next_section-margin layout_padding">
     <div class="container">
         <div class="heading_container">
-            <h2>
+            <h2 style="font-family: 'Roboto', Helvetica, Arial, sans-serif">
                 what we offer
             </h2>
             <p>
@@ -568,7 +566,7 @@
             <div class="col-md-5 col-lg-4">
                 <div class="detail-box">
                     <div class="heading_container">
-                        <h2>
+                        <h2 style="font-family: 'Roboto', Helvetica, Arial, sans-serif">
                             A Few words about us
                         </h2>
                     </div>
