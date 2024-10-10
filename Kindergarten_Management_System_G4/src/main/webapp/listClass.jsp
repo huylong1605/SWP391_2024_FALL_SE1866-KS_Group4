@@ -26,22 +26,22 @@
         <tr>
             <th>Class Name</th>
             <th>Class Level</th>
-            <th>User</th>
+            <th>Teacher</th>
             <th>Room</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         <!-- Duyệt qua danh sách lớp học -->
-        <c:forEach var="classes" items="${classes}">
+        <c:forEach var="classes" items="${listClass}">
             <tr>
-                <td>${classes.name}</td>
-                <td>${classes.classLevel.name}</td>
-                <td>${classes.user.name}</td>
-                <td>${classes.room.name}</td>
+                <td>${classes.className}</td>
+                <td>${classes.classLevelName}</td>
+                <td>${classes.fullname}</td>
+                <td>${classes.roomNumber}</td>
                 <td>
-                    <a href="updateClass.jsp?id=${classes.id}" class="btn btn-warning btn-sm">Edit</a>
-                    <a href="deleteClass?id=${classes.id}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this class?')">Delete</a>
+                    <a href="updateClass.jsp?id=${classes.classId}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="deleteClass?id=${classes.classId}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this class?')">Delete</a>
                 </td>
             </tr>
         </c:forEach>
