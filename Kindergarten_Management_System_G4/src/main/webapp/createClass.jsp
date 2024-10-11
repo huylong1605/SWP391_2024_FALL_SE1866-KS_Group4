@@ -44,11 +44,16 @@
 
 <div class="container form-container" style="margin-top: 70px">
     <h2 class="text-center">Create Class</h2>
-    <form action="CreateClassServlet" method="post">
+    <% if (request.getAttribute("classNameExist") != null) { %>
+    <p style="color:red;"><%= request.getAttribute("classNameExist") %></p>
+    <% } %>
+    <form action="createClass" method="post">
         <!-- Class Name -->
         <div class="form-group">
             <label for="className">Class Name</label>
-            <input type="text" class="form-control" id="className" name="className" placeholder="Enter class name" required>
+            <input type="text" class="form-control" id="className" name="className"
+
+                   value="<c:out value='${param.className}'/>" required>
         </div>
 
         <!-- Class Level ID (Combobox) -->
@@ -56,21 +61,25 @@
             <label for="classLevelId">Class Level</label>
             <select class="form-control" id="classLevelId" name="classLevelId" required>
                 <option value="">Select Class Level</option>
-                <!-- Duyệt qua danh sách class levels -->
-                <c:forEach var="classLevel" items="${classLevels}">
-                    <option value="${classLevel.id}">${classLevel.name}</option>
+                <c:forEach var="classLevel" items="${listClassLevel}">
+                    <option value="${classLevel.classLevelId}"
+                            <c:if test="${classLevel.classLevelId == param.classLevelId}">selected</c:if>>
+                            ${classLevel.classLevelName}
+                    </option>
                 </c:forEach>
             </select>
         </div>
 
         <!-- User ID (Combobox) -->
         <div class="form-group">
-            <label for="userId">User</label>
+            <label for="userId">Teacher</label>
             <select class="form-control" id="userId" name="userId" required>
-                <option value="">Select User</option>
-                <!-- Duyệt qua danh sách users -->
-                <c:forEach var="user" items="${users}">
-                    <option value="${user.id}">${user.name}</option>
+                <option value="">Select Teacher</option>
+                <c:forEach var="teacher" items="${listTeacher}">
+                    <option value="${teacher.userID}"
+                            <c:if test="${teacher.userID == param.userId}">selected</c:if>>
+                            ${teacher.fullname}
+                    </option>
                 </c:forEach>
             </select>
         </div>
@@ -80,9 +89,11 @@
             <label for="roomId">Room</label>
             <select class="form-control" id="roomId" name="roomId" required>
                 <option value="">Select Room</option>
-                <!-- Duyệt qua danh sách rooms -->
-                <c:forEach var="room" items="${rooms}">
-                    <option value="${room.id}">${room.name}</option>
+                <c:forEach var="room" items="${listRoom}">
+                    <option value="${room.roomId}"
+                            <c:if test="${room.roomId == param.roomId}">selected</c:if>>
+                            ${room.roomNumber}
+                    </option>
                 </c:forEach>
             </select>
         </div>
@@ -92,6 +103,10 @@
             <button type="submit" class="btn btn-primary btn-block">Create Class</button>
         </div>
     </form>
+
+    <div class="text-center">
+        <a href="listClass" class="btn btn-secondary">Back to List</a>
+    </div>
 </div>
 
 <%@ include file="/Views/common/footer.jsp" %>

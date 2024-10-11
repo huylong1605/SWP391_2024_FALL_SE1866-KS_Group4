@@ -1,10 +1,9 @@
 package org.example.kindergarten_management_system_g4.controller.classManagement;
 
-import org.example.kindergarten_management_system_g4.controller.profileManagement.ChangePasswordController;
 import org.example.kindergarten_management_system_g4.dao.classDAO.IClassDAO;
 import org.example.kindergarten_management_system_g4.dao.classDAO.impliment.ClassDAOImpl;
-import org.example.kindergarten_management_system_g4.dao.profileDAO.Implement.ChangePasswordDAOImpl;
 import org.example.kindergarten_management_system_g4.model.ClassDAL;
+import org.example.kindergarten_management_system_g4.model.ClassLevel;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,10 +30,28 @@ public class ListClassController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        int classLevelId = 0;
+        String filterLevelParam = req.getParameter("filterLevel");
+        String searching = req.getParameter("search");
+        if (filterLevelParam != null && !filterLevelParam.isEmpty()) {
+            classLevelId = Integer.parseInt(filterLevelParam);
+        }
+        List<ClassDAL> listClass;
         try {
-            List<ClassDAL> listClass = iClassDAO.listClass();
+            boolean isSearchingEmpty = (searching == null || searching.isEmpty());
+            if(classLevelId == 0 && isSearchingEmpty){
+                listClass = iClassDAO.listClass();
+            }else if(isSearchingEmpty){
+                listClass = iClassDAO.listClassFilter(classLevelId);
+            }else if(classLevelId == 0){
+                listClass = iClassDAO.listClassSearch(searching);
+            }else{
+                listClass = iClassDAO.listClassSearchFilter(classLevelId, searching);
+            }
+
+            List<ClassLevel> listClassLevel = iClassDAO.listClassLevel();
             req.setAttribute("listClass", listClass);
+            req.setAttribute("listClassLevel", listClassLevel);
             req.getRequestDispatcher("listClass.jsp").forward(req, resp);
         } catch (SQLException e) {
             LOGGER.info("SQLException: " +e.getMessage());

@@ -15,12 +15,46 @@
             max-width: 900px;
             margin: auto;
         }
+        .action-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .filter-form {
+            display: flex;
+            gap: 10px;
+        }
     </style>
 </head>
 <body>
 <%@ include file="/Views/common/header.jsp" %>
 <div class="container table-container">
     <h2 class="text-center">List of Classes</h2>
+
+    <!-- Thanh tìm kiếm và lọc -->
+    <div class="action-bar">
+        <!-- Nút tạo lớp -->
+        <a href="createClass" class="btn btn-primary">Create New Class</a>
+
+        <!-- Form tìm kiếm và lọc -->
+        <form class="filter-form" method="get" action="listClass">
+            <input type="text" id="search" name="search" class="form-control"  placeholder="Search by class name..." value="${param.search}" >
+
+            <select name="filterLevel" class="form-select" >
+                <option value="0">All Levels</option>
+                <c:forEach var="classLevel" items="${listClassLevel}">
+                    <option value="${classLevel.classLevelId}"
+                            <c:if test="${classLevel.classLevelId == param.filterLevel}">selected</c:if>>
+                            ${classLevel.classLevelName}
+                    </option>
+                </c:forEach>
+            </select>
+
+            <button type="submit" class="btn btn-secondary">Search</button>
+        </form>
+    </div>
+
     <table class="table table-bordered table-hover">
         <thead>
         <tr>
@@ -47,7 +81,6 @@
         </c:forEach>
         </tbody>
     </table>
-    <a href="createClass.jsp" class="btn btn-primary">Create New Class</a>
 </div>
 <%@ include file="/Views/common/footer.jsp" %>
 <!-- Bootstrap JS -->
