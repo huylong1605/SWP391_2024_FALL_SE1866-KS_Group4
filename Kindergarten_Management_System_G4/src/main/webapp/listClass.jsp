@@ -31,7 +31,12 @@
 <%@ include file="/Views/common/header.jsp" %>
 <div class="container table-container">
     <h2 class="text-center">List of Classes</h2>
-
+    <% if (request.getAttribute("deleteTrue") != null) { %>
+    <p style="color:green;"><%= request.getAttribute("deleteTrue") %></p>
+    <% } %>
+    <% if (request.getAttribute("deleteFalse") != null) { %>
+    <p style="color:red;"><%= request.getAttribute("deleteFalse") %></p>
+    <% } %>
     <!-- Thanh tìm kiếm và lọc -->
     <div class="action-bar">
         <!-- Nút tạo lớp -->
@@ -39,9 +44,9 @@
 
         <!-- Form tìm kiếm và lọc -->
         <form class="filter-form" method="get" action="listClass">
-            <input type="text" id="search" name="search" class="form-control"  placeholder="Search by class name..." value="${param.search}" >
+            <input type="text" id="search" name="search" class="form-control"  placeholder="Search by class name..." value="${param.search}" onchange="this.form.submit()">
 
-            <select name="filterLevel" class="form-select" >
+            <select name="filterLevel" class="form-select" onchange="this.form.submit()">
                 <option value="0">All Levels</option>
                 <c:forEach var="classLevel" items="${listClassLevel}">
                     <option value="${classLevel.classLevelId}"
@@ -51,7 +56,7 @@
                 </c:forEach>
             </select>
 
-            <button type="submit" class="btn btn-secondary">Search</button>
+           <%-- <button type="submit" class="btn btn-secondary">Search</button>--%>
         </form>
     </div>
 
@@ -74,8 +79,9 @@
                 <td>${classes.fullname}</td>
                 <td>${classes.roomNumber}</td>
                 <td>
-                    <a href="updateClass.jsp?id=${classes.classId}" class="btn btn-warning btn-sm">Edit</a>
-                    <a href="deleteClass?id=${classes.classId}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this class?')">Delete</a>
+                    <a href="updateClass?classId=${classes.classId}" class="btn btn-warning btn-sm">Edit</a>
+                    <a href="updateClass?classId=${classes.classId}" class="btn btn-warning btn-sm">Detail</a>
+                    <a href="deleteClass?classId=${classes.classId}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this class?')">Delete</a>
                 </td>
             </tr>
         </c:forEach>

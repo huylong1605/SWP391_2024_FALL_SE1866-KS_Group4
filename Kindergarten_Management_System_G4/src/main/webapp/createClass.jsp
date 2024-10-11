@@ -47,6 +47,9 @@
     <% if (request.getAttribute("classNameExist") != null) { %>
     <p style="color:red;"><%= request.getAttribute("classNameExist") %></p>
     <% } %>
+    <% if (request.getAttribute("maxLength") != null) { %>
+    <p style="color:red;"><%= request.getAttribute("maxLength") %></p>
+    <% } %>
     <form action="createClass" method="post">
         <!-- Class Name -->
         <div class="form-group">

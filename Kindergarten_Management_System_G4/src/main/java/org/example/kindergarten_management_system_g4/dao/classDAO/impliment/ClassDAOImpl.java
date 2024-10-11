@@ -23,11 +23,24 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
             "ON r.Room_ID = c.Room_ID\n" +
             "WHERE c.Room_ID IS NULL;";
 
+    public static final String GET_LIST_ROOM_2 = "select r.* \n" +
+            "FROM room r\n" +
+            "LEFT JOIN class c \n" +
+            "ON r.Room_ID = c.Room_ID\n" +
+            "WHERE c.Room_ID IS NULL OR r.Room_ID = ?;";
+
+    public static final String GET_CLASS_BY_ID = "SELECT * from class where Class_ID = ?";
     public static final String GET_LIST_TEACHER = "SELECT u.* \n" +
             "FROM user u\n" +
             "LEFT JOIN class c \n" +
             "ON u.User_id = c.User_id\n" +
             "WHERE c.User_id IS NULL;";
+
+    public static final String GET_LIST_TEACHER_2 = "SELECT u.* \n" +
+            "FROM user u\n" +
+            "LEFT JOIN class c \n" +
+            "ON u.User_id = c.User_id\n" +
+            "WHERE c.User_id IS NULL OR u.User_id = ?;";
 
     public static final String GET_LIST_CLASS_LEVEL = "SELECT * from class_level";
     public static final String GET_CLASS_NAME = "SELECT Class_name from class where Class_name = ?";
@@ -102,6 +115,24 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
 
     private static final String INSERT_CLASS = "INSERT INTO class(Class_name, Class_level_ID, User_id, Room_ID) " +
                                                 "VALUES (?, ?, ?, ?)";
+
+    private static final String UPDATE_CLASS = "UPDATE class\n" +
+            "SET Class_name = ?,\n" +
+            "    Class_level_ID = ?," +
+            "     User_id = ?,  \n" +
+            "    Room_ID = ?         \n" +
+            "WHERE Class_ID = ?;";
+
+    public static final String DELETE_CLASS = "DELETE FROM class\n" +
+            "WHERE Class_ID = ?\n" +
+            "AND NOT EXISTS (\n" +
+            "    SELECT 1\n" +
+            "    FROM student \n" +
+            "    WHERE student.class_id = class.Class_ID\n" +
+            ");";
+
+
+
     @Override
     public List<ClassDAL> listClass() throws SQLException {
         List<ClassDAL> classList = new ArrayList<>();
@@ -210,6 +241,42 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
     }
 
     @Override
+    public List<Room> listRoom(int roomId) throws SQLException {
+        List<Room> roomList = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = getConnection();
+            LOGGER.log(Level.INFO, "Connecting to database...");
+            preparedStatement = connection.prepareStatement(GET_LIST_ROOM_2);
+            preparedStatement.setInt(1, roomId);
+            resultSet = preparedStatement.executeQuery();
+
+            // Duyệt qua các kết quả và tạo đối tượng ClassDAL từ mỗi dòng kết quả
+            while (resultSet.next()) {
+                Room room = new Room();
+                room.setRoomId(resultSet.getInt("Room_ID"));
+                room.setRoomNumber(resultSet.getString("Room_number"));
+                room.setStatus(resultSet.getInt("Status"));
+                room.setCapacity(resultSet.getInt("capacity"));
+
+
+                // Thêm đối tượng vào danh sách
+                roomList.add(room);
+
+            }
+
+        }catch (SQLException e) {
+            throw new SQLException("Error list room " + e.getMessage(), e);
+        } finally {
+            closeResources(resultSet, preparedStatement, connection);
+        }
+        return roomList;
+    }
+
+    @Override
     public List<User> listTeacher() throws SQLException {
         List<User> teacherList = new ArrayList<>();
         Connection connection = null;
@@ -225,6 +292,43 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
             // Duyệt qua các kết quả và tạo đối tượng ClassDAL từ mỗi dòng kết quả
             while (resultSet.next()) {
                User teacher = new User();
+                teacher.setUserID(resultSet.getInt("User_id"));
+                teacher.setFullname(resultSet.getString("Fullname"));
+                teacher.setEmail(resultSet.getString("Email"));
+                teacher.setGender(resultSet.getInt("gender"));
+                teacher.setPhoneNumber(resultSet.getString("phoneNumber"));
+
+
+                // Thêm đối tượng vào danh sách
+                teacherList.add(teacher);
+
+            }
+
+        }catch (SQLException e) {
+            throw new SQLException("Error list teacher " + e.getMessage(), e);
+        } finally {
+            closeResources(resultSet, preparedStatement, connection);
+        }
+        return teacherList;
+    }
+
+    @Override
+    public List<User> listTeacher(int userId) throws SQLException {
+        List<User> teacherList = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = getConnection();
+            LOGGER.log(Level.INFO, "Connecting to database...");
+            preparedStatement = connection.prepareStatement(GET_LIST_TEACHER_2);
+            preparedStatement.setInt(1, userId);
+            resultSet = preparedStatement.executeQuery();
+
+            // Duyệt qua các kết quả và tạo đối tượng ClassDAL từ mỗi dòng kết quả
+            while (resultSet.next()) {
+                User teacher = new User();
                 teacher.setUserID(resultSet.getInt("User_id"));
                 teacher.setFullname(resultSet.getString("Fullname"));
                 teacher.setEmail(resultSet.getString("Email"));
@@ -353,6 +457,42 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
     }
 
     @Override
+    public Classes getClassById(int classId) throws SQLException {
+        Classes classes = new Classes();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = getConnection();
+            LOGGER.log(Level.INFO, "Connecting to database...");
+            preparedStatement = connection.prepareStatement(GET_CLASS_BY_ID);
+            preparedStatement.setInt(1, classId);
+            resultSet = preparedStatement.executeQuery();
+
+            // Duyệt qua các kết quả và tạo đối tượng ClassDAL từ mỗi dòng kết quả
+            while (resultSet.next()) {
+
+                classes.setClassId(resultSet.getInt("Class_ID"));
+                classes.setClassName(resultSet.getString("Class_name"));
+                classes.setClassLevelId(resultSet.getInt("Class_level_ID"));
+                classes.setUserId(resultSet.getInt("User_id"));
+                classes.setRoomId(resultSet.getInt("Room_ID"));
+
+                // Thêm đối tượng vào danh sách
+
+
+            }
+
+        }catch (SQLException e) {
+            throw new SQLException("Error get class " + e.getMessage(), e);
+        } finally {
+            closeResources(resultSet, preparedStatement, connection);
+        }
+        return classes;
+    }
+
+    @Override
     public Boolean createClass(Classes classes) throws SQLException {
         boolean isInserted = false; // Khởi tạo mặc định là false
         Connection connection = null;
@@ -420,6 +560,68 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
         return ClassNamee;
     }
 
+    @Override
+    public Boolean updateClass(Classes classes) throws SQLException {
+        boolean isInserted = false; // Khởi tạo mặc định là false
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = getConnection();
+            LOGGER.log(Level.INFO, "Connecting to database...");
+            preparedStatement = connection.prepareStatement(UPDATE_CLASS);
+
+            preparedStatement.setString(1, classes.getClassName());
+            preparedStatement.setInt(2, classes.getClassLevelId());
+            preparedStatement.setInt(3, classes.getUserId());
+            preparedStatement.setInt(4, classes.getRoomId());
+            preparedStatement.setInt(5, classes.getClassId());
+
+
+            LOGGER.log(Level.INFO, "Executing Update class: {0}", preparedStatement);
+
+            int result = preparedStatement.executeUpdate(); // Thực thi câu lệnh
+
+            if (result > 0) {
+                // Nếu số dòng bị ảnh hưởng > 0, thêm thành công
+                isInserted = true;
+                LOGGER.log(Level.INFO, "Class Update successfully: {0}", classes.getClassName());
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Error Update class " + e.getMessage(), e);
+        } finally {
+            closeResources(null, preparedStatement, connection);
+        }
+
+        return isInserted; // Trả về kết quả kiểm tra
+    }
+
+    @Override
+    public Boolean deleteClass(int classID) throws SQLException {
+        boolean isInserted = false; // Khởi tạo mặc định là false
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            connection = getConnection();
+            LOGGER.log(Level.INFO, "Connecting to database...");
+            preparedStatement = connection.prepareStatement(DELETE_CLASS);
+            preparedStatement.setInt(1, classID);
+            LOGGER.log(Level.INFO, "Executing Delele class: {0}", preparedStatement);
+
+            int result = preparedStatement.executeUpdate();
+
+            if(result > 0){
+                isInserted = true;
+                LOGGER.log(Level.INFO, "Class Update successfully: {0}", classID);
+            }
+        }catch (SQLException e) {
+            throw new SQLException("Error Delete class " + e.getMessage(), e);
+        } finally {
+            closeResources(null, preparedStatement, connection);
+        }
+        return isInserted;
+    }
     private void closeResources(ResultSet resultSet, PreparedStatement preparedStatement, Connection connection) {
             // Đóng ResultSet
             try {
