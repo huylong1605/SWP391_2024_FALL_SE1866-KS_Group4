@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -33,20 +34,50 @@ public class ListClassController extends HttpServlet {
         int classLevelId = 0;
         String filterLevelParam = req.getParameter("filterLevel");
         String searching = req.getParameter("search");
+        HttpSession session = req.getSession();
+        String deleteFalse = (String) session.getAttribute("DeleteFalse");
+        String deleteSuccessful = (String) session.getAttribute("DeleteSuccessful");
+        String createSuccessful = (String) session.getAttribute("CreateSuccessful");
+        String updateSuccessful = (String) session.getAttribute("UpdateSuccessful");
+
         if (filterLevelParam != null && !filterLevelParam.isEmpty()) {
             classLevelId = Integer.parseInt(filterLevelParam);
         }
         List<ClassDAL> listClass;
         try {
             boolean isSearchingEmpty = (searching == null || searching.isEmpty());
-            if(classLevelId == 0 && isSearchingEmpty){
+            if (classLevelId == 0 && isSearchingEmpty) {
                 listClass = iClassDAO.listClass();
-            }else if(isSearchingEmpty){
+            } else if (isSearchingEmpty) {
                 listClass = iClassDAO.listClassFilter(classLevelId);
-            }else if(classLevelId == 0){
+            } else if (classLevelId == 0) {
                 listClass = iClassDAO.listClassSearch(searching);
-            }else{
+            } else {
                 listClass = iClassDAO.listClassSearchFilter(classLevelId, searching);
+            }
+            if (deleteSuccessful != null) {
+                // Đặt thông báo vào request
+                req.setAttribute("deleteSuccessful", deleteSuccessful);
+                // Xóa thông báo khỏi session để tránh hiển thị lại
+                session.removeAttribute("DeleteSuccessful");
+            }
+            if (deleteFalse != null) {
+                req.setAttribute("deleteFalse", deleteFalse);
+                // Xóa thông báo khỏi session để tránh hiển thị lại
+                session.removeAttribute("DeleteFalse");
+            }
+            if (createSuccessful != null) {
+                req.setAttribute("createSuccessful", createSuccessful);
+                // Xóa thông báo khỏi session để tránh hiển thị lại
+                session.removeAttribute("CreateSuccessful");
+            }
+
+            if (updateSuccessful != null) {
+                // Gán thông báo vào request để hiển thị trong JSP
+                req.setAttribute("updateSuccessful", updateSuccessful);
+
+                // Xóa thuộc tính khỏi session để tránh hiển thị lại trong các yêu cầu khác
+                session.removeAttribute("UpdateSuccessful");
             }
 
             List<ClassLevel> listClassLevel = iClassDAO.listClassLevel();
@@ -54,7 +85,7 @@ public class ListClassController extends HttpServlet {
             req.setAttribute("listClassLevel", listClassLevel);
             req.getRequestDispatcher("listClass.jsp").forward(req, resp);
         } catch (SQLException e) {
-            LOGGER.info("SQLException: " +e.getMessage());
+            LOGGER.info("SQLException: " + e.getMessage());
         }
     }
 

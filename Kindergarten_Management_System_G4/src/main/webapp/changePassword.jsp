@@ -19,6 +19,7 @@
             min-height: 100vh;
             background-color: #f8f9fa;
         }
+
         .register-form {
             background-color: #ffffff;
             padding: 30px;
@@ -27,20 +28,25 @@
             max-width: 600px;
             width: 100%;
         }
+
         .register-form h2 {
             margin-bottom: 25px;
             text-align: center;
         }
+
         .form-group label {
             font-weight: 600;
         }
+
         .password-container {
             position: relative;
         }
+
         .password-container input[type="password"],
         .password-container input[type="text"] {
             padding-right: 40px; /* Space for the eye icon */
         }
+
         .password-container .bi-eye,
         .password-container .bi-eye-slash {
             position: absolute;
@@ -51,13 +57,16 @@
             font-size: 1.2rem;
             color: #6c757d;
         }
+
         .btn-primary {
             background-color: #007bff;
             border: none;
         }
+
         .btn-primary:hover {
             background-color: #0056b3;
         }
+
         .text-muted {
             color: #6c757d;
         }
@@ -90,14 +99,16 @@
 
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" name="email" value="${sessionScope.user.email}" required>
+            <input type="email" class="form-control" id="email" name="email" value="${sessionScope.user.email}"
+                   required>
         </div>
 
         <br>
         <div class="form-group">
             <label for="oldPassword">Old Password:</label>
             <div class="password-container">
-                <input type="password" class="form-control" id="oldPassword" name="oldPassword" value="${param.oldPassword}" required
+                <input type="password" class="form-control" id="oldPassword" name="oldPassword"
+                       value="${param.oldPassword}" required
                        oninvalid="this.setCustomValidity('Please enter your old password')"
                        oninput="this.setCustomValidity('')">
                 <i class="bi bi-eye-slash" id="toggleOldPasswordIcon" onclick="toggleOldPassword()"></i>

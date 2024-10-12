@@ -1,7 +1,6 @@
 package org.example.kindergarten_management_system_g4.dao.classDAO.impliment;
 
 import org.example.kindergarten_management_system_g4.connection.DBConnection;
-
 import org.example.kindergarten_management_system_g4.dao.classDAO.IClassDAO;
 import org.example.kindergarten_management_system_g4.model.*;
 
@@ -9,42 +8,55 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ClassDAOImpl extends DBConnection implements IClassDAO {
-    private static final Logger LOGGER = Logger.getLogger(ClassDAOImpl.class.getName());
     public static final String GET_LIST_ROOM = "SELECT r.* \n" +
             "FROM room r\n" +
             "LEFT JOIN class c \n" +
             "ON r.Room_ID = c.Room_ID\n" +
             "WHERE c.Room_ID IS NULL;";
-
     public static final String GET_LIST_ROOM_2 = "select r.* \n" +
             "FROM room r\n" +
             "LEFT JOIN class c \n" +
             "ON r.Room_ID = c.Room_ID\n" +
             "WHERE c.Room_ID IS NULL OR r.Room_ID = ?;";
-
     public static final String GET_CLASS_BY_ID = "SELECT * from class where Class_ID = ?";
     public static final String GET_LIST_TEACHER = "SELECT u.* \n" +
             "FROM user u\n" +
             "LEFT JOIN class c \n" +
             "ON u.User_id = c.User_id\n" +
             "WHERE c.User_id IS NULL;";
-
     public static final String GET_LIST_TEACHER_2 = "SELECT u.* \n" +
             "FROM user u\n" +
             "LEFT JOIN class c \n" +
             "ON u.User_id = c.User_id\n" +
             "WHERE c.User_id IS NULL OR u.User_id = ?;";
-
     public static final String GET_LIST_CLASS_LEVEL = "SELECT * from class_level";
     public static final String GET_CLASS_NAME = "SELECT Class_name from class where Class_name = ?";
-
+    public static final String GET_CLASS_NAME_UPDATE = "SELECT Class_name from class where Class_name = ? AND Class_ID != ?";
+    public static final String GET_CLASS_DETAIL = "SELECT\n" +
+            "    c.Class_ID, \n" +
+            "    c.Class_name,\n" +
+            "    cl.Class_level_name,\n" +
+            "    cl.Description,\n" +
+            "    u.Fullname,\n" +
+            "    u.Email,\n" +
+            "    r.Room_number,\n" +
+            "    r.capacity\n" +
+            "FROM \n" +
+            "    class c\n" +
+            "JOIN \n" +
+            "    class_level cl ON c.Class_level_ID = cl.Class_level_ID\n" +
+            "JOIN\n" +
+            "    user u ON c.User_id = u.User_id\n" +
+            "JOIN \n" +
+            "    room r ON c.Room_ID = r.Room_ID\n" +
+            "WHERE \n" +
+            "    c.Class_ID = ?;\n";
     public static final String GET_LIST_CLASS = "SELECT \n" +
             "    c.Class_ID, \n" +
             "    c.Class_name, \n" +
@@ -61,7 +73,6 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
             "    room r ON c.Room_ID = r.Room_ID\n" +
             "WHERE \n" +
             "    u.Role_id = 2;\n";
-
     public static final String GET_LIST_CLASS_FILTER = "SELECT \n" +
             "    c.Class_ID, \n" +
             "    c.Class_name, \n" +
@@ -78,7 +89,6 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
             "    room r ON c.Room_ID = r.Room_ID\n" +
             "WHERE \n" +
             "    cl.Class_level_ID = ?;\n";
-
     public static final String GET_LIST_CLASS_SEARCH_FILTER = "SELECT \n" +
             "    c.Class_ID, \n" +
             "    c.Class_name, \n" +
@@ -95,7 +105,6 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
             "    room r ON c.Room_ID = r.Room_ID\n" +
             "WHERE \n" +
             "   cl.Class_level_ID = ? AND u.Fullname like ?;\n";
-
     public static final String GET_LIST_CLASS_SEARCH = "SELECT \n" +
             "    c.Class_ID, \n" +
             "    c.Class_name, \n" +
@@ -112,26 +121,22 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
             "    room r ON c.Room_ID = r.Room_ID\n" +
             "WHERE \n" +
             "  u.Fullname like ?";
-
+    public static final String DELETE_CLASS = "DELETE FROM class\n" +
+            "WHERE Class_ID = ?\n" +
+            "AND NOT EXISTS (\n" +
+            "    SELECT 1\n" +
+            "    FROM student, schedule \n" +
+            "    WHERE student.class_id = class.Class_ID || schedule.class_id = class.Class_ID\n" +
+            ");";
+    private static final Logger LOGGER = Logger.getLogger(ClassDAOImpl.class.getName());
     private static final String INSERT_CLASS = "INSERT INTO class(Class_name, Class_level_ID, User_id, Room_ID) " +
-                                                "VALUES (?, ?, ?, ?)";
-
+            "VALUES (?, ?, ?, ?)";
     private static final String UPDATE_CLASS = "UPDATE class\n" +
             "SET Class_name = ?,\n" +
             "    Class_level_ID = ?," +
             "     User_id = ?,  \n" +
             "    Room_ID = ?         \n" +
             "WHERE Class_ID = ?;";
-
-    public static final String DELETE_CLASS = "DELETE FROM class\n" +
-            "WHERE Class_ID = ?\n" +
-            "AND NOT EXISTS (\n" +
-            "    SELECT 1\n" +
-            "    FROM student \n" +
-            "    WHERE student.class_id = class.Class_ID\n" +
-            ");";
-
-
 
     @Override
     public List<ClassDAL> listClass() throws SQLException {
@@ -160,12 +165,12 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
 
             }
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("Error list class " + e.getMessage(), e);
         } finally {
             closeResources(resultSet, preparedStatement, connection);
         }
-   return classList;
+        return classList;
     }
 
     @Override
@@ -197,7 +202,7 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
 
             }
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("Error filter list class " + e.getMessage(), e);
         } finally {
             closeResources(resultSet, preparedStatement, connection);
@@ -232,7 +237,7 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
 
             }
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("Error list room " + e.getMessage(), e);
         } finally {
             closeResources(resultSet, preparedStatement, connection);
@@ -268,7 +273,7 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
 
             }
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("Error list room " + e.getMessage(), e);
         } finally {
             closeResources(resultSet, preparedStatement, connection);
@@ -291,7 +296,7 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
 
             // Duyệt qua các kết quả và tạo đối tượng ClassDAL từ mỗi dòng kết quả
             while (resultSet.next()) {
-               User teacher = new User();
+                User teacher = new User();
                 teacher.setUserID(resultSet.getInt("User_id"));
                 teacher.setFullname(resultSet.getString("Fullname"));
                 teacher.setEmail(resultSet.getString("Email"));
@@ -304,7 +309,7 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
 
             }
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("Error list teacher " + e.getMessage(), e);
         } finally {
             closeResources(resultSet, preparedStatement, connection);
@@ -341,7 +346,7 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
 
             }
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("Error list teacher " + e.getMessage(), e);
         } finally {
             closeResources(resultSet, preparedStatement, connection);
@@ -370,13 +375,12 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
                 classLevel.setDescription(resultSet.getString("Description"));
 
 
-
                 // Thêm đối tượng vào danh sách
                 classLevelList.add(classLevel);
 
             }
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("Error list class level " + e.getMessage(), e);
         } finally {
             closeResources(resultSet, preparedStatement, connection);
@@ -412,7 +416,7 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
 
             }
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("Error filter list class " + e.getMessage(), e);
         } finally {
             closeResources(resultSet, preparedStatement, connection);
@@ -448,7 +452,7 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
 
             }
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("Error search list class " + e.getMessage(), e);
         } finally {
             closeResources(resultSet, preparedStatement, connection);
@@ -484,12 +488,48 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
 
             }
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("Error get class " + e.getMessage(), e);
         } finally {
             closeResources(resultSet, preparedStatement, connection);
         }
         return classes;
+    }
+
+    @Override
+    public ClassDAL getClassByIdDetail(int classId) throws SQLException {
+        ClassDAL classDAL = new ClassDAL();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = getConnection();
+            LOGGER.log(Level.INFO, "Connecting to database...");
+            preparedStatement = connection.prepareStatement(GET_CLASS_DETAIL);
+            preparedStatement.setInt(1, classId);
+            resultSet = preparedStatement.executeQuery();
+
+            // Duyệt qua các kết quả và tạo đối tượng ClassDAL từ mỗi dòng kết quả
+            while (resultSet.next()) {
+
+                classDAL.setClassId(resultSet.getInt("Class_ID"));
+                classDAL.setClassName(resultSet.getString("Class_name"));
+                classDAL.setClassLevelName(resultSet.getString("Class_level_name"));
+                classDAL.setFullname(resultSet.getString("Fullname"));
+                classDAL.setRoomNumber(resultSet.getString("Room_number"));
+                classDAL.setDescription(resultSet.getString("Description"));
+                classDAL.setEmail(resultSet.getString("Email"));
+                classDAL.setCapacity(resultSet.getString("capacity"));
+
+            }
+
+        } catch (SQLException e) {
+            throw new SQLException("Error get class Detail " + e.getMessage(), e);
+        } finally {
+            closeResources(resultSet, preparedStatement, connection);
+        }
+        return classDAL;
     }
 
     @Override
@@ -561,6 +601,39 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
     }
 
     @Override
+    public String getClassNameUpdate(String className, int ClassId) throws SQLException {
+        String ClassNamee = "";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = getConnection();
+            LOGGER.log(Level.INFO, "Connecting to database...");
+
+            preparedStatement = connection.prepareStatement(GET_CLASS_NAME_UPDATE);
+            preparedStatement.setString(1, className);
+            preparedStatement.setInt(2, ClassId);
+            LOGGER.log(Level.INFO, "Executing query: {0}", preparedStatement);
+
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                ClassNamee = resultSet.getString(1);  // Lưu Password ở đây
+                LOGGER.log(Level.INFO, "Get class name: {0}", className);  // Ghi log khi lấy được Password
+            } else {
+                LOGGER.log(Level.WARNING, "No class name found : {0}", className); // Ghi log không tìm thấy Password
+            }
+
+        } catch (SQLException e) {
+            throw new SQLException("Error get class name " + e.getMessage(), e);
+        } finally {
+            closeResources(resultSet, preparedStatement, connection);
+        }
+        return ClassNamee;
+    }
+
+    @Override
     public Boolean updateClass(Classes classes) throws SQLException {
         boolean isInserted = false; // Khởi tạo mặc định là false
         Connection connection = null;
@@ -611,70 +684,71 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
 
             int result = preparedStatement.executeUpdate();
 
-            if(result > 0){
+            if (result > 0) {
                 isInserted = true;
                 LOGGER.log(Level.INFO, "Class Update successfully: {0}", classID);
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new SQLException("Error Delete class " + e.getMessage(), e);
         } finally {
             closeResources(null, preparedStatement, connection);
         }
         return isInserted;
     }
+
     private void closeResources(ResultSet resultSet, PreparedStatement preparedStatement, Connection connection) {
-            // Đóng ResultSet
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                    LOGGER.log(Level.INFO, "ResultSet closed");
-                }
-            } catch (SQLException e) {
-                LOGGER.log(Level.SEVERE, "Error closing ResultSet", e);
-                printSQLException(e);
+        // Đóng ResultSet
+        try {
+            if (resultSet != null) {
+                resultSet.close();
+                LOGGER.log(Level.INFO, "ResultSet closed");
             }
-
-            // Đóng PreparedStatement
-            try {
-                if (preparedStatement != null) {
-                    preparedStatement.close();
-                    LOGGER.log(Level.INFO, "PreparedStatement closed");
-                }
-            } catch (SQLException e) {
-                LOGGER.log(Level.SEVERE, "Error closing PreparedStatement", e);
-                printSQLException(e);
-            }
-
-            // Đóng Connection
-            try {
-                if (connection != null) {
-                    connection.close();
-                    LOGGER.log(Level.INFO, "Connection closed");
-                }
-            } catch (SQLException e) {
-                LOGGER.log(Level.SEVERE, "Error closing Connection", e);
-                printSQLException(e);
-            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error closing ResultSet", e);
+            printSQLException(e);
         }
 
-        /**
-         * Ghi lại thông tin lỗi SQL
-         *
-         * @param ex Đối tượng SQLException
-         */
-        private void printSQLException(SQLException ex) {
-            for (Throwable e : ex) {
-                if (e instanceof SQLException) {
-                    LOGGER.log(Level.SEVERE, "SQL Exception: {0}", e.getMessage());
-                    LOGGER.log(Level.SEVERE, "SQLState: {0}", ((SQLException) e).getSQLState());
-                    LOGGER.log(Level.SEVERE, "Error Code: {0}", ((SQLException) e).getErrorCode());
-                    Throwable t = ex.getCause();
-                    while (t != null) {
-                        LOGGER.log(Level.SEVERE, "Cause: {0}", t);
-                        t = t.getCause();
-                    }
+        // Đóng PreparedStatement
+        try {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+                LOGGER.log(Level.INFO, "PreparedStatement closed");
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error closing PreparedStatement", e);
+            printSQLException(e);
+        }
+
+        // Đóng Connection
+        try {
+            if (connection != null) {
+                connection.close();
+                LOGGER.log(Level.INFO, "Connection closed");
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error closing Connection", e);
+            printSQLException(e);
+        }
+    }
+
+    /**
+     * Ghi lại thông tin lỗi SQL
+     *
+     * @param ex Đối tượng SQLException
+     */
+    private void printSQLException(SQLException ex) {
+        for (Throwable e : ex) {
+            if (e instanceof SQLException) {
+                LOGGER.log(Level.SEVERE, "SQL Exception: {0}", e.getMessage());
+                LOGGER.log(Level.SEVERE, "SQLState: {0}", ((SQLException) e).getSQLState());
+                LOGGER.log(Level.SEVERE, "Error Code: {0}", ((SQLException) e).getErrorCode());
+                Throwable t = ex.getCause();
+                while (t != null) {
+                    LOGGER.log(Level.SEVERE, "Cause: {0}", t);
+                    t = t.getCause();
                 }
             }
         }
+    }
 
 }

@@ -11,16 +11,19 @@
         body {
             padding: 20px;
         }
+
         .table-container {
             max-width: 900px;
             margin: auto;
         }
+
         .action-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
         }
+
         .filter-form {
             display: flex;
             gap: 10px;
@@ -31,12 +34,28 @@
 <%@ include file="/Views/common/header.jsp" %>
 <div class="container table-container">
     <h2 class="text-center">List of Classes</h2>
-    <% if (request.getAttribute("deleteTrue") != null) { %>
-    <p style="color:green;"><%= request.getAttribute("deleteTrue") %></p>
+
+    <% if (request.getAttribute("deleteSuccessful") != null) { %>
+    <div class="alert alert-success">
+        <%= request.getAttribute("deleteSuccessful") %>
+    </div>
+
+    </p>
     <% } %>
+    <% if (request.getAttribute("updateSuccessful") != null) { %>
+    <div class="alert alert-success"><%= request.getAttribute("updateSuccessful") %>
+    </div>
+    <% } %>
+    <% if (request.getAttribute("createSuccessful") != null) { %>
+    <div class="alert alert-success"><%= request.getAttribute("createSuccessful") %>
+    </div>
+    <% } %>
+
     <% if (request.getAttribute("deleteFalse") != null) { %>
-    <p style="color:red;"><%= request.getAttribute("deleteFalse") %></p>
+    <div class="alert alert-danger"><%= request.getAttribute("deleteFalse") %>
+    </div>
     <% } %>
+
     <!-- Thanh tìm kiếm và lọc -->
     <div class="action-bar">
         <!-- Nút tạo lớp -->
@@ -44,7 +63,8 @@
 
         <!-- Form tìm kiếm và lọc -->
         <form class="filter-form" method="get" action="listClass">
-            <input type="text" id="search" name="search" class="form-control"  placeholder="Search by class name..." value="${param.search}" onchange="this.form.submit()">
+            <input type="text" id="search" name="search" class="form-control" placeholder="Search by class name..."
+                   value="${param.search}" onchange="this.form.submit()">
 
             <select name="filterLevel" class="form-select" onchange="this.form.submit()">
                 <option value="0">All Levels</option>
@@ -56,7 +76,7 @@
                 </c:forEach>
             </select>
 
-           <%-- <button type="submit" class="btn btn-secondary">Search</button>--%>
+            <%-- <button type="submit" class="btn btn-secondary">Search</button>--%>
         </form>
     </div>
 
@@ -80,8 +100,9 @@
                 <td>${classes.roomNumber}</td>
                 <td>
                     <a href="updateClass?classId=${classes.classId}" class="btn btn-warning btn-sm">Edit</a>
-                    <a href="updateClass?classId=${classes.classId}" class="btn btn-warning btn-sm">Detail</a>
-                    <a href="deleteClass?classId=${classes.classId}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this class?')">Delete</a>
+                    <a href="classDetail?classId=${classes.classId}" class="btn btn-warning btn-sm">Detail</a>
+                    <a href="#" class="btn btn-danger btn-sm"
+                       onclick="deleteClass(${classes.classId})">Delete</a>
                 </td>
             </tr>
         </c:forEach>
@@ -89,7 +110,26 @@
     </table>
 </div>
 <%@ include file="/Views/common/footer.jsp" %>
+
+<script>
+    function deleteClass(classId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = 'deleteClass?classId=' + classId;
+            }
+        });
+    }
+</script>
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

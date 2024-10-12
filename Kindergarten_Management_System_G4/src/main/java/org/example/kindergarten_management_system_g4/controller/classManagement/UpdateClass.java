@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -20,18 +21,19 @@ import java.util.logging.Logger;
 @WebServlet(name = "updateClass", value = "/updateClass")
 public class UpdateClass extends HttpServlet {
     private static final Logger LOGGER = Logger.getLogger(ListClassController.class.getName());
-    private IClassDAO iClassDAO;
     private static final int MAX_LENGTH = 10;
+    private IClassDAO iClassDAO;
 
     public void init() throws ServletException {
         super.init();
         iClassDAO = new ClassDAOImpl();
 
     }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-          String classId = req.getParameter("classId");
+        String classId = req.getParameter("classId");
 
         try {
             Classes classes = iClassDAO.getClassById(Integer.parseInt(classId));
@@ -45,7 +47,7 @@ public class UpdateClass extends HttpServlet {
             req.setAttribute("listClassLevel", listClassLevel);
             req.getRequestDispatcher("updateClass.jsp").forward(req, resp);
         } catch (SQLException e) {
-            LOGGER.info("SQLException: " +e.getMessage());
+            LOGGER.info("SQLException: " + e.getMessage());
         }
     }
 
@@ -58,11 +60,11 @@ public class UpdateClass extends HttpServlet {
         int room = Integer.parseInt(req.getParameter("roomId"));
 
 
-
         try {
             String classIds = req.getParameter("classId");
             Classes classesee = iClassDAO.getClassById(Integer.parseInt(classIds));
-            if(className.length() > MAX_LENGTH){
+            String classNames = iClassDAO.getClassNameUpdate(className, classId);
+            if (className.length() > MAX_LENGTH) {
 
                 Classes classese = iClassDAO.getClassById(Integer.parseInt(classIds));
                 List<User> teacherr = iClassDAO.listTeacher(classese.getUserId());
@@ -76,11 +78,28 @@ public class UpdateClass extends HttpServlet {
                 req.getRequestDispatcher("updateClass.jsp").forward(req, resp);
                 return;
             }
+            if (className.equals(classNames)) {
+
+                Classes classese = iClassDAO.getClassById(Integer.parseInt(classIds));
+                List<User> teacherr = iClassDAO.listTeacher(classese.getUserId());
+                List<Room> roomm = iClassDAO.listRoom(classese.getRoomId());
+                List<ClassLevel> listClassLevel = iClassDAO.listClassLevel();
+                req.setAttribute("classNameExist", "Class name is exist");
+                req.setAttribute("classObject", classesee);
+                req.setAttribute("listRoom", roomm);
+                req.setAttribute("listTeacher", teacherr);
+                req.setAttribute("listClassLevel", listClassLevel);
+                req.getRequestDispatcher("updateClass.jsp").forward(req, resp);
+                return;
+            }
+
             Classes classes = new Classes(classId, className, classLevel, teacher, room);
             iClassDAO.updateClass(classes);
+            HttpSession session = req.getSession();
+            session.setAttribute("UpdateSuccessful", "Update class " + className + " successful");
             resp.sendRedirect("listClass");
         } catch (SQLException e) {
-            LOGGER.info("SQLException: " +e.getMessage());
+            LOGGER.info("SQLException: " + e.getMessage());
         }
 
     }

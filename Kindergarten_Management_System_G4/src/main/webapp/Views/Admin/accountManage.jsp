@@ -81,6 +81,12 @@
                         <span>View List Student</span>
                     </a>
                 </li>
+                <li class="sidebar-item">
+                    <a href="${pageContext.request.contextPath}/listClass" class="sidebar-link">
+                        <i class="lni lni-graduation"></i>
+                        <span>View list class</span>
+                    </a>
+                </li>
             </ul>
 
         </aside>

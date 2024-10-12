@@ -19,7 +19,7 @@ public class Classes {
         this.roomId = roomId;
     }
 
-    public Classes( String className, int classLevelId, int userId, int roomId) {
+    public Classes(String className, int classLevelId, int userId, int roomId) {
 
         this.className = className;
         this.classLevelId = classLevelId;

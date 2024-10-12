@@ -4,7 +4,7 @@ public class ClassLevel {
 
     private int classLevelId;
     private String classLevelName;
-    private String  description;
+    private String description;
 
     public ClassLevel() {
     }

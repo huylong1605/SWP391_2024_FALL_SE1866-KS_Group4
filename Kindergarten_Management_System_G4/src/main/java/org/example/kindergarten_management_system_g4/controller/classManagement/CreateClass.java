@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.logging.Logger;
 public class CreateClass extends HttpServlet {
     private static final Logger LOGGER = Logger.getLogger(CreateClass.class.getName());
     private static final int MAX_LENGTH = 10;
-     private IClassDAO iClassDAO;
+    private IClassDAO iClassDAO;
 
     public void init() throws ServletException {
         super.init();
@@ -36,18 +37,18 @@ public class CreateClass extends HttpServlet {
             List<Room> listRoom = iClassDAO.listRoom();
             List<User> listTeacher = iClassDAO.listTeacher();
             List<ClassLevel> listClassLevel = iClassDAO.listClassLevel();
-
             req.setAttribute("listRoom", listRoom);
             req.setAttribute("listTeacher", listTeacher);
             req.setAttribute("listClassLevel", listClassLevel);
             req.getRequestDispatcher("createClass.jsp").forward(req, resp);
         } catch (SQLException e) {
-            LOGGER.info("SQLException: " +e.getMessage());
+            LOGGER.info("SQLException: " + e.getMessage());
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
 
         String className = req.getParameter("className").trim().replaceAll("\\s+", " ");
         int classLevel = Integer.parseInt(req.getParameter("classLevelId"));
@@ -57,7 +58,7 @@ public class CreateClass extends HttpServlet {
         try {
             String classNameExist = iClassDAO.getClassName(className);
 
-            if(className.equals(classNameExist)){
+            if (className.equals(classNameExist)) {
 
                 List<Room> listRoom = iClassDAO.listRoom();
                 List<User> listTeacher = iClassDAO.listTeacher();
@@ -67,11 +68,11 @@ public class CreateClass extends HttpServlet {
                 req.setAttribute("listTeacher", listTeacher);
                 req.setAttribute("listClassLevel", listClassLevel);
                 req.getRequestDispatcher("createClass.jsp").forward(req, resp);
-                LOGGER.info("classNameExist:  " + className +"=" +classNameExist );
-                 return;
+                LOGGER.info("classNameExist:  " + className + "=" + classNameExist);
+                return;
             }
 
-            if(className.length() > MAX_LENGTH){
+            if (className.length() > MAX_LENGTH) {
                 List<Room> listRoom = iClassDAO.listRoom();
                 List<User> listTeacher = iClassDAO.listTeacher();
                 List<ClassLevel> listClassLevel = iClassDAO.listClassLevel();
@@ -80,20 +81,20 @@ public class CreateClass extends HttpServlet {
                 req.setAttribute("listTeacher", listTeacher);
                 req.setAttribute("listClassLevel", listClassLevel);
                 req.getRequestDispatcher("createClass.jsp").forward(req, resp);
-                LOGGER.info("classNameExist:  " + className +"=" +classNameExist );
+                LOGGER.info("classNameExist:  " + className + "=" + classNameExist);
                 return;
             }
 
-            Classes classes = new Classes(className, classLevel, teacher, room );
+            Classes classes = new Classes(className, classLevel, teacher, room);
             iClassDAO.createClass(classes);
+            HttpSession session = req.getSession();
+            session.setAttribute("CreateSuccessful", "Create class " + className + " successful");
             resp.sendRedirect("listClass");
 //            req.setAttribute("createSuccessful", "Create class " + className +" Successful");
 //            req.getRequestDispatcher("createClass.jsp").forward(req, resp);
         } catch (SQLException e) {
-            LOGGER.info("SQLException: " +e.getMessage());
+            LOGGER.info("SQLException: " + e.getMessage());
         }
-
-
 
 
     }
