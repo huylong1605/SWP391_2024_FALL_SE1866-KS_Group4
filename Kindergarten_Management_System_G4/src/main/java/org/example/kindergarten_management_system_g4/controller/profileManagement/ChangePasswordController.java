@@ -44,6 +44,16 @@ public class ChangePasswordController extends HttpServlet {
 
     }
 
+    /**
+     * Phương thức xử lý yêu cầu GET.
+     * Hiện tại không có logic nào được xử lý trong phương thức này.
+     * Có thể được sử dụng trong tương lai cho các yêu cầu gửi dữ liệu.
+     *
+     * @param req  HttpServletRequest chứa thông tin yêu cầu từ client
+     * @param resp HttpServletResponse chứa thông tin phản hồi cho client
+     * @throws ServletException nếu có lỗi khi xử lý yêu cầu
+     * @throws IOException      nếu có lỗi khi gửi phản hồi
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doGet(req, resp);

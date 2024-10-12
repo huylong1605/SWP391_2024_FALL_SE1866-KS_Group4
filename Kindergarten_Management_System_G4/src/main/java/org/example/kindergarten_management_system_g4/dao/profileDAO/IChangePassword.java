@@ -4,7 +4,7 @@
  * Kindergarten Management System
  *
  * Record of change:
- * DATE           Version                  AUTHOR                                      DESCRIPTION
+ * DATE           Version                  AUTHOR                                           DESCRIPTION
  * 10/5/2024       1.1              Nguyễn Huy Long - He160140                   create interface for change Password
  */
 

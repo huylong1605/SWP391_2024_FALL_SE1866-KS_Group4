@@ -1,3 +1,13 @@
+/*
+ * Copyright(C) 2005,  SWP_G4.
+ * KMS :
+ * Kindergarten Management System
+ *
+ * Record of change:
+ * DATE           Version                  AUTHOR                                 DESCRIPTION
+ * 10/5/2024       1.1              Nguyễn Huy Long - He160140              Create class DAOIpml and method
+ * 10/12/2024       1.2              Nguyễn Huy Long - He160140              Update class DAOIpml and method
+ */
 package org.example.kindergarten_management_system_g4.dao.classDAO.impliment;
 
 import org.example.kindergarten_management_system_g4.connection.DBConnection;
@@ -13,6 +23,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Lớp ClassDAOImpl kế thừa từ DBConnection và thực hiện các phương thức
+ * trong interface IClassDAO. Lớp này chứa các phương thức
+ *
+ * @author Nguyễn Huy Long
+ */
 public class ClassDAOImpl extends DBConnection implements IClassDAO {
     public static final String GET_LIST_ROOM = "SELECT r.* \n" +
             "FROM room r\n" +
@@ -138,8 +154,20 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
             "    Room_ID = ?         \n" +
             "WHERE Class_ID = ?;";
 
+
+    /**
+     * Lấy danh sách các lớp từ cơ sở dữ liệu.
+     *
+     * Phương thức này thiết lập một kết nối tới cơ sở dữ liệu, thực hiện truy vấn
+     * để lấy thông tin chi tiết về lớp và ánh xạ kết quả thành một danh sách các
+     * đối tượng ClassDAL.
+     *
+     * @return Danh sách các đối tượng ClassDAL đại diện cho các lớp.
+     * @throws SQLException nếu có lỗi xảy ra khi truy cập cơ sở dữ liệu hoặc
+     *                     thực hiện truy vấn.
+     */
     @Override
-    public List<ClassDAL> listClass() throws SQLException {
+    public List<ClassDAL> getListClass() throws SQLException {
         List<ClassDAL> classList = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -173,8 +201,20 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
         return classList;
     }
 
+    /**
+     * Lấy danh sách các lớp từ cơ sở dữ liệu với bộ lọc tìm kiếm theo cấp độ lớp.
+     *
+     * Phương thức này thiết lập một kết nối tới cơ sở dữ liệu, thực hiện truy vấn
+     * với các tham số để lọc các lớp dựa trên cấp độ lớp và từ khóa tìm kiếm.
+     *
+     * @param classLevelId ID của cấp độ lớp để lọc.
+     * @param search từ khóa tìm kiếm để lọc tên lớp.
+     * @return Danh sách các đối tượng ClassDAL đại diện cho các lớp phù hợp với bộ lọc.
+     * @throws SQLException nếu có lỗi xảy ra khi truy cập cơ sở dữ liệu hoặc
+     *                     thực hiện truy vấn.
+     */
     @Override
-    public List<ClassDAL> listClassSearchFilter(int classLevelId, String search) throws SQLException {
+    public List<ClassDAL> getListClassSearchFilter(int classLevelId, String search) throws SQLException {
         List<ClassDAL> classSearchFilterList = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -210,8 +250,19 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
         return classSearchFilterList;
     }
 
+    /**
+     * Lấy danh sách các phòng từ cơ sở dữ liệu.
+     *
+     * Phương thức này thiết lập một kết nối tới cơ sở dữ liệu, thực hiện truy vấn
+     * để lấy thông tin chi tiết về phòng và ánh xạ kết quả thành một danh sách các
+     * đối tượng Room.
+     *
+     * @return Danh sách các đối tượng Room đại diện cho các phòng.
+     * @throws SQLException nếu có lỗi xảy ra khi truy cập cơ sở dữ liệu hoặc
+     *                     thực hiện truy vấn.
+     */
     @Override
-    public List<Room> listRoom() throws SQLException {
+    public List<Room> getListRoom() throws SQLException {
         List<Room> roomList = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -245,8 +296,20 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
         return roomList;
     }
 
+    /**
+     * Lấy danh sách các phòng từ cơ sở dữ liệu theo ID phòng.
+     *
+     * Phương thức này thiết lập một kết nối tới cơ sở dữ liệu, thực hiện truy vấn
+     * với tham số để lấy thông tin chi tiết về phòng dựa trên ID phòng và ánh xạ
+     * kết quả thành một danh sách các đối tượng Room.
+     *
+     * @param roomId ID của phòng cần lấy thông tin.
+     * @return Danh sách các đối tượng Room đại diện cho các phòng phù hợp với ID được cung cấp.
+     * @throws SQLException nếu có lỗi xảy ra khi truy cập cơ sở dữ liệu hoặc
+     *                     thực hiện truy vấn.
+     */
     @Override
-    public List<Room> listRoom(int roomId) throws SQLException {
+    public List<Room> getListRoom(int roomId) throws SQLException {
         List<Room> roomList = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -281,8 +344,19 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
         return roomList;
     }
 
+    /**
+     * Lấy danh sách các giáo viên từ cơ sở dữ liệu.
+     *
+     * Phương thức này thiết lập một kết nối tới cơ sở dữ liệu, thực hiện truy vấn
+     * để lấy thông tin chi tiết về giáo viên và ánh xạ kết quả thành một danh sách
+     * các đối tượng User.
+     *
+     * @return Danh sách các đối tượng User đại diện cho các giáo viên.
+     * @throws SQLException nếu có lỗi xảy ra khi truy cập cơ sở dữ liệu hoặc
+     *                     thực hiện truy vấn.
+     */
     @Override
-    public List<User> listTeacher() throws SQLException {
+    public List<User> getListTeacher() throws SQLException {
         List<User> teacherList = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -316,9 +390,21 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
         }
         return teacherList;
     }
-
+    /**
+     * Lấy danh sách giáo viên từ cơ sở dữ liệu theo ID người dùng.
+     *
+     * Phương thức này thiết lập một kết nối tới cơ sở dữ liệu, thực hiện truy vấn
+     * với tham số để lấy thông tin chi tiết về giáo viên dựa trên ID người dùng
+     * và ánh xạ kết quả thành một danh sách các đối tượng User.
+     *
+     * @param userId ID của người dùng cần lấy thông tin giáo viên.
+     * @return Danh sách các đối tượng User đại diện cho các giáo viên phù hợp
+     *         với ID người dùng được cung cấp.
+     * @throws SQLException nếu có lỗi xảy ra khi truy cập cơ sở dữ liệu hoặc
+     *                     thực hiện truy vấn.
+     */
     @Override
-    public List<User> listTeacher(int userId) throws SQLException {
+    public List<User> getListTeacher(int userId) throws SQLException {
         List<User> teacherList = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -354,8 +440,20 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
         return teacherList;
     }
 
+    /**
+     * Lấy danh sách các cấp lớp từ cơ sở dữ liệu.
+     *
+     * Phương thức này thiết lập một kết nối tới cơ sở dữ liệu, thực hiện truy vấn
+     * để lấy thông tin về các cấp lớp và ánh xạ kết quả thành một danh sách
+     * các đối tượng ClassLevel.
+     *
+     * @return Danh sách các đối tượng ClassLevel đại diện cho các cấp lớp có
+     *         trong cơ sở dữ liệu.
+     * @throws SQLException nếu có lỗi xảy ra khi truy cập cơ sở dữ liệu hoặc
+     *                     thực hiện truy vấn.
+     */
     @Override
-    public List<ClassLevel> listClassLevel() throws SQLException {
+    public List<ClassLevel> getListClassLevel() throws SQLException {
         List<ClassLevel> classLevelList = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -388,8 +486,21 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
         return classLevelList;
     }
 
+    /**
+     * Lấy danh sách các lớp học theo cấp lớp từ cơ sở dữ liệu.
+     *
+     * Phương thức này thiết lập một kết nối tới cơ sở dữ liệu, thực hiện truy vấn
+     * để lấy thông tin về các lớp học dựa trên cấp lớp đã chỉ định và ánh xạ
+     * kết quả thành một danh sách các đối tượng ClassDAL.
+     *
+     * @param classLevelId ID của cấp lớp cần lọc danh sách lớp học.
+     * @return Danh sách các đối tượng ClassDAL đại diện cho các lớp học
+     *         thuộc cấp lớp đã chỉ định trong cơ sở dữ liệu.
+     * @throws SQLException nếu có lỗi xảy ra khi truy cập cơ sở dữ liệu hoặc
+     *                     thực hiện truy vấn.
+     */
     @Override
-    public List<ClassDAL> listClassFilter(int classLevelId) throws SQLException {
+    public List<ClassDAL> getListClassFilter(int classLevelId) throws SQLException {
         List<ClassDAL> classFilterList = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -424,8 +535,21 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
         return classFilterList;
     }
 
+    /**
+     * Tìm kiếm danh sách các lớp học trong cơ sở dữ liệu theo từ khóa tìm kiếm.
+     *
+     * Phương thức này thiết lập một kết nối tới cơ sở dữ liệu, thực hiện truy vấn
+     * để tìm kiếm thông tin về các lớp học dựa trên từ khóa tìm kiếm được cung cấp.
+     * Các kết quả tìm kiếm được ánh xạ thành một danh sách các đối tượng ClassDAL.
+     *
+     * @param search Từ khóa tìm kiếm để lọc danh sách lớp học.
+     * @return Danh sách các đối tượng ClassDAL đại diện cho các lớp học
+     *         khớp với từ khóa tìm kiếm trong cơ sở dữ liệu.
+     * @throws SQLException nếu có lỗi xảy ra khi truy cập cơ sở dữ liệu hoặc
+     *                     thực hiện truy vấn.
+     */
     @Override
-    public List<ClassDAL> listClassSearch(String search) throws SQLException {
+    public List<ClassDAL> getListClassSearch(String search) throws SQLException {
         List<ClassDAL> classSearchList = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -460,6 +584,19 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
         return classSearchList;
     }
 
+    /**
+     * Lấy thông tin lớp học theo ID từ cơ sở dữ liệu.
+     *
+     * Phương thức này thiết lập một kết nối tới cơ sở dữ liệu, thực hiện truy vấn
+     * để lấy thông tin của lớp học dựa trên ID được cung cấp.
+     * Kết quả truy vấn sẽ được ánh xạ thành một đối tượng Classes.
+     *
+     * @param classId ID của lớp học cần lấy thông tin.
+     * @return Đối tượng Classes chứa thông tin về lớp học
+     *         tương ứng với ID được cung cấp.
+     * @throws SQLException nếu có lỗi xảy ra khi truy cập cơ sở dữ liệu hoặc
+     *                     thực hiện truy vấn.
+     */
     @Override
     public Classes getClassById(int classId) throws SQLException {
         Classes classes = new Classes();
@@ -495,7 +632,19 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
         }
         return classes;
     }
-
+    /**
+     * Lấy thông tin chi tiết của lớp học theo ID từ cơ sở dữ liệu.
+     *
+     * Phương thức này thiết lập một kết nối tới cơ sở dữ liệu, thực hiện truy vấn
+     * để lấy thông tin chi tiết của lớp học dựa trên ID được cung cấp.
+     * Kết quả truy vấn sẽ được ánh xạ thành một đối tượng ClassDAL.
+     *
+     * @param classId ID của lớp học cần lấy thông tin chi tiết.
+     * @return Đối tượng ClassDAL chứa thông tin chi tiết về lớp học
+     *         tương ứng với ID được cung cấp.
+     * @throws SQLException nếu có lỗi xảy ra khi truy cập cơ sở dữ liệu hoặc
+     *                     thực hiện truy vấn.
+     */
     @Override
     public ClassDAL getClassByIdDetail(int classId) throws SQLException {
         ClassDAL classDAL = new ClassDAL();
@@ -532,6 +681,19 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
         return classDAL;
     }
 
+    /**
+     * Tạo một lớp học mới trong cơ sở dữ liệu.
+     *
+     * Phương thức này thiết lập một kết nối tới cơ sở dữ liệu và thực hiện
+     * câu lệnh SQL để chèn một lớp học mới dựa trên thông tin được cung cấp
+     * trong đối tượng Classes. Nếu quá trình chèn thành công, phương thức sẽ
+     * trả về true, ngược lại trả về false.
+     *
+     * @param classes Đối tượng Classes chứa thông tin lớp học cần tạo.
+     * @return true nếu lớp học được chèn thành công, false nếu không.
+     * @throws SQLException nếu có lỗi xảy ra khi truy cập cơ sở dữ liệu hoặc
+     *                     thực hiện câu lệnh chèn.
+     */
     @Override
     public Boolean createClass(Classes classes) throws SQLException {
         boolean isInserted = false; // Khởi tạo mặc định là false
@@ -567,6 +729,18 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
         return isInserted; // Trả về kết quả kiểm tra
     }
 
+    /**
+     * Lấy tên lớp từ cơ sở dữ liệu dựa trên tên lớp được cung cấp.
+     *
+     * Phương thức này thực hiện một truy vấn để tìm kiếm tên lớp trong
+     * cơ sở dữ liệu. Nếu tìm thấy, phương thức sẽ trả về tên lớp,
+     * ngược lại sẽ trả về một chuỗi rỗng.
+     *
+     * @param className Tên lớp cần tìm kiếm trong cơ sở dữ liệu.
+     * @return Tên lớp tương ứng nếu tìm thấy, chuỗi rỗng nếu không.
+     * @throws SQLException nếu có lỗi xảy ra khi truy cập cơ sở dữ liệu hoặc
+     *                     thực hiện câu lệnh truy vấn.
+     */
     @Override
     public String getClassName(String className) throws SQLException {
 
@@ -600,6 +774,19 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
         return ClassNamee;
     }
 
+    /**
+     * Lấy tên lớp từ cơ sở dữ liệu dựa trên tên lớp và ID lớp được cung cấp.
+     *
+     * Phương thức này thực hiện một truy vấn để tìm kiếm tên lớp trong
+     * cơ sở dữ liệu dựa trên tên lớp và ID lớp. Nếu tìm thấy, phương
+     * thức sẽ trả về tên lớp, ngược lại sẽ trả về một chuỗi rỗng.
+     *
+     * @param className Tên lớp cần tìm kiếm trong cơ sở dữ liệu.
+     * @param ClassId ID của lớp cần tìm kiếm.
+     * @return Tên lớp tương ứng nếu tìm thấy, chuỗi rỗng nếu không.
+     * @throws SQLException nếu có lỗi xảy ra khi truy cập cơ sở dữ liệu hoặc
+     *                     thực hiện câu lệnh truy vấn.
+     */
     @Override
     public String getClassNameUpdate(String className, int ClassId) throws SQLException {
         String ClassNamee = "";
@@ -633,6 +820,19 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
         return ClassNamee;
     }
 
+    /**
+     * Cập nhật thông tin lớp trong cơ sở dữ liệu.
+     *
+     * Phương thức này thực hiện một câu lệnh SQL để cập nhật thông tin
+     * của một lớp dựa trên các thuộc tính của đối tượng Classes được
+     * cung cấp. Nếu cập nhật thành công, phương thức sẽ trả về true,
+     * ngược lại sẽ trả về false.
+     *
+     * @param classes Đối tượng Classes chứa thông tin lớp cần cập nhật.
+     * @return true nếu cập nhật thành công, false nếu không.
+     * @throws SQLException nếu có lỗi xảy ra khi truy cập cơ sở dữ liệu
+     *                     hoặc thực hiện câu lệnh cập nhật.
+     */
     @Override
     public Boolean updateClass(Classes classes) throws SQLException {
         boolean isInserted = false; // Khởi tạo mặc định là false
@@ -669,6 +869,18 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
         return isInserted; // Trả về kết quả kiểm tra
     }
 
+    /**
+     * Xóa lớp khỏi cơ sở dữ liệu theo ID lớp.
+     *
+     * Phương thức này thực hiện một câu lệnh SQL để xóa một lớp
+     * dựa trên ID lớp được cung cấp. Nếu xóa thành công, phương thức
+     * sẽ trả về true, ngược lại sẽ trả về false.
+     *
+     * @param classID ID của lớp cần xóa.
+     * @return true nếu xóa thành công, false nếu không.
+     * @throws SQLException nếu có lỗi xảy ra khi truy cập cơ sở dữ liệu
+     *                     hoặc thực hiện câu lệnh xóa.
+     */
     @Override
     public Boolean deleteClass(int classID) throws SQLException {
         boolean isInserted = false; // Khởi tạo mặc định là false
@@ -696,6 +908,13 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
         return isInserted;
     }
 
+    /**
+     * Đóng các tài nguyên cơ sở dữ liệu (ResultSet, PreparedStatement, Connection)
+     *
+     * @param resultSet         Đối tượng ResultSet cần đóng
+     * @param preparedStatement Đối tượng PreparedStatement cần đóng
+     * @param connection        Đối tượng Connection cần đóng
+     */
     private void closeResources(ResultSet resultSet, PreparedStatement preparedStatement, Connection connection) {
         // Đóng ResultSet
         try {

@@ -1,3 +1,13 @@
+/*
+ * Copyright(C) 2005,  SWP_G4.
+ * KMS :
+ * Kindergarten Management System
+ *
+ * Record of change:
+ * DATE           Version                  AUTHOR                              DESCRIPTION
+ * 10/10/2024       1.1              Nguyễn Huy Long - He160140              Create class level
+ * 10/12/2024       1.2              Nguyễn Huy Long - He160140              Update class level
+ */
 package org.example.kindergarten_management_system_g4.model;
 
 public class ClassLevel {

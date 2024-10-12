@@ -22,9 +22,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Lớp ChangePasswordDAO kế thừa từ DBConnection và thực hiện các phương thức
- * trong interface ChangePasswordService. Lớp này chứa các phương thức
+ * Lớp ChangePasswordDAOImpl kế thừa từ DBConnection và thực hiện các phương thức
+ * trong interface IChangePassword. Lớp này chứa các phương thức
  * để tìm kiếm email, mật khẩu và cập nhật mật khẩu trong cơ sở dữ liệu.
+ *
  * @author Nguyễn Huy Long
  */
 public class ChangePasswordDAOImpl extends DBConnection implements IChangePassword {
@@ -40,6 +41,7 @@ public class ChangePasswordDAOImpl extends DBConnection implements IChangePasswo
 
     /**
      * Tìm kiếm email trong cơ sở dữ liệu.
+     *
      * @param email email cần tìm.
      * @return email tìm thấy hoặc chuỗi rỗng nếu không tìm thấy.
      * @throws SQLException nếu có lỗi trong quá trình thực hiện SQL.
@@ -76,6 +78,7 @@ public class ChangePasswordDAOImpl extends DBConnection implements IChangePasswo
 
     /**
      * Tìm kiếm mật khẩu cho bằng email .
+     *
      * @param email email cần tìm mật khẩu.
      * @return mật khẩu liên kết với email hoặc chuỗi rỗng nếu không tìm thấy.
      * @throws SQLException nếu có lỗi trong quá trình thực hiện SQL.
@@ -115,7 +118,8 @@ public class ChangePasswordDAOImpl extends DBConnection implements IChangePasswo
 
     /**
      * Cập nhật mật khẩu cho một email cụ thể.
-     * @param email email mà mật khẩu sẽ được cập nhật.
+     *
+     * @param email       email mà mật khẩu sẽ được cập nhật.
      * @param NewPassword mật khẩu mới để thiết lập.
      * @return true nếu mật khẩu được cập nhật thành công; false nếu ngược lại.
      * @throws SQLException nếu có lỗi trong quá trình thực hiện SQL.
@@ -154,9 +158,10 @@ public class ChangePasswordDAOImpl extends DBConnection implements IChangePasswo
 
     /**
      * Đóng các tài nguyên cơ sở dữ liệu (ResultSet, PreparedStatement, Connection)
-     * @param resultSet Đối tượng ResultSet cần đóng
+     *
+     * @param resultSet         Đối tượng ResultSet cần đóng
      * @param preparedStatement Đối tượng PreparedStatement cần đóng
-     * @param connection Đối tượng Connection cần đóng
+     * @param connection        Đối tượng Connection cần đóng
      */
     private void closeResources(ResultSet resultSet, PreparedStatement preparedStatement, Connection connection) {
         // Đóng ResultSet
