@@ -10,16 +10,30 @@
  */
 package org.example.kindergarten_management_system_g4.model;
 
+/**
+ * Lớp Room đại diện cho một phòng trong hệ thống quản lý mầm non.
+ * Chứa thông tin về ID phòng, số phòng, trạng thái và sức chứa.
+ * @author Nguyễn Huy Long
+ */
 public class Room {
 
-    private int roomId;
-    private String roomNumber;
-    private int status;
-    private int capacity;
+    private int roomId;          // ID của phòng
+    private String roomNumber;   // Số phòng
+    private int status;          // Trạng thái phòng (0: không hoạt động, 1: hoạt động)
+    private int capacity;        // Sức chứa của phòng
 
+    // Constructor không tham số
     public Room() {
     }
 
+    /**
+     * Constructor với tất cả các thuộc tính.
+     *
+     * @param roomId ID của phòng
+     * @param roomNumber Số phòng
+     * @param status Trạng thái phòng
+     * @param capacity Sức chứa của phòng
+     */
     public Room(int roomId, String roomNumber, int status, int capacity) {
         this.roomId = roomId;
         this.roomNumber = roomNumber;
@@ -27,35 +41,37 @@ public class Room {
         this.capacity = capacity;
     }
 
+    // Phương thức getter và setter cho các thuộc tính
+
     public int getRoomId() {
-        return roomId;
+        return roomId; // Trả về ID của phòng
     }
 
     public void setRoomId(int roomId) {
-        this.roomId = roomId;
+        this.roomId = roomId; // Cập nhật ID của phòng
     }
 
     public String getRoomNumber() {
-        return roomNumber;
+        return roomNumber; // Trả về số phòng
     }
 
     public void setRoomNumber(String roomNumber) {
-        this.roomNumber = roomNumber;
+        this.roomNumber = roomNumber; // Cập nhật số phòng
     }
 
     public int getStatus() {
-        return status;
+        return status; // Trả về trạng thái của phòng
     }
 
     public void setStatus(int status) {
-        this.status = status;
+        this.status = status; // Cập nhật trạng thái của phòng
     }
 
     public int getCapacity() {
-        return capacity;
+        return capacity; // Trả về sức chứa của phòng
     }
 
     public void setCapacity(int capacity) {
-        this.capacity = capacity;
+        this.capacity = capacity; // Cập nhật sức chứa của phòng
     }
 }
