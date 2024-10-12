@@ -10,9 +10,8 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- Custom CSS -->
     <style>
-        .register-container {
+        .form-container {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -20,22 +19,22 @@
             background-color: #f8f9fa;
         }
 
-        .register-form {
+        .form-box {
             background-color: #ffffff;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
+            max-width: 500px;
             width: 100%;
         }
 
-        .register-form h2 {
+        .form-box h2 {
             margin-bottom: 25px;
             text-align: center;
         }
 
-        .form-group label {
-            font-weight: 600;
+        .alert {
+            margin-bottom: 20px;
         }
 
         .password-container {
@@ -44,7 +43,7 @@
 
         .password-container input[type="password"],
         .password-container input[type="text"] {
-            padding-right: 40px; /* Space for the eye icon */
+            padding-right: 40px;
         }
 
         .password-container .bi-eye,
@@ -54,8 +53,6 @@
             right: 10px;
             transform: translateY(-50%);
             cursor: pointer;
-            font-size: 1.2rem;
-            color: #6c757d;
         }
 
         .btn-primary {
@@ -66,84 +63,72 @@
         .btn-primary:hover {
             background-color: #0056b3;
         }
-
-        .text-muted {
-            color: #6c757d;
-        }
     </style>
 </head>
 <body>
 <%@ include file="/Views/common/header.jsp" %>
-<div class="register-container">
-    <form class="register-form" action="changePassword" method="POST">
+<div class="container form-container">
+    <div class="form-box">
         <h2>Change Password</h2>
 
+        <!-- Hiển thị thông báo lỗi/success -->
         <c:if test="${not empty oldNewPassFalse}">
-            <p style="color:red;">${oldNewPassFalse}</p>
+            <div class="alert alert-danger">${oldNewPassFalse}</div>
         </c:if>
         <c:if test="${not empty notMatch}">
-            <p style="color:red;">${notMatch}</p>
+            <div class="alert alert-danger">${notMatch}</div>
         </c:if>
         <c:if test="${not empty passwordFalse}">
-            <p style="color:red;">${passwordFalse}</p>
+            <div class="alert alert-danger">${passwordFalse}</div>
         </c:if>
         <c:if test="${not empty emailFalse}">
-            <p style="color:red;">${emailFalse}</p>
+            <div class="alert alert-danger">${emailFalse}</div>
         </c:if>
         <c:if test="${not empty lengthFalse}">
-            <p style="color:red;">${lengthFalse}</p>
+            <div class="alert alert-danger">${lengthFalse}</div>
         </c:if>
         <c:if test="${not empty updateSuccessful}">
-            <p style="color:lawngreen;">${updateSuccessful}</p>
+            <div class="alert alert-success">${updateSuccessful}</div>
         </c:if>
 
-        <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" name="email" value="${sessionScope.user.email}"
-                   required>
-        </div>
+        <!-- Form đổi mật khẩu -->
+        <form action="changePassword" method="POST">
+            <div class="form-group">
+                <label for="email">email: <span style="color: red;">*</span></label>
 
-        <br>
-        <div class="form-group">
-            <label for="oldPassword">Old Password:</label>
-            <div class="password-container">
-                <input type="password" class="form-control" id="oldPassword" name="oldPassword"
-                       value="${param.oldPassword}" required
-                       oninvalid="this.setCustomValidity('Please enter your old password')"
-                       oninput="this.setCustomValidity('')">
-                <i class="bi bi-eye-slash" id="toggleOldPasswordIcon" onclick="toggleOldPassword()"></i>
+                <input type="email" class="form-control" id="email" name="email" value="${sessionScope.user.email}" required>
             </div>
-        </div>
 
-        <br>
-        <div class="form-group">
-            <label for="newPassword">New Password:</label>
-            <div class="password-container">
-                <input type="password" class="form-control" id="newPassword" name="newPassword" required
-                       oninvalid="this.setCustomValidity('Please enter your new password')"
-                       oninput="this.setCustomValidity('')">
-                <i class="bi bi-eye-slash" id="toggleNewPasswordIcon" onclick="toggleNewPassword()"></i>
+            <div class="form-group">
+                <label for="oldPassword">Old Password: <span style="color: red;">*</span></label>
+
+                <div class="password-container">
+                    <input type="password" class="form-control" id="oldPassword" name="oldPassword"  required>
+                    <i class="bi bi-eye-slash" id="toggleOldPasswordIcon" onclick="toggleOldPassword()"></i>
+                </div>
             </div>
-        </div>
 
-        <br>
-        <div class="form-group">
-            <label for="confirmNewPassword">Confirm New Password:</label>
-            <div class="password-container">
-                <input type="password" class="form-control" id="confirmNewPassword" name="confirmNewPassword" required
-                       oninvalid="this.setCustomValidity('Please confirm your new password')"
-                       oninput="this.setCustomValidity('')">
-                <i class="bi bi-eye-slash" id="toggleConfirmNewPasswordIcon" onclick="toggleConfirmNewPassword()"></i>
+            <div class="form-group">
+                <label for="newPassword">New Password: <span style="color: red;">*</span></label>
+
+                <div class="password-container">
+                    <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                    <i class="bi bi-eye-slash" id="toggleNewPasswordIcon" onclick="toggleNewPassword()"></i>
+                </div>
             </div>
-        </div>
 
-        <br>
-        <button type="submit" class="btn btn-primary btn-block">Change Password</button>
+            <div class="form-group">
+                <label for="confirmNewPassword">confirmNewPassword: <span style="color: red;">*</span></label>
+                <
+                <div class="password-container">
+                    <input type="password" class="form-control" id="confirmNewPassword" name="confirmNewPassword" required>
+                    <i class="bi bi-eye-slash" id="toggleConfirmNewPasswordIcon" onclick="toggleConfirmNewPassword()"></i>
+                </div>
+            </div>
 
-        <div class="text-center mt-3">
-            <p class="text-muted">Forgot your password? <a href="forgotPassword.jsp">Forget Password here</a></p>
-        </div>
-    </form>
+            <button type="submit" class="btn btn-primary btn-block">Change Password</button>
+        </form>
+    </div>
 </div>
 <%@ include file="/Views/common/footer.jsp" %>
 
@@ -156,48 +141,26 @@
     function toggleOldPassword() {
         var passwordField = document.getElementById("oldPassword");
         var toggleIcon = document.getElementById("toggleOldPasswordIcon");
-
-        if (passwordField.type === "password") {
-            passwordField.type = "text";
-            toggleIcon.classList.remove("bi-eye-slash");
-            toggleIcon.classList.add("bi-eye");
-        } else {
-            passwordField.type = "password";
-            toggleIcon.classList.remove("bi-eye");
-            toggleIcon.classList.add("bi-eye-slash");
-        }
+        passwordField.type = (passwordField.type === "password") ? "text" : "password";
+        toggleIcon.classList.toggle("bi-eye");
+        toggleIcon.classList.toggle("bi-eye-slash");
     }
 
     function toggleNewPassword() {
         var passwordField = document.getElementById("newPassword");
         var toggleIcon = document.getElementById("toggleNewPasswordIcon");
-
-        if (passwordField.type === "password") {
-            passwordField.type = "text";
-            toggleIcon.classList.remove("bi-eye-slash");
-            toggleIcon.classList.add("bi-eye");
-        } else {
-            passwordField.type = "password";
-            toggleIcon.classList.remove("bi-eye");
-            toggleIcon.classList.add("bi-eye-slash");
-        }
+        passwordField.type = (passwordField.type === "password") ? "text" : "password";
+        toggleIcon.classList.toggle("bi-eye");
+        toggleIcon.classList.toggle("bi-eye-slash");
     }
 
     function toggleConfirmNewPassword() {
         var passwordField = document.getElementById("confirmNewPassword");
         var toggleIcon = document.getElementById("toggleConfirmNewPasswordIcon");
-
-        if (passwordField.type === "password") {
-            passwordField.type = "text";
-            toggleIcon.classList.remove("bi-eye-slash");
-            toggleIcon.classList.add("bi-eye");
-        } else {
-            passwordField.type = "password";
-            toggleIcon.classList.remove("bi-eye");
-            toggleIcon.classList.add("bi-eye-slash");
-        }
+        passwordField.type = (passwordField.type === "password") ? "text" : "password";
+        toggleIcon.classList.toggle("bi-eye");
+        toggleIcon.classList.toggle("bi-eye-slash");
     }
 </script>
-
 </body>
 </html>
