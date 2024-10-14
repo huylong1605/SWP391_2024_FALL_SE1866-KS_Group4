@@ -73,6 +73,7 @@ public class DeleteClassController extends HttpServlet {
             // Chuyển hướng về servlet danh sách lớp
             resp.sendRedirect("listClass");
         } catch (SQLException e) {
+            req.getRequestDispatcher("error.jsp").forward(req, resp);
             LOGGER.severe("SQLException: " + e.getMessage()); // Ghi lại lỗi SQL
         }
     }

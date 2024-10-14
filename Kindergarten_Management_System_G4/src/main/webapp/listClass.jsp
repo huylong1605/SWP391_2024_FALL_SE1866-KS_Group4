@@ -39,8 +39,6 @@
     <div class="alert alert-success">
         <%= request.getAttribute("deleteSuccessful") %>
     </div>
-
-    </p>
     <% } %>
     <% if (request.getAttribute("updateSuccessful") != null) { %>
     <div class="alert alert-success"><%= request.getAttribute("updateSuccessful") %>
@@ -50,22 +48,16 @@
     <div class="alert alert-success"><%= request.getAttribute("createSuccessful") %>
     </div>
     <% } %>
-
     <% if (request.getAttribute("deleteFalse") != null) { %>
     <div class="alert alert-danger"><%= request.getAttribute("deleteFalse") %>
     </div>
     <% } %>
 
-    <!-- Thanh tìm kiếm và lọc -->
     <div class="action-bar">
-        <!-- Nút tạo lớp -->
         <a href="createClass" class="btn btn-primary">Create New Class</a>
-
-        <!-- Form tìm kiếm và lọc -->
         <form class="filter-form" method="get" action="listClass">
             <input type="text" id="search" name="search" class="form-control" placeholder="Search by class name..."
                    value="${param.search}" onchange="this.form.submit()">
-
             <select name="filterLevel" class="form-select" onchange="this.form.submit()">
                 <option value="0">All Levels</option>
                 <c:forEach var="classLevel" items="${listClassLevel}">
@@ -75,8 +67,6 @@
                     </option>
                 </c:forEach>
             </select>
-
-            <%-- <button type="submit" class="btn btn-secondary">Search</button>--%>
         </form>
     </div>
 
@@ -91,7 +81,6 @@
         </tr>
         </thead>
         <tbody>
-        <!-- Duyệt qua danh sách lớp học -->
         <c:forEach var="classes" items="${listClass}">
             <tr>
                 <td>${classes.className}</td>
@@ -101,13 +90,23 @@
                 <td>
                     <a href="updateClass?classId=${classes.classId}" class="btn btn-warning btn-sm">Edit</a>
                     <a href="classDetail?classId=${classes.classId}" class="btn btn-warning btn-sm">Detail</a>
-                    <a href="#" class="btn btn-danger btn-sm"
-                       onclick="deleteClass(${classes.classId})">Delete</a>
+                    <a href="#" class="btn btn-danger btn-sm" onclick="deleteClass(${classes.classId})">Delete</a>
                 </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
+
+    <!-- Phân trang -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <c:forEach var="i" begin="1" end="${totalPages}">
+                <li class="page-item <c:if test='${i == currentPage}'>active</c:if>'">
+                    <a class="page-link" href="listClass?page=${i}&search=${param.search}&filterLevel=${param.filterLevel}">${i}</a>
+                </li>
+            </c:forEach>
+        </ul>
+    </nav>
 </div>
 <%@ include file="/Views/common/footer.jsp" %>
 
@@ -128,7 +127,6 @@
         });
     }
 </script>
-<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>

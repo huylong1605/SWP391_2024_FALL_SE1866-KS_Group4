@@ -74,6 +74,7 @@ public class CreateClassController extends HttpServlet {
             req.getRequestDispatcher("createClass.jsp").forward(req, resp);
         } catch (SQLException e) {
             // Ghi lại thông báo lỗi nếu có SQLException
+            req.getRequestDispatcher("error.jsp").forward(req, resp);
             LOGGER.info("SQLException: " + e.getMessage());
         }
     }
@@ -136,6 +137,7 @@ public class CreateClassController extends HttpServlet {
             // Chuyển hướng đến danh sách lớp
             resp.sendRedirect("listClass");
         } catch (SQLException e) {
+            req.getRequestDispatcher("error.jsp").forward(req, resp);
             // Ghi lại thông báo lỗi nếu có SQLException
             LOGGER.info("SQLException: " + e.getMessage());
         }

@@ -69,6 +69,7 @@ public class ClassDetailController extends HttpServlet {
             req.getRequestDispatcher("viewClassDetail.jsp").forward(req, resp);
         } catch (SQLException e) {
             // Ghi lại thông báo lỗi nếu có SQLException
+            req.getRequestDispatcher("error.jsp").forward(req, resp);
             LOGGER.info("SQLException: " + e.getMessage());
         }
     }
