@@ -134,7 +134,6 @@ public class ChangePasswordController extends HttpServlet {
 
         } catch (SQLException /*| ClassNotFoundException*/ e) {
             LOGGER.info("SQLException: " + e.getMessage());
-            req.setAttribute("errorMessage", "An error occurred while changing password: " + e.getMessage());
             req.getRequestDispatcher("error.jsp").forward(req, resp);
             // Xử lý ngoại lệ nếu có lỗi xảy ra trong quá trình truy vấn cơ sở dữ liệu
 

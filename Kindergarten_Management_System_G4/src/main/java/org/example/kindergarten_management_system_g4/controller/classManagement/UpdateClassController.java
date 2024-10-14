@@ -71,8 +71,10 @@ public class UpdateClassController extends HttpServlet {
             req.setAttribute("listRoom", room);
             req.setAttribute("listTeacher", teacher);
             req.setAttribute("listClassLevel", listClassLevel);
+
             req.getRequestDispatcher("updateClass.jsp").forward(req, resp); // Chuyển tiếp đến updateClass.jsp
         } catch (SQLException e) {
+            req.getRequestDispatcher("error.jsp").forward(req, resp);
             LOGGER.info("SQLException: " + e.getMessage());
         }
     }
@@ -139,6 +141,7 @@ public class UpdateClassController extends HttpServlet {
             session.setAttribute("UpdateSuccessful", "Cập nhật lớp " + className + " thành công");
             resp.sendRedirect("listClass"); // Chuyển hướng đến danh sách lớp
         } catch (SQLException e) {
+            req.getRequestDispatcher("error.jsp").forward(req, resp);
             LOGGER.info("SQLException: " + e.getMessage());
         }
     }

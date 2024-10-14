@@ -110,6 +110,7 @@ public class ListClassController extends HttpServlet {
             // Chuyển hướng tới JSP để hiển thị danh sách lớp
             req.getRequestDispatcher("listClass.jsp").forward(req, resp);
         } catch (SQLException e) {
+            req.getRequestDispatcher("error.jsp").forward(req, resp);
             LOGGER.severe("SQLException: " + e.getMessage()); // Ghi lại lỗi SQL
         }
     }
