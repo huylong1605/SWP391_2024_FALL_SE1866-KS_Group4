@@ -88,8 +88,8 @@
                     </a>
                 </li>
             </ul>
-
         </aside>
+
         <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg col-md-10">
             <!-- Navbar -->
             <c:if test="${not empty sessionScope.successMessage}">
@@ -132,6 +132,7 @@
                     </div>
                 </div>
             </nav>
+
             <!-- End Navbar -->
             <div class="container-fluid py-4">
                 <div class="row">
@@ -196,6 +197,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="col-md-5">
                                 <button class="btn btn-primary">
@@ -229,7 +231,6 @@
                             </nav>
                         </div>
                     </div>
-
                 </div>
 
             </div>
