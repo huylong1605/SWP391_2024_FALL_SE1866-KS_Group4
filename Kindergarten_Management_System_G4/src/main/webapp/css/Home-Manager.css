@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap');
+
+.home-manager {
+    background:linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)),
+    linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)),
+    linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)),
+    url("https://i.pinimg.com/564x/0a/ee/aa/0aeeaa90c4025f8eaa70fa0681f765b7.jpg"),
+    url("https://i.pinimg.com/736x/31/50/42/315042282b85dc3603174d85237f7a29.jpg"),
+    url("https://i.pinimg.com/736x/90/bb/ae/90bbaeb1962ef97194baf5a1e3228736.jpg");
+    background-position: left, center, right;
+    background-repeat: no-repeat;
+    background-size: calc(100%/3) 100%;
+    color: white;
+    margin-bottom: -50px;
+}
+
+.aa {
+    width: 100%;
+    height: 100vh;
+    text-shadow: 1px 1px 2px red, 0 0 1em rgb(0, 255, 68), 0 0 0.2em rgb(0, 255, 60);
+}
+.s2 {
+    text-align: center;
+    font-size: 80px;
+    text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;
+    margin-bottom: 120px;
+}
+
+.s1{
+    text-align: center;
+    font-size: 40px;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.waviy {
+    position: relative;
+}
+.waviy span {
+    font-family: 'Alfa Slab One', cursive;
+    position: relative;
+    display: inline-block;
+    color: #fff;
+    text-transform: uppercase;
+    animation: waviy 5s infinite;
+    animation-delay: calc(.1s * var(--i));
+
+}
+@keyframes waviy {
+    0%,40%,100% {
+        transform: translateY(0)
+    }
+    20% {
+        transform: translateY(-20px)
+    }
+}
+
+.item-nav-manager{
+    padding-top: 50px;
+    text-align: center;
+}
+
+.items-nav-manager{
+    width: 150px;
+    height: 60px;
+    color: rgb(255, 255, 255);
+    background:linear-gradient(rgba(255, 255, 255, 0.4),rgba(255, 255, 255, 0.4));
+    transition: transform 0.3s ease-in-out;
+    border: 2px solid white;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.items-nav-manager:hover{
+    width: 150px;
+    height: 60px;
+    color: rgb(255, 255, 255);
+    background:linear-gradient(rgba(254, 0, 0, 0.4),rgba(255, 0, 0, 0.4));
+    transform: scale(1.2);
+    border: 2px solid rgb(255, 0, 0);
+    border-radius: 5px;
+}
+
+.item-nav-manager a {
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+}
