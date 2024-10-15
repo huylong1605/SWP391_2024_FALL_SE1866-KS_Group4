@@ -46,9 +46,6 @@
             Manage Room
         </a>
         <a href="#" class="items-nav-manager">
-            Manage Student
-        </a>
-        <a href="#" class="items-nav-manager">
             Manage Subject
         </a>
         <a href="#" class="items-nav-manager">
