@@ -139,12 +139,14 @@ public class LoginController extends HttpServlet { // lớp LoginController đ�
      * @throws IOException      Nếu có lỗi đầu vào/đầu ra.
      */
     private void redirectUserBasedOnRole(User user, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (user.getRoleId() == 4) {         //Id = 4 điều hướng người dùng đến trang  homepage của parent
+        if (user.getRoleId() == 3) {         //Id = 4 điều hướng người dùng đến trang  homepage của parent
             req.getRequestDispatcher("/Views/HomePage/HomePage.jsp").forward(req, resp);
         } else if (user.getRoleId() == 1) {      //Id = 1 điều hướng người dùng đến trang  homepage của Admin
-            req.getRequestDispatcher("/Views/Admin/accountManage.jsp").forward(req, resp);
-        } else if (user.getRoleId() == 2) {      //Id = 1 điều hướng người dùng đến trang  homepage của Admin
-            resp.sendRedirect("listClass");
+            req.getRequestDispatcher("/Views/HomePage/HomePageForAdmin.jsp").forward(req, resp);
+        } else if (user.getRoleId() == 4) {      //Id = 1 điều hướng người dùng đến trang  homepage của Manager
+            req.getRequestDispatcher("/Views/HomePage/HomePageForManager.jsp").forward(req, resp);
+        } else if (user.getRoleId() == 2) {      //Id = 1 điều hướng người dùng đến trang  homepage của teacher
+            req.getRequestDispatcher("/Views/HomePage/HomePageForTeacher.jsp").forward(req, resp);
         }
     }
     /**

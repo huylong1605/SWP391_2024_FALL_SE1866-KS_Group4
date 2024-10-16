@@ -52,19 +52,22 @@
         <h1>An Error Occurred!</h1>
         <p>Sorry, something went wrong while processing your request.</p>
         <p>Please contact the system administrator.</p>
-        <%
+       <%-- <%
             User user = (User) session.getAttribute("user");
             int roleId = user.getRoleId();
             String homeUrl = "index.jsp"; // Default URL if roleid is not set
 
-                if (roleId == 4) {
-                    homeUrl = "adminHome.jsp"; // URL for admin home
-                } else if (roleId == 2) {
-                    homeUrl = "listClass"; // URL for parent home
-
-            }
+                if (roleId == 3) {
+                    homeUrl = "/Views/HomePage/HomePage.jsp";
+                } else if (roleId == 1) {
+                    homeUrl = "/Views/HomePage/HomePageForAdmin.jsp"; // URL for parent home
+                }else if (roleId == 4) {
+                        homeUrl = "listClass";
+            }else if (roleId == 2) {
+                    homeUrl = "/Views/HomePage/HomePageForTeacher.jsp";
+                }
         %>
-        <a href="<%= homeUrl %>">Back to Home</a>
+        <a href="<%= homeUrl %>">Back to Home</a>--%>
     </div>
 </div>
 <%@ include file="/Views/common/footer.jsp" %>
