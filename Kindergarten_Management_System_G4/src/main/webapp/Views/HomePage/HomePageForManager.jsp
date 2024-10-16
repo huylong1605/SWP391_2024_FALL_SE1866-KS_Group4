@@ -48,9 +48,12 @@
         <a href="#" class="items-nav-manager">
             Manage Subject
         </a>
-        <a href="#" class="items-nav-manager">
+        <a href="${pageContext.request.contextPath}/viewStudentList" class="items-nav-manager">
             View List Student
         </a>
+        <a  href="${pageContext.request.contextPath}/classLevel" class="items-nav-manager">
+                    Manage Class Level
+                </a>
     </div>
     <div class=" aa d-flex justify-content-center align-items-center">
         <div class="admin-page">
