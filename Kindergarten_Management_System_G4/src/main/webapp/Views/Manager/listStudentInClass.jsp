@@ -23,6 +23,8 @@
   <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
   <link id="pagestyle" href="${pageContext.request.contextPath}/css/material-dashboard.css?v=3.1.0" rel="stylesheet" />
   <style>
     a.sidebar-link:hover {
@@ -30,14 +32,14 @@
       border-left: 3px solid white;
       color: white;
     }
-    /*.table-responsive {*/
-    /*    max-height: 425px; !*
-    /*    overflow-y: auto; !*
-    /*}*/
-    /*table {*/
-    /*    width: 100%;*/
-    /*    table-layout: fixed;*/
-    /*}*/
+    .table-responsive {
+      max-height: 563px;
+      overflow-y: auto;
+    }
+    table {
+      width: 100%;
+      table-layout: fixed;
+    }
     .wrapper{
       height: 860px;
     }
@@ -58,7 +60,7 @@
       </div>
       <ul class="sidebar-nav">
         <li class="sidebar-item">
-          <a href="#" class="sidebar-link">
+          <a href="${pageContext.request.contextPath}/listClass" class="sidebar-link">
             <i class="lni lni-user"></i>
             <span>Manage Class</span>
           </a>
@@ -116,65 +118,99 @@
               </div>
               <div class="card-body px-0 pb-2">
                 <div class="table-responsive p-0">
-                  <table class="table align-items-center mb-0">
-                    <thead>
-                    <tr>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Gender</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Age</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Class</th>
-                      <th class="text-secondary opacity-7"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-
-                      <tr>
-                        <td class="text-center">Ngoc Hung</td>
-                        <td class="text-center">Male</td>
-                        <td class="text-center">6</td>
-                        <td class="text-center">MA123</td>
-                        <td class="align-middle">
-                          <a href="#" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                            <i class="fa-solid fa-trash" style="color: red; font-size: 30px; margin: 5px"></i>
-                          </a>
-                          <a href="#" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                            <i class="fa-solid fa-circle-info" style="color: blue; font-size: 30px; margin: 5px"></i>
-                          </a>
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <td class="text-center">Manh Tien</td>
-                        <td class="text-center">Male</td>
-                        <td class="text-center">4</td>
-                        <td class="text-center">MA331</td>
-                        <td class="align-middle">
-                          <a href="#" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                            <i class="fa-solid fa-trash" style="color: red; font-size: 30px; margin: 5px"></i>
-                          </a>
-                          <a href="#" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                            <i class="fa-solid fa-circle-info" style="color: blue; font-size: 30px; margin: 5px"></i>
-                          </a>
-                        </td>
-                      </tr>
-
-
-                    </tbody>
-                  </table>
+                  <c:choose>
+                    <c:when test="${empty students}">
+                      <div class="text-center text-danger">
+                        <p>Dont have any student in this class !!</p>
+                      </div>
+                    </c:when>
+                    <c:otherwise>
+                          <table class="table align-items-center mb-0 table-responsive">
+                            <thead>
+                            <tr>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Number</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Name</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Gender</th>
+                              <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Age</th>
+                              <th class="text-secondary opacity-7"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach var="student" items="${students}" varStatus="status">
+                              <tr style="font-weight: bold">
+                                <td class="text-center">${status.index + 1}</td>
+                                <td class="text-center">${student.name}</td>
+                                <td class="text-center">${student.gender? "<span style='color:Magenta'>Male</span>" : "<span style='color:blue'>Female</span>"}</td>
+                                <td class="text-center">${student.age}</td>
+                                <td class="align-middle">
+                                  <a href="#" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete student"
+                                     data-student-id="${student.studentId}" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+                                    <i class="fa-solid fa-trash" style="color: red; font-size: 30px; margin: 5px"></i>
+                                  </a>
+                                  <a href="${pageContext.request.contextPath}/Views/Manager/StudentDetails?action=details&studentId=${student.studentId}" class="text-secondary font-weight-bold text-xs"
+                                     data-toggle="tooltip" data-original-title="View Details">
+                                    <i class="fa-solid fa-circle-info" style="color: blue; font-size: 30px; margin: 5px"></i>
+                                  </a>
+                                </td>
+                              </tr>
+                            </c:forEach>
+                            </tbody>
+                          </table>
+                    </c:otherwise>
+                  </c:choose>
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="col-md-5">
                 <button class="btn btn-primary">
-                  <a href="#" class="text-light">Add Student</a>
+                  <a href="${pageContext.request.contextPath}/Views/Manager/AddStudentToClass?classId=${classId}&action=add" class="text-light">Add Student</a>
                 </button>
               </div>
             </div>
           </div>
         </div>
-
       </div>
+
+      <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm deletion</h5>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Are you sure you want to delete this student?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-danger" id="confirmDeleteButton">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="deleteSuccessModal" tabindex="-1" role="dialog" aria-labelledby="deleteSuccessModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteSuccessModalLabel">Successfully</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              This student delete successfully
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </main>
 
   </div>
@@ -191,6 +227,56 @@
   };
 </script>
 
+<script>
+  $(document).ready(function() {
+    // Lưu ID học sinh vào modal khi nhấn nút xóa
+    $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget); // Nút xóa
+      var studentId = button.data('student-id'); // Lấy ID học sinh từ thuộc tính data
+      var modal = $(this);
+      modal.find('#confirmDeleteButton').data('student-id', studentId); // Lưu ID vào nút xác nhận
+    });
+
+    // Xử lý sự kiện nhấn nút "Xóa"
+    $('#confirmDeleteButton').on('click', function() {
+      var studentId = $(this).data('student-id');
+      var classId = "${classId}"; // Lấy classId từ JSP
+
+      $.ajax({
+        url: '${pageContext.request.contextPath}/Views/Manager/listStudentInClass',
+        type: 'POST',
+        data: {
+          classId: classId,
+          studentId: studentId,
+          action: 'remove'
+        },
+        success: function(response) {
+          if (response.success) {
+            // Hiển thị modal "Xóa thành công"
+            $('#deleteSuccessModal').modal('show');
+            // Làm mới trang hoặc xóa dòng học sinh khỏi bảng
+            setTimeout(function() {
+              location.reload();
+            }, 2000); // Làm mới sau 2 giây
+          } else {
+            alert(response.message);
+          }
+        },
+        error: function() {
+          alert("Đã xảy ra lỗi khi xóa học sinh.");
+        }
+      });
+
+      $('#confirmDeleteModal').modal('hide'); // Đóng modal
+    });
+  });
+</script>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5/7mA3J+O2/7V/KPj8o3cp7V/e4URK5M8nqFf1x7" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>

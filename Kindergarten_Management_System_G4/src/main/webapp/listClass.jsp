@@ -189,7 +189,9 @@
                                     <!-- Duyệt qua danh sách lớp học -->
                                     <c:forEach var="classes" items="${listClass}">
                                         <tr>
-                                            <td>${classes.className}</td>
+                                            <td>
+                                                <a href="${pageContext.request.contextPath}/Views/Manager/listStudentInClass?classId=${classes.classId}">${classes.className}</a>
+                                            </td>
                                             <td>${classes.classLevelName}</td>
                                             <td>${classes.fullname}</td>
                                             <td>${classes.roomNumber}</td>
