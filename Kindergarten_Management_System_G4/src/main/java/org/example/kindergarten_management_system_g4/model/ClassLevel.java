@@ -19,7 +19,9 @@ public class ClassLevel {
 
     private int classLevelId;           // ID của cấp lớp
     private String classLevelName;      // Tên của cấp lớp
-    private String description;          // Mô tả về cấp lớp
+    private String description;
+    private int ageRange;
+    // Mô tả về cấp lớp
 
     // Constructor không tham số
     public ClassLevel() {
@@ -38,6 +40,12 @@ public class ClassLevel {
         this.description = description;
     }
 
+    public ClassLevel(int classLevelId, String classLevelName, String description, int ageRange) {
+        this.classLevelId = classLevelId;
+        this.classLevelName = classLevelName;
+        this.description = description;
+        this.ageRange = ageRange;
+    }
     // Phương thức getter và setter cho các thuộc tính
 
     public int getClassLevelId() {
@@ -62,5 +70,13 @@ public class ClassLevel {
 
     public void setDescription(String description) {
         this.description = description; // Cập nhật mô tả của cấp lớp
+    }
+
+    public int getAgeRange() {
+        return ageRange;
+    }
+
+    public void setAgeRange(int ageRange) {
+        this.ageRange = ageRange;
     }
 }
