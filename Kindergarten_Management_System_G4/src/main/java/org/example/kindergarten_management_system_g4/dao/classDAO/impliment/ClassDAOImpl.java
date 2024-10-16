@@ -45,12 +45,12 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
             "FROM user u\n" +
             "LEFT JOIN class c \n" +
             "ON u.User_id = c.User_id\n" +
-            "WHERE c.User_id IS NULL;";
+            "WHERE c.User_id IS NULL And u.Role_id = 2;";
     public static final String GET_LIST_TEACHER_2 = "SELECT u.* \n" +
             "FROM user u\n" +
             "LEFT JOIN class c \n" +
             "ON u.User_id = c.User_id\n" +
-            "WHERE c.User_id IS NULL OR u.User_id = ?;";
+            "WHERE c.User_id IS NULL OR u.User_id = ? And u.Role_id = 2;";
     public static final String GET_LIST_CLASS_LEVEL = "SELECT * from class_level";
     public static final String GET_CLASS_NAME = "SELECT Class_name from class where Class_name = ?";
     public static final String GET_CLASS_NAME_UPDATE = "SELECT Class_name from class where Class_name = ? AND Class_ID != ?";

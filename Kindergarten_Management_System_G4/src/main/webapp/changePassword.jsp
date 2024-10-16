@@ -126,8 +126,10 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary btn-block">Change Password</button>
+            <button type="submit" class="btn btn-primary btn-block mb-3">Change Password</button>
         </form>
+        <br>
+        <a href="viewprofile" class="btn btn-secondary btn-block" role="button">View Profile</a>
     </div>
 </div>
 <%@ include file="/Views/common/footer.jsp" %>
