@@ -34,7 +34,7 @@ public class ClassLevelCreateController extends HttpServlet {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+        resp.sendRedirect(req.getContextPath() + "/classLevel?success=true");
 
-            resp.sendRedirect(req.getContextPath() + "/classLevel");
         }
     }

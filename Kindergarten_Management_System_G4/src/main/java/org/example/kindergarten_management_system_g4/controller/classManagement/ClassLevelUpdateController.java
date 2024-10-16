@@ -41,6 +41,7 @@ public class ClassLevelUpdateController extends HttpServlet {
                 throw new RuntimeException(e);
             }
 
-            resp.sendRedirect(req.getContextPath() + "/classLevel");
-        }
+        resp.sendRedirect(req.getContextPath() + "/classLevel?success=true");
+
+    }
     }

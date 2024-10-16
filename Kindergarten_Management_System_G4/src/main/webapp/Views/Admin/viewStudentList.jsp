@@ -8,11 +8,24 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/sidebar.css">
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+          crossorigin="anonymous">
     <link href="${pageContext.request.contextPath}/css/material-dashboard.css?v=3.1.0" rel="stylesheet" />
+
+    <!-- Custom CSS for fixed height and pagination -->
+    <style>
+        .table-container {
+            min-height: 350px; /* Đảm bảo chiều cao cố định */
+            max-height: 600px; /* Nếu cần */
+            overflow: auto;
+        }
+        .pagination-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
 </head>
 <body class="g-sidenav-show bg-gray-200">
     <!-- Include the common header JSP file -->
@@ -35,43 +48,43 @@
                 </div>
                 <!-- Sidebar navigation items -->
                 <ul class="sidebar-nav">
-                                <li class="sidebar-item">
-                                    <a href="${pageContext.request.contextPath}/Views/Admin/accountManage" class="sidebar-link">
-                                        <i class="lni lni-user"></i>
-                                        <span>Manage Account</span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a href="${pageContext.request.contextPath}/Views/Admin/notifications" class="sidebar-link">
-                                        <i class="lni lni-agenda"></i>
-                                        <span>Manage Notification</span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a href="${pageContext.request.contextPath}/subject" class="sidebar-link">
-                                        <i class="lni lni-graduation"></i>
-                                        <span>Manage Subject</span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a href="${pageContext.request.contextPath}/viewStudentList" class="sidebar-link">
-                                        <i class="lni lni-graduation"></i>
-                                        <span>View List Student</span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a href="${pageContext.request.contextPath}/listClass" class="sidebar-link">
-                                        <i class="lni lni-graduation"></i>
-                                        <span>View list class</span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                                                    <a href="${pageContext.request.contextPath}/listClass" class="sidebar-link">
-                                                                        <i class="lni lni-graduation"></i>
-                                                                        <span>Manage Class Level</span>
-                                                                    </a>
-                                                                </li>
-                            </ul>
+                    <li class="sidebar-item">
+                        <a href="${pageContext.request.contextPath}/Views/Admin/accountManage" class="sidebar-link">
+                            <i class="lni lni-user"></i>
+                            <span>Manage Account</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="${pageContext.request.contextPath}/Views/Admin/notifications" class="sidebar-link">
+                            <i class="lni lni-agenda"></i>
+                            <span>Manage Notification</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="${pageContext.request.contextPath}/subject" class="sidebar-link">
+                            <i class="lni lni-graduation"></i>
+                            <span>Manage Subject</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="${pageContext.request.contextPath}/viewStudentList" class="sidebar-link">
+                            <i class="lni lni-graduation"></i>
+                            <span>View List Student</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="${pageContext.request.contextPath}/listClass" class="sidebar-link">
+                            <i class="lni lni-graduation"></i>
+                            <span>View list class</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="${pageContext.request.contextPath}/classLevel" class="sidebar-link">
+                            <i class="lni lni-graduation"></i>
+                            <span>Manage Class Level</span>
+                        </a>
+                    </li>
+                </ul>
             </aside>
 
             <!-- Main content section -->
@@ -79,6 +92,7 @@
                 <div class="container-fluid py-4">
                     <div class="row">
                         <div class="col-12">
+
                             <!-- Card container for displaying the student list -->
                             <div class="card my-4">
                                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
@@ -87,6 +101,19 @@
                                     </div>
                                 </div>
                                 <div class="card-body px-0 pb-2">
+                                   <!-- Search and Filter Section -->
+                                                               <div class="row mb-3" style="margin-left: 100px">
+                                                                   <div class="col-md-4">
+                                                                       <input type="text" id="searchInput" class="form-control" placeholder="Search by Name" onkeyup="searchTable()">
+                                                                   </div>
+                                                                   <div class="col-md-4">
+                                                                       <select id="sortDropdown" class="form-control" onchange="sortTable()">
+                                                                           <option value="default">Default</option>
+                                                                           <option value="asc">Sort by Name (A-Z)</option>
+                                                                           <option value="desc">Sort by Name (Z-A)</option>
+                                                                       </select>
+                                                                   </div>
+                                                               </div>
                                     <div class="table-responsive p-0">
                                         <!-- Table displaying student details -->
                                         <table class="table align-items-center mb-0">
@@ -101,14 +128,14 @@
                                                     <th class="text-secondary opacity-7"></th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id="studentTableBody">
                                                 <!-- Initialize counter for student numbering -->
                                                 <c:set var="counter" value="${(currentPage - 1) * 5 + 1}" />
                                                 <!-- Iterate over the list of students -->
                                                 <c:forEach var="student" items="${students}">
                                                     <tr>
                                                         <td class="text-center">${counter}</td>
-                                                        <td class="text-center">${student.name}</td>
+                                                        <td class="text-center studentName">${student.name}</td>
                                                         <td class="text-center">${student.dob}</td>
                                                         <td class="text-center">${student.gender ? 'Male' : 'Female'}</td>
                                                         <td class="text-center">${student.address}</td>
@@ -205,20 +232,54 @@
     </div>
 
     <script>
-        // Function to populate and show the modal with student details
+        // Function to open the modal with student details
         function showModal(studentId, name, dob, gender, address, phoneNumber) {
-            // Set the values in the modal input fields
             document.getElementById("studentName").value = name;
             document.getElementById("studentDob").value = dob;
             document.getElementById("studentGender").value = gender;
             document.getElementById("studentAddress").value = address;
             document.getElementById("studentPhoneNumber").value = phoneNumber;
 
-            // Show the modal
-            var modal = new bootstrap.Modal(document.getElementById('studentModal'), {
-                keyboard: false
-            });
+            var modal = new bootstrap.Modal(document.getElementById('studentModal'), { keyboard: false });
             modal.show();
+        }
+
+        // Search function
+        function searchTable() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const tableRows = document.querySelectorAll('#studentTableBody tr');
+
+            tableRows.forEach((row) => {
+                const studentName = row.querySelector('.studentName').textContent.toLowerCase();
+                if (studentName.includes(searchInput)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        // Sort function
+        function sortTable() {
+            const tableBody = document.getElementById('studentTableBody');
+            const rows = Array.from(tableBody.getElementsByTagName('tr'));
+            const sortDirection = document.getElementById('sortDropdown').value;
+
+            if (sortDirection === 'default') {
+                rows.sort((a, b) => {
+                    const idA = parseInt(a.querySelector('td').textContent);
+                    const idB = parseInt(b.querySelector('td').textContent);
+                    return idA - idB;
+                });
+            } else {
+                rows.sort((a, b) => {
+                    const nameA = a.querySelector('.studentName').textContent.toLowerCase();
+                    const nameB = b.querySelector('.studentName').textContent.toLowerCase();
+                    return sortDirection === 'asc' ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+                });
+            }
+
+            rows.forEach(row => tableBody.appendChild(row));
         }
     </script>
 

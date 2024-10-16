@@ -64,6 +64,12 @@ public class ClassLevelController extends HttpServlet {
             // Đặt danh sách classLevelList vào request để sử dụng trong JSP
             req.setAttribute("classLevelList", classLevelList);
 
+            // Kiểm tra xem tham số success có được truyền trong request hay không
+
+            String success = req.getParameter("success");
+            if (success != null && success.equals("true")) {
+                req.setAttribute("success", "Action completed successfully!");
+            }
             // Chuyển tiếp đến trang viewClassLevels.jsp để hiển thị
             req.getRequestDispatcher("/Views/Admin/viewClassLevels.jsp").forward(req, resp);
         } catch (SQLException e) {
