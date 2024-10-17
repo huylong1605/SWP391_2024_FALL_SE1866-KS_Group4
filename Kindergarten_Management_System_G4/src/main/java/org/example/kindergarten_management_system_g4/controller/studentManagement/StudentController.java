@@ -21,25 +21,45 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Lớp StudentController chịu trách nhiệm xử lý các yêu cầu HTTP GET để hiển thị danh sách sinh viên và chi tiết sinh viên.
+ * Dữ liệu sinh viên được lấy từ cơ sở dữ liệu và phân trang trước khi hiển thị trên giao diện.
+ * <p>Lỗi: Chưa phát hiện lỗi.
+ *
+ * @tác_giả Đào Xuân Bình
+ */
+
 // Định nghĩa servlet với tên "StudentController" và ánh xạ đến URL "/viewStudentList"
 @WebServlet(name = "StudentController", value = "/viewStudentList")
 public class StudentController extends HttpServlet {
+
     // Khai báo đối tượng StudentDAO để tương tác với cơ sở dữ liệu
     private StudentDAO studentDAO;
 
-    // Phương thức khởi tạo servlet, được gọi khi servlet được tạo ra
+    /**
+     * Phương thức khởi tạo servlet, được gọi khi servlet được tạo ra.
+     * Khởi tạo đối tượng StudentDAO.
+     */
     @Override
     public void init() throws ServletException {
-        // Khởi tạo đối tượng StudentDAO
-        studentDAO = new StudentDAO();
+        studentDAO = new StudentDAO(); // Khởi tạo đối tượng StudentDAO
     }
 
-    // Xử lý các yêu cầu GET từ phía client
+    /**
+     * Xử lý các yêu cầu GET từ phía client để hiển thị danh sách sinh viên.
+     * Lấy danh sách sinh viên từ cơ sở dữ liệu và áp dụng phân trang trước khi truyền tới giao diện người dùng.
+     *
+     * @param req đối tượng HttpServletRequest chứa yêu cầu từ phía client
+     * @param resp đối tượng HttpServletResponse chứa phản hồi của servlet
+     * @throws ServletException nếu có lỗi đặc thù của servlet xảy ra
+     * @throws IOException nếu có lỗi đầu vào hoặc đầu ra được phát hiện khi servlet xử lý yêu cầu GET
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            // Lấy danh sách tất cả sinh viên
+            // Lấy danh sách tất cả sinh viên từ cơ sở dữ liệu
             List<Student> students = studentDAO.getAllStudents();
+
             // Thiết lập phân trang
             int studentsPerPage = 5; // Số sinh viên trên mỗi trang
             int totalStudents = students.size(); // Tổng số sinh viên
@@ -59,8 +79,7 @@ public class StudentController extends HttpServlet {
         } catch (ClassNotFoundException e) {
             // Xử lý ngoại lệ và gửi phản hồi lỗi nội bộ máy chủ nếu có vấn đề về cơ sở dữ liệu
             e.printStackTrace();
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Lỗi cơ sở dữ liệu");
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Database error");
         }
     }
 }
-

@@ -167,35 +167,35 @@
     </div>
 
     <!-- Modal for adding a new class level -->
-    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form action="${pageContext.request.contextPath}/addClassLevel" method="POST" onsubmit="return confirmAdd()">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addModalLabel">Add New Class Level</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="addClassName" class="form-label">Class Level Name</label>
-                            <input type="text" class="form-control" id="addClassName" name="classLevelName" required>
+        <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="${pageContext.request.contextPath}/addClassLevel" method="POST" onsubmit="return confirmAdd()">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addModalLabel">Add New Class Level</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="mb-3">
-                            <label for="addDescription" class="form-label">Description</label>
-                            <input type="text" class="form-control" id="addDescription" name="description" required>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="addClassName" class="form-label">Class Level Name</label>
+                                <input type="text" class="form-control" id="addClassName" name="classLevelName" minlength="5" maxlength="50" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="addDescription" class="form-label">Description</label>
+                                <input type="text" class="form-control" id="addDescription" name="description" minlength="5" maxlength="50" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="addAgeRange" class="form-label">Age Range</label>
+                                <input type="number" class="form-control" id="addAgeRange" name="ageRange" max-value="6" required>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="addAgeRange" class="form-label">Age Range</label>
-                            <input type="number" class="form-control" id="addAgeRange" name="ageRange" required>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Save</button>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Save</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
 
     <!-- Modal for editing an existing class level -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -210,15 +210,15 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="editClassName" class="form-label">Class Level Name</label>
-                            <input type="text" class="form-control" id="editClassName" name="classLevelName" required>
+                            <input type="text" class="form-control" id="editClassName" name="classLevelName" minlength="5" maxlength="50" required>
                         </div>
                         <div class="mb-3">
                             <label for="editDescription" class="form-label">Description</label>
-                            <input type="text" class="form-control" id="editDescription" name="description" required>
+                            <input type="text" class="form-control" id="editDescription" name="description" minlength="5" maxlength="50" required>
                         </div>
                         <div class="mb-3">
                             <label for="editAgeRange" class="form-label">Age Range</label>
-                            <input type="number" class="form-control" id="editAgeRange" name="ageRange" required>
+                            <input type="number" class="form-control" id="editAgeRange" name="ageRange" max-value="6" required>
                         </div>
                     </div>
                     <div class="modal-footer">
