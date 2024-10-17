@@ -120,7 +120,7 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
             "JOIN \n" +
             "    room r ON c.Room_ID = r.Room_ID\n" +
             "WHERE \n" +
-            "   cl.Class_level_ID = ? AND u.Fullname like ?;\n";
+            "   cl.Class_level_ID = ? AND c.Class_name like ?;\n";
     public static final String GET_LIST_CLASS_SEARCH = "SELECT \n" +
             "    c.Class_ID, \n" +
             "    c.Class_name, \n" +
@@ -136,7 +136,7 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
             "JOIN \n" +
             "    room r ON c.Room_ID = r.Room_ID\n" +
             "WHERE \n" +
-            "  u.Fullname like ?";
+            "  c.Class_name like ?";
     public static final String DELETE_CLASS = "DELETE FROM class\n" +
             "WHERE Class_ID = ?\n" +
             "AND NOT EXISTS (\n" +
