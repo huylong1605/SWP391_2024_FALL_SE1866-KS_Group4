@@ -33,7 +33,7 @@
       color: white;
     }
     .table-responsive {
-      max-height: 563px;
+      max-height: 445px;
       overflow-y: auto;
     }
     table {
@@ -86,23 +86,6 @@
             <h4 class="font-weight-bolder mb-0">Manage Class</h4>
           </nav>
 
-          <div class="btn-search" style="margin-top: 20px;">
-            <form action="${pageContext.request.contextPath}/Views/Admin/accountManage" method="get">
-              <input type="text" name="searchName" placeholder="Search by name" value="${param.searchName}">
-              <input type="hidden" name="action" value="search">
-              <button type="submit">Search</button>
-            </form>
-          </div>
-
-          <div style="margin-top: 20px;">
-            <form action="${pageContext.request.contextPath}/Views/Admin/accountManage" method="get">
-              <label for="roleFilter">Filter by class:</label>
-              <select name="roleFilter" id="roleFilter" onchange="this.form.submit()">
-                <option value="">All</option>
-              </select>
-              <input type="hidden" name="action" value="filter">
-            </form>
-          </div>
         </div>
       </nav>
 
@@ -113,7 +96,7 @@
             <div class="card my-4">
               <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                 <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                  <h6 class="text-white text-capitalize ps-3">List Student</h6>
+                  <h5 class="text-white text-capitalize ps-3">List Student <span style="font-size: 40px">${students[0].className}</span></h5>
                 </div>
               </div>
               <div class="card-body px-0 pb-2">
@@ -162,9 +145,12 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-5">
+              <div class="col-md-5 d-flex">
                 <button class="btn btn-primary">
                   <a href="${pageContext.request.contextPath}/Views/Manager/AddStudentToClass?classId=${classId}&action=add" class="text-light">Add Student</a>
+                </button>
+                <button class="btn btn-primary ms-2 text-light">
+                  <a class="text-light" href="${pageContext.request.contextPath}/listClass">Back To List Class</a>
                 </button>
               </div>
             </div>
@@ -210,9 +196,7 @@
           </div>
         </div>
       </div>
-
     </main>
-
   </div>
 </div>
 

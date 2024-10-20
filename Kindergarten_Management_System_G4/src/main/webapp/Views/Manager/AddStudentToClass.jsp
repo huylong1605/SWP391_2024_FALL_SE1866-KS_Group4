@@ -30,16 +30,15 @@
       border-left: 3px solid white;
       color: white;
     }
-    .table-responsive {
-       max-height: 563px;
-      overflow-y: auto;
-    }
-    table {
-       width: 100%;
-      table-layout: fixed;
-    }
+    /*.table-responsive {*/
+    /*  height: 475px;*/
+    /*}*/
+    /*table {*/
+    /*   width: 100%;*/
+    /*   height: 800px;*/
+    /*}*/
     .wrapper{
-      height: 860px;
+      height: 1200px;
     }
   </style>
 </head>
@@ -85,22 +84,27 @@
           </nav>
 
           <div class="btn-search" style="margin-top: 20px;">
-            <form action="${pageContext.request.contextPath}/Views/Admin/accountManage" method="get">
-              <input type="text" name="searchName" placeholder="Search by name" value="${param.searchName}">
+            <form action="${pageContext.request.contextPath}/Views/Manager/AddStudentToClass" method="get">
+              <input type="text" name="searchTerm" placeholder="Search by name" value="${param.searchTerm}">
+              <input type="hidden" name="classId" value="${classId}" />
               <input type="hidden" name="action" value="search">
               <button type="submit">Search</button>
             </form>
           </div>
 
-          <div style="margin-top: 20px;">
-            <form action="${pageContext.request.contextPath}/Views/Admin/accountManage" method="get">
-              <label for="roleFilter">Filter by class:</label>
-              <select name="roleFilter" id="roleFilter" onchange="this.form.submit()">
-                <option value="">All</option>
-              </select>
-              <input type="hidden" name="action" value="filter">
-            </form>
-          </div>
+            <div style="margin-top: 20px;">
+                <form action="${pageContext.request.contextPath}/Views/Manager/AddStudentToClass" method="get">
+                    <label for="classFilter">Filter by class:</label>
+                    <select name="classFilter" id="classFilter" onchange="this.form.submit()">
+                        <option value="">All</option> <!-- Option to display all students -->
+                        <option value="withClass">Class IS Available</option>
+                        <option value="noClass">Class NOT Available</option>
+                    </select>
+                    <input type="hidden" name="classId" value="${classId}" />
+                    <input type="hidden" name="action" value="filter">
+                </form>
+            </div>
+
         </div>
       </nav>
 
@@ -111,7 +115,7 @@
             <div class="card my-4">
               <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                 <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                  <h6 class="text-white text-capitalize ps-3">List Student</h6>
+                  <h5 class="text-white text-capitalize ps-3">Add Student To <span style="font-size: 40px">${className}</span></h5>
                 </div>
               </div>
               <div class="card-body px-0 pb-2">
@@ -130,34 +134,41 @@
                           <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Name</th>
                           <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Gender</th>
                           <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Age</th>
-                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Classes available</th>
+                          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Class Name</th>
                           <th class="text-secondary opacity-7"></th>
                         </tr>
                         </thead>
                         <tbody>
                         <c:forEach var="student" items="${AllStudent}" varStatus="status">
                           <tr style="font-weight: bold">
-                            <td class="text-center">${status.index + 1}</td>
+                            <td class="text-center">${(currentPage - 1) * pageSize + status.index + 1}</td>
                             <td class="text-center">${student.name}</td>
                             <td class="text-center">${student.gender? "<span style='color:Magenta'>Male</span>" : "<span style='color:blue'>Female</span>"}</td>
                             <td class="text-center">${student.age}</td>
                             <c:if test="${student.classId == 0}">
-                              <td class="text-center" style="color: #039f03">No Class Yet</td>
+                              <td class="text-center" style="color: red"><i class="fa-solid fa-circle-xmark" style="font-size: 30px"></i></td>
                             </c:if>
                             <c:if test="${student.classId != 0}">
-                              <td class="text-center" style="color: red">Had Class</td>
+                              <td class="text-center" style="color: #039f03"><i class="fa-solid fa-circle-check" style="font-size: 30px"></i></td>
+                            </c:if>
+                            <c:if test="${student.classId == 0}">
+                              <td class="text-center" style="color: red">###</td>
+                            </c:if>
+                            <c:if test="${student.classId != 0}">
+                              <td class="text-center" style="color: #039f03">${student.className}</td>
                             </c:if>
                             <td class="align-middle">
                               <form action="${pageContext.request.contextPath}/Views/Manager/AddStudentToClass" method="post" style="display:inline;">
                                 <input type="hidden" name="classId" value="${classId}" />
                                 <input type="hidden" name="studentId" value="${student.studentId}" />
-                                <button style="margin-top: 3px" type="button" class="btn btn-link text-secondary font-weight-bold text-xs"
+                                <button style="margin-top: 15px" type="button" class="text-light btn btn-primary text-secondary font-weight-bold text-xs"
                                         onclick="handleAddToClass(${student.classId}, ${student.studentId}, ${classId})">
-                                  <i class="fa-solid fa-circle-plus" style="color: #02af02; font-size: 30px; margin: 5px"></i>
+                                  ADD
                                 </button>
                               </form>
-                              <a href="#" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                <i class="fa-solid fa-circle-info" style="color: blue; font-size: 30px; margin: 5px"></i>
+                              <a href="${pageContext.request.contextPath}/Views/Manager/StudentDetails?action=details&studentId=${student.studentId}" style="margin-top: 14px" class="text-light btn btn-primary text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                Details
                               </a>
                             </td>
                           </tr>
@@ -166,6 +177,32 @@
                       </table>
                     </c:otherwise>
                   </c:choose>
+
+                  <c:set var="actionValue" value="${isFiltered ? 'filter' : 'add'}" />
+                  <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center mt-4">
+                      <c:if test="${currentPage > 1}">
+                        <li class="page-item">
+                          <a class="page-link" href="${pageContext.request.contextPath}/Views/Manager/AddStudentToClass?classId=${classId}&page=${currentPage - 1}&size=${pageSize}&action=${actionValue}&classFilter=${filterType}&searchTerm=${searchTerm}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                          </a>
+                        </li>
+                      </c:if>
+                      <c:forEach begin="1" end="${totalPages}" var="i">
+                        <li class="page-item ${currentPage == i ? 'active' : ''}">
+                          <a class="page-link" href="${pageContext.request.contextPath}/Views/Manager/AddStudentToClass?classId=${classId}&page=${i}&size=${pageSize}&action=${actionValue}&classFilter=${filterType}&searchTerm=${searchTerm}">${i}</a>
+                        </li>
+                      </c:forEach>
+                      <c:if test="${currentPage < totalPages}">
+                        <li class="page-item">
+                          <a class="page-link" href="${pageContext.request.contextPath}/Views/Manager/AddStudentToClass?classId=${classId}&page=${currentPage + 1}&size=${pageSize}&action=${actionValue}&classFilter=${filterType}&searchTerm=${searchTerm}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                          </a>
+                        </li>
+                      </c:if>
+                    </ul>
+                  </nav>
+
 
                   <!-- Modal xác nhận chuyển lớp -->
                   <div class="modal fade" id="confirmChangeClassModal" tabindex="-1" aria-labelledby="confirmChangeClassModalLabel" aria-hidden="true">
@@ -206,6 +243,9 @@
                 </div>
               </div>
             </div>
+            <button class="btn btn-primary text-light">
+              <a class="text-light" href="${pageContext.request.contextPath}/Views/Manager/listStudentInClass?classId=${classId}">Back To List Student</a>
+            </button>
           </div>
         </div>
       </div>

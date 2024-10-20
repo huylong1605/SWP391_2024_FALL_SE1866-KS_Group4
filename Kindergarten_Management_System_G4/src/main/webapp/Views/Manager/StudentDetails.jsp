@@ -88,7 +88,7 @@
                         </div>
                         <div class="col-auto my-auto">
                             <div class="h-100">
-                                <h5 class="mb-1">${detaiStudent.name}</h5>
+                                <h5 class="mb-1">${detailStudent.name}</h5>
                             </div>
                         </div>
 
@@ -102,11 +102,16 @@
                                     </div>
                                     <div class="card-body p-3">
                                         <ul class="list-group">
-                                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; ${detaiStudent.name}</li>
-                                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Date Of Birth:</strong> &nbsp; ${detaiStudent.dob}</li>
-                                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Gender:</strong> &nbsp; ${detaiStudent.gender?"Male":"Female"}</li>
-                                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Age:</strong> &nbsp; ${detaiStudent.age}</li>
-                                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Class:</strong> &nbsp; ${detaiStudent.className}</li>
+                                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Full Name:</strong> &nbsp; ${detailStudent.name}</li>
+                                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Date Of Birth:</strong> &nbsp; ${detailStudent.dob}</li>
+                                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Gender:</strong> &nbsp; ${detailStudent.gender?"Male":"Female"}</li>
+                                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Age:</strong> &nbsp; ${detailStudent.age}</li>
+                                            <c:if test="${detailStudent.classId != 0}">
+                                                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Class:</strong> &nbsp; ${detailStudent.className}</li>
+                                            </c:if>
+                                            <c:if test="${detailStudent.classId == 0}">
+                                                <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Class:</strong> &nbsp; ###</li>
+                                            </c:if>
                                         </ul>
                                     </div>
                                 </div>
@@ -118,18 +123,18 @@
                                     </div>
                                     <div class="card-body p-3">
                                         <ul class="list-group">
-                                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Parent Name:</strong> &nbsp; ${detaiStudent.parentName}</li>
-                                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Parent Email:</strong> &nbsp; ${detaiStudent.parentEmail}</li>
-                                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Address:</strong> &nbsp; ${detaiStudent.parentAddress}</li>
-                                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Parent Phone:</strong> &nbsp; ${detaiStudent.parentPhone}</li>
+                                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Parent Name:</strong> &nbsp; ${detailStudent.parentName}</li>
+                                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Parent Email:</strong> &nbsp; ${detailStudent.parentEmail}</li>
+                                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Address:</strong> &nbsp; ${detailStudent.parentAddress}</li>
+                                            <li class="list-group-item border-0 ps-0 text-sm"><strong class="text-dark">Parent Phone:</strong> &nbsp; ${detailStudent.parentPhone}</li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="pt-3">
-                            <button class="btn btn-primary">
-                                <a class="text-light" href="${pageContext.request.contextPath}/Views/Manager/listStudentInClass?classId=${detaiStudent.classId}">Back To List Student</a>
+                            <button class="btn btn-primary" onclick="window.history.back();">
+                                Back To List Student
                             </button>
                         </div>
 
