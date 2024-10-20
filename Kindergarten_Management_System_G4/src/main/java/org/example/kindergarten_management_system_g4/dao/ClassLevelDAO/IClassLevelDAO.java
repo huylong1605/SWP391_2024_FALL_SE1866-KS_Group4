@@ -1,5 +1,14 @@
-package org.example.kindergarten_management_system_g4.dao.ClassLevelDAO;
+/*
+ * Copyright(C) 2005,  SWP_G4.
+ * KMS :
+ * Kindergarten Management System
+ *
+ * Record of change:
+ * DATE           Version                  AUTHOR                              DESCRIPTION
+ * 10/5/2024       1.1              Đào Xuân Bình - HE163115              Create interface IClassLevelDAO
+ */
 
+package org.example.kindergarten_management_system_g4.dao.ClassLevelDAO;
 
 import org.example.kindergarten_management_system_g4.model.ClassLevel;
 
@@ -8,6 +17,7 @@ import java.util.List;
 
 /**
  * Interface cho các phương thức thao tác với ClassLevel.
+ * Interface này định nghĩa các phương thức cần thiết để lấy, thêm, cập nhật và xóa class levels từ cơ sở dữ liệu.
  */
 public interface IClassLevelDAO {
 

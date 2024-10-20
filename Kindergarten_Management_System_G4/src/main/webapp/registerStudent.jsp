@@ -1,73 +1,95 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%@ page import="org.example.kindergarten_management_system_g4.model.User" %>
+<%@ page isErrorPage="true" %>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Student Registration</title>
+    <meta charset="UTF-8">
+    <title>Error Page</title>
     <style>
         body {
+            margin: 0;
+            background-color: #f0f2f5;
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+        }
+        .content {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            min-height: calc(100vh - 160px); /* Adjust for header/footer height */
+            text-align: center;
         }
-
         .registration-form {
             background-color: #fff;
-            padding: 20px;
+            padding: 40px;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            width: 400px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width:40%;
         }
 
-        .registration-form h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
 
-        .form-group {
-            margin-bottom: 15px;
-        }
+         h2 {
+                     text-align: center;
+                     margin-bottom: 20px;
+                     font-size: 24px;
+                     color: #333;
+                 }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
+                 .form-group {
+                     display: flex;
+                     align-items: center;
+                     margin-bottom: 20px;
+                 }
 
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #bdc3c7;
-            border-radius: 4px;
-        }
+                 label {
+                     flex: 0.5;
+                     font-size: 14px;
+                     color: #333;
+                 }
 
-        .form-group button {
-            width: 100%;
-            padding: 10px;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+                 input,
+                 select {
+                     flex: 2;
+                     padding: 10px;
+                     border: 1px solid #bdc3c7;
+                     border-radius: 5px;
+                     font-size: 14px;
+                     box-sizing: border-box;
+                 }
 
-        .form-group button:hover {
-            background-color: #2980b9;
-        }
+                  .button-container {
+                            display: flex;
+                            justify-content: center;
+                        }
+
+                        button {
+                            width: 40%;
+                            padding: 12px;
+                            background-color: #3498db;
+                            color: white;
+                            border: none;
+                            border-radius: 5px;
+                            font-size: 16px;
+                            cursor: pointer;
+                            transition: background-color 0.3s ease;
+                        }
+                 button:hover {
+                     background-color: #2980b9;
+                 }
+
     </style>
 </head>
 <body>
-
-<div class="registration-form">
-    <h2>Register Student</h2>
+<%@ include file="/Views/common/header.jsp" %>
+<div class="content">
+    <div class="registration-form">
+<h2>Register Student</h2>
     <form action="registerStudent" method="post">
         <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
         </div>
         <div class="form-group">
-            <label for="dob">Date of Birth:</label>
+            <label for="dob">DOB:</label>
             <input type="date" id="dob" name="dob" required>
         </div>
         <div class="form-group">
@@ -77,11 +99,12 @@
                 <option value="false">Female</option>
             </select>
         </div>
-        <div class="form-group">
+        <div class="button-container">
             <button type="submit">Register</button>
         </div>
     </form>
+    </div>
 </div>
-
+<%@ include file="/Views/common/footer.jsp" %>
 </body>
 </html>

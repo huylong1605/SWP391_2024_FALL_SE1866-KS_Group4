@@ -1,10 +1,18 @@
+/*
+ * Copyright(C) 2005,  SWP_G4.
+ * KMS :
+ * Kindergarten Management System
+ *
+ * Record of change:
+ * DATE           Version                  AUTHOR                              DESCRIPTION
+ * 10/5/2024       1.1              Đào Xuân Bình - HE163115              Create StudentDAO class
+ */
+
 package org.example.kindergarten_management_system_g4.dao;
 
 import org.example.kindergarten_management_system_g4.connection.DBConnection;
 import org.example.kindergarten_management_system_g4.model.Student;
-import org.example.kindergarten_management_system_g4.model.User;
 
-import javax.servlet.http.HttpSession;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,13 +21,25 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Lớp StudentDAO chịu trách nhiệm tương tác với cơ sở dữ liệu để thực hiện các hoạt động liên quan đến bảng student.
+ * Lớp này bao gồm các phương thức kiểm tra sinh viên tồn tại, thêm sinh viên mới, và lấy danh sách sinh viên từ cơ sở dữ liệu.
+ * <p>Lỗi: Chưa phát hiện lỗi.
+ */
 public class StudentDAO {
 
-    // Phương thức kiểm tra sinh viên đã tồn tại chưa
+    /**
+     * Phương thức kiểm tra sinh viên đã tồn tại chưa trong cơ sở dữ liệu.
+     *
+     * @param name   tên sinh viên.
+     * @param dob    ngày sinh của sinh viên.
+     * @param userId ID người dùng (phụ huynh).
+     * @return true nếu sinh viên đã tồn tại, false nếu chưa.
+     * @throws ClassNotFoundException nếu không tìm thấy driver kết nối cơ sở dữ liệu.
+     */
     public boolean isStudentExist(String name, LocalDate dob, int userId) throws ClassNotFoundException {
         String CHECK_STUDENT_EXIST = "SELECT COUNT(*) FROM student WHERE Student_name = ? AND Date_of_birth = ? AND User_id = ?";
 
-        // Sử dụng try-with-resources để quản lý kết nối cơ sở dữ liệu và câu lệnh
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(CHECK_STUDENT_EXIST)) {
 
@@ -41,22 +61,24 @@ public class StudentDAO {
         return false; // Trả về false nếu sinh viên chưa tồn tại
     }
 
-    // Phương thức để lấy tất cả sinh viên kèm thông tin người dùng
+    /**
+     * Phương thức để lấy tất cả sinh viên kèm thông tin người dùng từ cơ sở dữ liệu.
+     *
+     * @return danh sách các đối tượng Student.
+     * @throws ClassNotFoundException nếu không tìm thấy driver kết nối cơ sở dữ liệu.
+     */
     public List<Student> getAllStudents() throws ClassNotFoundException {
         List<Student> students = new ArrayList<>();
 
-        // Câu truy vấn SQL để chọn dữ liệu sinh viên kèm địa chỉ và số điện thoại người dùng
         String SELECT_ALL_STUDENTS_WITH_USER =
                 "SELECT s.Student_ID, s.Date_of_birth, s.gender, s.Student_name, " +
                         "u.address, u.phoneNumber " +
                         "FROM student s " +
                         "JOIN user u ON s.User_id = u.User_id";
 
-        // Sử dụng try-with-resources để quản lý kết nối cơ sở dữ liệu và câu lệnh
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_STUDENTS_WITH_USER)) {
 
-            // Thực thi truy vấn và xử lý kết quả
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -82,7 +104,11 @@ public class StudentDAO {
         return students; // Trả về danh sách sinh viên
     }
 
-    // Phương thức in chi tiết lỗi SQL
+    /**
+     * Phương thức in chi tiết lỗi SQL.
+     *
+     * @param ex đối tượng SQLException chứa thông tin lỗi.
+     */
     private void printSQLException(SQLException ex) {
         for (Throwable e : ex) {
             if (e instanceof SQLException) {
@@ -99,11 +125,15 @@ public class StudentDAO {
         }
     }
 
-    // Phương thức thêm sinh viên mới vào cơ sở dữ liệu
+    /**
+     * Phương thức thêm sinh viên mới vào cơ sở dữ liệu.
+     *
+     * @param student đối tượng Student chứa thông tin sinh viên mới.
+     * @throws ClassNotFoundException nếu không tìm thấy driver kết nối cơ sở dữ liệu.
+     */
     public void addStudent(Student student) throws ClassNotFoundException {
         String INSERT_STUDENT = "INSERT INTO student (Student_name, Date_of_birth, gender, User_id) VALUES (?,?,?,?)";
 
-        // Sử dụng try-with-resources để quản lý kết nối cơ sở dữ liệu và câu lệnh
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_STUDENT)) {
 
@@ -121,9 +151,3 @@ public class StudentDAO {
         }
     }
 }
-
-
-
-
-
-
