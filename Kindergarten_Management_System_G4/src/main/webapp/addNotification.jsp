@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
@@ -15,7 +16,7 @@
 <%@include file="Views/common/header.jsp"%>
 
 <div class="container my-4">
-    <h2>Add Notification</h2>
+    <h2 style="font-family: 'Roboto', Helvetica, Arial, sans-serif">Add Notification</h2>
 
     <!-- Hiển thị thông báo lỗi nếu có -->
     <c:if test="${not empty errorMessage}">

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -19,11 +19,11 @@
 
 <body>
 <!-- Sidebar -->
-<%@ include file="subject-manage-sidebar.jsp" %>
+<%@include file="Views/common/header.jsp"%>
+
 
 <div class="mt-5 main-content">
     <h2>Subject List</h2>
-
     <c:if test="${param.success ne null}">
         <div class="alert alert-success d-flex align-items-center" role="alert">
             <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
@@ -33,16 +33,19 @@
         </div>
     </c:if>
     <c:if test="${param.fail ne null}">
-        <div class="alert alert-danger" role="alert">
-            Failed!
+        <div class="alert alert-danger d-flex align-items-center" role="alert">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+            <div>
+                Failed !
+            </div>
         </div>
     </c:if>
 
 
     <c:if test="${sessionScope.errorMessage != null}">
-<%--        <div class="alert alert-danger" role="alert">--%>
-<%--                ${sessionScope.errorMessage}--%>
-<%--        </div>--%>
+        <%--        <div class="alert alert-danger" role="alert">--%>
+        <%--                ${sessionScope.errorMessage}--%>
+        <%--        </div>--%>
 
 
         <div class="alert alert-danger d-flex align-items-center" role="alert">
@@ -60,15 +63,40 @@
 
     <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addsubjectModal">Add subject</button>
 
+    <%--Filter form--%>
+        <form action="subject" method="post" class="form-inline">
+            <!-- Lọc theo subjectCode -->
+            <input type="hidden" name="action" class="form-control mr-2" value="filter" placeholder="Enter subject code">
+
+            <label for="subjectCodeFilter" class="mr-2">Subject Code:</label>
+            <input type="text" id="subjectCodeFilter" name="subjectCode" class="form-control mr-2" placeholder="Enter subject code">
+
+            <!-- Lọc theo subjectName -->
+            <label for="subjectNameFilter" class="mr-2">Subject Name:</label>
+            <input type="text" id="subjectNameFilter" name="subjectName" class="form-control mr-2" placeholder="Enter subject name">
+
+            <!-- Lọc theo status -->
+            <label for="statusFilter" class="mr-2">Status:</label>
+            <select id="statusFilter" name="status" class="form-select" style="width: 100px;">
+                <option value="">All</option>
+                <option value="active">Active</option>
+                <option value="In active">In active</option>
+            </select>
+
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary ml-2">Filter</button>
+            </div>
+        </form>
+
     <table id="subjectTable" class="table table-striped">
         <thead>
         <tr>
-            <th>Subject ID</th>
-            <th>Subject Code</th>
-            <th>Subject Name</th>
-            <th>Description</th>
-            <th>Status</th>
-            <th>Action</th>
+            <th>SUBJECT ID</th>
+            <th>SUBJECT CODE</th>
+            <th>SUBJECT NAME</th>
+            <th>DESCRIPTION</th>
+            <th>STATUS</th>
+            <th>ACTION</th>
         </tr>
         </thead>
         <tbody>
@@ -80,11 +108,8 @@
                 <td>${subject.description}</td>
 
 
-<%--                <td>--%>
-<%--                    <span class="btn btn-success">${subject.status}</span>--%>
-<%--                </td>--%>
-
                 <td>
+                    <!-- Hiển thị trạng thái môn học (active/inactive) -->
                     <c:choose>
                         <c:when test="${subject.status == 'active'}">
                             <span style="color: #31c121; font-weight: bold">Active</span>
@@ -98,9 +123,12 @@
 
                 <td>
                     <div style="display: flex; gap: 5px;">
-                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#subjectInfoModal_${subject.subjectId}">Info</button>
-                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#editsubjectModal_${subject.subjectId}">Edit</button>
-                    <a type="button" class="btn btn-danger btn-sm" href="subject?action=delete&subjectId=${subject.subjectId}" onclick="return confirm('Are you sure to delete this subject?')">Delete</a>
+                        <button type="button" style="background-color: #008CBA; border-color: #008CBA; border-radius:6px; border-style: solid; border-width: 0.8px; font-weight:
+500; color: #fff" data-toggle="modal" data-target="#subjectInfoModal_${subject.subjectId}">Info</button>
+                        <button type="button" style="background-color: #198754; border-color: #198754; border-radius:6px; border-style: solid; border-width: 0.8px; font-weight:
+500; color: #fff"; data-toggle="modal" data-target="#editsubjectModal_${subject.subjectId}">Edit</button>
+                        <a type="button" style="background-color: #f44336; border-color:#f44336; border-radius:6px; border-style: solid; border-width: 0.8px; font-weight:
+500; color: #fff" href="subject?action=delete&subjectId=${subject.subjectId}" onclick="return confirm('Are you sure to delete this subject?')">Delete</a>
                     </div>
                 </td>
             </tr>
@@ -115,12 +143,11 @@
     <div class="modal fade" id="editsubjectModal_${subject.subjectId}" tabindex="-1" role="dialog" aria-labelledby="editsubjectModalLabel_${subject.subjectId}" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
+                +
                 <div class="modal-header">
-<<<<<<< HEAD
-                    <h5 class="modal-title" id="editsubjectModalLabel_${subject.subjectId}">Edit subject</h5>
-=======
-                    <h5 class="modal-title" id="editsubjectModal_${subject.id}">Edit subject</h5>
->>>>>>> 6575569b82098c58d2ff62c2aa35716c607cf3b9
+                        <%--                    <h5 class="modal-title" id="editsubjectModalLabel_${subject.subjectId}">Edit subject</h5>--%>
+
+                    <h5 class="modal-title" id="editsubjectModal_${subject.subjectId}">Edit subject</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -133,31 +160,29 @@
                             <input type="hidden" name="action" value="update"/>
 
                             <div class="form-group">
-                                <label for="subjectCode">Subject Code</label>
+                                <label for="subjectCode">Subject Code*</label>
                                 <input type="text" class="form-control" name="subjectCode" value="${subject.subjectCode}" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="subjectName">Subject Name</label>
+                                <label for="subjectName">Subject Name*</label>
                                 <input type="text" class="form-control" name="subjectName" maxlength="50" value="${subject.subjectName}" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="description">Description</label>
+                                <label for="description">Description*</label>
                                 <textarea class="form-control" name="description" required>${subject.description}</textarea>
                             </div>
                             <div class="form-group">
-                                <label for="subjectName">Subject Status</label>
-                                <select name="status" class="form-control">
+                                <label for="subjectName">Subject Status*</label>
+                                <select name="status" class="form-select">
                                     <option value="active" ${subject.status ==  'Active' ?  "selected" : ""}>Active</option>
                                     <option value="In active" ${subject.status ==  'In active' ?  "selected" : ""}>In Active</option>
                                 </select>
                             </div>
 
-                            <div class="form-group">
-                                <label for="userId">User ID</label>
-                                <input type="number" class="form-control" name="userId" value="${subject.userId}" required>
-                            </div>
+                            <input type="hidden" class="form-control" name="userId" value="${subject.userId}" required>
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -181,7 +206,7 @@
                 </div>
                 <div class="modal-body">
 
-                    <p><strong>ID:</strong> ${subject.subjectId}</p>
+<%--                    <p><strong>ID:</strong> ${subject.subjectId}</p>--%>
                     <p><strong>Subject Code:</strong> ${subject.subjectCode}</p>
                     <p><strong>Subject Name:</strong> ${subject.subjectName}</p>
                     <p><strong>Description:</strong> ${subject.description}</p>
@@ -212,33 +237,31 @@
                     <input type="hidden" name="action" value="add"/>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="subjectCode">Subject Code</label>
+                            <label for="subjectCode">Subject Code*</label>
                             <input type="text" class="form-control" id="subjectCode" name="subjectCode" placeholder="Enter subject code" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="subjectName">Subject Name</label>
+                            <label for="subjectName">Subject Name*</label>
                             <input type="text" class="form-control" id="subjectName" name="subjectName" maxlength="50" placeholder="Enter subject name" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="description">Description</label>
+                            <label for="description">Description*</label>
                             <textarea class="form-control" id="description" name="description" placeholder="Enter description" required></textarea>
                         </div>
 
                         <div class="form-group">
-                            <label for="status">Status</label>
-                        <select name="status" class="form-control" id="status">
-                            <option value="active">Active</option>
-                            <option value="In active">In Active</option>
-                        </select>
+                            <label for="status">Status*</label>
+                            <select name="status" class="form-select" id="status">
+                                <option value="active">Active</option>
+                                <option value="In active">In Active</option>
+                            </select>
 
                         </div>
 
-                        <div class="form-group">
-                            <label for="userId">User ID</label>
-                            <input type="number" class="form-control" id="userId" name="userId" placeholder="Enter user ID" required>
-                        </div>
+                        <input type="hidden" class="form-control" id="userId" name="userId" placeholder="Enter user ID" required>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -262,7 +285,7 @@
     $(document).ready(function () {
         $('#subjectTable').DataTable({
             "autoWidth": false,
-            "searching": false
+            "searching": true
         });
     });
 </script>
@@ -278,6 +301,6 @@
         <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
     </symbol>
 </svg>
-
+<%@include file="Views/common/footer.jsp"%>
 </body>
 </html>

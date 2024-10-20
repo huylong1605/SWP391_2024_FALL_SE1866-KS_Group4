@@ -5,27 +5,36 @@ public class Subject {
     private String subjectCode;
     private String subjectName;
     private String description;
-    private int userId;  // This is a foreign key referencing User
+    private int userId;
     private String status;
     // Constructor
     public Subject() {}
 
-    public Subject(int subjectId, String subjectCode, String subjectName, String description, int userId) {
+    public Subject(int subjectId, String subjectCode, String subjectName, String description, String status) {
         this.subjectId = subjectId;
         this.subjectCode = subjectCode;
         this.subjectName = subjectName;
         this.description = description;
+        this.status = status;
+
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
     // Getters and Setters
     public int getSubjectId() {
         return subjectId;
-    }
+    } // tra ve
 
     public void setSubjectId(int subjectId) {
         this.subjectId = subjectId;
-    }
+    } // cap nhat
 
     public String getSubjectCode() {
         return subjectCode;
@@ -46,9 +55,11 @@ public class Subject {
     public String getDescription() {
         return description;
     }
+
     public void setStatus(String status) {
         this.status = status;
     }
+
     public String getStatus() {
         return status;
     }
@@ -57,13 +68,6 @@ public class Subject {
         this.description = description;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 
     @Override
     public String toString() {
@@ -72,7 +76,6 @@ public class Subject {
                 ", subjectCode='" + subjectCode + '\'' +
                 ", subjectName='" + subjectName + '\'' +
                 ", description='" + description + '\'' +
-                ", userId=" + userId +
                 '}';
     }
 }
