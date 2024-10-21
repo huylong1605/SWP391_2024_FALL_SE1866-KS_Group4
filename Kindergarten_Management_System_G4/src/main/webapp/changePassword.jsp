@@ -103,7 +103,7 @@
                 <label for="oldPassword">Old Password: <span style="color: red;">*</span></label>
 
                 <div class="password-container">
-                    <input type="password" class="form-control" id="oldPassword" name="oldPassword"  required>
+                    <input type="password" class="form-control" id="oldPassword" name="oldPassword" value="${param.oldPassword}"   required>
                     <i class="bi bi-eye-slash" id="toggleOldPasswordIcon" onclick="toggleOldPassword()"></i>
                 </div>
             </div>
@@ -112,16 +112,16 @@
                 <label for="newPassword">New Password: <span style="color: red;">*</span></label>
 
                 <div class="password-container">
-                    <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                    <input type="password" class="form-control" id="newPassword" name="newPassword" value="${param.newPassword}"  required>
                     <i class="bi bi-eye-slash" id="toggleNewPasswordIcon" onclick="toggleNewPassword()"></i>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="confirmNewPassword">confirmNewPassword: <span style="color: red;">*</span></label>
-                <
+                <label for="confirmNewPassword">confirm New Password: <span style="color: red;">*</span></label>
+
                 <div class="password-container">
-                    <input type="password" class="form-control" id="confirmNewPassword" name="confirmNewPassword" required>
+                    <input type="password" class="form-control" id="confirmNewPassword" name="confirmNewPassword" value="${param.confirmNewPassword}" required>
                     <i class="bi bi-eye-slash" id="toggleConfirmNewPasswordIcon" onclick="toggleConfirmNewPassword()"></i>
                 </div>
             </div>
