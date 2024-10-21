@@ -65,14 +65,14 @@
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="${pageContext.request.contextPath}/listClass" class="sidebar-link">
                         <i class="lni lni-user"></i>
                         <span>Manage Class</span>
                     </a>
                 </li>
 
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="" class="sidebar-link">
                         <i class="lni lni-user"></i>
                         <span>Manage Term</span>
                     </a>
@@ -86,7 +86,7 @@
                 </li>
 
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="${pageContext.request.contextPath}/sidebar" class="sidebar-link">
                         <i class="lni lni-user"></i>
                         <span>Manage Subject</span>
                     </a>
@@ -189,7 +189,9 @@
                                     <!-- Duyệt qua danh sách lớp học -->
                                     <c:forEach var="classes" items="${listClass}">
                                         <tr>
-                                            <td>${classes.className}</td>
+                                            <td>
+                                                <a href="${pageContext.request.contextPath}/Views/Manager/listStudentInClass?classId=${classes.classId}">${classes.className}</a>
+                                            </td>
                                             <td>${classes.classLevelName}</td>
                                             <td>${classes.fullname}</td>
                                             <td>${classes.roomNumber}</td>

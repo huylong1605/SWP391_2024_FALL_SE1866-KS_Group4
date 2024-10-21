@@ -68,7 +68,6 @@ public class AccountDAO extends DBConnection{
         // ket noi voi data va thuc hien truy van
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql.toString())) {
-
             int paramIndex = 1;
 
             // Thiet lap gia tri cho tham so tim kiem theo ten
@@ -101,7 +100,6 @@ public class AccountDAO extends DBConnection{
                     account.setPassword(rs.getString("Password"));
                     account.setImage(rs.getString("Image"));
                     account.setGender(rs.getInt("Gender"));
-
                     accounts.add(account);
                 }
             }

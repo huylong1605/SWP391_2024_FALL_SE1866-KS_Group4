@@ -1,3 +1,13 @@
+/*
+ * Copyright(C) 2005,  SWP_G4.
+ * KMS :
+ * Kindergarten Management System
+ *
+ * Record of change:
+ * DATE           Version                  AUTHOR                              DESCRIPTION
+ * 10/5/2024       1.1              Đào Xuân Bình - HE163115              Create UserProfileDAO class
+ */
+
 package org.example.kindergarten_management_system_g4.dao;
 
 import org.example.kindergarten_management_system_g4.connection.DBConnection;
@@ -8,15 +18,23 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Lớp UserProfileDAO chịu trách nhiệm tương tác với cơ sở dữ liệu để thực hiện các thao tác liên quan đến hồ sơ người dùng.
+ * Các phương thức bao gồm lấy thông tin người dùng theo ID và cập nhật hồ sơ người dùng.
+ * <p>Lỗi: Chưa phát hiện lỗi.
+ */
 public class UserProfileDAO {
 
-    // Lấy thông tin người dùng dựa trên ID người dùng
+    /**
+     * Phương thức lấy thông tin người dùng từ cơ sở dữ liệu dựa trên ID người dùng.
+     *
+     * @param userId ID của người dùng cần lấy thông tin.
+     * @return đối tượng User chứa thông tin người dùng, hoặc null nếu không tìm thấy.
+     */
     public User getUserById(int userId) {
         User user = null;
-        // Câu truy vấn SQL để chọn thông tin người dùng theo User_Id
-        String sql = "SELECT * FROM user WHERE User_Id = ?";
+        String sql = "SELECT * FROM user WHERE User_Id = ?"; // Câu truy vấn SQL để lấy thông tin người dùng
 
-        // Thiết lập kết nối với cơ sở dữ liệu và chuẩn bị câu lệnh SQL
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
@@ -35,22 +53,25 @@ public class UserProfileDAO {
                 user.setAddress(resultSet.getString("address"));
                 user.setImage(resultSet.getString("image"));
             }
-            // Luôn đóng ResultSet sau khi sử dụng
-            resultSet.close();
+            resultSet.close(); // Luôn đóng ResultSet sau khi sử dụng
+
         } catch (SQLException e) {
             // In ra chi tiết lỗi nếu có ngoại lệ SQL
             e.printStackTrace();
         }
-        // Trả về đối tượng User với thông tin đã được thiết lập hoặc null nếu không tìm thấy
-        return user;
+
+        return user; // Trả về đối tượng User hoặc null nếu không tìm thấy
     }
 
-    // Cập nhật thông tin hồ sơ người dùng trong cơ sở dữ liệu
+    /**
+     * Phương thức cập nhật thông tin hồ sơ người dùng trong cơ sở dữ liệu.
+     *
+     * @param user đối tượng User chứa thông tin đã được cập nhật.
+     * @return true nếu cập nhật thành công, false nếu cập nhật thất bại.
+     */
     public boolean updateUserProfile(User user) {
-        // Câu truy vấn SQL để cập nhật thông tin người dùng theo User_Id
-        String sql = "UPDATE user SET Fullname = ?, Email = ?, gender = ?, phoneNumber = ?, address = ?, image = ? WHERE User_Id = ?";
+        String sql = "UPDATE user SET Fullname = ?, Email = ?, gender = ?, phoneNumber = ?, address = ?, image = ? WHERE User_Id = ?"; // Câu truy vấn SQL để cập nhật thông tin người dùng
 
-        // Thiết lập kết nối với cơ sở dữ liệu và chuẩn bị câu lệnh SQL
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
@@ -65,13 +86,12 @@ public class UserProfileDAO {
 
             // Thực thi câu lệnh cập nhật và trả về true nếu ít nhất một bản ghi đã được cập nhật
             return preparedStatement.executeUpdate() > 0;
+
         } catch (SQLException e) {
             // In ra chi tiết lỗi nếu có ngoại lệ SQL
             e.printStackTrace();
         }
-        // Trả về false nếu cập nhật không thành công
-        return false;
+
+        return false; // Trả về false nếu cập nhật không thành công
     }
 }
-
-

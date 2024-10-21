@@ -32,9 +32,9 @@
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="fullname">Full name*</label>
-                                <div class="col-md-4">
-                                    <input value="${user.fullname}" id="fullname" name="fullname" type="text" class="form-control" required>
-                                </div>
+                               <div class="col-md-4">
+                                   <input value="${user.fullname}" id="fullname" name="fullname" type="text" class="form-control" minlength="5" maxlength="50" required>
+                               </div>
                             </div>
 
                             <div class="form-group">
@@ -82,7 +82,7 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label" for="address">Address</label>
                                 <div class="col-md-4">
-                                    <input value="${user.address}" id="address" name="address" type="text" placeholder="Address" class="form-control" required>
+                                    <input value="${user.address}" id="address" name="address" type="text" placeholder="Address" class="form-control"  minlength="5" maxlength="50" required>
                                 </div>
                             </div>
 
