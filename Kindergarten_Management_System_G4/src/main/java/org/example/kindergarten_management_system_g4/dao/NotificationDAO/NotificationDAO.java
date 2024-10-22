@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import  org.example.kindergarten_management_system_g4.connection.DBConnection;
+import org.example.kindergarten_management_system_g4.model.Room;
 
 public class NotificationDAO extends DBConnection {
 
@@ -176,4 +177,31 @@ public class NotificationDAO extends DBConnection {
             pstmt.executeUpdate();
         }
     }
+    // Tìm kiếm thông báo theo tiêu đề
+    public List<Notification> searchNotificationsByTitle(String title) throws SQLException {
+        List<Notification> notifications = new ArrayList<>();
+        String query = "SELECT * FROM Notification WHERE title LIKE ?";  // Sử dụng LIKE để tìm kiếm
+
+        // Mở kết nối và chuẩn bị câu truy vấn để tìm kiếm thông báo
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+
+            pstmt.setString(1, "%" + title + "%");  // Thêm ký tự % để tìm kiếm chứa chuỗi title
+            ResultSet rs = pstmt.executeQuery();
+
+            // Duyệt qua ResultSet và thêm các thông báo vào danh sách
+            while (rs.next()) {
+                Notification notification = new Notification(
+                        rs.getInt("Notification_ID"),
+                        rs.getString("title"),
+                        rs.getString("Content"),
+                        rs.getDate("Date"),
+                        rs.getInt("User_id")
+                );
+                notifications.add(notification);
+            }
+        }
+        return notifications;  // Trả về danh sách thông báo tìm kiếm được
+    }
+
 }

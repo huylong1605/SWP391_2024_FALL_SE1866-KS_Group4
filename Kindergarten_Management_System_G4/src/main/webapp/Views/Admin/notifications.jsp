@@ -42,6 +42,30 @@
           <span>Manage Notification</span>
         </a>
       </li>
+      <li class="sidebar-item">
+        <a href="${pageContext.request.contextPath}/subject" class="sidebar-link">
+          <i class="lni lni-graduation"></i>
+          <span>Manage Subject</span>
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a href="${pageContext.request.contextPath}/Views/Admin/viewStudentList.jsp" class="sidebar-link">
+          <i class="lni lni-graduation"></i>
+          <span>View List Student</span>
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a href="${pageContext.request.contextPath}/listClass" class="sidebar-link">
+          <i class="lni lni-graduation"></i>
+          <span>View list class</span>
+        </a>
+      </li>
+      <li class="sidebar-item">
+        <a href="${pageContext.request.contextPath}/Views/Admin/listRoom" class="sidebar-link">
+          <i class="lni lni-agenda"></i>
+          <span>Manage Room</span>
+        </a>
+      </li>
     </ul>
   </aside>
 
@@ -55,26 +79,21 @@
           </ol>
           <h4 class="font-weight-bolder mb-0">Manage Notifications</h4>
         </nav>
+        <div class="btn-search" style="margin-top: 20px;">
+          <form action="${pageContext.request.contextPath}/searchNotification" method="get">
+            <input type="text" name="searchTitle" placeholder="Search by title" value="${param.searchTitle}">
+            <input type="hidden" name="action" value="search">
+            <button type="submit">Search</button>
+          </form>
+        </div>
 
         <div class="btn-search" style="margin-top: 20px;">
+
           <div class="text-end">
             <a href="${pageContext.request.contextPath}/addNotification.jsp" class="btn btn-primary">Add Notification</a>
 
           </div>
-          <div style="margin-top: 20px;">
-            <form action="${pageContext.request.contextPath}/Views/Admin/accountManage" method="get">
-              <label for="roleFilter">Filter by role:</label>
-              <select name="roleFilter" id="roleFilter" onchange="this.form.submit()">
-                <option value="">All</option>
-                <option value="1" ${param.roleFilter == '1' ? 'selected' : ''}>Admin</option>
-                <option value="2" ${param.roleFilter == '2' ? 'selected' : ''}>Teacher</option>
-                <option value="3" ${param.roleFilter == '3' ? 'selected' : ''}>Principal</option>
-                <option value="4" ${param.roleFilter == '4' ? 'selected' : ''}>Parent</option>
-                <option value="5" ${param.roleFilter == '5' ? 'selected' : ''}>Enrollment</option>
-              </select>
-              <input type="hidden" name="action" value="filter">
-            </form>
-          </div>
+
         </div>
 
 
