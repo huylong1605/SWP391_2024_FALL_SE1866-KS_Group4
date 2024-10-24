@@ -4,38 +4,38 @@ use  KindergartenManagementSystem;
 
 CREATE TABLE Role (
     role_Id INT PRIMARY KEY AUTO_INCREMENT,
-    Role_name VARCHAR(255) NOT NULL
+    Role_name VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE User (
     User_id INT PRIMARY KEY AUTO_INCREMENT,
     Fullname VARCHAR(50)NOT NULL,
     date_Of_birth date,
-    Email VARCHAR(50),
-    Password VARCHAR(255),
+    Email VARCHAR(30),
+    Password VARCHAR(30),
     gender Bit,
-    phoneNumber VARCHAR(20),
-    address VARCHAR(50),
+    phoneNumber VARCHAR(10),
+    address VARCHAR(100),
     image VARCHAR(255),
     Status BIT default 1,
-    Code VARCHAR(10),
+    Code VARCHAR(7),
     Role_id INT default 3,
     FOREIGN KEY (Role_id) REFERENCES Role(role_Id)
 );
 
 CREATE TABLE Room (
     Room_ID INT PRIMARY KEY AUTO_INCREMENT,
-    Room_number VARCHAR(255),
+    Room_number VARCHAR(10),
     Status BIT default 1,
     capacity INT
 );
 
 CREATE TABLE Subject (
     Subject_ID INT PRIMARY KEY AUTO_INCREMENT,
-    subject_Code VARCHAR(50),
+    subject_Code VARCHAR(10),
     Subject_name VARCHAR(50),
     Description VARCHAR(225),
-    Status varchar(225)
+    Status varchar(20)
 );
 
 CREATE TABLE Slot (
@@ -49,7 +49,7 @@ CREATE TABLE Student (
     Student_ID INT PRIMARY KEY AUTO_INCREMENT,
     Date_of_birth date,
     gender BIT,
-    Student_name VARCHAR(255),
+    Student_name VARCHAR(50),
     class_id INT,
     User_id INT,
     FOREIGN KEY (User_id) REFERENCES User(User_id)
@@ -59,7 +59,7 @@ CREATE TABLE Class_level(
     Class_level_ID INT PRIMARY KEY AUTO_INCREMENT,
     Class_level_name VARCHAR(50),
     AgeRange int,
-    Description VARCHAR(50)
+    Description VARCHAR(255)
     
 );
 CREATE TABLE Class (
@@ -108,7 +108,7 @@ CREATE TABLE Attendance (
 
 CREATE TABLE Notification (
     Notification_ID INT PRIMARY KEY AUTO_INCREMENT,
-    title VARCHAR(255),
+    title VARCHAR(100),
     Content VARCHAR(255),
     Date DATE,
     User_id INT,
@@ -137,7 +137,7 @@ CREATE TABLE Mark (
     Mark_ID INT PRIMARY KEY AUTO_INCREMENT,
      Student_ID INT,
     Subject_ID INT,
-    Final_mark VARCHAR(255),
+    Final_mark VARCHAR(5),
     FOREIGN KEY (Student_ID) REFERENCES Student(Student_ID),
     FOREIGN KEY (Subject_ID) REFERENCES Subject(Subject_ID)
 );
