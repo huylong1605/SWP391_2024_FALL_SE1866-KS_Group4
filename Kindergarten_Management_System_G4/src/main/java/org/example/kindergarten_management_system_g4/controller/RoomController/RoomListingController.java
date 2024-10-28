@@ -29,7 +29,7 @@ import java.util.List;
  *
  * @author Vũ Gia Huy - HE163358
  */
-@WebServlet(name = "listRoom", value = "/Views/Admin/listRoom")
+@WebServlet(name = "listRoom", value = "/Views/Manager/listRoom")
 public class RoomListingController extends HttpServlet {
     private IRoomDAO roomDAO;
 
@@ -69,7 +69,7 @@ public class RoomListingController extends HttpServlet {
         req.setAttribute("totalPages", totalPages);
 
         // Chuyển tiếp yêu cầu đến Room.jsp để hiển thị giao diện
-        req.getRequestDispatcher("/Views/Admin/Room.jsp").forward(req, resp);
+        req.getRequestDispatcher("/Views/Manager/Room.jsp").forward(req, resp);
     }
 
     /**

@@ -2,14 +2,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Edit Room</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <style>
         body {
             background-color: #f8f9fa;
         }
+
         .container {
             margin-top: 50px;
             max-width: 600px;
@@ -18,13 +20,16 @@
             background-color: white;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
         h2 {
             margin-bottom: 20px;
             text-align: center;
         }
+
         .form-label {
             font-weight: bold;
         }
+
         button {
             width: 100%;
         }
@@ -38,7 +43,7 @@
     <c:if test="${not empty sessionScope.successMessage}">
         <div class="alert alert-success" role="alert">
                 ${sessionScope.successMessage}
-            <c:remove var="successMessage" scope="session" />
+            <c:remove var="successMessage" scope="session"/>
         </div>
     </c:if>
 
@@ -47,7 +52,8 @@
 
         <div class="mb-3">
             <label for="roomNumber" class="form-label">Room Number:</label>
-            <input type="text" id="roomNumber" name="roomNumber" class="form-control" value="${room.roomNumber}" required>
+            <input type="text" id="roomNumber" name="roomNumber" class="form-control" value="${room.roomNumber}"
+                   required>
         </div>
         <div class="mb-3">
             <label for="capacity" class="form-label">Capacity:</label>
@@ -61,7 +67,8 @@
             </select>
         </div>
         <button type="submit" class="btn btn-primary">Update Room</button>
-        <a href="${pageContext.request.contextPath}/Views/Admin/listRoom" class="btn btn-secondary mt-3">Back to Room List</a>
+        <a href="${pageContext.request.contextPath}/Views/Manager/listRoom" class="btn btn-secondary mt-3">Back to Room
+            List</a>
     </form>
 </div>
 </body>
