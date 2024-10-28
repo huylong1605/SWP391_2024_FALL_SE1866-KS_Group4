@@ -69,53 +69,52 @@
 <%@include file="../common/header.jsp" %>
 <div class="containerAll">
     <div class="wrapper">
+
         <aside id="sidebar" class="expand">
             <div class="d-flex">
                 <button class="toggle-btn" type="button">
                     <i class="lni lni-grid-alt"></i>
                 </button>
                 <div class="sidebar-logo">
-                    <a href="#">Admin Manage</a>
+                    <a href="#">Manager Management</a>
                 </div>
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="${pageContext.request.contextPath}/Views/Admin/accountManage" class="sidebar-link">
+                    <a href="${pageContext.request.contextPath}/listClass" class="sidebar-link">
                         <i class="lni lni-user"></i>
-                        <span>Manage Account</span>
+                        <span>Manage Class</span>
                     </a>
                 </li>
+
                 <li class="sidebar-item">
-                    <a href="${pageContext.request.contextPath}/Views/Admin/notifications" class="sidebar-link">
-                        <i class="fa-solid fa-bell"></i>
-                        <span>Manage Notification</span>
+                    <a href="" class="sidebar-link">
+                        <i class="lni lni-user"></i>
+                        <span>Manage Term</span>
                     </a>
                 </li>
+
+                <li class="sidebar-item">
+                    <a href="${pageContext.request.contextPath}/Views/Manager/listRoom" class="sidebar-link">
+                        <i class="lni lni-user"></i>
+                        <span>Manage Room</span>
+                    </a>
+                </li>
+
                 <li class="sidebar-item">
                     <a href="${pageContext.request.contextPath}/subject" class="sidebar-link">
-                        <i class="lni lni-graduation"></i>
+                        <i class="lni lni-user"></i>
                         <span>Manage Subject</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="${pageContext.request.contextPath}/Views/Admin/viewStudentList.jsp" class="sidebar-link">
-                        <i class="lni lni-graduation"></i>
+                    <a href="#" class="sidebar-link">
+                        <i class="lni lni-user"></i>
                         <span>View List Student</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a href="${pageContext.request.contextPath}/listClass" class="sidebar-link">
-                        <i class="lni lni-graduation"></i>
-                        <span>View list class</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="${pageContext.request.contextPath}/Views/Admin/listRoom" class="sidebar-link">
-                        <i class="fa-solid fa-door-open"></i>
-                        <span>Manage Room</span>
-                    </a>
-                </li>
             </ul>
+
         </aside>
 
         <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg col-md-10">

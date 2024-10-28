@@ -78,6 +78,6 @@ public class SearchRoomController extends HttpServlet {
         req.setAttribute("totalPages", totalPages);
 
         // Chuyển tiếp yêu cầu tới Room.jsp để hiển thị giao diện
-        req.getRequestDispatcher("/Views/Admin/Room.jsp").forward(req, resp);
+        req.getRequestDispatcher("/Views/Manager/Room.jsp").forward(req, resp);
     }
 }

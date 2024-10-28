@@ -51,7 +51,7 @@ public class DeleteRoomController extends HttpServlet {
      * @param req  Đối tượng HttpServletRequest chứa thông tin yêu cầu từ phía client
      * @param resp Đối tượng HttpServletResponse được sử dụng để gửi phản hồi về cho client
      * @throws ServletException nếu có lỗi xảy ra liên quan đến servlet
-     * @throws IOException nếu có lỗi nhập/xuất trong quá trình xử lý yêu cầu
+     * @throws IOException      nếu có lỗi nhập/xuất trong quá trình xử lý yêu cầu
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -67,7 +67,7 @@ public class DeleteRoomController extends HttpServlet {
                 req.getSession().setAttribute("errorMessage", "Cannot delete room because it is referenced in another table (class)."); // Thiết lập thông báo lỗi
             }
 
-            resp.sendRedirect(req.getContextPath() + "/Views/Admin/listRoom"); // Chuyển hướng về trang danh sách phòng
+            resp.sendRedirect(req.getContextPath() + "/Views/Manager/listRoom"); // Chuyển hướng về trang danh sách phòng
         } else {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid action"); // Gửi lỗi nếu action không hợp lệ
         }
@@ -79,7 +79,7 @@ public class DeleteRoomController extends HttpServlet {
      * @param req  Đối tượng HttpServletRequest chứa thông tin yêu cầu từ phía client
      * @param resp Đối tượng HttpServletResponse được sử dụng để gửi phản hồi về cho client
      * @throws ServletException nếu có lỗi xảy ra liên quan đến servlet
-     * @throws IOException nếu có lỗi nhập/xuất trong quá trình xử lý yêu cầu
+     * @throws IOException      nếu có lỗi nhập/xuất trong quá trình xử lý yêu cầu
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

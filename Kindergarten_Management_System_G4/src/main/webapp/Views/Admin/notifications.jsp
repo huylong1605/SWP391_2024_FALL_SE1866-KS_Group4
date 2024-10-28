@@ -43,30 +43,7 @@
                     <span>Manage Notification</span>
                 </a>
             </li>
-            <li class="sidebar-item">
-                <a href="${pageContext.request.contextPath}/subject" class="sidebar-link">
-                    <i class="lni lni-graduation"></i>
-                    <span>Manage Subject</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a href="${pageContext.request.contextPath}/Views/Admin/viewStudentList.jsp" class="sidebar-link">
-                    <i class="lni lni-graduation"></i>
-                    <span>View List Student</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a href="${pageContext.request.contextPath}/listClass" class="sidebar-link">
-                    <i class="lni lni-graduation"></i>
-                    <span>View list class</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a href="${pageContext.request.contextPath}/Views/Admin/listRoom" class="sidebar-link">
-                    <i class="lni lni-agenda"></i>
-                    <span>Manage Room</span>
-                </a>
-            </li>
+
         </ul>
     </aside>
 

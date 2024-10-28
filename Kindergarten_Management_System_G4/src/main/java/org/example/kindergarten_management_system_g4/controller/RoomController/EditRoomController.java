@@ -51,14 +51,14 @@ public class EditRoomController extends HttpServlet {
      * @param req  Đối tượng HttpServletRequest chứa thông tin yêu cầu từ phía client
      * @param resp Đối tượng HttpServletResponse được sử dụng để gửi phản hồi về cho client
      * @throws ServletException nếu có lỗi xảy ra liên quan đến servlet
-     * @throws IOException nếu có lỗi nhập/xuất trong quá trình xử lý yêu cầu
+     * @throws IOException      nếu có lỗi nhập/xuất trong quá trình xử lý yêu cầu
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int roomId = Integer.parseInt(req.getParameter("id")); // Lấy ID phòng từ tham số yêu cầu
         Room room = roomDAO.getRoomById(roomId); // Lấy thông tin phòng từ cơ sở dữ liệu
         req.setAttribute("room", room); // Đặt thông tin phòng vào thuộc tính để gửi tới giao diện
-        req.getRequestDispatcher("/Views/Admin/editRoom.jsp").forward(req, resp); // Chuyển tiếp tới trang chỉnh sửa
+        req.getRequestDispatcher("/Views/Manager/editRoom.jsp").forward(req, resp); // Chuyển tiếp tới trang chỉnh sửa
     }
 
     /**
@@ -67,7 +67,7 @@ public class EditRoomController extends HttpServlet {
      * @param req  Đối tượng HttpServletRequest chứa thông tin yêu cầu từ phía client
      * @param resp Đối tượng HttpServletResponse được sử dụng để gửi phản hồi về cho client
      * @throws ServletException nếu có lỗi xảy ra liên quan đến servlet
-     * @throws IOException nếu có lỗi nhập/xuất trong quá trình xử lý yêu cầu
+     * @throws IOException      nếu có lỗi nhập/xuất trong quá trình xử lý yêu cầu
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -86,10 +86,10 @@ public class EditRoomController extends HttpServlet {
         boolean isUpdated = roomDAO.updateRoom(room);
         if (isUpdated) {
             req.getSession().setAttribute("successMessage", "Room updated successfully!"); // Thiết lập thông báo thành công
-            resp.sendRedirect(req.getContextPath() + "/Views/Admin/listRoom"); // Chuyển hướng tới danh sách phòng
+            resp.sendRedirect(req.getContextPath() + "/Views/Manager/listRoom"); // Chuyển hướng tới danh sách phòng
         } else {
             req.getSession().setAttribute("errorMessage", "Error edit room. Please check your input."); // Thiết lập thông báo lỗi
-            req.getRequestDispatcher("/Views/Admin/editRoom.jsp").forward(req, resp); // Chuyển tiếp trở lại trang chỉnh sửa
+            req.getRequestDispatcher("/Views/Manager/editRoom.jsp").forward(req, resp); // Chuyển tiếp trở lại trang chỉnh sửa
         }
     }
 }

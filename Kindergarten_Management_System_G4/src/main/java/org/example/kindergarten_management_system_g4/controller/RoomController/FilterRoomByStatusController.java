@@ -53,7 +53,7 @@ public class FilterRoomByStatusController extends HttpServlet {
      * @param req  Đối tượng HttpServletRequest chứa thông tin yêu cầu từ phía client
      * @param resp Đối tượng HttpServletResponse được sử dụng để gửi phản hồi về cho client
      * @throws ServletException nếu có lỗi xảy ra liên quan đến servlet
-     * @throws IOException nếu có lỗi nhập/xuất trong quá trình xử lý yêu cầu
+     * @throws IOException      nếu có lỗi nhập/xuất trong quá trình xử lý yêu cầu
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -75,6 +75,6 @@ public class FilterRoomByStatusController extends HttpServlet {
         req.setAttribute("totalPages", totalPages); // Tổng số trang
 
         // Chuyển tiếp yêu cầu tới Room.jsp để hiển thị danh sách phòng
-        req.getRequestDispatcher("/Views/Admin/Room.jsp").forward(req, resp);
+        req.getRequestDispatcher("/Views/Manager/Room.jsp").forward(req, resp);
     }
 }

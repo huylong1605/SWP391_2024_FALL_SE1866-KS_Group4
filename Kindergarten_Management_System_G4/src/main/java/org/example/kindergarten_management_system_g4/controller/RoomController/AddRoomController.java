@@ -51,11 +51,11 @@ public class AddRoomController extends HttpServlet {
      * @param req  Đối tượng HttpServletRequest chứa thông tin yêu cầu từ phía client
      * @param resp Đối tượng HttpServletResponse được sử dụng để gửi phản hồi về cho client
      * @throws ServletException nếu có lỗi xảy ra liên quan đến servlet
-     * @throws IOException nếu có lỗi nhập/xuất trong quá trình xử lý yêu cầu
+     * @throws IOException      nếu có lỗi nhập/xuất trong quá trình xử lý yêu cầu
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/Views/Admin/addRoom.jsp").forward(req, resp); // Chuyển tiếp yêu cầu tới trang thêm phòng
+        req.getRequestDispatcher("/Views/Manager/addRoom.jsp").forward(req, resp); // Chuyển tiếp yêu cầu tới trang thêm phòng
     }
 
     /**
@@ -64,7 +64,7 @@ public class AddRoomController extends HttpServlet {
      * @param req  Đối tượng HttpServletRequest chứa thông tin yêu cầu từ phía client
      * @param resp Đối tượng HttpServletResponse được sử dụng để gửi phản hồi về cho client
      * @throws ServletException nếu có lỗi xảy ra liên quan đến servlet
-     * @throws IOException nếu có lỗi nhập/xuất trong quá trình xử lý yêu cầu
+     * @throws IOException      nếu có lỗi nhập/xuất trong quá trình xử lý yêu cầu
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -83,7 +83,7 @@ public class AddRoomController extends HttpServlet {
         boolean isAdded = roomDAO.addRoom(room); // Thực hiện thêm phòng vào cơ sở dữ liệu
         if (isAdded) {
             req.getSession().setAttribute("successMessage", "Room added successfully!"); // Thiết lập thông báo thành công
-            resp.sendRedirect(req.getContextPath() + "/Views/Admin/listRoom"); // Chuyển hướng về trang danh sách phòng
+            resp.sendRedirect(req.getContextPath() + "/Views/Manager/listRoom"); // Chuyển hướng về trang danh sách phòng
         } else {
             req.getSession().setAttribute("errorMessage", "Error adding room. Please check your input."); // Thiết lập thông báo lỗi
             req.getRequestDispatcher("addRoom.jsp").forward(req, resp); // Chuyển tiếp tới trang thêm phòng
