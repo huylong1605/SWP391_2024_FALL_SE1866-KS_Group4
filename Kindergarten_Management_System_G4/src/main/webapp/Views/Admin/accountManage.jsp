@@ -87,6 +87,18 @@
                         <span>View list class</span>
                     </a>
                 </li>
+                <li class="sidebar-item">
+                    <a href="${pageContext.request.contextPath}" class="sidebar-link">
+                        <i class="fa-solid fa-school"></i>
+                        <span>Manage Class</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a href="${pageContext.request.contextPath}" class="sidebar-link">
+                        <i class="fa-solid fa-broom"></i>
+                        <span>Manage Room</span>
+                    </a>
+                </li>
             </ul>
         </aside>
 

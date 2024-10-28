@@ -62,7 +62,7 @@
                 <td>${term.year}</td>
                 <td>
                     <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-info" data-toggle="modal"
+                        <button type="button" class="btn btn-success" data-toggle="modal"
                                 data-target="#termInfoModal_${term.termId}">Detail
                         </button>
                         <button type="button" class="btn btn-warning" data-toggle="modal"
