@@ -29,7 +29,7 @@ import java.util.logging.Logger;
  * Nó lấy tất cả các cấp lớp từ cơ sở dữ liệu và chuyển chúng tới view tương ứng để hiển thị.
  * <p>Lỗi: Chưa phát hiện lỗi.
  *
- * @tác_giả Đào Xuân Bình
+ * @author Đào Xuân Bình
  */
 @WebServlet(name = "classLevel", value = "/classLevel")
 public class ClassLevelController extends HttpServlet {

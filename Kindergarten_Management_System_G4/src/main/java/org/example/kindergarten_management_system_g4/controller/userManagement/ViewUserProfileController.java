@@ -26,7 +26,7 @@ import java.io.IOException;
  * Thông tin người dùng được lấy từ cơ sở dữ liệu và hiển thị trên giao diện.
  * <p>Lỗi: Chưa phát hiện lỗi.
  *
- * @tác_giả Đào Xuân Bình
+ * @author Đào Xuân Bình
  */
 
 // Định nghĩa servlet với tên "ViewUserProfileController" và ánh xạ đến URL "/viewprofile"
