@@ -10,14 +10,24 @@
 
 package org.example.kindergarten_management_system_g4.dao.scheduledao;
 
-import org.example.kindergarten_management_system_g4.model.Schedule;
+import org.example.kindergarten_management_system_g4.model.*;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public interface IScheduleDAO {
 
-       List<Schedule> scheduleOfStudent(int parentId) throws SQLException;
+    List<ScheduleDAL> getScheduleOfStudent(int parentId) throws SQLException;
 
+    List<Term> getListTerm() throws SQLException;
 
+    List<Subject> getListSubject() throws SQLException;
+
+    List<Classes> getListClass() throws SQLException;
+
+    List<Slot> getListSlot() throws SQLException;
+
+    Boolean addSchedule(Schedule schedule, int subjectId) throws SQLException;
+
+    Boolean getSchedule(Schedule schedule) throws SQLException;
 }

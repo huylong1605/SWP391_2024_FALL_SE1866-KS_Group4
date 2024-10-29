@@ -37,6 +37,8 @@
 </head>
 <body>
 <%@ include file="/Views/common/header.jsp" %>
+
+
 <div class="hero_area">
     <!-- slider section -->
     <section class=" slider_section position-relative">
@@ -182,9 +184,11 @@
                                         <a href="" class="btn-1">
                                             Read More
                                         </a>
+
                                         <a href="" class="btn-2">
                                             Contact us
                                         </a>
+
                                     </div>
                                 </div>
                             </div>
