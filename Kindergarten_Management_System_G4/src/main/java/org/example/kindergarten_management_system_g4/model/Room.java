@@ -40,6 +40,12 @@ public class Room {
         this.status = status;
         this.capacity = capacity;
     }
+    public Room( String roomNumber, int status, int capacity) {
+        this.roomNumber = roomNumber;
+        this.status = status;
+        this.capacity = capacity;
+    }
+
 
     // Phương thức getter và setter cho các thuộc tính
 

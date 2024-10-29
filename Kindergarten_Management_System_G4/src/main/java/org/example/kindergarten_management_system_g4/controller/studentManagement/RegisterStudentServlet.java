@@ -28,7 +28,7 @@ import java.time.LocalDate;
  * Dữ liệu sinh viên được lấy từ form và lưu vào cơ sở dữ liệu.
  * <p>Lỗi: Chưa phát hiện lỗi.
  *
- * @tác_giả Đào Xuân Bình
+ * @author Đào Xuân Bình
  */
 
 // Định nghĩa servlet với tên "registerStudent" và ánh xạ đến URL "/registerStudent"

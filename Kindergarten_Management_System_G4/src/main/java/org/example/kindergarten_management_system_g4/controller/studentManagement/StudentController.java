@@ -26,7 +26,7 @@ import java.util.List;
  * Dữ liệu sinh viên được lấy từ cơ sở dữ liệu và phân trang trước khi hiển thị trên giao diện.
  * <p>Lỗi: Chưa phát hiện lỗi.
  *
- * @tác_giả Đào Xuân Bình
+ * @author Đào Xuân Bình
  */
 
 // Định nghĩa servlet với tên "StudentController" và ánh xạ đến URL "/viewStudentList"

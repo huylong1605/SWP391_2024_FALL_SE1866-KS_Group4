@@ -28,7 +28,7 @@ public class RegisterDAO extends DBConnection {
     private static final Logger LOGGER = Logger.getLogger(RegisterDAO.class.getName());
     private static final String CHECK_PHONE = "SELECT * FROM user WHERE phoneNumber=?";
     private static final String CHECK_EMAIL = "SELECT * FROM user WHERE email=?";
-    private static final String INSERT_USER = "INSERT INTO user(Fullname, email, password, gender, phoneNumber, address) VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_USER = "INSERT INTO user(Fullname, email, Password, gender, phoneNumber, address) VALUES (?, ?, ?, ?, ?, ?)";
     private static final String INSERT_USER_LOGIN_GG = "INSERT INTO user(Fullname, email) VALUES (?, ?)";
 
 
