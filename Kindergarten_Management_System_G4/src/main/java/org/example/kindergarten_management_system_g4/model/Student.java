@@ -1,6 +1,7 @@
 package org.example.kindergarten_management_system_g4.model;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 public class Student {
     private int studentId;
@@ -9,15 +10,64 @@ public class Student {
     private String name;
     private int classId;
     private int userId;
-
     private String address;
-
     private String phoneNumber;
+    private String parentName;
+    private String parentEmail;
+    private String parentAddress;
+    private String parentPhone;
+    private String className;
 
+    public String getParentName() {
+        return parentName;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
+
+    public String getParentEmail() {
+        return parentEmail;
+    }
+
+    public void setParentEmail(String parentEmail) {
+        this.parentEmail = parentEmail;
+    }
+
+    public String getParentAddress() {
+        return parentAddress;
+    }
+
+    public void setParentAddress(String parentAddress) {
+        this.parentAddress = parentAddress;
+    }
+
+    public String getParentPhone() {
+        return parentPhone;
+    }
+
+    public void setParentPhone(String parentPhone) {
+        this.parentPhone = parentPhone;
+    }
+
+    public int getAge() {
+        if (dob == null) {
+            return 0;
+        }
+        return Period.between(dob, LocalDate.now()).getYears();
+    }
 
     public Student() {
-
     }
+
     public Student(int studentId, LocalDate dob, boolean gender, String name,String address, String phoneNumber) {
         this.studentId = studentId;
         this.dob = dob;
@@ -70,6 +120,8 @@ public class Student {
         return gender;
     }
 
+    public boolean getGender() {return gender;}
+
     public void setGender(boolean gender) {
         this.gender = gender;
     }
@@ -119,6 +171,7 @@ public class Student {
         return "Student{" +
                 "studentId=" + studentId +
                 ", dob=" + dob +
+                ", Age=" + getAge() +
                 ", gender=" + gender +
                 ", name='" + name + '\'' +
                 ", classId=" + classId +
