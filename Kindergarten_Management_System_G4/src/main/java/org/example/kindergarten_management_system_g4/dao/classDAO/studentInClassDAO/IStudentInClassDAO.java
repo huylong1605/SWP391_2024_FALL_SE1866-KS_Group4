@@ -10,9 +10,7 @@
 
 
 package org.example.kindergarten_management_system_g4.dao.classDAO.studentInClassDAO;
-
 import org.example.kindergarten_management_system_g4.model.Student;
-
 import java.sql.SQLException;
 import java.util.List;
 
@@ -67,14 +65,53 @@ public interface IStudentInClassDAO {
      */
     Student getStudentById(int studentId) throws SQLException;
 
+
+    /**
+     * Lấy danh sách học sinh có classId với phân trang.
+     *
+     * @param pageNumber Số trang muốn lấy.
+     * @param pageSize   Số lượng học sinh trong mỗi trang.
+     * @return Danh sách học sinh có classId.
+     * @throws SQLException Nếu có lỗi xảy ra khi truy vấn cơ sở dữ liệu.
+     */
     List<Student> getStudentsWithClass(int pageNumber, int pageSize) throws SQLException;
 
+    /**
+     * Lấy danh sách học sinh không có classId với phân trang.
+     *
+     * @param pageNumber Số trang muốn lấy.
+     * @param pageSize   Số lượng học sinh trong mỗi trang.
+     * @return Danh sách học sinh không có classId.
+     * @throws SQLException Nếu có lỗi xảy ra khi truy vấn cơ sở dữ liệu.
+     */
     List<Student> getStudentsWithoutClass(int pageNumber, int pageSize) throws SQLException;
 
+    /**
+     * Tìm kiếm học sinh theo tên.
+     *
+     * @param name Tên của học sinh cần tìm kiếm.
+     * @return Danh sách học sinh phù hợp với tên tìm kiếm.
+     * @throws SQLException Nếu có lỗi xảy ra khi truy vấn cơ sở dữ liệu.
+     */
     List<Student> searchStudentsByName(String name) throws SQLException;
 
+    /**
+     * Lấy tổng số học sinh, có thể áp dụng bộ lọc.
+     *
+     * @param filterType Kiểu lọc để xác định học sinh cần đếm (có hoặc không có classId).
+     * @return Tổng số học sinh phù hợp với bộ lọc.
+     * @throws SQLException Nếu có lỗi xảy ra khi truy vấn cơ sở dữ liệu.
+     */
     int getTotalStudentsCount(String filterType) throws SQLException;
 
+
+    /**
+     * Lấy tên lớp theo classId.
+     *
+     * @param classId ID của lớp cần lấy tên.
+     * @return Tên của lớp tương ứng với classId.
+     * @throws SQLException Nếu có lỗi xảy ra khi truy vấn cơ sở dữ liệu.
+     */
     String getClassNameById(int classId) throws SQLException;
 }
 

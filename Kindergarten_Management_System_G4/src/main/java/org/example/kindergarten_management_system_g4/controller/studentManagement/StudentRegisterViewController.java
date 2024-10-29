@@ -24,7 +24,7 @@ import java.io.IOException;
  * Yêu cầu sẽ được chuyển tiếp đến trang "registerStudent.jsp".
  * <p>Lỗi: Chưa phát hiện lỗi.
  *
- * @tác_giả Đào Xuân Bình
+ * @author Đào Xuân Bình
  */
 @WebServlet(name = "viewFormRegisterStudent", value = "/viewFormRegisterStudent")
 public class StudentRegisterViewController extends HttpServlet {

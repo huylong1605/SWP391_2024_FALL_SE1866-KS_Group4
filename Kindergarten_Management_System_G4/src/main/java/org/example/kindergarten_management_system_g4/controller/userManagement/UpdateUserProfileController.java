@@ -24,7 +24,7 @@ import java.io.IOException;
  * Yêu cầu có thể bao gồm việc cập nhật tên, email, giới tính, số điện thoại, địa chỉ, và ảnh đại diện của người dùng.
  * <p>Lỗi: Chưa phát hiện lỗi.
  *
- * @tác_giả Đào Xuân Bình
+ * @author Đào Xuân Bình
  */
 
 // Định nghĩa servlet với tên "UpdateUserProfileController" và ánh xạ đến URL "/updateprofile"
