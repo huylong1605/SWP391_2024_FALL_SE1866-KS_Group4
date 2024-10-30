@@ -50,7 +50,8 @@ public class ScheduleDAOImpl extends DBConnection implements IScheduleDAO {
             "  ORDER BY \n" +
             "    sch.date ASC;";
     public static final String GET_ALL_TERM = "SELECT * FROM term;";
-    public static final String GET_ALL_SUBJECT = "SELECT * FROM subject;";
+    public static final String GET_TERM_BY_ID = "SELECT * FROM term where term_ID = ?;";
+    public static final String GET_ALL_SUBJECT = "SELECT * FROM subject where status = 'Active';";
     public static final String GET_ALL_CLASS = "SELECT * FROM class;";
     public static final String GET_ALL_SLOT = "SELECT * FROM slot;";
     public static final String INSERT_SCHEDULE = "INSERT INTO Schedule (day_of_week, date, term_ID, class_id, slotId) VALUES\n" +
@@ -346,6 +347,39 @@ public class ScheduleDAOImpl extends DBConnection implements IScheduleDAO {
         return isCheck;
     }
 
+    @Override
+    public Term getTermById(int TermId) throws SQLException {
+        Term term = new Term();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = getConnection();
+            LOGGER.log(Level.INFO, "Connecting to database...");
+            preparedStatement = connection.prepareStatement(GET_TERM_BY_ID);
+            preparedStatement.setInt(1, TermId);
+            resultSet = preparedStatement.executeQuery();
+
+            // Duyệt qua các kết quả và tạo đối tượng ClassDAL từ mỗi dòng kết quả
+            while (resultSet.next()) {
+
+                term.setTermId(resultSet.getInt("term_ID"));
+                term.setTermName(resultSet.getString("term_name"));
+                term.setStartDate(resultSet.getDate("start_Date"));
+                term.setEndDate(resultSet.getDate("end_Date"));
+                term.setYear(resultSet.getInt("year"));
+
+                // Thêm đối tượng vào danh sách
+            }
+
+        } catch (SQLException e) {
+            throw new SQLException("Error get class " + e.getMessage(), e);
+        } finally {
+            closeResources(resultSet, preparedStatement, connection);
+        }
+        return term;
+    }
 
 
     /**

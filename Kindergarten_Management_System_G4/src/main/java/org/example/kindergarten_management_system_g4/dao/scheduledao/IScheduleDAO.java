@@ -30,4 +30,6 @@ public interface IScheduleDAO {
     Boolean addSchedule(Schedule schedule, int subjectId) throws SQLException;
 
     Boolean getSchedule(Schedule schedule) throws SQLException;
+
+    Term getTermById(int TermId) throws SQLException;
 }

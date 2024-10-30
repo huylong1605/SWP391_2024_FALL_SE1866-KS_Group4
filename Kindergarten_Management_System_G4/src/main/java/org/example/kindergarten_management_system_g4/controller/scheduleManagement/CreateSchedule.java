@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -86,13 +87,28 @@ public class CreateSchedule extends HttpServlet {
                 return;
             }
             Schedule scheduleCheck = new Schedule(dateOfDay, classId, slotId);
-             Boolean isCheckExistSchedule = iScheduleDAO.getSchedule(scheduleCheck);
-             if(isCheckExistSchedule == true){
-                 data(req, resp);
-                 req.setAttribute("ExistSchedule", "Trùng lịch, hãy kiểm tra lại ngày, lop, slot học");
-                 req.getRequestDispatcher("createSchedule.jsp").forward(req, resp);
-                 return;
-             }
+            Boolean isCheckExistSchedule = iScheduleDAO.getSchedule(scheduleCheck);
+            if (isCheckExistSchedule == true) {
+                data(req, resp);
+                req.setAttribute("ExistSchedule", "Trùng lịch, hãy kiểm tra lại ngày, lop, slot học");
+                req.getRequestDispatcher("createSchedule.jsp").forward(req, resp);
+                return;
+            }
+
+            Term term = iScheduleDAO.getTermById(termId);
+            String startTimeString = String.valueOf(term.getStartDate());
+            String endTimeString = String.valueOf(term.getEndDate());
+            LocalDate dateSelect = LocalDate.parse(dateOfDay);
+            LocalDate startTime = LocalDate.parse((startTimeString));
+            LocalDate endTime = LocalDate.parse(endTimeString);
+            if (dateSelect.isBefore(startTime) || dateSelect.isAfter(endTime)) {
+                data(req, resp);
+                req.setAttribute("outOfDateTerm", "Vì kỳ học bạn chọn là " + term.getTermName()
+                        + " - " + term.getYear() + " nên ngày phải nằm trong khoảng từ "
+                        + term.getStartDate() + " đến " + term.getEndDate() + ".");
+                req.getRequestDispatcher("createSchedule.jsp").forward(req, resp);
+                return;
+            }
 
 
             Schedule schedule = new Schedule(dayOfWeek, dateOfDay, termId, classId, slotId);

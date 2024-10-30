@@ -56,6 +56,9 @@
         <a href="${pageContext.request.contextPath}/classLevel" class="items-nav-manager">
             Manage Class Level
         </a>
+        <a href="${pageContext.request.contextPath}/createSchedule" class="items-nav-manager">
+            Manage Schedule
+        </a>
     </div>
     <div class=" aa d-flex justify-content-center align-items-center">
         <div class="admin-page">

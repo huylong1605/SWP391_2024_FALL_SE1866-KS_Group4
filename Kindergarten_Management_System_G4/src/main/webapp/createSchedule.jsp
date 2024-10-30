@@ -27,7 +27,11 @@
         <%= request.getAttribute("ExistSchedule") %>
     </div>
     <% } %>
-
+    <% if (request.getAttribute("outOfDateTerm") != null) { %>
+    <div class="alert alert-danger">
+        <%= request.getAttribute("outOfDateTerm") %>
+    </div>
+    <% } %>
     <%
         String dayOfWeek = request.getParameter("dayOfWeek");
         String date = request.getParameter("date");

@@ -622,7 +622,6 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
 
                 // Thêm đối tượng vào danh sách
 
-
             }
 
         } catch (SQLException e) {
