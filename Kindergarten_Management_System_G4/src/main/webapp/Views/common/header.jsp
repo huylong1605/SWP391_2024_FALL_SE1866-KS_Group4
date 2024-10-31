@@ -52,7 +52,7 @@
             <a href="${pageContext.request.contextPath}/Views/HomePage/HomePage.jsp" class="nav-item nav-link active">Home</a>
             <a href="/" class="nav-item nav-link">About Us</a>
             <a href="" class="nav-item nav-link">Contact Us</a>
-            <a href="" class="nav-item nav-link">Blog </a>
+            
         </div>
 
         <ul class="navbar-nav ml-auto" style="font-size: 20px">
