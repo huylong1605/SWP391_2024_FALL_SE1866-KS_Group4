@@ -26,7 +26,7 @@ import java.sql.SQLException;
  * ID của cấp lớp cần xóa được lấy từ form và sau đó được xóa khỏi cơ sở dữ liệu.
  * <p>Lỗi: Chưa phát hiện lỗi.
  *
- * @tác_giả Đào Xuân Bình
+ * @author Đào Xuân Bình
  */
 @WebServlet(name = "deleteClassLevel", value = "/deleteClassLevel")
 public class ClassLevelDeleteController extends HttpServlet {

@@ -85,7 +85,7 @@
 
           <div class="btn-search" style="margin-top: 20px;">
             <form action="${pageContext.request.contextPath}/Views/Manager/AddStudentToClass" method="get">
-              <input type="text" name="searchTerm" placeholder="Search by name" value="${param.searchTerm}">
+              <input type="text" name="searchTerm" placeholder="Search by name" value="${param.searchTerm}" maxlength="50">
               <input type="hidden" name="classId" value="${classId}" />
               <input type="hidden" name="action" value="search">
               <button type="submit">Search</button>

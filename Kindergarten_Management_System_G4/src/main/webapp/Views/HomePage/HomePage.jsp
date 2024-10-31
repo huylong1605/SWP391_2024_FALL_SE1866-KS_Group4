@@ -34,6 +34,24 @@
         <!-- responsive style -->
         <link href="${pageContext.request.contextPath}/css/responsive.css" rel="stylesheet" />
 
+    <style>
+        .parent-items button{
+            margin: 12px 0 12px 0;
+            height: 60px;
+            background-color: green;
+            margin-left: 70px;
+            border: 1px solid white;
+        }
+        .parent-items button:hover{
+            margin: 12px 0 12px 0;
+            height: 60px;
+            margin-left: 70px;
+            transform: scale(1.2);
+            background-color: #fd4d4d;
+        }
+    </style>
+
+
 </head>
 <body>
 <%@ include file="/Views/common/header.jsp" %>
@@ -42,154 +60,22 @@
     <section class=" slider_section position-relative">
         <div class="container row">
             <div id="carouselExampleIndicators" class="carousel slide col-md-6" data-ride="carousel" style="padding-top: 30px">
-                <ol class="carousel-indicators" style="padding-bottom: 60px;">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
-                </ol>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="detail-box">
-                                    <h1 style="font-family: 'Roboto', Helvetica, Arial, sans-serif">
-                                        A Perfect Learning Center <br />
-                                        <span>
-                        For Your Kids
-                      </span>
-                                    </h1>
-                                    <p>
-                                        It is a long established fact that a reader will be distracted
-                                        by the readable content of a page when looking at its layout.
-                                        The point of using Lorem Ipsum is that it has a more-or-less
-                                        normal distribution of letters, as
-                                    </p>
-                                    <div class="btn-box">
-                                        <a href="" class="btn-1">
-                                            Read More
-                                        </a>
-                                        <a href="" class="btn-2">
-                                            Contact us
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="detail-box">
-                                    <h1 style="font-family: 'Roboto', Helvetica, Arial, sans-serif">
-                                        A Perfect Learning Center <br />
-                                        <span>
-                        For Your Kids
-                      </span>
-                                    </h1>
-                                    <p>
-                                        It is a long established fact that a reader will be distracted
-                                        by the readable content of a page when looking at its layout.
-                                        The point of using Lorem Ipsum is that it has a more-or-less
-                                        normal distribution of letters, as
-                                    </p>
-                                    <div class="btn-box">
-                                        <a href="" class="btn-1">
-                                            Read More
-                                        </a>
-                                        <a href="" class="btn-2">
-                                            Contact us
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="detail-box">
-                                    <h1 style="font-family: 'Roboto', Helvetica, Arial, sans-serif">
-                                        A Perfect Learning Center <br />
-                                        <span>
-                        For Your Kids
-                      </span>
-                                    </h1>
-                                    <p>
-                                        It is a long established fact that a reader will be distracted
-                                        by the readable content of a page when looking at its layout.
-                                        The point of using Lorem Ipsum is that it has a more-or-less
-                                        normal distribution of letters, as
-                                    </p>
-                                    <div class="btn-box">
-                                        <a href="" class="btn-1">
-                                            Read More
-                                        </a>
-                                        <a href="" class="btn-2">
-                                            Contact us
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="detail-box">
-                                    <h1 style="font-family: 'Roboto', Helvetica, Arial, sans-serif">
-                                        A Perfect Learning Center <br />
-                                        <span>
-                        For Your Kids
-                      </span>
-                                    </h1>
-                                    <p>
-                                        It is a long established fact that a reader will be distracted
-                                        by the readable content of a page when looking at its layout.
-                                        The point of using Lorem Ipsum is that it has a more-or-less
-                                        normal distribution of letters, as
-                                    </p>
-                                    <div class="btn-box">
-                                        <a href="" class="btn-1">
-                                            Read More
-                                        </a>
-                                        <a href="" class="btn-2">
-                                            Contact us
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="detail-box">
-                                    <h1 style="font-family: 'Roboto', Helvetica, Arial, sans-serif">
-                                        A Perfect Learning Center <br />
-                                        <span>
-                        For Your Kids
-                      </span>
-                                    </h1>
-                                    <p>
-                                        It is a long established fact that a reader will be distracted
-                                        by the readable content of a page when looking at its layout.
-                                        The point of using Lorem Ipsum is that it has a more-or-less
-                                        normal distribution of letters, as
-                                    </p>
-                                    <div class="btn-box">
-                                        <a href="" class="btn-1">
-                                            Read More
-                                        </a>
-                                        <a href="" class="btn-2">
-                                            Contact us
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="parent-items">
+                    <button class="btn btn-primary" style="width: 60%">
+                        <a class="text-light" href="">View Child Information</a>
+                    </button>
+
+
+
+                    <button class="btn btn-primary" style="width: 60%">
+                        <a class="text-light" href="">View Class Of Child</a>
+                    </button>
+                    <button class="btn btn-primary" style="width: 60%">
+                        <a class="text-light" href="scheduleStudent?parentId=${sessionScope.user.userID}">View Schedule Of Child </a>
+                    </button>
+                    <button class="btn btn-primary" style="width: 60%">
+                        <a class="text-light" href="">View Student Information</a>
+                    </button>
                 </div>
             </div>
             <div class=" col-md-6">
