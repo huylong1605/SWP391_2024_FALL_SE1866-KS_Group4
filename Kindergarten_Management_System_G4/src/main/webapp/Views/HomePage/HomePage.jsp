@@ -36,6 +36,25 @@
     <!-- responsive style -->
     <link href="${pageContext.request.contextPath}/css/responsive.css" rel="stylesheet"/>
 
+    <style>
+        .parent-items button {
+            margin: 12px 0 12px 0;
+            height: 60px;
+            background-color: green;
+            margin-left: 70px;
+            border: 1px solid white;
+        }
+
+        .parent-items button:hover {
+            margin: 12px 0 12px 0;
+            height: 60px;
+            margin-left: 70px;
+            transform: scale(1.2);
+            background-color: #fd4d4d;
+        }
+    </style>
+
+
 </head>
 <body>
 <%@ include file="/Views/common/header.jsp" %>
@@ -188,19 +207,37 @@
                                         <a href="" class="btn-2">
                                             Contact us
                                         </a>
-                                        
+
                                     </div>
 
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <%--            <div id="carouselExampleIndicators" class="carousel slide col-md-6" data-ride="carousel" style="padding-top: 30px">--%>
+                    <%--                <div class="parent-items">--%>
+                    <%--                    <button class="btn btn-primary" style="width: 60%">--%>
+                    <%--                        <a class="text-light" href="">View Child Information</a>--%>
+                    <%--                    </button>--%>
+
+
+                    <%--                    <button class="btn btn-primary" style="width: 60%">--%>
+                    <%--                        <a class="text-light" href="">View Class Of Child</a>--%>
+                    <%--                    </button>--%>
+                    <%--                    <button class="btn btn-primary" style="width: 60%">--%>
+                    <%--                        <a class="text-light" href="scheduleStudent?parentId=${sessionScope.user.userID}">View Schedule Of Child </a>--%>
+                    <%--                    </button>--%>
+                    <%--                    <button class="btn btn-primary" style="width: 60%">--%>
+                    <%--                        <a class="text-light" href="">View Student Information</a>--%>
+                    <%--                    </button>--%>
+
+                    <%--                </div>--%>
+                    <%--            </div>--%>
+                    <div class=" col-md-6">
+                        <img src="${pageContext.request.contextPath}/img/slider-bg.jpg" style="width: 800px;" alt="">
+                    </div>
                 </div>
-            </div>
-            <div class=" col-md-6">
-                <img src="${pageContext.request.contextPath}/img/slider-bg.jpg" style="width: 800px;" alt="">
-            </div>
-        </div>
     </section>
     <!-- end slider section -->
 </div>

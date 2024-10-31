@@ -27,7 +27,7 @@ import java.sql.SQLException;
  * Dữ liệu cấp lớp được lấy từ form, tạo một đối tượng ClassLevel và cập nhật thông tin trong cơ sở dữ liệu.
  * <p>Lỗi: Chưa phát hiện lỗi.
  *
- * @tác_giả Đào Xuân Bình
+ * @author Đào Xuân Bình
  */
 @WebServlet(name = "updateClassLevel", value = "/updateClassLevel")
 public class ClassLevelUpdateController extends HttpServlet {

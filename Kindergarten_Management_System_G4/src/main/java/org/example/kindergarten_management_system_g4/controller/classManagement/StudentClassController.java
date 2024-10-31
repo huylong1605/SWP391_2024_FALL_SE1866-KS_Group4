@@ -1,5 +1,18 @@
+
+
+/*
+ * Copyright(C) 2005,  <SWP_G4>.
+ * <KMS> :
+ *  <Kindergarten Management System>
+ *
+ * Record of change:
+ * DATE                       Version             AUTHOR                       DESCRIPTION
+ * <10/15/2024>                 <1.1>           <Vu Viet Chuc>            <Update searchStudents method>
+ */
+
+
+
 package org.example.kindergarten_management_system_g4.controller.classManagement;
-import org.example.kindergarten_management_system_g4.dao.StudentDAO;
 import org.example.kindergarten_management_system_g4.dao.classDAO.studentInClassDAO.IStudentInClassDAO;
 import org.example.kindergarten_management_system_g4.dao.classDAO.studentInClassDAO.StudentInClassDAO;
 import org.example.kindergarten_management_system_g4.model.Student;
@@ -12,13 +25,36 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+
+/**
+ * StudentClassController là lớp điều khiển xử lý các yêu cầu liên quan đến quản lý
+ * học sinh trong các lớp học, bao gồm các chức năng như: hiển thị danh sách học sinh,
+ * tìm kiếm học sinh, thêm học sinh vào lớp, lọc học sinh theo tình trạng, và hiển thị chi tiết.
+ */
+
 @WebServlet(value = {"/Views/Manager/listStudentInClass", "/Views/Manager/AddStudentToClass", "/Views/Manager/StudentDetails"})
 public class StudentClassController extends HttpServlet {
     private IStudentInClassDAO studentDAO;
 
+
+    /**
+     * Phương thức khởi tạo init() được sử dụng để khởi tạo đối tượng studentDAO
+     * khi servlet được tạo.
+     */
+
     public void init() throws ServletException {
         studentDAO = new StudentInClassDAO(); // Khởi tạo đối tượng StudentDAO
     }
+
+    /**
+     * Phương thức doGet() xử lý các yêu cầu GET, bao gồm hiển thị danh sách học sinh,
+     * tìm kiếm, lọc học sinh, hiển thị chi tiết học sinh, và thêm học sinh vào lớp.
+     *
+     * @param req  Đối tượng HttpServletRequest chứa yêu cầu từ phía client.
+     * @param resp Đối tượng HttpServletResponse để trả về phản hồi cho client.
+     * @throws ServletException Nếu có lỗi trong quá trình xử lý Servlet.
+     * @throws IOException      Nếu có lỗi I/O xảy ra.
+     */
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -67,7 +103,8 @@ public class StudentClassController extends HttpServlet {
                 } else if ("filter".equals(action) && filterType != null) {
                     filterStudents(req, resp, filterType, classIdParam, page, size);
                 } else if ("search".equals(action)) {
-                    if (searchTerm == null || searchTerm.trim().isEmpty()) {
+                    searchTerm = (searchTerm != null) ? searchTerm.trim() : null;
+                    if (searchTerm == null || searchTerm.isEmpty()) {
                         // Hiển thị tất cả sinh viên nếu searchTerm rỗng
                         showAddStudentToClass(req, resp, classIdParam, page, size);
                     } else {
@@ -89,6 +126,20 @@ public class StudentClassController extends HttpServlet {
         }
     }
 
+
+    /**
+     * Phương thức searchStudents() dùng để tìm kiếm học sinh theo tên dựa trên từ khóa
+     * tìm kiếm được truyền vào.
+     *
+     * @param req       Đối tượng HttpServletRequest chứa yêu cầu từ phía client.
+     * @param resp      Đối tượng HttpServletResponse để trả về phản hồi cho client.
+     * @param searchTerm Từ khóa tìm kiếm tên học sinh.
+     * @param classIdParam Mã lớp để xác định lớp học.
+     * @throws ServletException Nếu có lỗi trong quá trình xử lý Servlet.
+     * @throws IOException      Nếu có lỗi I/O xảy ra.
+     * @throws SQLException     Nếu có lỗi truy vấn cơ sở dữ liệu.
+     */
+
     private void searchStudents(HttpServletRequest req, HttpServletResponse resp, String searchTerm, String classIdParam)
             throws ServletException, IOException, SQLException {
         int classId = Integer.parseInt(classIdParam);
@@ -99,6 +150,20 @@ public class StudentClassController extends HttpServlet {
     }
 
 
+    /**
+     * Phương thức filterStudents() dùng để lọc danh sách học sinh theo bộ lọc (có lớp, không lớp)
+     * và phân trang.
+     *
+     * @param req       Đối tượng HttpServletRequest chứa yêu cầu từ phía client.
+     * @param resp      Đối tượng HttpServletResponse để trả về phản hồi cho client.
+     * @param filterType Loại bộ lọc (có lớp, không lớp, tất cả).
+     * @param classIdParam Mã lớp học.
+     * @param page      Trang hiện tại để phân trang.
+     * @param size      Số lượng bản ghi mỗi trang.
+     * @throws ServletException Nếu có lỗi trong quá trình xử lý Servlet.
+     * @throws IOException      Nếu có lỗi I/O xảy ra.
+     * @throws SQLException     Nếu có lỗi truy vấn cơ sở dữ liệu.
+     */
     private void filterStudents(HttpServletRequest req, HttpServletResponse resp, String filterType, String classIdParam, int page, int size)
             throws ServletException, IOException, SQLException {
         int classId = Integer.parseInt(classIdParam);
@@ -127,16 +192,25 @@ public class StudentClassController extends HttpServlet {
     }
 
 
+    /**
+     * Phương thức showStudentDetails() dùng để hiển thị thông tin chi tiết của học sinh.
+     *
+     * @param req        Đối tượng HttpServletRequest chứa yêu cầu từ phía client.
+     * @param resp       Đối tượng HttpServletResponse để trả về phản hồi cho client.
+     * @param classIdParam Mã lop học.
+     * @throws ServletException Nếu có lỗi trong quá trình xử lý Servlet.
+     * @throws IOException      Nếu có lỗi I/O xảy ra.
+     * @throws SQLException     Nếu có lỗi truy vấn cơ sở dữ liệu.
+     */
     private void showAddStudentToClass(HttpServletRequest req, HttpServletResponse resp, String classIdParam, int pageNumber, int pageSize)
             throws ServletException, IOException, SQLException {
         int classId = Integer.parseInt(classIdParam);
 
         // Lấy danh sách học sinh với phân trang
         List<Student> allStudents = studentDAO.getAllStudents(pageNumber, pageSize); // Gọi phương thức đã cập nhật
-
         // Tổng số học sinh để tính tổng số trang
         int totalStudentsCount = studentDAO.getTotalStudentsCount(""); // Lấy tổng số học sinh không lọc
-        int totalPages = (int) Math.ceil((double) totalStudentsCount / pageSize); // Tính tổng số trang
+        int totalPages = (int) Math.ceil((double) totalStudentsCount / pageSize);
         String className = studentDAO.getClassNameById(classId);
         // Thêm các thuộc tính vào request
         req.setAttribute("AllStudent", allStudents);
@@ -150,7 +224,16 @@ public class StudentClassController extends HttpServlet {
         req.getRequestDispatcher("/Views/Manager/AddStudentToClass.jsp").forward(req, resp);
     }
 
-
+    /**
+     * Phương thức listStudentsByClassId() dùng để hiển thị danh sách học sinh theo mã lớp.
+     *
+     * @param req        Đối tượng HttpServletRequest chứa yêu cầu từ phía client.
+     * @param resp       Đối tượng HttpServletResponse để trả về phản hồi cho client.
+     * @param studentIdParam Mã lop học.
+     * @throws ServletException Nếu có lỗi trong quá trình xử lý Servlet.
+     * @throws IOException      Nếu có lỗi I/O xảy ra.
+     * @throws SQLException     Nếu có lỗi truy vấn cơ sở dữ liệu.
+     */
     private void showStudentDetails(HttpServletRequest req, HttpServletResponse resp, String studentIdParam)
             throws ServletException, IOException, SQLException {
         int studentId = Integer.parseInt(studentIdParam);
@@ -164,6 +247,16 @@ public class StudentClassController extends HttpServlet {
     }
 
 
+    /**
+     * Phương thức listStudentsByClassId() dùng để hiển thị danh sách học sinh theo mã lớp.
+     *
+     * @param req        Đối tượng HttpServletRequest chứa yêu cầu từ phía client.
+     * @param resp       Đối tượng HttpServletResponse để trả về phản hồi cho client.
+     * @param classIdParam Mã lớp học.
+     * @throws ServletException Nếu có lỗi trong quá trình xử lý Servlet.
+     * @throws IOException      Nếu có lỗi I/O xảy ra.
+     * @throws SQLException     Nếu có lỗi truy vấn cơ sở dữ liệu.
+     */
     private void listStudentsByClassId(HttpServletRequest req, HttpServletResponse resp, String classIdParam)
             throws ServletException, IOException, SQLException {
         int classId = Integer.parseInt(classIdParam);
@@ -173,8 +266,14 @@ public class StudentClassController extends HttpServlet {
         req.getRequestDispatcher("/Views/Manager/listStudentInClass.jsp").forward(req, resp);
     }
 
-
-
+    /**
+     * Phương thức doPost() xử lý các yêu cầu POST, bao gồm thêm hoặc xóa học sinh khỏi lớp học.
+     *
+     * @param req  Đối tượng HttpServletRequest chứa yêu cầu từ phía client.
+     * @param resp Đối tượng HttpServletResponse để trả về phản hồi cho client.
+     * @throws ServletException Nếu có lỗi trong quá trình xử lý Servlet.
+     * @throws IOException      Nếu có lỗi I/O xảy ra.
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String classIdParam = req.getParameter("classId");

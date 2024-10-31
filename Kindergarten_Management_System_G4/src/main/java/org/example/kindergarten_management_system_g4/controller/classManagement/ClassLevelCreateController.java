@@ -27,7 +27,7 @@ import java.sql.SQLException;
  * Dữ liệu cấp lớp được lấy từ form gửi lên và lưu vào cơ sở dữ liệu.
  * <p>Lỗi: Chưa phát hiện lỗi.
  *
- * @tác_giả Đào Xuân Bình
+ * @author Đào Xuân Bình
  */
 @WebServlet(name = "addClassLevel", value = "/addClassLevel")
 public class ClassLevelCreateController extends HttpServlet {
