@@ -72,21 +72,21 @@
                 </li>
 
                 <li class="sidebar-item">
-                    <a href="" class="sidebar-link">
+                    <a href="${pageContext.request.contextPath}/term" class="sidebar-link">
                         <i class="lni lni-user"></i>
                         <span>Manage Term</span>
                     </a>
                 </li>
 
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="" class="sidebar-link">
                         <i class="lni lni-user"></i>
                         <span>Manage Room</span>
                     </a>
                 </li>
 
                 <li class="sidebar-item">
-                    <a href="${pageContext.request.contextPath}/sidebar" class="sidebar-link">
+                    <a href="${pageContext.request.contextPath}/subject" class="sidebar-link">
                         <i class="lni lni-user"></i>
                         <span>Manage Subject</span>
                     </a>
