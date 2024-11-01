@@ -17,6 +17,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Lớp UserProfileDAO chịu trách nhiệm tương tác với cơ sở dữ liệu để thực hiện các thao tác liên quan đến hồ sơ người dùng.
@@ -93,5 +95,33 @@ public class UserProfileDAO {
         }
 
         return false; // Trả về false nếu cập nhật không thành công
+    }
+
+    public List<User> getAllUserParent() {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM user WHERE user_id = 3"; // Giả định rằng có một cột 'role' chỉ định vai trò người dùng là 'parent'
+
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            // Lặp qua các kết quả và thêm vào danh sách người dùng
+            while (resultSet.next()) {
+                User user = new User();
+                user.setUserID(resultSet.getInt("User_id"));
+                user.setFullname(resultSet.getString("Fullname"));
+                user.setEmail(resultSet.getString("Email"));
+                user.setGender(resultSet.getInt("gender"));
+                user.setPhoneNumber(resultSet.getString("phoneNumber"));
+                user.setAddress(resultSet.getString("address"));
+                user.setImage(resultSet.getString("image"));
+                users.add(user);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // Xử lý ngoại lệ SQL
+        }
+
+        return users; // Trả về danh sách người dùng
     }
 }
