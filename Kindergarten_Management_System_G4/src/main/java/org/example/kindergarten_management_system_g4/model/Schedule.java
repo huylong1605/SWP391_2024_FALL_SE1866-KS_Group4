@@ -1,31 +1,37 @@
 package org.example.kindergarten_management_system_g4.model;
 
 public class Schedule {
-
     private int scheduleId;
-    private String subject_name;
-    private String  termName;
-    private String slotName;
-    private String startTime;
-    private String endTime;
     private String dayOfWeek;
     private String dateOfDay;
-    private String className;
-    private String room;
+    private int termId;
+    private int classId;
+    private int slotId;
+
     public Schedule() {
     }
 
-    public Schedule(int scheduleId, String subject_name, String termName, String slotName, String startTime, String endTime, String dayOfWeek, String dateOfDay, String className, String room) {
+    public Schedule(int scheduleId, String dayOfWeek, String dateOfDay, int termId, int classId, int slotId) {
         this.scheduleId = scheduleId;
-        this.subject_name = subject_name;
-        this.termName = termName;
-        this.slotName = slotName;
-        this.startTime = startTime;
-        this.endTime = endTime;
         this.dayOfWeek = dayOfWeek;
         this.dateOfDay = dateOfDay;
-        this.className = className;
-        this.room = room;
+        this.termId = termId;
+        this.classId = classId;
+        this.slotId = slotId;
+    }
+
+    public Schedule(String dateOfDay, int classId, int slotId) {
+        this.dateOfDay = dateOfDay;
+        this.classId = classId;
+        this.slotId = slotId;
+    }
+
+    public Schedule(String dayOfWeek, String dateOfDay, int termId, int classId, int slotId) {
+        this.dayOfWeek = dayOfWeek;
+        this.dateOfDay = dateOfDay;
+        this.termId = termId;
+        this.classId = classId;
+        this.slotId = slotId;
     }
 
     public int getScheduleId() {
@@ -34,62 +40,6 @@ public class Schedule {
 
     public void setScheduleId(int scheduleId) {
         this.scheduleId = scheduleId;
-    }
-
-    public String getSubject_name() {
-        return subject_name;
-    }
-
-    public void setSubject_name(String subject_name) {
-        this.subject_name = subject_name;
-    }
-
-    public String getTermName() {
-        return termName;
-    }
-
-    public void setTermName(String termName) {
-        this.termName = termName;
-    }
-
-    public String getClassName() {
-        return className;
-    }
-
-    public void setClassName(String className) {
-        this.className = className;
-    }
-
-    public String getRoom() {
-        return room;
-    }
-
-    public void setRoom(String room) {
-        this.room = room;
-    }
-
-    public String getSlotName() {
-        return slotName;
-    }
-
-    public void setSlotName(String slotName) {
-        this.slotName = slotName;
-    }
-
-    public String getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
     }
 
     public String getDayOfWeek() {
@@ -106,5 +56,29 @@ public class Schedule {
 
     public void setDateOfDay(String dateOfDay) {
         this.dateOfDay = dateOfDay;
+    }
+
+    public int getTermId() {
+        return termId;
+    }
+
+    public void setTermId(int termId) {
+        this.termId = termId;
+    }
+
+    public int getClassId() {
+        return classId;
+    }
+
+    public void setClassId(int classId) {
+        this.classId = classId;
+    }
+
+    public int getSlotId() {
+        return slotId;
+    }
+
+    public void setSlotId(int slotId) {
+        this.slotId = slotId;
     }
 }

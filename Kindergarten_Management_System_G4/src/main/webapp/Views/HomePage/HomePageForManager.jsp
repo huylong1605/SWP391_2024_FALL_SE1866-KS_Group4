@@ -41,13 +41,13 @@
         <a href="${pageContext.request.contextPath}/listClass" class="items-nav-manager">
             Manage Class
         </a>
-        <a href="#" class="items-nav-manager">
+        <a href="${pageContext.request.contextPath}/listClass" class="items-nav-manager">
             Manage Term
         </a>
         <a href="${pageContext.request.contextPath}/listClass" class="items-nav-manager">
             Manage Room
         </a>
-        <a href="#" class="items-nav-manager">
+        <a href="${pageContext.request.contextPath}/listClass" class="items-nav-manager">
             Manage Subject
         </a>
         <a href="${pageContext.request.contextPath}/viewStudentList" class="items-nav-manager">
@@ -55,6 +55,9 @@
         </a>
         <a href="${pageContext.request.contextPath}/classLevel" class="items-nav-manager">
             Manage Class Level
+        </a>
+        <a href="${pageContext.request.contextPath}/createSchedule" class="items-nav-manager">
+            Manage Schedule
         </a>
     </div>
     <div class=" aa d-flex justify-content-center align-items-center">

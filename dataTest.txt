@@ -34,7 +34,7 @@ CREATE TABLE Subject (
     subject_ID INT PRIMARY KEY AUTO_INCREMENT,
     subject_Code VARCHAR(10),
     subject_name VARCHAR(50),
-    sescription VARCHAR(225),
+    description VARCHAR(225),
     status varchar(20)
 );
 

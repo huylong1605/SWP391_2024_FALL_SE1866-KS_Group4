@@ -1,4 +1,17 @@
 
+
+/*
+ * Copyright(C) 2005,  <SWP_G4>.
+ * <KMS> :
+ *  <Kindergarten Management System>
+ *
+ * Record of change:
+ * DATE                       Version             AUTHOR                       DESCRIPTION
+ * <10/15/2024>                 <1.1>           <Vu Viet Chuc>            <Update searchStudentsByName method>
+ */
+
+
+
 package org.example.kindergarten_management_system_g4.dao.classDAO.studentInClassDAO;
 import org.example.kindergarten_management_system_g4.connection.DBConnection;
 import org.example.kindergarten_management_system_g4.model.*;
@@ -11,6 +24,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
+/**
+ * Lớp StudentInClassDAO quản lý các thao tác cơ sở dữ liệu liên quan đến học sinh trong lớp học.
+ * Lớp này bao gồm các phương thức để thêm, xóa, lấy thông tin học sinh, và các truy vấn liên quan
+ * đến việc lọc hoặc phân trang danh sách học sinh theo lớp.
+ */
 
 public class StudentInClassDAO extends DBConnection implements IStudentInClassDAO {
     // Truy vấn SQL cho các hoạt động khác nhau liên quan đến sinh viên và lớp học
@@ -51,6 +70,15 @@ public class StudentInClassDAO extends DBConnection implements IStudentInClassDA
     // Logger để ghi lại thông điệp và lỗi
     private static final Logger LOGGER = Logger.getLogger(StudentInClassDAO.class.getName());
 
+
+    // Phương thức in chi tiết SQLException
+    /**
+     * Phương thức này ghi lại thông tin chi tiết của một SQLException, bao gồm thông báo lỗi,
+     * mã trạng thái SQL và mã lỗi, cùng với các nguyên nhân dẫn đến lỗi.
+     *
+     * @param ex Ngoại lệ SQLException cần ghi lại.
+     */
+
     private void printSQLException(SQLException ex) {
         for (Throwable e : ex) {
             if (e instanceof SQLException) {
@@ -67,6 +95,18 @@ public class StudentInClassDAO extends DBConnection implements IStudentInClassDA
             }
         }
     }
+
+
+    // Phương thức đóng các tài nguyên ResultSet, PreparedStatement, Connection
+    /**
+     * Đóng các tài nguyên bao gồm ResultSet, PreparedStatement và Connection.
+     * Phương thức này giúp giải phóng tài nguyên để tránh tình trạng rò rỉ bộ nhớ.
+     *
+     * @param resultSet Đối tượng ResultSet cần đóng.
+     * @param preparedStatement Đối tượng PreparedStatement cần đóng.
+     * @param connection Đối tượng Connection cần đóng.
+     */
+
 
     private void closeResources(ResultSet resultSet, PreparedStatement preparedStatement, Connection connection) {
         // Đóng ResultSet
@@ -100,6 +140,17 @@ public class StudentInClassDAO extends DBConnection implements IStudentInClassDA
             printSQLException(e);
         }
     }
+
+
+    // Phương thức lấy danh sách học sinh theo mã lớp
+    /**
+     * Lấy danh sách học sinh thuộc một lớp học cụ thể thông qua mã lớp (classId).
+     *
+     * @param classId Mã lớp học cần lấy danh sách học sinh.
+     * @return Danh sách học sinh thuộc lớp học đã chỉ định.
+     * @throws SQLException Nếu có lỗi xảy ra khi thực hiện truy vấn.
+     */
+
 
     public List<Student> getStudentsByClassId(int classId) throws SQLException {
         List<Student> students = new ArrayList<>();
@@ -135,6 +186,17 @@ public class StudentInClassDAO extends DBConnection implements IStudentInClassDA
 
         return students;
     }
+
+
+    // Phương thức lấy tất cả học sinh với phân trang
+    /**
+     * Lấy danh sách tất cả học sinh từ cơ sở dữ liệu, hỗ trợ phân trang.
+     *
+     * @param pageNumber Số thứ tự trang.
+     * @param pageSize Số lượng bản ghi trên mỗi trang.
+     * @return Danh sách học sinh trong trang yêu cầu.
+     * @throws SQLException Nếu có lỗi xảy ra khi thực hiện truy vấn.
+     */
 
     public List<Student> getAllStudents(int pageNumber, int pageSize) throws SQLException {
         List<Student> students = new ArrayList<>();
@@ -176,6 +238,17 @@ public class StudentInClassDAO extends DBConnection implements IStudentInClassDA
         return students;
     }
 
+
+    // Phương thức lấy tổng số lượng học sinh
+    /**
+     * Lấy tổng số lượng học sinh trong cơ sở dữ liệu, có thể lọc theo các tiêu chí khác nhau.
+     *
+     * @param filterType Loại bộ lọc (có lớp, không có lớp, hoặc tất cả).
+     * @return Tổng số học sinh thỏa mãn điều kiện lọc.
+     * @throws SQLException Nếu có lỗi xảy ra khi thực hiện truy vấn.
+     */
+
+
     public int getTotalStudentsCount(String filterType) throws SQLException {
         int count = 0;
         Connection connection = null;
@@ -213,6 +286,16 @@ public class StudentInClassDAO extends DBConnection implements IStudentInClassDA
     }
 
 
+    // Phương thức thêm học sinh vào lớp
+    /**
+     * Thêm học sinh vào một lớp cụ thể thông qua mã lớp và mã học sinh.
+     *
+     * @param studentId Mã học sinh cần thêm vào lớp.
+     * @param classId Mã lớp mà học sinh sẽ được thêm vào.
+     * @return true nếu thêm thành công, false nếu thất bại.
+     * @throws SQLException Nếu có lỗi xảy ra khi thực hiện truy vấn.
+     */
+
 
     public boolean addStudentToClass(int studentId, int classId) throws SQLException {
         Connection connection = null;
@@ -234,6 +317,17 @@ public class StudentInClassDAO extends DBConnection implements IStudentInClassDA
         return isAdded;
     }
 
+
+    // Phương thức xóa học sinh khỏi lớp
+    /**
+     * Xóa học sinh khỏi lớp học (thiết lập class_id là NULL).
+     *
+     * @param studentId Mã học sinh cần xóa khỏi lớp.
+     * @return true nếu xóa thành công, false nếu thất bại.
+     * @throws SQLException Nếu có lỗi xảy ra khi thực hiện truy vấn.
+     */
+
+
     public boolean removeStudentFromClass(int studentId) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -252,6 +346,16 @@ public class StudentInClassDAO extends DBConnection implements IStudentInClassDA
         }
         return isRemoved;
     }
+
+
+    // Phương thức lấy thông tin học sinh theo mã học sinh
+    /**
+     * Lấy thông tin chi tiết của một học sinh thông qua mã học sinh.
+     *
+     * @param studentId Mã học sinh cần lấy thông tin.
+     * @return Đối tượng Student chứa thông tin chi tiết của học sinh.
+     * @throws SQLException Nếu có lỗi xảy ra khi thực hiện truy vấn.
+     */
 
 
     public Student getStudentById(int studentId) throws SQLException {
@@ -287,6 +391,19 @@ public class StudentInClassDAO extends DBConnection implements IStudentInClassDA
         }
         return student;
     }
+
+
+    // Phương thức lọc học sinh theo lớp và phân trang
+    /**
+     * Lọc danh sách học sinh dựa trên việc học sinh có thuộc lớp hay không, kèm theo phân trang.
+     *
+     * @param hasClassId true nếu muốn lấy danh sách học sinh có lớp, false nếu không có lớp.
+     * @param pageNumber Số thứ tự trang.
+     * @param pageSize Số lượng bản ghi trên mỗi trang.
+     * @return Danh sách học sinh thỏa mãn điều kiện lọc.
+     * @throws SQLException Nếu có lỗi xảy ra khi thực hiện truy vấn.
+     */
+
 
     public List<Student> filterStudentsByClassId(Boolean hasClassId, int pageNumber, int pageSize) throws SQLException {
         List<Student> students = new ArrayList<>();
@@ -341,13 +458,40 @@ public class StudentInClassDAO extends DBConnection implements IStudentInClassDA
         return students;
     }
 
+    /**
+     * Lấy danh sách học sinh có classId với phân trang.
+     *
+     * @param pageNumber Số trang muốn lấy.
+     * @param pageSize   Số lượng học sinh trong mỗi trang.
+     * @return Danh sách học sinh có classId.
+     * @throws SQLException Nếu có lỗi xảy ra khi truy vấn cơ sở dữ liệu.
+     */
+
     public List<Student> getStudentsWithClass(int pageNumber, int pageSize) throws SQLException {
         return filterStudentsByClassId(true, pageNumber, pageSize);  // Lấy học sinh có classId
     }
 
+
+    /**
+     * Lấy danh sách học sinh không có classId với phân trang.
+     *
+     * @param pageNumber Số trang muốn lấy.
+     * @param pageSize   Số lượng học sinh trong mỗi trang.
+     * @return Danh sách học sinh không có classId.
+     * @throws SQLException Nếu có lỗi xảy ra khi truy vấn cơ sở dữ liệu.
+     */
+
     public List<Student> getStudentsWithoutClass(int pageNumber, int pageSize) throws SQLException {
         return filterStudentsByClassId(false, pageNumber, pageSize); // Lấy học sinh không có classId
     }
+
+    /**
+     * Tìm kiếm học sinh theo tên.
+     *
+     * @param name Tên của học sinh cần tìm kiếm.
+     * @return Danh sách học sinh phù hợp với tên tìm kiếm.
+     * @throws SQLException Nếu có lỗi xảy ra khi truy vấn cơ sở dữ liệu.
+     */
 
     public List<Student> searchStudentsByName(String name) throws SQLException {
         List<Student> students = new ArrayList<>();
@@ -380,6 +524,14 @@ public class StudentInClassDAO extends DBConnection implements IStudentInClassDA
 
         return students;
     }
+
+    /**
+     * Lấy tên lớp theo classId.
+     *
+     * @param classId ID của lớp cần lấy tên.
+     * @return Tên của lớp tương ứng với classId.
+     * @throws SQLException Nếu có lỗi xảy ra khi truy vấn cơ sở dữ liệu.
+     */
 
     public String getClassNameById(int classId) throws SQLException {
         String className = null;

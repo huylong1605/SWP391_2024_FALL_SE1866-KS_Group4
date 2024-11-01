@@ -46,6 +46,8 @@
     <div class="schedule-info">
         <div>Term: <span>${listScheduleStudent[0].termName}</span></div>
         <div>Class: <span>${listScheduleStudent[0].className}</span></div>
+        <div>teacher: <span>${listScheduleStudent[0].teacher}</span></div>
+        <div>Room: <span>${listScheduleStudent[0].room}</span></div>
     </div>
 
     <div class="table-container">

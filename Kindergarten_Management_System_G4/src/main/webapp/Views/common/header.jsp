@@ -22,7 +22,8 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@600&family=Lobster+Two:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@600&family=Lobster+Two:wght@700&display=swap"
+          rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -51,7 +52,9 @@
             <a href="${pageContext.request.contextPath}/Views/HomePage/HomePage.jsp" class="nav-item nav-link active">Home</a>
             <a href="/" class="nav-item nav-link">About Us</a>
             <a href="" class="nav-item nav-link">Contact Us</a>
+            
         </div>
+
         <ul class="navbar-nav ml-auto" style="font-size: 20px">
             <c:if test="${sessionScope.user != null}">
                 <li class="nav-item">
@@ -66,8 +69,10 @@
     <div class="collapse navbar-collapse" style="margin-left: 150px; font-size: 20px">
         <ul class="navbar-nav ml-auto">
             <c:if test="${sessionScope.user == null}">
-                <a href="${pageContext.request.contextPath}/Login.jsp" class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Sign in</a>
-                <a href="${pageContext.request.contextPath}/register.jsp" class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Sign up</a>
+                <a href="${pageContext.request.contextPath}/Login.jsp"
+                   class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Sign in</a>
+                <a href="${pageContext.request.contextPath}/register.jsp"
+                   class="btn btn-primary rounded-pill px-3 d-none d-lg-block">Sign up</a>
             </c:if>
         </ul>
     </div>
