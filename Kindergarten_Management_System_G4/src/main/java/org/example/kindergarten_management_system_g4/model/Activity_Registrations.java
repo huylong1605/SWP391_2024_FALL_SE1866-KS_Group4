@@ -7,13 +7,13 @@ public class Activity_Registrations {
     private int activity_id;
     private int student_id;
     private Date registration_date;
-    private boolean status;
+    private String status;
     private boolean parent_approval;
 
     public Activity_Registrations() {
     }
 
-    public Activity_Registrations(int registration_id, int activity_id, int student_id, Date registration_date, boolean status, boolean parent_approval) {
+    public Activity_Registrations(int registration_id, int activity_id, int student_id, Date registration_date, String status, boolean parent_approval) {
         this.registration_id = registration_id;
         this.activity_id = activity_id;
         this.student_id = student_id;
@@ -54,11 +54,11 @@ public class Activity_Registrations {
         this.registration_date = registration_date;
     }
 
-    public boolean isStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -68,5 +68,17 @@ public class Activity_Registrations {
 
     public void setParent_approval(boolean parent_approval) {
         this.parent_approval = parent_approval;
+    }
+
+    @Override
+    public String toString() {
+        return "Activity_Registrations{" +
+                "registration_id=" + registration_id +
+                ", activity_id=" + activity_id +
+                ", student_id=" + student_id +
+                ", registration_date=" + registration_date +
+                ", status='" + status + '\'' +
+                ", parent_approval=" + parent_approval +
+                '}';
     }
 }

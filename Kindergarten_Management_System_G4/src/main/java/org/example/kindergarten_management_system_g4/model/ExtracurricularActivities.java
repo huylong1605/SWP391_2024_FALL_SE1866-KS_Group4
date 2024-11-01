@@ -1,18 +1,49 @@
 package org.example.kindergarten_management_system_g4.model;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 public class ExtracurricularActivities {
     private int activity_id;
     private String activity_name;
     private String description;
-    private Date  start_time;
-    private Date end_time;
+    private LocalDate date;
+    private LocalTime start_time;
+    private LocalTime end_time;
     private String location;
 
     private int user_id;
     private String materials_needed;
-    private boolean status;
+    private String status;
+
+    public ExtracurricularActivities() {
+    }
+
+    public ExtracurricularActivities(int activity_id, String activity_name, String description, LocalDate date, LocalTime start_time, LocalTime end_time, String location, int user_id, String materials_needed, String status) {
+        this.activity_id = activity_id;
+        this.activity_name = activity_name;
+        this.description = description;
+        this.date = date;
+        this.start_time = start_time;
+        this.end_time = end_time;
+        this.location = location;
+        this.user_id = user_id;
+        this.materials_needed = materials_needed;
+        this.status = status;
+    }
+
+    public ExtracurricularActivities(int activity_id, String activity_name, String description, LocalDate date, LocalTime start_time, LocalTime end_time, String location, int user_id, String materials_needed) {
+        this.activity_id = activity_id;
+        this.activity_name = activity_name;
+        this.description = description;
+        this.date = date;
+        this.start_time = start_time;
+        this.end_time = end_time;
+        this.location = location;
+        this.user_id = user_id;
+        this.materials_needed = materials_needed;
+    }
 
     public int getActivity_id() {
         return activity_id;
@@ -38,19 +69,27 @@ public class ExtracurricularActivities {
         this.description = description;
     }
 
-    public Date getStart_time() {
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalTime getStart_time() {
         return start_time;
     }
 
-    public void setStart_time(Date start_time) {
+    public void setStart_time(LocalTime start_time) {
         this.start_time = start_time;
     }
 
-    public Date getEnd_time() {
+    public LocalTime getEnd_time() {
         return end_time;
     }
 
-    public void setEnd_time(Date end_time) {
+    public void setEnd_time(LocalTime end_time) {
         this.end_time = end_time;
     }
 
@@ -78,26 +117,27 @@ public class ExtracurricularActivities {
         this.materials_needed = materials_needed;
     }
 
-    public boolean isStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public ExtracurricularActivities(int activity_id, String activity_name, String description, Date start_time, Date end_time, String location, int user_id, String materials_needed, boolean status) {
-        this.activity_id = activity_id;
-        this.activity_name = activity_name;
-        this.description = description;
-        this.start_time = start_time;
-        this.end_time = end_time;
-        this.location = location;
-        this.user_id = user_id;
-        this.materials_needed = materials_needed;
-        this.status = status;
-    }
-
-    public ExtracurricularActivities() {
+    @Override
+    public String toString() {
+        return "ExtracurricularActivities{" +
+                "activity_id=" + activity_id +
+                ", activity_name='" + activity_name + '\'' +
+                ", description='" + description + '\'' +
+                ", date=" + date +
+                ", start_time=" + start_time +
+                ", end_time=" + end_time +
+                ", location='" + location + '\'' +
+                ", user_id=" + user_id +
+                ", materials_needed='" + materials_needed + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

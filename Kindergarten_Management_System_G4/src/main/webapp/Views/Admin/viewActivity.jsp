@@ -84,13 +84,17 @@
                                                                                 </a>
                                             </li>
                                             <li class="sidebar-item">
-                                                                                                                            <a href="${pageContext.request.contextPath}/view-extracurricular-activities" class="sidebar-link">
+                                                                                                                            <a href="${pageContext.request.contextPath}//view-all-registrations" class="sidebar-link">
                                                                                                                                 <i class="lni lni-graduation"></i>
                                                                                                                                 <span>Manage Activity</span>
                                                                                                                             </a>
                                                                                         </li>
                                         </ul>
                         </aside>
+
+            <!-- Main content section -->
+            <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+            <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
             <!-- Main content section -->
             <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg col-md-10">
@@ -100,52 +104,48 @@
                             <div class="card my-4">
                                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                                     <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                                        <h6 class="text-white text-capitalize ps-3">Manage Class Levels</h6>
+                                        <h6 class="text-white text-capitalize ps-3">Manage Extracurricular Activities</h6>
                                     </div>
                                 </div>
                                 <div class="card-body px-0 pb-2">
-                                    <!-- Search input and sort dropdown -->
-                                    <div class="row px-4 mb-3">
-                                        <div class="col-md-6">
-                                            <input type="text" id="searchInput" class="form-control" onkeyup="filterTable()" placeholder="Search by class level name...">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <select id="sortDropdown" class="form-control" onchange="sortTable()">
-                                                 <option value="default">Default</option>
-                                                <option value="asc">Sort by Name (A-Z)</option>
-                                                <option value="desc">Sort by Name (Z-A)</option>
-                                            </select>
-                                        </div>
-                                    </div>
                                     <div class="table-container">
                                         <table class="table align-items-center mb-0">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-center">#</th>
-                                                    <th class="text-center">Name</th>
-                                                    <th class="text-center">Description</th>
-                                                    <th class="text-center">Age Range</th>
-                                                    <th class="text-center">Actions</th>
+                                                    <th class="text-center">Activity ID</th>
+                                                    <th class="text-center">Activity Name</th>
+                                                    <th class="text-center">Date</th>
+                                                    <th class="text-center">Start Time</th>
+                                                    <th class="text-center">End Time</th>
+                                                    <th class="text-center">Location</th>
+                                                    <th class="text-center">Materials Needed</th>
+                                                    <th class="text-center">Status</th>
+                                                    <th class="text-center">Action</th>
+
                                                 </tr>
                                             </thead>
-                                            <tbody id="classLevelTableBody">
-                                                <c:forEach var="class_level" items="${classLevelList}">
+                                            <tbody>
+                                                <c:forEach var="activity" items="${activityList}">
                                                     <tr>
-                                                        <td class="text-center">${class_level.classLevelId}</td>
-                                                        <td class="text-center classLevelName">${class_level.classLevelName}</td>
-                                                        <td class="text-center">${class_level.description}</td>
-                                                        <td class="text-center">${class_level.ageRange}</td>
+                                                        <td class="text-center">${activity.activity_id}</td>
+                                                        <td class="text-center">${activity.activity_name}</td>
+                                                        <td class="text-center">${activity.date}</td>
+                                                        <td class="text-center">${activity.start_time}</td>
+                                                        <td class="text-center">${activity.end_time}</td>
+                                                        <td class="text-center">${activity.location}</td>
+                                                        <td class="text-center">${activity.materials_needed}</td>
+                                                        <td class="text-center">${activity.status ? "Active" : "Inactive"}</td>
                                                         <td class="text-center">
-                                                            <button type="button" class="btn btn-warning btn-sm"
-                                                                    onclick="openEditModal('${class_level.classLevelId}', '${class_level.classLevelName}', '${class_level.description}', '${class_level.ageRange}')">
-                                                                Update
-                                                            </button>
+                                                                                                                    <button type="button" class="btn btn-warning btn-sm"
+                                                                                                                            onclick="openEditModal('${class_level.classLevelId}', '${class_level.classLevelName}', '${class_level.description}', '${class_level.ageRange}')">
+                                                                                                                        Update
+                                                                                                                    </button>
 
-                                                            <button type="button" class="btn btn-danger btn-sm"
-                                                                    onclick="confirmDelete('${class_level.classLevelId}')">
-                                                                Delete
-                                                            </button>
-                                                        </td>
+                                                                                                                    <button type="button" class="btn btn-danger btn-sm"
+                                                                                                                            onclick="confirmDelete('${class_level.classLevelId}')">
+                                                                                                                        Delete
+                                                                                                                    </button>
+                                                                                                                </td>
                                                     </tr>
                                                 </c:forEach>
                                             </tbody>
@@ -153,22 +153,12 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Add New Class Level Button -->
-                            <button type="button" class="btn btn-success" onclick="openAddModal()">Add New Class Level</button>
-
-                            <!-- Pagination -->
-                            <div class="pagination-container">
-                                <nav>
-                                    <ul class="pagination" id="pagination">
-                                        <!-- Pagination will be generated here -->
-                                    </ul>
-                                </nav>
-                            </div>
+                            <button type="button" class="btn btn-success" onclick="openAddModal()">Add New Activity</button>
                         </div>
                     </div>
                 </div>
             </main>
+
         </div>
     </div>
 
@@ -176,24 +166,40 @@
         <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="${pageContext.request.contextPath}/addClassLevel" method="POST" onsubmit="return confirmAdd()">
+                    <form action="addActivity" method="POST" onsubmit="return confirmAdd()">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="addModalLabel">Add New Class Level</h5>
+                            <h5 class="modal-title" id="addModalLabel">Add New Activity</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label for="addClassName" class="form-label">Class Level Name</label>
-                                <input type="text" class="form-control" id="addClassName" name="classLevelName" minlength="5" maxlength="50" required>
+                                <label for="addActivityName" class="form-label">Activity Name</label>
+                                <input type="text" class="form-control" id="addActivityName" name="activityName" minlength="5" maxlength="50" required>
                             </div>
                             <div class="mb-3">
                                 <label for="addDescription" class="form-label">Description</label>
                                 <input type="text" class="form-control" id="addDescription" name="description" minlength="5" maxlength="50" required>
                             </div>
                             <div class="mb-3">
-                                <label for="addAgeRange" class="form-label">Age Range</label>
-                                <input type="number" class="form-control" id="addAgeRange" name="ageRange" max-value="6" required>
+                                                            <label for="addDate" class="form-label">Date</label>
+                                                            <input type="date" class="form-control" id="addDate" name="date"  required>
+                                                        </div>
+                            <div class="mb-3">
+                                <label for="addStartTime" class="form-label">Start Time</label>
+                                <input type="time" class="form-control" id="addStartTime" name="start_time" max-value="6" required>
                             </div>
+                             <div class="mb-3">
+                                                            <label for="addEndTime" class="form-label">End Time</label>
+                                                            <input type="time" class="form-control" id="addEndTime" name="end_time" max-value="6" required>
+                                                        </div>
+                             <div class="mb-3">
+                                                                                         <label for="addLocation" class="form-label">Location</label>
+                                                                                         <input type="text" class="form-control" id="addLocation" name="location" max-value="6" required>
+                                                                                     </div>
+                                                               <div class="mb-3">
+                                                                                                                                                       <label for="addMaterial" class="form-label">Materials</label>
+                                                                                                                                                       <input type="text" class="form-control" id="addMaterial" name="material" max-value="6" required>
+                                                                                                                                                   </div>
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-success">Save</button>
@@ -424,7 +430,7 @@
         }
 
         function confirmAdd() {
-            return confirm("Are you sure you want to add this class level?");
+            return confirm("Are you sure you want to add this activity level?");
         }
 
         function confirmUpdate() {
