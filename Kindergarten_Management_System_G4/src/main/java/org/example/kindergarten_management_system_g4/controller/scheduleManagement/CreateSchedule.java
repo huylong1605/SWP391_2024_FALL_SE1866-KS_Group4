@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -22,7 +23,7 @@ import java.util.logging.Logger;
 @WebServlet(name = "createSchedule", value = "/createSchedule")
 public class CreateSchedule extends HttpServlet {
 
-    private static final Logger LOGGER = Logger.getLogger(ScheduleListOfStudent.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(CreateSchedule.class.getName());
     private IScheduleDAO iScheduleDAO; // Interface cho các phương thức quản lý lớp học
 
     /**
@@ -113,6 +114,11 @@ public class CreateSchedule extends HttpServlet {
 
             Schedule schedule = new Schedule(dayOfWeek, dateOfDay, termId, classId, slotId);
             iScheduleDAO.addSchedule(schedule, subjectId);
+            /*HttpSession session = req.getSession();
+            // Đặt thông báo thành công vào session
+            session.setAttribute("AddScheduleSuccessful", "Add class to schedule successful");*/
+            // Chuyển hướng đến danh sách lớp
+            resp.sendRedirect("listSchedule");
         } catch (ParseException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {

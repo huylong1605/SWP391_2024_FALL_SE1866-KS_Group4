@@ -56,7 +56,7 @@
         <a href="${pageContext.request.contextPath}/classLevel" class="items-nav-manager">
             Manage Class Level
         </a>
-        <a href="${pageContext.request.contextPath}/createSchedule" class="items-nav-manager">
+        <a href="${pageContext.request.contextPath}/listSchedule" class="items-nav-manager">
             Manage Schedule
         </a>
     </div>
