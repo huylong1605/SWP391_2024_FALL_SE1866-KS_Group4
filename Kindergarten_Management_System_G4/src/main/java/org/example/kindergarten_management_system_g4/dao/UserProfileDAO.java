@@ -99,7 +99,7 @@ public class UserProfileDAO {
 
     public List<User> getAllUserParent() {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT * FROM user WHERE user_id = 3"; // Giả định rằng có một cột 'role' chỉ định vai trò người dùng là 'parent'
+        String sql = "SELECT * FROM user WHERE role_id = 3"; // Giả định rằng có một cột 'role' chỉ định vai trò người dùng là 'parent'
 
         try (Connection connection = DBConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -124,4 +124,7 @@ public class UserProfileDAO {
 
         return users; // Trả về danh sách người dùng
     }
+
+
+
 }

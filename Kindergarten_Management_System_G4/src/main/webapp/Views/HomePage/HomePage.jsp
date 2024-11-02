@@ -77,6 +77,12 @@
                     <button class="btn btn-primary" style="width: 60%">
                         <a class="text-light" href="">View Student Information</a>
                     </button>
+                    <button class="btn btn-primary" style="width: 60%">
+                         <a class="text-light" href="registerStudent.jsp">Register New Child</a>
+                    </button>
+
+
+
                 </div>
             </div>
             <div class=" col-md-6">
@@ -85,6 +91,27 @@
         </div>
     </section>
     <!-- end slider section -->
+
+
+    <!-- Success Modal - Visible only if registrationSuccess is set -->
+        <c:if test="${not empty registrationSuccess}">
+            <div class="modal fade show" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-modal="true" role="dialog" style="display: block;">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="successModalLabel">Registration Status</h5>
+
+                        </div>
+                        <div class="modal-body">
+                            ${registrationSuccess}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="window.location.href='/Kindergarten_Management_System_G4//Views/HomePage/HomePage.jsp'">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </c:if>
 </div>
 
 
