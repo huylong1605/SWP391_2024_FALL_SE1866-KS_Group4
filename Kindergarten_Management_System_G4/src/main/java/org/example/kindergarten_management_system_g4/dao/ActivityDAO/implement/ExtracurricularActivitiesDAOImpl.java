@@ -70,28 +70,28 @@ public class ExtracurricularActivitiesDAOImpl extends DBConnection implements Ex
         }
     }
 
+
     @Override
     public void updateActivity(ExtracurricularActivities activity) throws SQLException {
+        String sql = "UPDATE extracurricular_activities SET activity_name = ?, description = ?, start_time = ?, end_time = ?, location = ?, materials_needed = ?, status = ? WHERE activity_id = ?";
+
         try (Connection connection = getConnection();
-             PreparedStatement ps = connection.prepareStatement(UPDATE_ACTIVITY_QUERY)) {
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            ps.setString(1, activity.getActivity_name());
-            ps.setString(2, activity.getDescription());
-            ps.setTime(3, Time.valueOf(activity.getStart_time()));
-            ps.setTime(4, Time.valueOf(activity.getEnd_time()));
-            ps.setString(5, activity.getLocation());
-            ps.setInt(6, activity.getUser_id());
-            ps.setString(7, activity.getMaterials_needed());
-//            ps.setString(8, activity.isStatus());
-            ps.setInt(9, activity.getActivity_id());
+            statement.setString(1, activity.getActivity_name());
+            statement.setString(2, activity.getDescription());
+            statement.setObject(3, activity.getStart_time()); // Use setObject for LocalTime
+            statement.setObject(4, activity.getEnd_time());   // Use setObject for LocalTime
+            statement.setString(5, activity.getLocation());
+            statement.setString(6, activity.getMaterials_needed());
+            statement.setString(7, activity.getStatus());
+            statement.setInt(8, activity.getActivity_id());
 
-            ps.executeUpdate();
-            LOGGER.log(Level.INFO, "Activity updated successfully.");
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Error updating activity", e);
-            throw e;
+            statement.executeUpdate();
         }
     }
+
+
 
     @Override
     public void deleteActivity(int activityId) throws SQLException {
