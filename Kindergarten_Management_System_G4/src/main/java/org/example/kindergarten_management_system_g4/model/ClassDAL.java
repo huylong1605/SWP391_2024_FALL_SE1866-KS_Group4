@@ -136,4 +136,20 @@ public class ClassDAL {
     public void setRoomNumber(String roomNumber) {
         this.roomNumber = roomNumber; // Cập nhật số phòng của lớp
     }
+
+    @Override
+    public String toString() {
+        return "ClassDAL{" +
+                "classId=" + classId +
+                ", className='" + className + '\'' +
+                ", classLevelName='" + classLevelName + '\'' +
+                ", fullname='" + fullname + '\'' +
+                ", roomNumber='" + roomNumber + '\'' +
+                ", description='" + description + '\'' +
+                ", Email='" + Email + '\'' +
+                ", capacity='" + capacity + '\'' +
+                '}';
+    }
+
+
 }

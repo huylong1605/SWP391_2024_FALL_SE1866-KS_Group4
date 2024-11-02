@@ -41,13 +41,13 @@
         <a href="${pageContext.request.contextPath}/listClass" class="items-nav-manager">
             Manage Class
         </a>
-        <a href="#" class="items-nav-manager">
+        <a href="${pageContext.request.contextPath}/listClass" class="items-nav-manager">
             Manage Term
         </a>
         <a href="${pageContext.request.contextPath}/listClass" class="items-nav-manager">
             Manage Room
         </a>
-        <a href="#" class="items-nav-manager">
+        <a href="${pageContext.request.contextPath}/listClass" class="items-nav-manager">
             Manage Subject
         </a>
         <a href="${pageContext.request.contextPath}/viewStudentList" class="items-nav-manager">

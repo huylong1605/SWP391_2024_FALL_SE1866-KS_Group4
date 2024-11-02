@@ -1,17 +1,19 @@
 
 /*
-     * Copyright(C) 2005,  <SWP_G4>.
-     * <KMS> :
-     *  <Kindergarten Management System>
-     *
-     * Record of change:
-     * DATE                       Version             AUTHOR                       DESCRIPTION
-     * <10/2/2024>                 <1.1>           <Vu Viet Chuc>            <Update List Account method>
-     */
+ * Copyright(C) 2005,  <SWP_G4>.
+ * <KMS> :
+ *  <Kindergarten Management System>
+ *
+ * Record of change:
+ * DATE                       Version             AUTHOR                       DESCRIPTION
+ * <10/2/2024>                 <1.1>           <Vu Viet Chuc>            <Update List Account method>
+ */
 
 package org.example.kindergarten_management_system_g4.controller.accountManagement;
+
 import org.example.kindergarten_management_system_g4.dao.AccountDAO.AccountDAO;
 import org.example.kindergarten_management_system_g4.model.User;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,7 +35,7 @@ import java.util.List;
  * @author Vu Viet Chuc
  */
 
-@WebServlet(value = {"/Views/Admin/accountManage", "/Views/Admin/accountManage/Detail", "/Views/Admin/accountManage/Create" })
+@WebServlet(value = {"/Views/Admin/accountManage", "/Views/Admin/accountManage/Detail", "/Views/Admin/accountManage/Create"})
 public class accountController extends HttpServlet {
     private AccountDAO accountDAO;
 
@@ -48,16 +50,17 @@ public class accountController extends HttpServlet {
      * phương thức sẽ hiển thị chi tiết tài khoản.
      * Nếu không, nó sẽ hiển thị danh sách tài khoản.
      *
-     * @param req Đối tượng HttpServletRequest chứa thông tin yêu cầu từ client.
+     * @param req  Đối tượng HttpServletRequest chứa thông tin yêu cầu từ client.
      * @param resp Đối tượng HttpServletResponse dùng để phản hồi lại client.
      * @throws ServletException nếu có lỗi xảy ra trong quá trình xử lý yêu cầu.
-     * @throws IOException nếu có lỗi xảy ra trong quá trình nhập/xuất dữ liệu.
+     * @throws IOException      nếu có lỗi xảy ra trong quá trình nhập/xuất dữ liệu.
      */
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String path = req.getServletPath();
-        if (path.equals("/Views/Admin/accountManage/Detail")) {
+        if (path.equals("/Views/Admin/accou" +
+                "ntManage/Detail")) {
             // Hien thi chi tiet tai khoan
             showAccountDetails(req, resp);
         } else {
@@ -71,10 +74,10 @@ public class accountController extends HttpServlet {
      * Method này có thể thực hiện nhiều hành động như thay đổi trạng thái tài khoản,
      * tạo tài khoản mới, tìm kiếm tài khoản, và lọc tài khoản theo vai trò.
      *
-     * @param req Đối tượng HttpServletRequest chứa thông tin yêu cầu từ client.
+     * @param req  Đối tượng HttpServletRequest chứa thông tin yêu cầu từ client.
      * @param resp Đối tượng HttpServletResponse dùng để phản hồi lại client.
      * @throws ServletException nếu có lỗi xảy ra trong quá trình xử lý yêu cầu.
-     * @throws IOException nếu có lỗi xảy ra trong quá trình nhập/xuất dữ liệu.
+     * @throws IOException      nếu có lỗi xảy ra trong quá trình nhập/xuất dữ liệu.
      */
 
     @Override
@@ -167,10 +170,10 @@ public class accountController extends HttpServlet {
      * Phương thức này sẽ lấy danh sách tài khoản dựa trên các tham số tìm kiếm
      * và lọc từ yêu cầu và chuyển tiếp đến trang JSP hiển thị danh sách tài khoản.
      *
-     * @param req Đối tượng HttpServletRequest chứa thông tin yêu cầu từ client.
+     * @param req  Đối tượng HttpServletRequest chứa thông tin yêu cầu từ client.
      * @param resp Đối tượng HttpServletResponse dùng để phản hồi lại client.
      * @throws ServletException nếu có lỗi xảy ra trong quá trình xử lý yêu cầu.
-     * @throws IOException nếu có lỗi xảy ra trong quá trình nhập/xuất dữ liệu.
+     * @throws IOException      nếu có lỗi xảy ra trong quá trình nhập/xuất dữ liệu.
      */
 
     // Liet ke danh sach tai khoan voi phan trang
@@ -227,10 +230,10 @@ public class accountController extends HttpServlet {
      * Phương thức này sẽ lấy thông tin chi tiết tài khoản từ cơ sở dữ liệu
      * và chuyển tiếp đến trang JSP hiển thị thông tin tài khoản.
      *
-     * @param req Đối tượng HttpServletRequest chứa thông tin yêu cầu từ client.
+     * @param req  Đối tượng HttpServletRequest chứa thông tin yêu cầu từ client.
      * @param resp Đối tượng HttpServletResponse dùng để phản hồi lại client.
      * @throws ServletException nếu có lỗi xảy ra trong quá trình xử lý yêu cầu.
-     * @throws IOException nếu có lỗi xảy ra trong quá trình nhập/xuất dữ liệu.
+     * @throws IOException      nếu có lỗi xảy ra trong quá trình nhập/xuất dữ liệu.
      */
     //Hien thi chi tiet tai khoan
     private void showAccountDetails(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

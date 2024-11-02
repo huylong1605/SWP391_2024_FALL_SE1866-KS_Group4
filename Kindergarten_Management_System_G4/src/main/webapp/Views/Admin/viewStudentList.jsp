@@ -142,8 +142,10 @@
                                                         <td class="text-center">${student.phoneNumber}</td>
                                                         <td class="text-center">
                                                             <!-- Clickable text to view student details in a modal -->
-                                                            <p style="cursor: pointer;" class="text-secondary font-weight-bold text-xs"
-                                                               onclick="showModal('${student.studentId}', '${student.name}', '${student.dob}', '${student.gender ? 'Male' : 'Female'}', '${student.address}', '${student.phoneNumber}')">View</p>
+                                                             <button type="button" class="btn btn-warning btn-sm"
+                                                               onclick="showModal('${student.studentId}', '${student.name}', '${student.dob}', '${student.gender ? 'Male' : 'Female'}', '${student.address}', '${student.phoneNumber}')">View</button>
+                                                              <button type="button" class="btn btn-danger btn-sm"
+                                                                 onclick="showModalUpdate('${student.studentId}', '${student.name}', '${student.dob}', '${student.gender ? 'Male' : 'Female'}', '${student.address}', '${student.phoneNumber}')">Update</button>
                                                         </td>
                                                     </tr>
                                                     <!-- Increment the student counter -->
@@ -231,6 +233,56 @@
         </div>
     </div>
 
+          <!-- Modal for displaying student information -->
+            <div class="modal fade" id="updateStudentModal" tabindex="-1" aria-labelledby="updateStudentModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form action="updateStudent" method="post">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Update Student Information</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3 d-none">
+                                    <label for="updateStudentId" class="form-label">Id:</label>
+                                    <input type="text" class="form-control" id="updateStudentId" name="studentId" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="updateStudentName" class="form-label">Name:</label>
+                                    <input type="text" class="form-control" id="updateStudentName" name="name"  required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="updateStudentDob" class="form-label">Date of Birth:</label>
+                                    <input type="date" class="form-control" id="updateStudentDob" name="dob" required>
+                                </div>
+                               <div class="mb-3">
+                                   <label for="updateStudentGender" class="form-label">Gender:</label>
+                                   <select class="form-control" id="updateStudentGender" name="gender" required>
+                                       <option value="Male">Male</option>
+                                       <option value="Female">Female</option>
+                                   </select>
+                               </div>
+
+                                <div class="mb-3">
+                                    <label for="updateStudentAddress" class="form-label">Address:</label>
+                                    <input type="text" class="form-control" id="updateStudentAddress" name="address" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="updateStudentPhoneNumber" class="form-label">Phone Number:</label>
+                                    <input type="text" class="form-control" id="updateStudentPhoneNumber" name="phoneNumber" readonly>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
     <script>
         // Function to open the modal with student details
         function showModal(studentId, name, dob, gender, address, phoneNumber) {
@@ -241,6 +293,19 @@
             document.getElementById("studentPhoneNumber").value = phoneNumber;
 
             var modal = new bootstrap.Modal(document.getElementById('studentModal'), { keyboard: false });
+            modal.show();
+        }
+  // Function to open the modal with student details
+        function showModalUpdate(studentId, name, dob, gender, address, phoneNumber) {
+         console.log("Gender value:", gender);
+        document.getElementById("updateStudentId").value = studentId;
+            document.getElementById("updateStudentName").value = name;
+                document.getElementById("updateStudentDob").value = dob;
+                document.getElementById("updateStudentGender").value = gender;
+                document.getElementById("updateStudentAddress").value = address;
+                document.getElementById("updateStudentPhoneNumber").value = phoneNumber;
+
+            var modal = new bootstrap.Modal(document.getElementById('updateStudentModal'), { keyboard: false });
             modal.show();
         }
 

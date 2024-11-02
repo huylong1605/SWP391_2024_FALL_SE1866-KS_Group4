@@ -150,4 +150,25 @@ public class StudentDAO {
             printSQLException(e);
         }
     }
+    public boolean updateStudent(Student student) throws ClassNotFoundException {
+        String UPDATE_STUDENT_SQL =
+                "UPDATE student SET Student_name = ?, Date_of_birth = ?, gender = ? WHERE student_Id = ?";
+
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_STUDENT_SQL)) {
+
+            preparedStatement.setString(1, student.getName());
+            preparedStatement.setDate(2, java.sql.Date.valueOf(student.getDob()));
+            preparedStatement.setBoolean(3, student.isGender());
+            preparedStatement.setInt(4, student.getStudentId());
+
+            int rowsUpdated = preparedStatement.executeUpdate();
+            return rowsUpdated > 0;
+
+        } catch (SQLException e) {
+            printSQLException(e);
+        }
+        return false;
+    }
+
 }

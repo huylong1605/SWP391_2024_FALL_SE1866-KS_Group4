@@ -162,4 +162,6 @@ public interface IClassDAO {
      * @throws SQLException nếu có lỗi xảy ra trong quá trình truy vấn cơ sở dữ liệu
      */
     Boolean deleteClass(int classId) throws SQLException;
+
+
 }

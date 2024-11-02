@@ -8,41 +8,44 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-        <!-- Basic -->
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <!-- Mobile Metas -->
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <!-- Site Metas -->
-        <meta name="keywords" content="" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
+    <!-- Basic -->
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- Site Metas -->
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
 
-        <title>Brighton</title>
+    <title>Brighton</title>
 
-        <!-- slider stylesheet -->
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
+    <!-- slider stylesheet -->
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css"/>
 
-        <!-- bootstrap core css -->
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css" />
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css"/>
 
-        <!-- fonts style -->
-        <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Poppins:400,700|Roboto:400,700&display=swap" rel="stylesheet" />
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Poppins:400,700|Roboto:400,700&display=swap"
+          rel="stylesheet"/>
 
-        <!-- Custom styles for this template -->
-        <link href="${pageContext.request.contextPath}/css/style-Homepage.css" rel="stylesheet" />
-        <!-- responsive style -->
-        <link href="${pageContext.request.contextPath}/css/responsive.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="${pageContext.request.contextPath}/css/style-Homepage.css" rel="stylesheet"/>
+    <!-- responsive style -->
+    <link href="${pageContext.request.contextPath}/css/responsive.css" rel="stylesheet"/>
 
     <style>
-        .parent-items button{
+        .parent-items button {
             margin: 12px 0 12px 0;
             height: 60px;
             background-color: green;
             margin-left: 70px;
             border: 1px solid white;
         }
-        .parent-items button:hover{
+
+        .parent-items button:hover {
             margin: 12px 0 12px 0;
             height: 60px;
             margin-left: 70px;
@@ -64,13 +67,11 @@
                     <button class="btn btn-primary" style="width: 60%">
                         <a class="text-light" href="">View Child Information</a>
                     </button>
-
-
-
                     <button class="btn btn-primary" style="width: 60%">
                         <a class="text-light" href="">View Class Of Child</a>
                     </button>
                     <button class="btn btn-primary" style="width: 60%">
+                        <a class="text-light" href="">View Schedule Of Child </a>
                         <a class="text-light" href="scheduleStudent?parentId=${sessionScope.user.userID}">View Schedule Of Child </a>
                     </button>
                     <button class="btn btn-primary" style="width: 60%">
@@ -104,9 +105,12 @@
                         </h2>
                     </div>
                     <p>
-                        It is a long established fact that a reader will be distracted by the readable content of a page when
-                        looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution
-                        of letters, as opposed to using 'Content here, content here', making it look like readable English. Many
+                        It is a long established fact that a reader will be distracted by the readable content of a page
+                        when
+                        looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
+                        distribution
+                        of letters, as opposed to using 'Content here, content here', making it look like readable
+                        English. Many
                         desktop publishing packages and web
                     </p>
                     <div>
