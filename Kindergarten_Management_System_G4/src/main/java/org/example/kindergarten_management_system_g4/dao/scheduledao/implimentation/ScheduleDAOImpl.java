@@ -58,6 +58,25 @@ public class ScheduleDAOImpl extends DBConnection implements IScheduleDAO {
             "(?, ?, ?, ?, ?);\n";
     public static final String GET_EXIST_SCHEDULE = "SELECT * FROM schedule where date = ? " +
             "AND class_id = ? AND slotId = ?;";
+    public static final String GET_SCHEDULE_BY_ID = "SELECT * FROM schedule where schedule_ID = ?;" ;
+    public static final String GET_SUBJECT_BY_SCHEDULE_ID = "SELECT * FROM subject s join subject_schedule" +
+            " ss on s.subject_ID = ss.subject_ID where ss.schedule_ID = ?;\n" ;
+    public static final String GET_ALL_SCHEDULE_BY_CLASS =
+            "SELECT sch.schedule_ID, sch.day_of_week, sch.date, s.subject_name, " +
+                    "sl.slot_name, sl.start_time, sl.end_time, u.fullname " +
+                    "FROM schedule sch " +
+                    "JOIN slot sl ON sl.slot_id = sch.slotId " +
+                    "JOIN subject_Schedule ss ON sch.Schedule_ID = ss.Schedule_ID " +
+                    "JOIN Subject s ON ss.Subject_ID = s.Subject_ID " +
+                    "JOIN class c ON c.class_ID = sch.class_id " +
+                    "JOIN user u ON u.user_id = c.user_id " +
+                    "WHERE sch.class_id = ? " +
+                    "AND ( " +
+                    "    (sch.date BETWEEN ? AND ?) " +
+                    "    OR (? IS NULL AND ? IS NULL) " +
+                    ") " +
+                    "ORDER BY sch.date;";
+
     private static final Logger LOGGER = Logger.getLogger(ScheduleDAOImpl.class.getName());
 
     @Override
@@ -379,6 +398,127 @@ public class ScheduleDAOImpl extends DBConnection implements IScheduleDAO {
             closeResources(resultSet, preparedStatement, connection);
         }
         return term;
+    }
+
+    @Override
+    public List<ScheduleDAL> getListScheduleByClass(int classId, String startDate, String endDate) throws SQLException {
+        List<ScheduleDAL> listSchedule = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = getConnection();
+            LOGGER.log(Level.INFO, "Connecting to database...");
+            preparedStatement = connection.prepareStatement(GET_ALL_SCHEDULE_BY_CLASS);
+            preparedStatement.setInt(1, classId);
+            if (startDate == null || startDate.isEmpty()) {
+                preparedStatement.setNull(2, java.sql.Types.DATE); // Nếu startDate là null hoặc rỗng, set NULL
+                preparedStatement.setNull(4, java.sql.Types.DATE); // Tương tự cho điều kiện kiểm tra NULL
+            } else {
+                preparedStatement.setDate(2, java.sql.Date.valueOf(startDate));
+                preparedStatement.setDate(4, java.sql.Date.valueOf(startDate));
+            }
+
+
+            if (endDate == null || endDate.isEmpty()) {
+                preparedStatement.setNull(3, java.sql.Types.DATE); // Nếu endDate là null hoặc rỗng, set NULL
+                preparedStatement.setNull(5, java.sql.Types.DATE); // Tương tự cho điều kiện kiểm tra NULL
+            } else {
+                preparedStatement.setDate(3, java.sql.Date.valueOf(endDate));
+                preparedStatement.setDate(5, java.sql.Date.valueOf(endDate));
+            }
+            resultSet = preparedStatement.executeQuery();
+
+
+            while (resultSet.next()) {
+                ScheduleDAL schedule = new ScheduleDAL();
+                schedule.setScheduleId(resultSet.getInt("schedule_ID"));
+                schedule.setSubject_name(resultSet.getString("subject_name"));
+                schedule.setSlotName(resultSet.getString("slot_name"));
+                schedule.setStartTime(resultSet.getString("start_time"));
+                schedule.setEndTime(resultSet.getString("end_time"));
+                schedule.setDayOfWeek(resultSet.getString("day_of_week"));
+                schedule.setDateOfDay(resultSet.getString("date"));
+
+                schedule.setTeacher(resultSet.getString("fullname"));
+
+                // Thêm đối tượng vào danh sách
+                listSchedule.add(schedule);
+
+            }
+
+        } catch (SQLException e) {
+            throw new SQLException("Error list schedule for student " + e.getMessage(), e);
+        } finally {
+            closeResources(resultSet, preparedStatement, connection);
+        }
+        return listSchedule;
+    }
+
+    @Override
+    public Schedule getScheduleById(int scheduleId) throws SQLException {
+        Schedule schedule = new Schedule();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = getConnection();
+            LOGGER.log(Level.INFO, "Connecting to database...");
+            preparedStatement = connection.prepareStatement(GET_SCHEDULE_BY_ID);
+            preparedStatement.setInt(1, scheduleId);
+            resultSet = preparedStatement.executeQuery();
+
+            // Duyệt qua các kết quả và tạo đối tượng ClassDAL từ mỗi dòng kết quả
+            while (resultSet.next()) {
+
+                schedule.setScheduleId(resultSet.getInt("schedule_ID"));
+                schedule.setDayOfWeek(resultSet.getString("day_of_week"));
+                schedule.setDateOfDay(String.valueOf(resultSet.getDate("date")));
+                schedule.setClassId(resultSet.getInt("class_id"));
+                schedule.setSlotId(resultSet.getInt("slotId"));
+                schedule.setTermId(resultSet.getInt("term_ID"));
+
+
+                // Thêm đối tượng vào danh sách
+            }
+
+        } catch (SQLException e) {
+            throw new SQLException("Error get Schedule by Id " + e.getMessage(), e);
+        } finally {
+            closeResources(resultSet, preparedStatement, connection);
+        }
+        return schedule;
+    }
+
+    @Override
+    public Subject getSubjectByScheduleId(int scheduleId) throws SQLException {
+        Subject subject = new Subject();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = getConnection();
+            LOGGER.log(Level.INFO, "Connecting to database...");
+            preparedStatement = connection.prepareStatement(GET_SUBJECT_BY_SCHEDULE_ID);
+            preparedStatement.setInt(1, scheduleId);
+            resultSet = preparedStatement.executeQuery();
+
+            // Duyệt qua các kết quả và tạo đối tượng ClassDAL từ mỗi dòng kết quả
+            while (resultSet.next()) {
+
+                subject.setSubjectId(resultSet.getInt("subject_ID"));
+                // Thêm đối tượng vào danh sách
+            }
+
+        } catch (SQLException e) {
+            throw new SQLException("Error get Schedule by Id " + e.getMessage(), e);
+        } finally {
+            closeResources(resultSet, preparedStatement, connection);
+        }
+        return subject;
     }
 
 

@@ -32,4 +32,10 @@ public interface IScheduleDAO {
     Boolean getSchedule(Schedule schedule) throws SQLException;
 
     Term getTermById(int TermId) throws SQLException;
+
+    List<ScheduleDAL>  getListScheduleByClass(int classId, String startDate, String endDate) throws SQLException;
+
+    Schedule  getScheduleById(int scheduleId) throws SQLException;
+
+    Subject getSubjectByScheduleId(int scheduleId) throws SQLException;
 }

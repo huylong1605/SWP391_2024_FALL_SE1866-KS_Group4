@@ -13,6 +13,8 @@ public class ScheduleDAL {
     private String className;
     private String room;
     private String teacher;
+    private String start_Date;
+    private String end_Date;
     public ScheduleDAL() {
     }
 
@@ -116,5 +118,38 @@ public class ScheduleDAL {
 
     public void setDateOfDay(String dateOfDay) {
         this.dateOfDay = dateOfDay;
+    }
+
+    public String getStart_Date() {
+        return start_Date;
+    }
+
+    public void setStart_Date(String start_Date) {
+        this.start_Date = start_Date;
+    }
+
+    public String getEnd_Date() {
+        return end_Date;
+    }
+
+    public void setEnd_Date(String end_Date) {
+        this.end_Date = end_Date;
+    }
+
+    @Override
+    public String toString() {
+        return "ScheduleDAL{" +
+                "scheduleId=" + scheduleId +
+                ", subject_name='" + subject_name + '\'' +
+                ", termName='" + termName + '\'' +
+                ", slotName='" + slotName + '\'' +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                ", dayOfWeek='" + dayOfWeek + '\'' +
+                ", dateOfDay='" + dateOfDay + '\'' +
+                ", className='" + className + '\'' +
+                ", room='" + room + '\'' +
+                ", teacher='" + teacher + '\'' +
+                '}';
     }
 }

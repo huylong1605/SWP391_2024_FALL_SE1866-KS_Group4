@@ -60,6 +60,7 @@
              Manage Activity
         </a>
         <a href="${pageContext.request.contextPath}/createSchedule" class="items-nav-manager">
+        <a href="${pageContext.request.contextPath}/listSchedule" class="items-nav-manager">
             Manage Schedule
         </a>
     </div>

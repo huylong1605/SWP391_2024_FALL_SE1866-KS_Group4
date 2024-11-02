@@ -47,8 +47,8 @@
         <a href="#" class="items-nav-manager">
             Manage Room
         </a>
-        <a href="#" class="items-nav-manager">
-            Manage Student
+        <a href="${pageContext.request.contextPath}/Views/Teacher/teacherSchedule?teacherId=${sessionScope.user.userID}" class="items-nav-manager">
+            View Schedule
         </a>
     </div>
     <div class=" aa d-flex justify-content-center align-items-center">
