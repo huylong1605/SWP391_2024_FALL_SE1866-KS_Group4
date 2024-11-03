@@ -3,12 +3,14 @@ package org.example.kindergarten_management_system_g4.controller.scheduleManagem
 import org.example.kindergarten_management_system_g4.dao.scheduledao.IScheduleDAO;
 import org.example.kindergarten_management_system_g4.dao.scheduledao.implimentation.ScheduleDAOImpl;
 import org.example.kindergarten_management_system_g4.model.ScheduleDAL;
+import org.example.kindergarten_management_system_g4.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.DayOfWeek;
@@ -95,7 +97,7 @@ public class ScheduleListOfStudent extends HttpServlet {
         req.setAttribute("endDate", endDate); // truyền endDate vào JSP
 
         try {
-            // Lấy lịch của học sinh dựa vào parentId, startDate và endDate
+
             List<ScheduleDAL> listScheduleStudent = iScheduleDAO.getScheduleOfStudent(Integer.parseInt(parentIds), startDate, endDate);
             req.setAttribute("listScheduleStudent", listScheduleStudent);
 
