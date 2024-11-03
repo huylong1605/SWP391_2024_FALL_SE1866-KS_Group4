@@ -167,8 +167,16 @@ CREATE TABLE Activity_Registrations (
     FOREIGN KEY (student_ID) REFERENCES Student(student_ID)  
 );
 
+ALTER TABLE Attendance
+ADD UNIQUE KEY unique_attendance (student_ID, date, slotId);
+ALTER TABLE kindergartenmanagementsystem.application
+ADD COLUMN status ENUM('Approved', 'Pending', 'Rejected') NOT NULL DEFAULT 'Pending';
+
+
+
 -- Dữ liệu mẫu cho bảng Role
 INSERT INTO Role (Role_name) VALUES 
+
 ('Admin'), 
 ('Teacher'), 
 ('Parent'), 

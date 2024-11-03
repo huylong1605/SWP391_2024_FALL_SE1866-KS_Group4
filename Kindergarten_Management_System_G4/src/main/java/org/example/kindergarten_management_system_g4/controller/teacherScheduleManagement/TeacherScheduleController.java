@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -26,13 +27,16 @@ public class TeacherScheduleController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Lấy teacherId từ tham số yêu cầu
         int teacherId = Integer.parseInt(req.getParameter("teacherId"));
+        HttpSession session = req.getSession();
 
+        // Lấy thông báo từ phiên nếu có
+        String changeSlotSuccessful = (String) session.getAttribute("changeSlotSuccessful");
         // Lấy danh sách lịch dạy của giáo viên
         List<TeacherSchedule> teachingSchedules = teachingScheduleDAO.getTeachingSchedules(teacherId);
 
         // Đặt danh sách lịch dạy vào thuộc tính request để hiển thị trên JSP
         req.setAttribute("teachingSchedules", teachingSchedules);
-
+        req.setAttribute("changeSlotSuccessful", changeSlotSuccessful);
         // Chuyển hướng đến trang JSP để hiển thị lịch dạy
         req.getRequestDispatcher("/Views/Teacher/teacherSchedule.jsp").forward(req, resp);
     }

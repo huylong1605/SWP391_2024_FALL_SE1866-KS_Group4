@@ -35,7 +35,7 @@ public class Slot {
         this.slotName = slotName;
     }
 
-    public Time getStatrTime(Time time) {
+    public Time getStartTime() {
         return startTime;
     }
 
