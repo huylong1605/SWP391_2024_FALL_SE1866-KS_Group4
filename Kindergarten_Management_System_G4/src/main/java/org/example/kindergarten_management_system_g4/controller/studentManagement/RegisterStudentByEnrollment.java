@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -60,10 +61,21 @@ public class RegisterStudentByEnrollment extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Lấy danh sách tất cả người dùng từ DAO
         List<User> userList =  userProfileDAO.getAllUserParent();
-        System.out.println(userList);
-
+        for (User usercheck: userList) {
+            try {
+                List<User> userListCheck = new ArrayList<>();
+                if (studentDAO.getStudentsByUserId(usercheck.getUserID()).size()==0){
+                    System.out.println("Test"+usercheck.getUserID());
+                 userListCheck.add(usercheck);
+                    System.out.println("Test02"+userListCheck.size());
+                }
+                req.setAttribute("userList", userListCheck);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
         // Thiết lập danh sách người dùng làm thuộc tính của request để hiển thị trong giao diện
-        req.setAttribute("userList", userList);
+
 
         // Chuyển hướng tới trang JSP
         req.getRequestDispatcher("/registerStudentByEnrollment.jsp").forward(req, resp);
@@ -91,7 +103,6 @@ public class RegisterStudentByEnrollment extends HttpServlet {
         boolean gender = Boolean.parseBoolean(req.getParameter("gender"));  // Giới tính của sinh viên
 
         try {
-
                 // Nếu sinh viên chưa tồn tại, tạo đối tượng sinh viên mới
                 Student newStudent = new Student(0, dob, gender, name,userId); // studentId sẽ được tự động tạo
                 // Thêm sinh viên mới vào cơ sở dữ liệu

@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Lớp RegisterStudentServlet chịu trách nhiệm xử lý các yêu cầu HTTP POST để đăng ký sinh viên mới từ phía phụ huynh.
@@ -68,11 +69,15 @@ public class RegisterStudentServlet extends HttpServlet {
         LocalDate dob = LocalDate.parse(req.getParameter("dob"));  // Ngày sinh của sinh viên
         boolean gender = Boolean.parseBoolean(req.getParameter("gender"));  // Giới tính của sinh viên
 
+
         try {
+            System.out.println(" Test"+studentDAO.getStudentsByUserId(user.getUserID()).size());
             // Kiểm tra sinh viên đã tồn tại dựa trên tên, ngày sinh, và ID người dùng
-            if (studentDAO.isStudentExist(name, dob, user.getUserID())) {
+            if (studentDAO.isStudentExist(name, dob, user.getUserID())||studentDAO.getStudentsByUserId(user.getUserID()).size()>0) {
                 // Nếu sinh viên đã tồn tại, trả về lỗi xung đột (409)
-                resp.sendError(HttpServletResponse.SC_CONFLICT, "Student is already registered");
+                req.setAttribute("registrationSuccess", "Register Erroll !!!!! ");
+                // Chuyển tiếp yêu cầu đến trang chủ của phụ huynh
+                req.getRequestDispatcher("/Views/HomePage/HomePage.jsp").forward(req, resp);
             } else {
                 // Nếu sinh viên chưa tồn tại, tạo đối tượng sinh viên mới
                 Student newStudent = new Student(0, dob, gender, name, user.getUserID()); // studentId sẽ được tự động tạo
