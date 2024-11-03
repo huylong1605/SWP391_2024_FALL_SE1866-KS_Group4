@@ -43,6 +43,13 @@
         .wrapper{
             height: 860px;
         }
+
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
     </style>
 </head>
 <body class="g-sidenav-show bg-gray-200">
@@ -70,12 +77,6 @@
 
         <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg col-md-10">
             <!-- Navbar -->
-            <c:if test="${not empty sessionScope.successMessage}">
-                <div id="success-alert-create" style="width: 93%; background-color: #06bf06" class="alert alert-success text-light text-center mx-auto" role="alert">
-                        ${sessionScope.successMessage}
-                    <c:remove var="successMessage" scope="session" />
-                </div>
-            </c:if>
             <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
                 <div class="d-flex py-1 px-3 justify-content-between align-items-center" style="width: 100%;">
                     <nav aria-label="breadcrumb">
@@ -83,7 +84,7 @@
                             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
                             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Teacher</li>
                         </ol>
-                        <h4 class="font-weight-bolder mb-0">Teacher Schedule</h4>
+                        <h4 class="font-weight-bolder mb-0">Teacher Attendance</h4>
                     </nav>
 
                 </div>
@@ -92,123 +93,123 @@
             <!-- End Navbar -->
             <div class="container-fluid py-4">
                 <div class="row">
+                    <form action="${pageContext.request.contextPath}/Views/Teacher/attendStudent" method="post">
+                        <input type="hidden" name="classId" value="${classId}">
+                        <input type="hidden" name="date" value="${date}">
+                        <input type="hidden" name="slotId" value="${slotId}">
+                        <input type="hidden" name="className" value="${className}"> <!-- Thêm dòng này -->
+                        <input type="hidden" name="slotName" value="${slotName}">
                     <div class="col-12">
                         <div class="card my-4">
                             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                                 <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                                    <h5 class="text-white text-capitalize ps-3">Class: <span style="font-size: 30px">${teachingSchedules[0].className}</span></h5>
-                                    <h5 class="text-white text-capitalize ps-3">Room: <span style="font-size: 30px">${teachingSchedules[0].room}</span></h5>
+                                    <h5 class="text-white text-capitalize ps-3">Class: <span style="font-size: 20px">${className}</span></h5>
+                                    <h5 class="text-white text-capitalize ps-3">Date: <span style="font-size: 20px">${date}</span></h5>
+                                    <h5 class="text-white text-capitalize ps-3">Slot: <span style="font-size: 20px">${slotName}</span></h5>
                                 </div>
                             </div>
                             <div class="card-body px-0 pb-2">
                                 <div class="table-responsive p-0">
+
                                     <c:choose>
-                                        <c:when test="${empty teachingSchedules}">
+                                        <c:when test="${empty attendanceList}">
                                             <div class="text-center text-danger">
                                                 <p>Dont have any schedule !!!</p>
                                             </div>
                                         </c:when>
                                         <c:otherwise>
+
                                             <table class="table align-items-center mb-0 table-responsive">
                                                 <thead>
                                                 <tr>
-                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date</th>
-                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Day Of Week</th>
-                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Subject</th>
-                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Slot</th>
-                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Time Start</th>
-                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Time End</th>
+                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">STT</th>
+                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Student ID</th>
+                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Student Name</th>
+                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Date of Birth</th>
+                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Attendance Status</th>
                                                     <th class="text-secondary opacity-7"></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <c:forEach var="schedule" items="${teachingSchedules}" varStatus="status">
+                                                <c:forEach var="student" items="${attendanceList}" varStatus="status">
                                                     <tr style="font-weight: bold">
-                                                        <td class="text-center">${schedule.date}</td>
-                                                        <td class="text-center">${schedule.dayOfWeek}</td>
-                                                        <td class="text-center">${schedule.subjectName}</td>
-                                                        <td class="text-center">${schedule.slotName}</td>
-                                                        <td class="text-center">${schedule.startTime}</td>
-                                                        <td class="text-center">${schedule.endTime}</td>
-                                                        <td class="align-middle">
-                                                            <a href="#" class="text-light font-weight-bold text-xs"
-                                                               style="background-color: #5151ff; padding: 5px; color: white; border-radius: 10px; margin-right: 5px"
-                                                               data-toggle="tooltip" data-original-title="View Details">
-                                                                Change Slot
-                                                            </a>
-                                                            <a href="${pageContext.request.contextPath}/Views/Teacher/attendStudent?classId=${schedule.classId}&date=${schedule.date}&slotId=${schedule.slotId}&className=${schedule.className}&slotName=${schedule.slotName}"
-                                                               class="text-light font-weight-bold text-xs"
-                                                               style="background-color: #5151ff; padding: 5px; color: white; border-radius: 10px"
-                                                               data-toggle="tooltip" data-original-title="View Details">Attendance
-                                                            </a>
+                                                        <td class="text-center">${status.index + 1}</td>
+                                                        <td class="text-center">${student.studentId}</td>
+                                                        <td class="text-center">${student.studentName}</td>
+                                                        <td class="text-center">${student.dateOfBirth}</td>
+                                                        <td class="text-center">
+                                                            <span id="statusText_${student.studentId}">${student.attendStatus ? 'Present' : 'Absent'}</span>
+                                                            <input type="hidden" id="attendStatus_${student.studentId}" name="attendStatus" value="${student.attendStatus}">
+                                                            <input type="hidden" name="studentId" value="${student.studentId}"> <!-- Thêm dòng này -->
+                                                        </td>
+<%--                                                        <td class="align-middle">--%>
+<%--                                                            <a href="#" class="text-light font-weight-bold text-xs"--%>
+<%--                                                               style="background-color: #5151ff; padding: 5px; color: white; border-radius: 10px"--%>
+<%--                                                               data-toggle="tooltip" data-original-title="View Details">--%>
+<%--                                                                Change Slot--%>
+<%--                                                            </a>--%>
+<%--                                                        </td>--%>
+                                                        <td class="text-center">
+                                                            <button style="margin-top: 15px;" type="button" class="btn btn-warning" onclick="toggleAttendance(${student.studentId})">
+                                                                Take Attendance
+                                                            </button>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
                                                 </tbody>
                                             </table>
+
                                         </c:otherwise>
                                     </c:choose>
                                 </div>
                             </div>
                         </div>
-                        <a href="${pageContext.request.contextPath}/Views/Teacher/listAttendanceClass?classId=${teachingSchedules[0].classId}" class="btn btn-primary">View list attendance</a>
                     </div>
-                </div>
-            </div>
-
-            <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm deletion</h5>
-                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Are you sure you want to delete this student?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-danger" id="confirmDeleteButton">Delete</button>
-                        </div>
+                    <div class="text-center d-flex">
+                        <a href="${pageContext.request.contextPath}/Views/Teacher/teacherSchedule?teacherId=${sessionScope.user.userID}" class="btn btn-primary">Back To Schedule</a>
+                        <button type="submit" class="btn btn-primary" style="background-color: #4b4bff; margin-left: 15px">Save Attendance</button>
                     </div>
-                </div>
-            </div>
-
-            <div class="modal fade" id="deleteSuccessModal" tabindex="-1" role="dialog" aria-labelledby="deleteSuccessModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="deleteSuccessModalLabel">Successfully</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            This student delete successfully
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </main>
     </div>
 </div>
 
-<script>
-    window.onload = function() {
-        var alert = document.getElementById("success-alert-create");
-        if (alert) {
-            setTimeout(function() {
-                alert.style.display = 'none';
-            }, 3000);
-        }
-    };
-</script>
+<div class="toast-container text-center">
+    <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3000">
+        <div class="toast-header">
+            <strong class="mr-auto text-success">Success</strong>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="toast-body">
+            ${sessionScope.successMessage}
+        </div>
+    </div>
+</div>
 
+
+<script>
+    function toggleAttendance(studentId) {
+        var attendanceStatusElement = document.getElementById("attendStatus_" + studentId);
+        var currentStatus = attendanceStatusElement.value === "true";
+        var newStatus = !currentStatus;
+        attendanceStatusElement.value = newStatus;
+        var statusTextElement = document.getElementById("statusText_" + studentId);
+        statusTextElement.textContent = newStatus ? "Present" : "Absent";
+    }
+
+    // Hiển thị Toast nếu có thông báo thành công trong session
+    $(document).ready(function() {
+        <c:if test="${not empty sessionScope.successMessage}">
+        $('#successToast').toast('show');
+        <%-- Xóa thông báo sau khi hiển thị --%>
+        <c:remove var="successMessage" scope="session" />
+        </c:if>
+    });
+</script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5/7mA3J+O2/7V/KPj8o3cp7V/e4URK5M8nqFf1x7" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
