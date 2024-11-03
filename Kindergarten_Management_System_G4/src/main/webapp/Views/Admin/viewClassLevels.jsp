@@ -34,63 +34,7 @@
     <div class="containerAll">
         <div class="wrapper">
             <!-- Sidebar section -->
-            <aside id="sidebar" class="expand">
-                            <div class="d-flex">
-                                <!-- Button to toggle sidebar visibility -->
-                                <button class="toggle-btn" type="button">
-                                    <i class="lni lni-grid-alt"></i>
-                                </button>
-                                <!-- Sidebar logo -->
-                                <div class="sidebar-logo">
-                                    <a href="#">Admin Manage</a>
-                                </div>
-                            </div>
-                            <!-- Sidebar navigation items -->
-                            <ul class="sidebar-nav">
-                                            <li class="sidebar-item">
-                                                <a href="${pageContext.request.contextPath}/Views/Admin/accountManage" class="sidebar-link">
-                                                    <i class="lni lni-user"></i>
-                                                    <span>Manage Account</span>
-                                                </a>
-                                            </li>
-                                            <li class="sidebar-item">
-                                                <a href="${pageContext.request.contextPath}/Views/Admin/notifications" class="sidebar-link">
-                                                    <i class="lni lni-agenda"></i>
-                                                    <span>Manage Notification</span>
-                                                </a>
-                                            </li>
-                                            <li class="sidebar-item">
-                                                <a href="${pageContext.request.contextPath}/subject" class="sidebar-link">
-                                                    <i class="lni lni-graduation"></i>
-                                                    <span>Manage Subject</span>
-                                                </a>
-                                            </li>
-                                            <li class="sidebar-item">
-                                                <a href="${pageContext.request.contextPath}/viewStudentList" class="sidebar-link">
-                                                    <i class="lni lni-graduation"></i>
-                                                    <span>View List Student</span>
-                                                </a>
-                                            </li>
-                                            <li class="sidebar-item">
-                                                <a href="${pageContext.request.contextPath}/listClass" class="sidebar-link">
-                                                    <i class="lni lni-graduation"></i>
-                                                    <span>View list class</span>
-                                                </a>
-                                            </li>
-                                            <li class="sidebar-item">
-                                                                                <a href="${pageContext.request.contextPath}/classLevel" class="sidebar-link">
-                                                                                    <i class="lni lni-graduation"></i>
-                                                                                    <span>Manage Class Level</span>
-                                                                                </a>
-                                            </li>
-                                            <li class="sidebar-item">
-                                                                                                                            <a href="${pageContext.request.contextPath}/view-extracurricular-activities" class="sidebar-link">
-                                                                                                                                <i class="lni lni-graduation"></i>
-                                                                                                                                <span>Manage Activity</span>
-                                                                                                                            </a>
-                                                                                        </li>
-                                        </ul>
-                        </aside>
+            <%@ include file="../common/sidebar_manage.jsp" %>.
 
             <!-- Main content section -->
             <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg col-md-10">

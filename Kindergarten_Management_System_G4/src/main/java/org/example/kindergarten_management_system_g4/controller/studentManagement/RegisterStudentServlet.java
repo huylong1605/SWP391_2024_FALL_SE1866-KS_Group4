@@ -78,8 +78,10 @@ public class RegisterStudentServlet extends HttpServlet {
                 Student newStudent = new Student(0, dob, gender, name, user.getUserID()); // studentId sẽ được tự động tạo
                 // Thêm sinh viên mới vào cơ sở dữ liệu
                 studentDAO.addStudent(newStudent);
+                // Set a success attribute to display the modal
+                req.setAttribute("registrationSuccess", "Register Successful !!!!! ");
                 // Chuyển tiếp yêu cầu đến trang danh sách sinh viên
-                req.getRequestDispatcher("/viewStudentList").forward(req, resp);
+                req.getRequestDispatcher("/Views/HomePage/HomePage.jsp").forward(req, resp);
             }
             // Chuyển tiếp yêu cầu đến trang JSP để hiển thị
             req.getRequestDispatcher("/registerStudent.jsp").forward(req, resp);

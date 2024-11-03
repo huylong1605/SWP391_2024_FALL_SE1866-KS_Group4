@@ -97,7 +97,7 @@ public class RegisterStudentByEnrollment extends HttpServlet {
                 // Thêm sinh viên mới vào cơ sở dữ liệu
                 studentDAO.addStudent(newStudent);
                 // Chuyển tiếp yêu cầu đến trang danh sách sinh viên
-                req.getRequestDispatcher("/viewStudentList").forward(req, resp);
+            req.getRequestDispatcher("/Views/HomePage/HomePageForEnrollment.jsp").forward(req, resp);
 
         } catch (Exception e) {
             // Xử lý ngoại lệ và gửi lỗi máy chủ nội bộ (500)

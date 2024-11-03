@@ -35,8 +35,8 @@
 
 <div class="container-fluid home-manager">
     <div class="item-nav-manager d-flex justify-content-center">
-        <a href="#" class="items-nav-manager">
-            Register Account For Parent
+        <a href="${pageContext.request.contextPath}/registerStudentByEnrollment" class="items-nav-manager">
+            Register New Information Student
         </a>
        
     </div>
