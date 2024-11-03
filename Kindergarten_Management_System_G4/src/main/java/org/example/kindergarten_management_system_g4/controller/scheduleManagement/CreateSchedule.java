@@ -9,7 +9,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -43,6 +42,7 @@ public class CreateSchedule extends HttpServlet {
             List<Subject> listSubject = iScheduleDAO.getListSubject();
             List<Classes> listClass = iScheduleDAO.getListClass();
             List<Slot> listSlot = iScheduleDAO.getListSlot();
+            LOGGER.info(listSlot.toString());
             req.setAttribute("listTerm", listTerm);
             req.setAttribute("listSubject", listSubject);
             req.setAttribute("listClass", listClass);
@@ -56,7 +56,7 @@ public class CreateSchedule extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String dayOfWeek = req.getParameter("dayOfWeek");
+        /*String dayOfWeek = req.getParameter("dayOfWeek");*/
         String dateOfDay = req.getParameter("date");
         int termId = Integer.parseInt(req.getParameter("term_id"));
         int subjectId = Integer.parseInt(req.getParameter("subject_id"));
@@ -80,13 +80,19 @@ public class CreateSchedule extends HttpServlet {
             calendar.setTime(selectedDate);
 
             int dayOfWeekInt = calendar.get(Calendar.DAY_OF_WEEK);  // Lấy số đại diện cho ngày trong tuần
-            String selectedDayOfWeek = getDayOfWeekString(dayOfWeekInt);
-            if (!selectedDayOfWeek.equalsIgnoreCase(dayOfWeek)) {
+            String dayOfWeek = getDayOfWeekString(dayOfWeekInt);
+
+            if (dayOfWeek.equalsIgnoreCase("SUNDAY")) {
+                data(req, resp);
+                req.setAttribute("sunday", "can not add class in sunday");
+                req.getRequestDispatcher("createSchedule.jsp").forward(req, resp);
+            }
+           /* if (!selectedDayOfWeek.equalsIgnoreCase(dayOfWeek)) {
                 data(req, resp);
                 req.setAttribute("DayNotMatch", "ngày không khớp");
                 req.getRequestDispatcher("createSchedule.jsp").forward(req, resp);
                 return;
-            }
+            }*/
             Schedule scheduleCheck = new Schedule(dateOfDay, classId, slotId);
             Boolean isCheckExistSchedule = iScheduleDAO.getSchedule(scheduleCheck);
             if (isCheckExistSchedule == true) {
@@ -114,11 +120,14 @@ public class CreateSchedule extends HttpServlet {
 
             Schedule schedule = new Schedule(dayOfWeek, dateOfDay, termId, classId, slotId);
             iScheduleDAO.addSchedule(schedule, subjectId);
+
+            req.setAttribute("AddSuccessfully", "Đăng ký lớp vào lịch học thành công");
+            req.getRequestDispatcher("createSchedule.jsp").forward(req, resp);
             /*HttpSession session = req.getSession();
             // Đặt thông báo thành công vào session
             session.setAttribute("AddScheduleSuccessful", "Add class to schedule successful");*/
             // Chuyển hướng đến danh sách lớp
-            resp.sendRedirect("listSchedule");
+            /*resp.sendRedirect("listSchedule");*/
         } catch (ParseException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {

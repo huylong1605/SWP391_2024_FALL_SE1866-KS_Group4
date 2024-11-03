@@ -38,4 +38,6 @@ public interface IScheduleDAO {
     Schedule  getScheduleById(int scheduleId) throws SQLException;
 
     Subject getSubjectByScheduleId(int scheduleId) throws SQLException;
+
+    Boolean editSchedule(Schedule schedule, int subjectId) throws SQLException;
 }

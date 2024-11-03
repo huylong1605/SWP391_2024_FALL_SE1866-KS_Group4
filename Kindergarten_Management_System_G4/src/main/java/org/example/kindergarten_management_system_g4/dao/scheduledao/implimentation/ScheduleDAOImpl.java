@@ -56,11 +56,15 @@ public class ScheduleDAOImpl extends DBConnection implements IScheduleDAO {
     public static final String GET_ALL_SLOT = "SELECT * FROM slot;";
     public static final String INSERT_SCHEDULE = "INSERT INTO Schedule (day_of_week, date, term_ID, class_id, slotId) VALUES\n" +
             "(?, ?, ?, ?, ?);\n";
+
+    public static final String EDIT_SCHEDULE = "UPDATE Schedule SET day_of_week = ?, date = ?, term_ID = ?" +
+            ", class_id = ?, slotId = ? WHERE schedule_ID = ?;\n";
     public static final String GET_EXIST_SCHEDULE = "SELECT * FROM schedule where date = ? " +
-            "AND class_id = ? AND slotId = ?;";
+            "AND class_id = ? AND slotId = ? and schedule_ID != ?;";
     public static final String GET_SCHEDULE_BY_ID = "SELECT * FROM schedule where schedule_ID = ?;" ;
-    public static final String GET_SUBJECT_BY_SCHEDULE_ID = "SELECT * FROM subject s join subject_schedule" +
-            " ss on s.subject_ID = ss.subject_ID where ss.schedule_ID = ?;\n" ;
+    public static final String GET_SUBJECT_BY_SCHEDULE_ID = "SELECT s.subject_ID ,s.subject_name FROM " +
+            "subject s join " +
+            "subject_schedule ss on s.subject_ID = ss.subject_ID where ss.schedule_ID = ?;\n" ;
     public static final String GET_ALL_SCHEDULE_BY_CLASS =
             "SELECT sch.schedule_ID, sch.day_of_week, sch.date, s.subject_name, " +
                     "sl.slot_name, sl.start_time, sl.end_time, u.fullname " +
@@ -69,7 +73,8 @@ public class ScheduleDAOImpl extends DBConnection implements IScheduleDAO {
                     "JOIN subject_Schedule ss ON sch.Schedule_ID = ss.Schedule_ID " +
                     "JOIN Subject s ON ss.Subject_ID = s.Subject_ID " +
                     "JOIN class c ON c.class_ID = sch.class_id " +
-                    "JOIN user u ON u.user_id = c.user_id " +
+                    "JOIN user u ON u.user_id = c.user_id" +
+                    " " +
                     "WHERE sch.class_id = ? " +
                     "AND ( " +
                     "    (sch.date BETWEEN ? AND ?) " +
@@ -247,7 +252,7 @@ public class ScheduleDAOImpl extends DBConnection implements IScheduleDAO {
                 Slot slot = new Slot();
                 slot.setSlotId(resultSet.getInt("slot_id"));
                 slot.setSlotName(resultSet.getString("slot_name"));
-                slot.setStatrTime(resultSet.getTime("start_time"));
+                slot.setStartTime(resultSet.getTime("start_time"));
                 slot.setEndTime(resultSet.getTime("end_time"));
 
 
@@ -345,6 +350,7 @@ public class ScheduleDAOImpl extends DBConnection implements IScheduleDAO {
             preparedStatement.setString(1, schedule.getDateOfDay());
             preparedStatement.setInt(2, schedule.getClassId());
             preparedStatement.setInt(3, schedule.getSlotId());
+            preparedStatement.setInt(4, schedule.getScheduleId());
 
             LOGGER.log(Level.INFO, "Executing query to check schedule existence: {0}", preparedStatement);
 
@@ -510,16 +516,73 @@ public class ScheduleDAOImpl extends DBConnection implements IScheduleDAO {
             while (resultSet.next()) {
 
                 subject.setSubjectId(resultSet.getInt("subject_ID"));
+                subject.setSubjectName(resultSet.getString("subject_name"));
                 // Thêm đối tượng vào danh sách
             }
 
         } catch (SQLException e) {
-            throw new SQLException("Error get Schedule by Id " + e.getMessage(), e);
+            throw new SQLException("Error get subject by Schedule Id " + e.getMessage(), e);
         } finally {
             closeResources(resultSet, preparedStatement, connection);
         }
         return subject;
     }
+
+    @Override
+    public Boolean editSchedule(Schedule schedule, int subjectId) throws SQLException {
+        Boolean isEdit = false;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        PreparedStatement scheduleSubjectStatement = null;
+
+        try {
+            // Kết nối đến cơ sở dữ liệu
+            connection = getConnection();
+            LOGGER.log(Level.INFO, "Connecting to database...");
+
+            // Chuẩn bị câu lệnh SQL để cập nhật bảng schedule
+            preparedStatement = connection.prepareStatement(EDIT_SCHEDULE);
+
+            // Thiết lập các giá trị cho câu lệnh UPDATE vào bảng schedule
+            preparedStatement.setString(1, schedule.getDayOfWeek());
+            preparedStatement.setString(2, schedule.getDateOfDay());
+            preparedStatement.setInt(3, schedule.getTermId());
+            preparedStatement.setInt(4, schedule.getClassId());
+            preparedStatement.setInt(5, schedule.getSlotId());
+            preparedStatement.setInt(6, schedule.getScheduleId());
+
+            LOGGER.log(Level.INFO, "Executing edit schedule: {0}", preparedStatement);
+
+            // Thực thi câu lệnh update
+            int result = preparedStatement.executeUpdate();
+
+            // Kiểm tra xem có bản ghi nào được cập nhật thành công không
+            if (result > 0) {
+                isEdit = true;
+                LOGGER.log(Level.INFO, "Schedule edited successfully");
+
+                // Cập nhật bảng subject_schedule
+                String updateScheduleSubjectSQL = "UPDATE subject_schedule SET subject_ID = ? WHERE schedule_ID = ?";
+                scheduleSubjectStatement = connection.prepareStatement(updateScheduleSubjectSQL);
+                scheduleSubjectStatement.setInt(1, subjectId);
+                scheduleSubjectStatement.setInt(2, schedule.getScheduleId());
+
+                // Thực thi câu lệnh update vào bảng subject_schedule
+                scheduleSubjectStatement.executeUpdate();
+                LOGGER.log(Level.INFO, "Schedule_subject relation updated successfully for schedule_id {0} and subject_id {1}",
+                        new Object[]{schedule.getScheduleId(), subjectId});
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Error updating schedule: " + e.getMessage(), e);
+        } finally {
+            // Đóng các tài nguyên
+            closeResources(null, preparedStatement, connection);
+            closeResources(null, scheduleSubjectStatement, null);
+        }
+
+        return isEdit;
+    }
+
 
 
     /**

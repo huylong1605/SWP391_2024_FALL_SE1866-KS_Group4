@@ -21,6 +21,13 @@ public class Schedule {
     }
 
     public Schedule(String dateOfDay, int classId, int slotId) {
+
+        this.dateOfDay = dateOfDay;
+        this.classId = classId;
+        this.slotId = slotId;
+    }
+    public Schedule(int scheduleId,String dateOfDay, int classId, int slotId) {
+        this.scheduleId = scheduleId;
         this.dateOfDay = dateOfDay;
         this.classId = classId;
         this.slotId = slotId;
