@@ -10,7 +10,7 @@
 
 package org.example.kindergarten_management_system_g4.controller.studentManagement;
 
-import org.example.kindergarten_management_system_g4.dao.StudentDAO;
+import org.example.kindergarten_management_system_g4.dao.StudentDAO.StudentDAO;
 import org.example.kindergarten_management_system_g4.model.Student;
 import org.example.kindergarten_management_system_g4.model.User;
 
@@ -80,7 +80,7 @@ public class RegisterStudentServlet extends HttpServlet {
                 studentDAO.addStudent(newStudent);
                 // Set a success attribute to display the modal
                 req.setAttribute("registrationSuccess", "Register Successful !!!!! ");
-                // Chuyển tiếp yêu cầu đến trang danh sách sinh viên
+                // Chuyển tiếp yêu cầu đến trang chủ của phụ huynh
                 req.getRequestDispatcher("/Views/HomePage/HomePage.jsp").forward(req, resp);
             }
             // Chuyển tiếp yêu cầu đến trang JSP để hiển thị

@@ -127,15 +127,15 @@
                         </div>
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label for="addClassName" class="form-label">Class Level Name</label>
+                                <label for="addClassName" class="form-label">Class Level Name<span style="color:red;">*</span></label>
                                 <input type="text" class="form-control" id="addClassName" name="classLevelName" minlength="5" maxlength="50" required>
                             </div>
                             <div class="mb-3">
-                                <label for="addDescription" class="form-label">Description</label>
+                                <label for="addDescription" class="form-label">Description<span style="color:red;">*</span></label>
                                 <input type="text" class="form-control" id="addDescription" name="description" minlength="5" maxlength="50" required>
                             </div>
                             <div class="mb-3">
-                                <label for="addAgeRange" class="form-label">Age Range</label>
+                                <label for="addAgeRange" class="form-label">Age Range<span style="color:red;">*</span></label>
                                 <input type="number" class="form-control" id="addAgeRange" name="ageRange" max-value="6" required>
                             </div>
                         </div>
@@ -159,15 +159,15 @@
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="editClassName" class="form-label">Class Level Name</label>
+                            <label for="editClassName" class="form-label">Class Level Name<span style="color:red;">*</span></label>
                             <input type="text" class="form-control" id="editClassName" name="classLevelName" minlength="5" maxlength="50" required>
                         </div>
                         <div class="mb-3">
-                            <label for="editDescription" class="form-label">Description</label>
+                            <label for="editDescription" class="form-label">Description<span style="color:red;">*</span></label>
                             <input type="text" class="form-control" id="editDescription" name="description" minlength="5" maxlength="50" required>
                         </div>
                         <div class="mb-3">
-                            <label for="editAgeRange" class="form-label">Age Range</label>
+                            <label for="editAgeRange" class="form-label">Age Range<span style="color:red;">*</span></label>
                             <input type="number" class="form-control" id="editAgeRange" name="ageRange" max-value="6" required>
                         </div>
                     </div>

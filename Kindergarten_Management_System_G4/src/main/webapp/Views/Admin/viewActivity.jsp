@@ -87,13 +87,13 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="mb-3"><label for="addActivityName" class="form-label">Activity Name</label><input type="text" class="form-control" id="addActivityName" name="activityName" minlength="5" maxlength="50" required></div>
-                        <div class="mb-3"><label for="addDescription" class="form-label">Description</label><input type="text" class="form-control" id="addDescription" name="description" minlength="5" maxlength="50" required></div>
-                        <div class="mb-3"><label for="addDate" class="form-label">Date</label><input type="date" class="form-control" id="addDate" name="date" required></div>
-                        <div class="mb-3"><label for="addStartTime" class="form-label">Start Time</label><input type="time" class="form-control" id="addStartTime" name="start_time" max-value="6" required></div>
-                        <div class="mb-3"><label for="addEndTime" class="form-label">End Time</label><input type="time" class="form-control" id="addEndTime" name="end_time" max-value="6" required></div>
-                        <div class="mb-3"><label for="addLocation" class="form-label">Location</label><input type="text" class="form-control" id="addLocation" name="location" max-value="6" required></div>
-                        <div class="mb-3"><label for="addMaterial" class="form-label">Materials</label><input type="text" class="form-control" id="addMaterial" name="material" max-value="6" required></div>
+                        <div class="mb-3"><label for="addActivityName" class="form-label">Activity Name<span style="color:red;">*</span></label><input type="text" class="form-control" id="addActivityName" name="activityName" minlength="5" maxlength="50" required></div>
+                        <div class="mb-3"><label for="addDescription" class="form-label">Description<span style="color:red;">*</span></label><input type="text" class="form-control" id="addDescription" name="description" minlength="5" maxlength="250" required></div>
+                        <div class="mb-3"><label for="addDate" class="form-label">Date<span style="color:red;">*</span></label><input type="date" class="form-control" id="addDate" name="date" required></div>
+                        <div class="mb-3"><label for="addStartTime" class="form-label">Start Time<span style="color:red;">*</span></label><input type="time" class="form-control" id="addStartTime" name="start_time" required></div>
+                        <div class="mb-3"><label for="addEndTime" class="form-label">End Time<span style="color:red;">*</span></label><input type="time" class="form-control" id="addEndTime" name="end_time" required></div>
+                        <div class="mb-3"><label for="addLocation" class="form-label">Location<span style="color:red;">*</span></label><input type="text" class="form-control" id="addLocation" name="location" minlength="5"  maxlength="50" required></div>
+                        <div class="mb-3"><label for="addMaterial" class="form-label">Materials<span style="color:red;">*</span></label><input type="text" class="form-control" id="addMaterial" name="material" minlength="5"  maxlength="50" required></div>
                     </div>
                     <div class="modal-footer"><button type="submit" class="btn btn-success">Save</button></div>
                 </form>
@@ -108,14 +108,14 @@
                     <input type="hidden" id="editActivityId" name="activityId">
                     <div class="modal-header"><h5 class="modal-title" id="editModalLabel">Edit Activity</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
                     <div class="modal-body">
-                        <div class="mb-3"><label for="editActivityName" class="form-label">Activity Name</label><input type="text" class="form-control" id="editActivityName" name="activityName"></div>
-                        <div class="mb-3"><label for="editDescription" class="form-label">Description</label><input type="text" class="form-control" id="editDescription" name="description"></div>
-                        <div class="mb-3"><label for="editDate" class="form-label">Date</label><input type="date" class="form-control" id="editDate" name="date"></div>
-                        <div class="mb-3"><label for="editStartTime" class="form-label">Start Time</label><input type="time" class="form-control" id="editStartTime" name="startTime"></div>
-                        <div class="mb-3"><label for="editEndTime" class="form-label">End Time</label><input type="time" class="form-control" id="editEndTime" name="endTime"></div>
-                        <div class="mb-3"><label for="editLocation" class="form-label">Location</label><input type="text" class="form-control" id="editLocation" name="location"></div>
-                        <div class="mb-3"><label for="editMaterialsNeeded" class="form-label">Materials Needed</label><input type="text" class="form-control" id="editMaterialsNeeded" name="materialsNeeded"></div>
-                        <div class="mb-3"><label for="editStatus" class="form-label">Status</label><select class="form-control" id="editStatus" name="status"><option value="Planned">Planned</option><option value="Completed">Completed</option><option value="Cancelled">Cancelled</option></select></div>
+                        <div class="mb-3"><label for="editActivityName" class="form-label">Activity Name<span style="color:red;">*</span></label><input type="text" class="form-control" id="editActivityName" name="activityName"  minlength="5"  maxlength="50" required></div>
+                        <div class="mb-3"><label for="editDescription" class="form-label">Description<span style="color:red;">*</span></label><input type="text" class="form-control" id="editDescription" name="description" minlength="5"  maxlength="250" required></div>
+                        <div class="mb-3"><label for="editDate" class="form-label">Date<span style="color:red;">*</span></label><input type="date" class="form-control" id="editDate" name="date"></div>
+                        <div class="mb-3"><label for="editStartTime" class="form-label">Start Time<span style="color:red;">*</span></label><input type="time" class="form-control" id="editStartTime" name="startTime"></div>
+                        <div class="mb-3"><label for="editEndTime" class="form-label">End Time<span style="color:red;">*</span></label><input type="time" class="form-control" id="editEndTime" name="endTime"></div>
+                        <div class="mb-3"><label for="editLocation" class="form-label">Location<span style="color:red;">*</span></label><input type="text" class="form-control" id="editLocation" name="location" minlength="5"  maxlength="50" required></div>
+                        <div class="mb-3"><label for="editMaterialsNeeded" class="form-label">Materials Needed<span style="color:red;">*</span></label><input type="text" class="form-control" id="editMaterialsNeeded" name="materialsNeeded" minlength="5"  maxlength="50" required></div>
+                        <div class="mb-3"><label for="editStatus" class="form-label">Status<span style="color:red;">*</span></label><select class="form-control" id="editStatus" name="status"><option value="Planned">Planned</option><option value="Completed">Completed</option><option value="Cancelled">Cancelled</option></select></div>
                     </div>
                     <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button><button type="submit" class="btn btn-success">Save changes</button></div>
                 </form>

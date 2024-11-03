@@ -5,13 +5,13 @@
  *
  * Record of change:
  * DATE           Version                  AUTHOR                          DESCRIPTION
- * 12/10/2024       1.1              Đào Xuân Bình - HE163115        Register Student By Parent
+ * 12/10/2024       1.1              Đào Xuân Bình - HE163115        Register Student By Enrollment
  */
 
 package org.example.kindergarten_management_system_g4.controller.studentManagement;
 
-import org.example.kindergarten_management_system_g4.dao.StudentDAO;
-import org.example.kindergarten_management_system_g4.dao.UserProfileDAO;
+import org.example.kindergarten_management_system_g4.dao.StudentDAO.StudentDAO;
+import org.example.kindergarten_management_system_g4.dao.profileDAO.UserProfileDAO;
 import org.example.kindergarten_management_system_g4.model.Student;
 import org.example.kindergarten_management_system_g4.model.User;
 
@@ -26,7 +26,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * Lớp RegisterStudentServlet chịu trách nhiệm xử lý các yêu cầu HTTP POST để đăng ký sinh viên mới từ phía phụ huynh.
+ * Lớp RegisterStudentByEnrollment chịu trách nhiệm xử lý các yêu cầu HTTP POST để đăng ký sinh viên mới từ phía tuyển sinh.
  * Dữ liệu sinh viên được lấy từ form và lưu vào cơ sở dữ liệu.
  * <p>Lỗi: Chưa phát hiện lỗi.
  *
@@ -96,7 +96,7 @@ public class RegisterStudentByEnrollment extends HttpServlet {
                 Student newStudent = new Student(0, dob, gender, name,userId); // studentId sẽ được tự động tạo
                 // Thêm sinh viên mới vào cơ sở dữ liệu
                 studentDAO.addStudent(newStudent);
-                // Chuyển tiếp yêu cầu đến trang danh sách sinh viên
+                // Chuyển tiếp yêu cầu đến trang chủ của tuyển sinh
             req.getRequestDispatcher("/Views/HomePage/HomePageForEnrollment.jsp").forward(req, resp);
 
         } catch (Exception e) {

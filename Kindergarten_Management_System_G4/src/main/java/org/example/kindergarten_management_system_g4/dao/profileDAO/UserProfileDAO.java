@@ -8,7 +8,7 @@
  * 10/5/2024       1.1              Đào Xuân Bình - HE163115              Create UserProfileDAO class
  */
 
-package org.example.kindergarten_management_system_g4.dao;
+package org.example.kindergarten_management_system_g4.dao.profileDAO;
 
 import org.example.kindergarten_management_system_g4.connection.DBConnection;
 import org.example.kindergarten_management_system_g4.model.User;

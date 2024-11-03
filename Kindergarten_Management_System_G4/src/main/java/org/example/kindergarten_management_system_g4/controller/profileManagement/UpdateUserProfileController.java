@@ -8,9 +8,9 @@
  * 10/2/2024       1.1              Đào Xuân Bình - HE163115        Update Profile
  */
 
-package org.example.kindergarten_management_system_g4.controller.userManagement;
+package org.example.kindergarten_management_system_g4.controller.profileManagement;
 
-import org.example.kindergarten_management_system_g4.dao.UserProfileDAO;
+import org.example.kindergarten_management_system_g4.dao.profileDAO.UserProfileDAO;
 import org.example.kindergarten_management_system_g4.model.User;
 
 import javax.servlet.ServletException;
