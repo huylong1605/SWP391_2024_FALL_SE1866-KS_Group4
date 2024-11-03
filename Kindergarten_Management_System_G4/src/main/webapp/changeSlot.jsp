@@ -103,7 +103,7 @@
         <!-- Action Buttons - Centered below -->
         <div class="action-buttons">
             <button type="submit" class="btn btn-primary">Update Slot</button>
-            <a href="listSchedule" class="btn btn-secondary ms-2">back to list</a>
+            <a href="${pageContext.request.contextPath}/Views/Teacher/teacherSchedule?teacherId=${sessionScope.user.userID}" class="btn btn-primary">Back To Schedule</a>
 
         </div>
     </form>

@@ -1,33 +1,33 @@
 package org.example.kindergarten_management_system_g4.model;
 
 public class TeacherSchedule {
-        private int scheduleID;
-        private String className;
-        private String subjectName;
-        private String slotName;
-        private String date;
-        private String room;
-        private String termName;
-        private String dayOfWeek;
-        private String startTime;
-        private String endTime;
+    private int scheduleID;
+    private int classId; // Thêm classId
+    private String className;
+    private String subjectName;
+    private int slotId; // Thêm slotId
+    private String slotName;
+    private String date;
+    private String room;
+    private String termName;
+    private String dayOfWeek;
+    private String startTime;
+    private String endTime;
 
-        public TeacherSchedule(int scheduleID, String className, String subjectName, String slotName, String date,
-                               String room, String termName, String dayOfWeek, String startTime, String endTime) {
-            this.scheduleID = scheduleID;
-            this.className = className;
-            this.subjectName = subjectName;
-            this.slotName = slotName;
-            this.date = date;
-            this.room = room;
-            this.termName = termName;
-            this.dayOfWeek = dayOfWeek;
-            this.startTime = startTime;
-            this.endTime = endTime;
-        }
-
-    public String getClassName() {
-        return className;
+    public TeacherSchedule(int scheduleID, int classId, String className, String subjectName, int slotId, String slotName,
+                           String date, String room, String termName, String dayOfWeek, String startTime, String endTime) {
+        this.scheduleID = scheduleID;
+        this.classId = classId; // Khởi tạo classId
+        this.className = className;
+        this.subjectName = subjectName;
+        this.slotId = slotId; // Khởi tạo slotId
+        this.slotName = slotName;
+        this.date = date;
+        this.room = room;
+        this.termName = termName;
+        this.dayOfWeek = dayOfWeek;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     public int getScheduleID() {
@@ -36,6 +36,18 @@ public class TeacherSchedule {
 
     public void setScheduleID(int scheduleID) {
         this.scheduleID = scheduleID;
+    }
+
+    public int getClassId() { // Getter cho classId
+        return classId;
+    }
+
+    public void setClassId(int classId) { // Setter cho classId
+        this.classId = classId;
+    }
+
+    public String getClassName() {
+        return className;
     }
 
     public void setClassName(String className) {
@@ -48,6 +60,14 @@ public class TeacherSchedule {
 
     public void setSubjectName(String subjectName) {
         this.subjectName = subjectName;
+    }
+
+    public int getSlotId() { // Getter cho slotId
+        return slotId;
+    }
+
+    public void setSlotId(int slotId) { // Setter cho slotId
+        this.slotId = slotId;
     }
 
     public String getSlotName() {
