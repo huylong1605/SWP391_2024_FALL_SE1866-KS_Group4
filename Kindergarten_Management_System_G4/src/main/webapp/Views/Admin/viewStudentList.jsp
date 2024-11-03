@@ -198,15 +198,15 @@
                                     <input type="text" class="form-control" id="updateStudentId" name="studentId" readonly>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="updateStudentName" class="form-label">Name:</label>
-                                    <input type="text" class="form-control" id="updateStudentName" name="name"  required>
+                                    <label for="updateStudentName" class="form-label">Name:<span style="color:red;">*</span></label>
+                                    <input type="text" class="form-control" id="updateStudentName" name="name"  minlength="5"  maxlength="50" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="updateStudentDob" class="form-label">Date of Birth:</label>
+                                    <label for="updateStudentDob" class="form-label">Date of Birth:<span style="color:red;">*</span></label>
                                     <input type="date" class="form-control" id="updateStudentDob" name="dob" required>
                                 </div>
                                <div class="mb-3">
-                                   <label for="updateStudentGender" class="form-label">Gender:</label>
+                                   <label for="updateStudentGender" class="form-label">Gender:<span style="color:red;">*</span></label>
                                    <select class="form-control" id="updateStudentGender" name="gender" required>
                                        <option value="Male">Male</option>
                                        <option value="Female">Female</option>
@@ -214,11 +214,11 @@
                                </div>
 
                                 <div class="mb-3">
-                                    <label for="updateStudentAddress" class="form-label">Address:</label>
+                                    <label for="updateStudentAddress" class="form-label">Address:<span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="updateStudentAddress" name="address" readonly>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="updateStudentPhoneNumber" class="form-label">Phone Number:</label>
+                                    <label for="updateStudentPhoneNumber" class="form-label">Phone Number:<span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="updateStudentPhoneNumber" name="phoneNumber" readonly>
                                 </div>
                             </div>

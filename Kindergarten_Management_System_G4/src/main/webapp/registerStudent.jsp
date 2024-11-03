@@ -85,15 +85,18 @@
 <h2>Register Student</h2>
     <form action="registerStudent" method="post">
         <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+           <label for="name">
+             Name:<span style="color:red;">*</span>
+           </label>
+
+            <input type="text" id="name" name="name" minlength="5"  maxlength="50" required>
         </div>
         <div class="form-group">
-            <label for="dob">DOB:</label>
+            <label for="dob">DOB:<span style="color:red;">*</span></label>
             <input type="date" id="dob" name="dob" required>
         </div>
         <div class="form-group">
-            <label for="gender">Gender:</label>
+            <label for="gender">Gender:<span style="color:red;">*</span></label>
             <select id="gender" name="gender" required>
                 <option value="true">Male</option>
                 <option value="false">Female</option>
