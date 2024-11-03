@@ -120,7 +120,7 @@ public class CreateSchedule extends HttpServlet {
 
             Schedule schedule = new Schedule(dayOfWeek, dateOfDay, termId, classId, slotId);
             iScheduleDAO.addSchedule(schedule, subjectId);
-
+            data(req, resp);
             req.setAttribute("AddSuccessfully", "Đăng ký lớp vào lịch học thành công");
             req.getRequestDispatcher("createSchedule.jsp").forward(req, resp);
             /*HttpSession session = req.getSession();

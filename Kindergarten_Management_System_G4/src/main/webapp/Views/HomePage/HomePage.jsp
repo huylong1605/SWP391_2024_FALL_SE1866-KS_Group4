@@ -71,8 +71,8 @@
                         <a class="text-light" href="">View Class Of Child</a>
                     </button>
                     <button class="btn btn-primary" style="width: 60%">
-                        <a class="text-light" href="">View Schedule Of Child </a>
-                        <a class="text-light" href="scheduleStudent?parentId=${sessionScope.user.userID}">View Schedule Of Child </a>
+
+                        <a class="text-light" href="${pageContext.request.contextPath}/scheduleStudent?parentId=${sessionScope.user.userID}">View Schedule Of Child </a>
                     </button>
                     <button class="btn btn-primary" style="width: 60%">
                         <a class="text-light" href="">View Student Information</a>

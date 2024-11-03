@@ -47,6 +47,11 @@
 </head>
 <body class="g-sidenav-show bg-gray-200">
 <%@include file="../common/header.jsp"%>
+<% if (request.getAttribute("changeSlotSuccessful") != null) { %>
+<div class="alert alert-success">
+    <%= request.getAttribute("changeSlotSuccessful") %>
+</div>
+<% } %>
 <div class="containerAll">
     <div class="wrapper">
         <aside id="sidebar" class="expand">
@@ -131,7 +136,7 @@
                                                         <td class="text-center">${schedule.startTime}</td>
                                                         <td class="text-center">${schedule.endTime}</td>
                                                         <td class="align-middle">
-                                                            <a href="#" class="text-light font-weight-bold text-xs"
+                                                            <a href="${pageContext.request.contextPath}/changeSlotTeacher?schedulesId=${schedule.scheduleID}" class="text-light font-weight-bold text-xs"
                                                                style="background-color: #5151ff; padding: 5px; color: white; border-radius: 10px"
                                                                data-toggle="tooltip" data-original-title="View Details">
                                                                 Change Slot

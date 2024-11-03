@@ -14,6 +14,7 @@ public class TeacherSchedule {
 
         public TeacherSchedule(int scheduleID, String className, String subjectName, String slotName, String date,
                                String room, String termName, String dayOfWeek, String startTime, String endTime) {
+            this.scheduleID = scheduleID;
             this.className = className;
             this.subjectName = subjectName;
             this.slotName = slotName;

@@ -17,7 +17,7 @@ import java.util.List;
 
 public interface IScheduleDAO {
 
-    List<ScheduleDAL> getScheduleOfStudent(int parentId) throws SQLException;
+    List<ScheduleDAL> getScheduleOfStudent(int parentId, String startDate, String endDate) throws SQLException;
 
     List<Term> getListTerm() throws SQLException;
 
@@ -30,6 +30,7 @@ public interface IScheduleDAO {
     Boolean addSchedule(Schedule schedule, int subjectId) throws SQLException;
 
     Boolean getSchedule(Schedule schedule) throws SQLException;
+    Boolean getSchedule2(Schedule schedule) throws SQLException;
 
     Term getTermById(int TermId) throws SQLException;
 
@@ -40,4 +41,8 @@ public interface IScheduleDAO {
     Subject getSubjectByScheduleId(int scheduleId) throws SQLException;
 
     Boolean editSchedule(Schedule schedule, int subjectId) throws SQLException;
+
+    Slot getSlotByScheduleId(int slotId) throws SQLException;
+
+    Boolean changeSlot(Schedule schedule) throws SQLException;
 }

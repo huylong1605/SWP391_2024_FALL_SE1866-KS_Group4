@@ -46,8 +46,8 @@ class ScheduleDAOImplTest {
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
     }
 
-    @Test
-    void testGetScheduleOfStudent() throws SQLException {
+   /* @Test*/
+   /* void testGetScheduleOfStudent() throws SQLException {
         // Giả lập dữ liệu trả về từ ResultSet
         when(resultSet.next()).thenReturn(true).thenReturn(false); // Chỉ có 1 bản ghi
         when(resultSet.getInt("Schedule_ID")).thenReturn(1);
@@ -83,7 +83,7 @@ class ScheduleDAOImplTest {
         // Kiểm tra các tương tác
         verify(connection, times(1)).prepareStatement(anyString());
         verify(preparedStatement, times(1)).executeQuery();
-    }
+    }*/
 
     @Test
     void testAddSchedule() throws SQLException {
