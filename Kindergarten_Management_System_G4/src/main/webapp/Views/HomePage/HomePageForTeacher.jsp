@@ -59,6 +59,10 @@
         <a href="${pageContext.request.contextPath}/Views/Teacher/teacherSchedule?teacherId=${sessionScope.user.userID}" class="items-nav-manager">
             View Schedule
         </a>
+
+        <a href="teacher/evaluations/list" class="items-nav-manager">
+            Manage Student Evaluation
+        </a>
     </div>
     <div class=" aa d-flex justify-content-center align-items-center">
         <div class="admin-page">
