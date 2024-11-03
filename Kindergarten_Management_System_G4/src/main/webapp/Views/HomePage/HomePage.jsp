@@ -106,7 +106,7 @@
                             ${registrationSuccess}
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="window.location.href='/Kindergarten_Management_System_G4//Views/HomePage/HomePage.jsp'">OK</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="window.location.href='${pageContext.request.contextPath}/Views/HomePage/HomePage.jsp'">OK</button>
                         </div>
                     </div>
                 </div>
