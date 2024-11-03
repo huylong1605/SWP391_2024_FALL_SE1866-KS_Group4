@@ -41,6 +41,15 @@
         <a href="#" class="items-nav-manager">
             Manage Class
         </a>
+        <a href="${pageContext.request.contextPath}/teacher/applications" class="items-nav-manager">
+            Manage Application
+        </a>
+        <a href="${pageContext.request.contextPath}/teacher-subject" class="items-nav-manager">
+            View Subjects
+        </a>
+        <a href="${pageContext.request.contextPath}/teacher-term" class="items-nav-manager">
+            View Semester
+        </a>
         <a href="#" class="items-nav-manager">
             Assessment
         </a>

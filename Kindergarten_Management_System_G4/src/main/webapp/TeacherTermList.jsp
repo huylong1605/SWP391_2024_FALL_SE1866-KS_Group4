@@ -8,76 +8,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Term List</title>
+    <title>Parent Term List</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- DataTable CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
     <!-- Font Awesome CSS for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
 </head>
 <body>
 
 <%@ include file="Views/common/header.jsp" %>
 
+
 <div class="mt-5 main-content container">
     <h2>List of Terms</h2>
-
-    <a href="listClass" type="button" class="btn btn-primary mb-3">
+    <a href="Views/HomePage/HomePageForTeacher.jsp" type="button" class="btn btn-primary mb-3">
         Back
     </a>
-    <button type="button" class="btn btn-primary mb-3" data-toggle="modal" id="add-term" data-target="#addTermModal">Add Term</button>
-
-    <%-- Filter form --%>
-    <form action="term" method="post" class="form-inline mb-3">
-        <input type="hidden" name="action" value="filter">
-        <div class="form-group mr-2">
-            <label for="termNameFilter" class="mr-2">Term Name:</label>
-            <input type="text" id="termNameFilter" name="termName" class="form-control" placeholder="Enter term name">
-        </div>
-        <div class="form-group mr-2">
-            <label for="yearFilter" class="mr-2">Year:</label>
-            <%--            <input type="number" id="yearFilter" name="year" class="form-control" placeholder="Enter year">--%>
-            <select id="yearFilter" name="year" class="form-control">
-                <option value="">Select year</option>
-                <option value="2024">2024</option>
-                <option value="2025">2025</option>
-                <option value="2026">2026</option>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Filter</button>
-    </form>
     <table id="termTable" class="table table-striped">
         <thead>
         <tr>
-            <th>Term ID</th>
             <th>Term Name</th>
             <th>Start Date</th>
             <th>End Date</th>
             <th>Year</th>
-            <th>Action</th>
+            <th>Information</th>
         </tr>
         </thead>
         <tbody>
         <c:forEach var="term" items="${termList}" varStatus="index">
             <tr>
-                <td>${index.index + 1}</td>
                 <td>${term.termName}</td>
                 <td>${term.startDate}</td>
                 <td>${term.endDate}</td>
                 <td>${term.year}</td>
                 <td>
                     <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
+                        <button type="button" class="btn btn-success" data-toggle="modal"
                                 data-target="#termInfoModal_${term.termId}">Detail
                         </button>
-                        <button type="button" class="btn btn-warning btn-sm" data-toggle="modal"
-                                data-target="#editTermModal_${term.termId}" id="#editTermModal_${term.termId}">Edit
-                        </button>
-                            <%--                        <a class="btn btn-danger" href="term?action=delete&termId=${term.termId}"--%>
-                            <%--                           onclick="return confirm('Are you sure to delete this term?')">Delete</a>--%>
-                        <button class="btn btn-danger btn-sm" href="#" onclick="openDeleteModal(event, ${term.termId})">Delete</button>
+
                     </div>
                 </td>
             </tr>
@@ -86,170 +57,7 @@
     </table>
 </div>
 
-<!-- Modal delete -->
-<div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteConfirmModalLabel">Confirm Deletion</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="deleteModalBody">
-                Are you sure to delete this term?
-            </div>
-            <div class="modal-footer" id="deleteModalFooter">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <a id="confirmDeleteBtn" class="btn btn-danger">Delete</a>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-<!-- Add Term Modal -->
-<div class="modal fade" id="addTermModal" tabindex="-1" role="dialog" aria-labelledby="addTermModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Add Term</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <c:if test="${param.add_error  != null}">
-                    <div class="alert alert-danger">
-                            ${param.add_error}
-                    </div>
-                </c:if>
-                <form id="addTermForm" action="term" method="POST" onsubmit="return validateAddTermForm(event)">
-                    <input type="hidden" name="action" value="add"/>
-                    <div id="notification" style="display: none;" class="alert alert-success"></div>
-                    <div class="form-group">
-                        <label for="addTermName">Term Name*</label>
-                        <input type="text" class="form-control" id="addTermName" name="termName"
-                               placeholder="Enter term name" required>
-                        <span id="termNameError" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="addStartDate">Start Date*</label>
-                        <input type="date" class="form-control" id="addStartDate" name="startDate" required>
-                        <span id="startDateError" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="addEndDate">End Date*</label>
-                        <input type="date" class="form-control" id="addEndDate" name="endDate" required>
-                        <span id="endDateError" class="text-danger"></span>
-                    </div>
-                    <%--                    <div class="form-group">--%>
-                    <%--                        <label for="addYear">Year*</label>--%>
-                    <%--                        <input type="number" class="form-control" id="addYear" name="year" required>--%>
-                    <%--                        <span id="yearError" class="text-danger"></span>--%>
-                    <%--                    </div> --%>
-                    <div class="form-group">
-                        <label for="addYear">Year*</label>
-                        <select class="form-control" id="addYear" name="year" required>
-                            <option value="">Select year</option>
-                            <option value="2024">2024</option>
-                            <option value="2025">2025</option>
-                            <option value="2026">2026</option>
-                        </select>
-                        <span id="yearError" class="text-danger"></span>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success">Add Term</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<c:if test="${param.add_error != null}">
-    <script>
-        document.getElementById("#add-term").click();
-    </script>
-</c:if>
 <c:forEach var="term" items="${termList}">
-
-    <!-- Edit Term Modal -->
-    <div class="modal fade" id="editTermModal_${term.termId}" tabindex="-1" role="dialog"
-         aria-labelledby="editTermModalLabel_${term.termId}" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Term</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <c:if test="${param.update_error  != null}">
-                        <div class="alert alert-danger">
-                                ${param.update_error}
-                        </div>
-                    </c:if>
-                    <form id="editTermForm_${term.termId}" action="term" method="POST" onsubmit="return validateEditTermForm(event,${term.termId})">
-                        <input type="hidden" name="action" value="update"/>
-                        <input type="hidden" name="termId" value="${term.termId}"/>
-                        <div id="notification_edit_${term.termId}" style="display:none;" class="alert alert-success"></div>
-                        <div class="form-group">
-                            <label for="editTermName_${term.termId}">Term Name*</label>
-                            <input type="text" class="form-control" id="editTermName_${term.termId}" name="termName"
-                                   value="${term.termName}" placeholder="Enter term name" required>
-                            <span id="editTermNameError_e_${term.termId}" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="editStartDate_${term.termId}">Start Date*</label>
-                            <input type="date" class="form-control" id="editStartDate_${term.termId}" name="startDate"
-                                   value="${term.startDate}" required>
-                            <span id="editStartDateError_e_${term.termId}" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="editEndDate_${term.termId}">End Date*</label>
-                            <input type="date" class="form-control" id="editEndDate_${term.termId}" name="endDate"
-                                   value="${term.endDate}" required>
-                            <span id="editEndDateError_e_${term.termId}" class="text-danger"></span>
-                        </div>
-                            <%--                        <div class="form-group">--%>
-                            <%--                            <label for="editYear_${term.termId}">Year*</label>--%>
-                            <%--                            <input type="number" class="form-control" id="editYear_${term.termId}" name="year"--%>
-                            <%--                                   value="${term.year}" required>--%>
-                            <%--                            <span id="editYearError_e_${term.termId}" class="text-danger"></span>--%>
-                            <%--                        </div>--%>
-                        <div class="form-group">
-                            <label for="editYear_${term.termId}">Year*</label>
-                            <select class="form-control" id="editYear_${term.termId}" name="year" required>
-                                <option value="">Select year</option>
-                                <option value="2024" ${term.year == 2024 ? 'selected' : ''}>2024</option>
-                                <option value="2025" ${term.year == 2025 ? 'selected' : ''}>2025</option>
-                                <option value="2026" ${term.year == 2026 ? 'selected' : ''}>2026</option>
-                            </select>
-                            <span id="editYearError_e_${term.termId}" class="text-danger"></span>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-success">Save changes</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <c:if test="${param.update_error != null}">
-        <script>
-            document.getElementById("#editTermModal_${param.termId}").click();
-        </script>
-    </c:if>
     <!-- Term Info Modal -->
     <div class="modal fade" id="termInfoModal_${term.termId}" tabindex="-1" role="dialog"
          aria-labelledby="termInfoModalLabel_${term.termId}" aria-hidden="true">
@@ -288,12 +96,12 @@
         event.preventDefault(); // Prevent page reload
 
         // Set up the delete URL
-        const deleteUrl =  "term?action=delete&termId="+termId;
+        const deleteUrl = "term?action=delete&termId=" + termId;
 
         // Assign delete URL to confirmDeleteBtn
         document.getElementById('confirmDeleteBtn').onclick = function () {
             // Send delete request via fetch API
-            fetch(deleteUrl, { method: 'POST' })  // Ensure method is POST for deletion
+            fetch(deleteUrl, {method: 'POST'})  // Ensure method is POST for deletion
                 .then(response => {
                     if (response.ok) {
                         // Show success message and close modal
@@ -317,11 +125,6 @@
     }
 
 
-
-
-
-
-
     // Thêm sự kiện submit cho form khi document được load
     document.addEventListener("DOMContentLoaded", function () {
         const form = document.getElementById("addTermForm");
@@ -343,21 +146,19 @@
     }
 
     function showEditNotification(termId, message) {
-        const notification = document.getElementById("notification_edit_"+termId);
+        const notification = document.getElementById("notification_edit_" + termId);
         notification.textContent = message;
         notification.style.display = "block";
 
         setTimeout(function () {
-            $("#editTermModal_"+termId).modal('hide');
+            $("#editTermModal_" + termId).modal('hide');
 
-            setTimeout(function() {
+            setTimeout(function () {
                 notification.style.display = "none";
                 notification.textContent = "";
             }, 500);
         }, 5000);
     }
-
-
 
 
     function calculateMonthDifference(startDate, endDate) {
@@ -439,8 +240,8 @@
             // Tính khoảng cách tháng giữa startDate và endDate
             const monthDifference = calculateMonthDifference(startDateObj, endDateObj);
 
-            if (monthDifference < 3) {
-                endDateError.textContent = "Start Date and End Date must be at least 3 month apart.";
+            if (monthDifference < 1) {
+                endDateError.textContent = "Start Date and End Date must be at least 1 month apart.";
                 isValid = false;
             }
 
@@ -470,9 +271,8 @@
     }
 
 
-
     // Hàm kiểm tra form cập nhật term (update term)
-    function validateEditTermForm(event,termId) {
+    function validateEditTermForm(event, termId) {
         event.preventDefault();
         // if(true){
         //     console.log(termId)
@@ -530,11 +330,16 @@
                 isValid = false;
             }
 
+            const currentDate = new Date();
+            if (startDateObj < currentDate.setHours(0, 0, 0, 0)) {
+                startDateError.textContent = "Start Date cannot be in the past.";
+                isValid = false;
+            }
             // Tính khoảng cách tháng giữa startDate và endDate
             const monthDifference = calculateMonthDifference(startDateObj, endDateObj);
 
-            if (monthDifference < 3) {
-                endDateError.textContent = "Start Date and End Date must be at least 3 month apart.";
+            if (monthDifference < 1) {
+                endDateError.textContent = "Start Date and End Date must be at least 1 month apart.";
                 isValid = false;
             }
 
@@ -575,12 +380,12 @@
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
             // Xử lý phản hồi từ server
-            xhr.onreadystatechange = function() {
+            xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     const response = xhr.responseText.trim();
                     if (response === "success") {
                         showEditNotification(termId, "Term updated successfully!");
-                        setTimeout(()=> {
+                        setTimeout(() => {
                             window.location.reload();
                         }, 2000)
                     } else {
@@ -590,7 +395,7 @@
             };
 
             // Xử lý lỗi mạng hoặc lỗi gửi yêu cầu
-            xhr.onerror = function() {
+            xhr.onerror = function () {
                 showEditNotification(termId, "Edit failed !");
             };
 
@@ -606,7 +411,9 @@
 
 
     $(document).ready(function () {
-        $('#termTable').DataTable();
+        $('#termTable').DataTable({
+            "searching": false
+        });
     });
 </script>
 

@@ -23,13 +23,12 @@ public class SubjectDAO {
 
     // Create or Insert a new Subject
     public boolean createSubject(Subject subject)  {
-        String sql = "INSERT INTO Subject (subject_Code, subject_name, Description, User_id, status) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Subject (subject_Code, subject_name, description, status) VALUES (?, ?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, subject.getSubjectCode());
-            statement.setString(2, subject.getSubjectName());
-            statement.setString(3, subject.getDescription());
-            statement.setInt(4, subject.getUserId());
-            statement.setString(5, subject.getStatus());
+            statement.setString(1, subject.getSubjectCode().trim());
+            statement.setString(2, subject.getSubjectName().trim());
+            statement.setString(3, subject.getDescription().trim());
+            statement.setString(4, subject.getStatus());
 
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -41,7 +40,7 @@ public class SubjectDAO {
 
     //  Ktra duplicate Code
     public boolean checkDuplicateSubjectCode(String subjectCode) {
-        String query = "SELECT COUNT(*) FROM subjects WHERE subject_Code = ?";
+        String query = "SELECT COUNT(*) FROM subject WHERE subject_Code = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, subjectCode);
             ResultSet rs = pstmt.executeQuery();
@@ -57,7 +56,7 @@ public class SubjectDAO {
 
     // Ktra duplicate Name
     public boolean checkDuplicateSubjectName(String subjectName) {
-        String query = "SELECT COUNT(*) FROM subjects WHERE subject_name = ?";
+        String query = "SELECT COUNT(*) FROM subject WHERE subject_name = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, subjectName);
             ResultSet rs = pstmt.executeQuery();
@@ -78,14 +77,13 @@ public class SubjectDAO {
 
     // Update an existing Subject
     public boolean updateSubject(Subject subject)  {
-        String sql = "UPDATE Subject SET subject_Code = ?, subject_name = ?, Description = ?, User_id = ?, status=? WHERE Subject_ID = ?";
+        String sql = "UPDATE Subject SET subject_Code = ?, subject_name = ?, Description = ?, status=? WHERE Subject_ID = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, subject.getSubjectCode());
-            statement.setString(2, subject.getSubjectName());
-            statement.setString(3, subject.getDescription());
-            statement.setInt(4, subject.getUserId());
-            statement.setString(5, subject.getStatus());
-            statement.setInt(6, subject.getSubjectId());
+            statement.setString(1, subject.getSubjectCode().trim());
+            statement.setString(2, subject.getSubjectName().trim());
+            statement.setString(3, subject.getDescription().trim());
+            statement.setString(4, subject.getStatus());
+            statement.setInt(5, subject.getSubjectId());
 
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -119,19 +117,19 @@ public class SubjectDAO {
                         resultSet.getString("subject_Code"),
                         resultSet.getString("subject_name"),
                         resultSet.getString("Description"),
-                        resultSet.getInt("User_id")
+                        resultSet.getString("Status")
                 );
-                s.setStatus(resultSet.getString("status"));
-                return  s;
+//                s.setStatus(resultSet.getString("status"));
+                return s;
             }
         }catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return null;
     }
-    
+
     public Subject getSubjectByIdCode(int subjectId, String code) {
-        String sql = "SELECT * FROM Subject WHERE Subject_ID != ? and subject_Code = ?";
+        String sql = "SELECT * FROM Subject WHERE subject_ID != ? and subject_Code = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, subjectId);
             statement.setString(2, code);
@@ -143,7 +141,7 @@ public class SubjectDAO {
                         resultSet.getString("subject_Code"),
                         resultSet.getString("subject_name"),
                         resultSet.getString("Description"),
-                        resultSet.getInt("User_id")
+                        resultSet.getString("Status")
                 );
 
             }
@@ -165,9 +163,30 @@ public class SubjectDAO {
                         resultSet.getString("subject_Code"),
                         resultSet.getString("subject_name"),
                         resultSet.getString("Description"),
-                        resultSet.getInt("User_id")
+                        resultSet.getString("Status")
                 );
-                s.setStatus(resultSet.getString("status"));
+                /*s.setStatus(resultSet.getString("status"));*/
+                subjects.add(s);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return subjects;
+    }
+
+    public List<Subject> parentGetAllSubjects() {
+        List<Subject> subjects = new ArrayList<>();
+        String sql = "SELECT * FROM Subject";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Subject s = new Subject();
+//                s.setSubjectId(resultSet.getInt("Subject_ID"));
+                s.setSubjectCode(resultSet.getString("subject_Code"));
+                s.setSubjectName(resultSet.getString("subject_name"));
+                s.setDescription(resultSet.getString("Description"));
+//                s.setStatus(resultSet.getString("status"));
                 subjects.add(s);
             }
         } catch (SQLException e) {

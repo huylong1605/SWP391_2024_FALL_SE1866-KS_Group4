@@ -63,6 +63,12 @@
         <a href="${pageContext.request.contextPath}/listSchedule" class="items-nav-manager">
             Manage Schedule
         </a>
+            <a href="${pageContext.request.contextPath}/listClass" class="items-nav-manager">
+                Manage Term
+            </a>
+            <a href="${pageContext.request.contextPath}/listClass" class="items-nav-manager">
+                Manage Subject
+            </a>
     </div>
     <div class=" aa d-flex justify-content-center align-items-center">
         <div class="admin-page">
