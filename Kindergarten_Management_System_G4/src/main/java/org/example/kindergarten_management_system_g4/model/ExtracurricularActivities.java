@@ -1,25 +1,61 @@
+/*
+ * Copyright(C) 2005,  SWP_G4.
+ * KMS :
+ * Kindergarten Management System
+ *
+ * Record of change:
+ * DATE           Version                  AUTHOR                              DESCRIPTION
+ * 12/10/2024       1.1              Đào Xuân Bình - HE163115             ExtracurricularActivities
+ */
+
 package org.example.kindergarten_management_system_g4.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 
+/**
+ * ExtracurricularActivities đại diện cho một hoạt động ngoại khóa trong hệ thống.
+ * Lớp này chứa thông tin chi tiết về một hoạt động ngoại khóa, bao gồm tên hoạt động, mô tả, ngày, thời gian,
+ * địa điểm, người quản lý, vật liệu cần thiết, và trạng thái của hoạt động.
+ * <p>Bugs: Không có lỗi nào được phát hiện.
+ *
+ * @see java.time.LocalDate
+ * @see java.time.LocalTime
+ *
+ */
 public class ExtracurricularActivities {
-    private int activity_id;
-    private String activity_name;
-    private String description;
-    private LocalDate date;
-    private LocalTime start_time;
-    private LocalTime end_time;
-    private String location;
+    private int activity_id;           // ID của hoạt động
+    private String activity_name;       // Tên của hoạt động
+    private String description;         // Mô tả hoạt động
+    private LocalDate date;             // Ngày diễn ra hoạt động
+    private LocalTime start_time;       // Thời gian bắt đầu
+    private LocalTime end_time;         // Thời gian kết thúc
+    private String location;            // Địa điểm tổ chức
+    private int user_id;                // ID của người quản lý hoạt động
+    private String materials_needed;    // Các vật liệu cần thiết cho hoạt động
+    private String status;              // Trạng thái của hoạt động (Planned, Completed, etc.)
 
-    private int user_id;
-    private String materials_needed;
-    private String status;
-
+    /**
+     * Constructor mặc định cho ExtracurricularActivities.
+     */
     public ExtracurricularActivities() {
     }
 
+    /**
+     * Constructor với tất cả các thuộc tính của ExtracurricularActivities.
+     *
+     * @param activity_id       ID của hoạt động.
+     * @param activity_name     Tên của hoạt động.
+     * @param description       Mô tả hoạt động.
+     * @param date              Ngày diễn ra hoạt động.
+     * @param start_time        Thời gian bắt đầu.
+     * @param end_time          Thời gian kết thúc.
+     * @param location          Địa điểm tổ chức.
+     * @param user_id           ID của người quản lý hoạt động.
+     * @param materials_needed  Vật liệu cần thiết cho hoạt động.
+     * @param status            Trạng thái của hoạt động.
+     */
     public ExtracurricularActivities(int activity_id, String activity_name, String description, LocalDate date, LocalTime start_time, LocalTime end_time, String location, int user_id, String materials_needed, String status) {
         this.activity_id = activity_id;
         this.activity_name = activity_name;
@@ -33,6 +69,19 @@ public class ExtracurricularActivities {
         this.status = status;
     }
 
+    /**
+     * Constructor cho ExtracurricularActivities mà không có trạng thái hoạt động.
+     *
+     * @param activity_id       ID của hoạt động.
+     * @param activity_name     Tên của hoạt động.
+     * @param description       Mô tả hoạt động.
+     * @param date              Ngày diễn ra hoạt động.
+     * @param start_time        Thời gian bắt đầu.
+     * @param end_time          Thời gian kết thúc.
+     * @param location          Địa điểm tổ chức.
+     * @param user_id           ID của người quản lý hoạt động.
+     * @param materials_needed  Vật liệu cần thiết cho hoạt động.
+     */
     public ExtracurricularActivities(int activity_id, String activity_name, String description, LocalDate date, LocalTime start_time, LocalTime end_time, String location, int user_id, String materials_needed) {
         this.activity_id = activity_id;
         this.activity_name = activity_name;
@@ -44,6 +93,8 @@ public class ExtracurricularActivities {
         this.user_id = user_id;
         this.materials_needed = materials_needed;
     }
+
+    // Getter và Setter cho các thuộc tính
 
     public int getActivity_id() {
         return activity_id;
@@ -125,6 +176,11 @@ public class ExtracurricularActivities {
         this.status = status;
     }
 
+    /**
+     * Trả về biểu diễn dạng chuỗi của đối tượng ExtracurricularActivities.
+     *
+     * @return chuỗi chứa thông tin của đối tượng ExtracurricularActivities.
+     */
     @Override
     public String toString() {
         return "ExtracurricularActivities{" +

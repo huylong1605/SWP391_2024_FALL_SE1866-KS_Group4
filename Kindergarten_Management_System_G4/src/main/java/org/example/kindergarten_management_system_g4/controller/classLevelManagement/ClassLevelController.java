@@ -8,7 +8,7 @@
  * 12/10/2024       1.1              Đào Xuân Bình - HE163115        View Class Level
  */
 
-package org.example.kindergarten_management_system_g4.controller.classManagement;
+package org.example.kindergarten_management_system_g4.controller.classLevelManagement;
 
 import org.example.kindergarten_management_system_g4.dao.ClassLevelDAO.IClassLevelDAO;
 import org.example.kindergarten_management_system_g4.dao.ClassLevelDAO.implement.ClassLevelDAOImpl;

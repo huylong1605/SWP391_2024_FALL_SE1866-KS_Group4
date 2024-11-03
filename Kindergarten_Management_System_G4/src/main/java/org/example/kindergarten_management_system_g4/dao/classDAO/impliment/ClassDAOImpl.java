@@ -153,8 +153,7 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
             "     User_id = ?,  \n" +
             "    Room_ID = ?         \n" +
             "WHERE Class_ID = ?;";
-
-
+    
     /**
      * Lấy danh sách các lớp từ cơ sở dữ liệu.
      *

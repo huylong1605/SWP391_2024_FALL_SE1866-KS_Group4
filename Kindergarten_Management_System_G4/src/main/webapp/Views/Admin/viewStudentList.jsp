@@ -35,57 +35,7 @@
     <div class="containerAll">
         <div class="wrapper">
             <!-- Sidebar section -->
-            <aside id="sidebar" class="expand">
-                <div class="d-flex">
-                    <!-- Button to toggle sidebar visibility -->
-                    <button class="toggle-btn" type="button">
-                        <i class="lni lni-grid-alt"></i>
-                    </button>
-                    <!-- Sidebar logo -->
-                    <div class="sidebar-logo">
-                        <a href="#">Admin Manage</a>
-                    </div>
-                </div>
-                <!-- Sidebar navigation items -->
-                <ul class="sidebar-nav">
-                    <li class="sidebar-item">
-                        <a href="${pageContext.request.contextPath}/Views/Admin/accountManage" class="sidebar-link">
-                            <i class="lni lni-user"></i>
-                            <span>Manage Account</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="${pageContext.request.contextPath}/Views/Admin/notifications" class="sidebar-link">
-                            <i class="lni lni-agenda"></i>
-                            <span>Manage Notification</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="${pageContext.request.contextPath}/subject" class="sidebar-link">
-                            <i class="lni lni-graduation"></i>
-                            <span>Manage Subject</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="${pageContext.request.contextPath}/viewStudentList" class="sidebar-link">
-                            <i class="lni lni-graduation"></i>
-                            <span>View List Student</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="${pageContext.request.contextPath}/listClass" class="sidebar-link">
-                            <i class="lni lni-graduation"></i>
-                            <span>View list class</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="${pageContext.request.contextPath}/classLevel" class="sidebar-link">
-                            <i class="lni lni-graduation"></i>
-                            <span>Manage Class Level</span>
-                        </a>
-                    </li>
-                </ul>
-            </aside>
+               <%@ include file="../common/sidebar_manage.jsp" %>.
 
             <!-- Main content section -->
             <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg col-md-10">
@@ -248,15 +198,15 @@
                                     <input type="text" class="form-control" id="updateStudentId" name="studentId" readonly>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="updateStudentName" class="form-label">Name:</label>
-                                    <input type="text" class="form-control" id="updateStudentName" name="name"  required>
+                                    <label for="updateStudentName" class="form-label">Name:<span style="color:red;">*</span></label>
+                                    <input type="text" class="form-control" id="updateStudentName" name="name"  minlength="5"  maxlength="50" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="updateStudentDob" class="form-label">Date of Birth:</label>
+                                    <label for="updateStudentDob" class="form-label">Date of Birth:<span style="color:red;">*</span></label>
                                     <input type="date" class="form-control" id="updateStudentDob" name="dob" required>
                                 </div>
                                <div class="mb-3">
-                                   <label for="updateStudentGender" class="form-label">Gender:</label>
+                                   <label for="updateStudentGender" class="form-label">Gender:<span style="color:red;">*</span></label>
                                    <select class="form-control" id="updateStudentGender" name="gender" required>
                                        <option value="Male">Male</option>
                                        <option value="Female">Female</option>
@@ -264,11 +214,11 @@
                                </div>
 
                                 <div class="mb-3">
-                                    <label for="updateStudentAddress" class="form-label">Address:</label>
+                                    <label for="updateStudentAddress" class="form-label">Address:<span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="updateStudentAddress" name="address" readonly>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="updateStudentPhoneNumber" class="form-label">Phone Number:</label>
+                                    <label for="updateStudentPhoneNumber" class="form-label">Phone Number:<span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="updateStudentPhoneNumber" name="phoneNumber" readonly>
                                 </div>
                             </div>

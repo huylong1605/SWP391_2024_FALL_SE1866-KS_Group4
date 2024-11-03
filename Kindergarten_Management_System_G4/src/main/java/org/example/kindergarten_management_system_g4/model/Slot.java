@@ -6,7 +6,7 @@ public class Slot {
 
     private int slotId;
     private String slotName;
-    private Time statrTime;
+    private Time startTime;
     private Time endTime;
 
     public Slot() {
@@ -15,7 +15,7 @@ public class Slot {
     public Slot(int slotId, String slotName, Time statrTime, Time endTime) {
         this.slotId = slotId;
         this.slotName = slotName;
-        this.statrTime = statrTime;
+        this.startTime = statrTime;
         this.endTime = endTime;
     }
 
@@ -35,12 +35,12 @@ public class Slot {
         this.slotName = slotName;
     }
 
-    public Time getStatrTime(Time time) {
-        return statrTime;
+    public Time getStartTime() {
+        return startTime;
     }
 
-    public void setStatrTime(Time statrTime) {
-        this.statrTime = statrTime;
+    public void setStartTime(Time startTime) {
+        this.startTime = startTime;
     }
 
     public Time getEndTime() {
@@ -49,5 +49,15 @@ public class Slot {
 
     public void setEndTime(Time endTime) {
         this.endTime = endTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Slot{" +
+                "slotId=" + slotId +
+                ", slotName='" + slotName + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                '}';
     }
 }

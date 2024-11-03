@@ -58,10 +58,10 @@
         <ul class="navbar-nav ml-auto" style="font-size: 20px">
             <c:if test="${sessionScope.user != null}">
                 <li class="nav-item">
-                    <a class="nav-link" href="viewprofile">Hello, ${sessionScope.user.fullname}</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/viewprofile">Hello, ${sessionScope.user.fullname}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="logout">Logout</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/logout">Logout</a>
                 </li>
             </c:if>
         </ul>

@@ -20,7 +20,27 @@ public class Schedule {
         this.slotId = slotId;
     }
 
+    public Schedule(int scheduleId, String dayOfWeek, String dateOfDay, int slotId) {
+        this.scheduleId = scheduleId;
+        this.dayOfWeek = dayOfWeek;
+        this.dateOfDay = dateOfDay;
+        this.slotId = slotId;
+    }
+
+    public Schedule(int scheduleId, String dateOfDay, int slotId) {
+        this.scheduleId = scheduleId;
+        this.dateOfDay = dateOfDay;
+        this.slotId = slotId;
+    }
+
     public Schedule(String dateOfDay, int classId, int slotId) {
+
+        this.dateOfDay = dateOfDay;
+        this.classId = classId;
+        this.slotId = slotId;
+    }
+    public Schedule(int scheduleId,String dateOfDay, int classId, int slotId) {
+        this.scheduleId = scheduleId;
         this.dateOfDay = dateOfDay;
         this.classId = classId;
         this.slotId = slotId;

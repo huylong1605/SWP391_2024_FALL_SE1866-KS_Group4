@@ -31,7 +31,7 @@
                             </legend>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="fullname">Full name*</label>
+                                <label class="col-md-4 control-label" for="fullname">Full name<span style="color:red;">*</span></label>
                                <div class="col-md-4">
                                    <input value="${user.fullname}" id="fullname" name="fullname" type="text" class="form-control" minlength="5" maxlength="50" required>
                                </div>
@@ -54,7 +54,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="gender">Gender</label>
+                                <label class="col-md-4 control-label" for="gender">Gender<span style="color:red;">*</span></label>
                                 <div class="col-md-4">
                                     <label class="radio-inline">
                                         <input type="radio" name="gender" id="male" value="1" <c:if test="${user.gender == 1}">checked</c:if>> Male
@@ -66,21 +66,21 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="phoneNumber">Phone Number*</label>
+                                <label class="col-md-4 control-label" for="phoneNumber">Phone Number<span style="color:red;">*</span></label>
                                 <div class="col-md-4">
                                     <input value="${user.phoneNumber}" id="phoneNumber" name="phoneNumber" type="tel" pattern="0\d{9}" max-value="10" placeholder="Phone Number (format 10 digit)" class="form-control" required>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="email">Email*</label>
+                                <label class="col-md-4 control-label" for="email">Email<span style="color:red;">*</span></label>
                                 <div class="col-md-4">
                                     <input value="${user.email}" id="email" name="email" type="email" placeholder="Email Address" class="form-control" required readonly>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="address">Address</label>
+                                <label class="col-md-4 control-label" for="address">Address<span style="color:red;">*</span></label>
                                 <div class="col-md-4">
                                     <input value="${user.address}" id="address" name="address" type="text" placeholder="Address" class="form-control"  minlength="5" maxlength="50" required>
                                 </div>

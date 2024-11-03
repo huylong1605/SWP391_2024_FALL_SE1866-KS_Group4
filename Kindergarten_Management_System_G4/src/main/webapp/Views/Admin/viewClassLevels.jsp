@@ -34,63 +34,7 @@
     <div class="containerAll">
         <div class="wrapper">
             <!-- Sidebar section -->
-            <aside id="sidebar" class="expand">
-                            <div class="d-flex">
-                                <!-- Button to toggle sidebar visibility -->
-                                <button class="toggle-btn" type="button">
-                                    <i class="lni lni-grid-alt"></i>
-                                </button>
-                                <!-- Sidebar logo -->
-                                <div class="sidebar-logo">
-                                    <a href="#">Admin Manage</a>
-                                </div>
-                            </div>
-                            <!-- Sidebar navigation items -->
-                            <ul class="sidebar-nav">
-                                            <li class="sidebar-item">
-                                                <a href="${pageContext.request.contextPath}/Views/Admin/accountManage" class="sidebar-link">
-                                                    <i class="lni lni-user"></i>
-                                                    <span>Manage Account</span>
-                                                </a>
-                                            </li>
-                                            <li class="sidebar-item">
-                                                <a href="${pageContext.request.contextPath}/Views/Admin/notifications" class="sidebar-link">
-                                                    <i class="lni lni-agenda"></i>
-                                                    <span>Manage Notification</span>
-                                                </a>
-                                            </li>
-                                            <li class="sidebar-item">
-                                                <a href="${pageContext.request.contextPath}/subject" class="sidebar-link">
-                                                    <i class="lni lni-graduation"></i>
-                                                    <span>Manage Subject</span>
-                                                </a>
-                                            </li>
-                                            <li class="sidebar-item">
-                                                <a href="${pageContext.request.contextPath}/viewStudentList" class="sidebar-link">
-                                                    <i class="lni lni-graduation"></i>
-                                                    <span>View List Student</span>
-                                                </a>
-                                            </li>
-                                            <li class="sidebar-item">
-                                                <a href="${pageContext.request.contextPath}/listClass" class="sidebar-link">
-                                                    <i class="lni lni-graduation"></i>
-                                                    <span>View list class</span>
-                                                </a>
-                                            </li>
-                                            <li class="sidebar-item">
-                                                                                <a href="${pageContext.request.contextPath}/classLevel" class="sidebar-link">
-                                                                                    <i class="lni lni-graduation"></i>
-                                                                                    <span>Manage Class Level</span>
-                                                                                </a>
-                                            </li>
-                                            <li class="sidebar-item">
-                                                                                                                            <a href="${pageContext.request.contextPath}/view-extracurricular-activities" class="sidebar-link">
-                                                                                                                                <i class="lni lni-graduation"></i>
-                                                                                                                                <span>Manage Activity</span>
-                                                                                                                            </a>
-                                                                                        </li>
-                                        </ul>
-                        </aside>
+            <%@ include file="../common/sidebar_manage.jsp" %>.
 
             <!-- Main content section -->
             <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg col-md-10">
@@ -183,15 +127,15 @@
                         </div>
                         <div class="modal-body">
                             <div class="mb-3">
-                                <label for="addClassName" class="form-label">Class Level Name</label>
+                                <label for="addClassName" class="form-label">Class Level Name<span style="color:red;">*</span></label>
                                 <input type="text" class="form-control" id="addClassName" name="classLevelName" minlength="5" maxlength="50" required>
                             </div>
                             <div class="mb-3">
-                                <label for="addDescription" class="form-label">Description</label>
+                                <label for="addDescription" class="form-label">Description<span style="color:red;">*</span></label>
                                 <input type="text" class="form-control" id="addDescription" name="description" minlength="5" maxlength="50" required>
                             </div>
                             <div class="mb-3">
-                                <label for="addAgeRange" class="form-label">Age Range</label>
+                                <label for="addAgeRange" class="form-label">Age Range<span style="color:red;">*</span></label>
                                 <input type="number" class="form-control" id="addAgeRange" name="ageRange" max-value="6" required>
                             </div>
                         </div>
@@ -215,15 +159,15 @@
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="editClassName" class="form-label">Class Level Name</label>
+                            <label for="editClassName" class="form-label">Class Level Name<span style="color:red;">*</span></label>
                             <input type="text" class="form-control" id="editClassName" name="classLevelName" minlength="5" maxlength="50" required>
                         </div>
                         <div class="mb-3">
-                            <label for="editDescription" class="form-label">Description</label>
+                            <label for="editDescription" class="form-label">Description<span style="color:red;">*</span></label>
                             <input type="text" class="form-control" id="editDescription" name="description" minlength="5" maxlength="50" required>
                         </div>
                         <div class="mb-3">
-                            <label for="editAgeRange" class="form-label">Age Range</label>
+                            <label for="editAgeRange" class="form-label">Age Range<span style="color:red;">*</span></label>
                             <input type="number" class="form-control" id="editAgeRange" name="ageRange" max-value="6" required>
                         </div>
                     </div>

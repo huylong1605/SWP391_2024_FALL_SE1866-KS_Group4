@@ -1,5 +1,15 @@
 package org.example.kindergarten_management_system_g4.dao.ClassLevelDAO.implement;
 
+/*
+ * Copyright(C) 2005, SWP_G4.
+ * KMS:
+ * Kindergarten Management System
+ *
+ * Record of change:
+ * DATE           Version                  AUTHOR                          DESCRIPTION
+ * 12/10/2024       1.1               Đào Xuân Bình - HE163115          Implement Class Level DAO
+ */
+
 import org.example.kindergarten_management_system_g4.dao.ClassLevelDAO.IClassLevelDAO;
 import org.example.kindergarten_management_system_g4.model.ClassLevel;
 import org.example.kindergarten_management_system_g4.connection.DBConnection;
@@ -14,7 +24,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Lớp triển khai các phương thức từ interface IClassLevelDAO để thao tác với cơ sở dữ liệu.
+ * ClassLevelDAOImpl cung cấp các phương thức để thao tác với cơ sở dữ liệu
+ * cho các cấp lớp, bao gồm thêm mới, cập nhật, xóa và lấy tất cả các cấp lớp.
+ * <p>Bugs: Không có lỗi nào được phát hiện.
+ *
+ * @see IClassLevelDAO
+ * @see DBConnection
+ *
+ * @author Đào Xuân Bình
  */
 public class ClassLevelDAOImpl extends DBConnection implements IClassLevelDAO {
 
@@ -25,10 +42,10 @@ public class ClassLevelDAOImpl extends DBConnection implements IClassLevelDAO {
     private static final Logger LOGGER = Logger.getLogger(ClassLevelDAOImpl.class.getName());
 
     /**
-     * Lấy danh sách tất cả các class levels từ cơ sở dữ liệu.
+     * Truy xuất tất cả các cấp lớp từ cơ sở dữ liệu.
      *
-     * @return Danh sách các đối tượng ClassLevel.
-     * @throws SQLException nếu có lỗi xảy ra khi truy vấn cơ sở dữ liệu.
+     * @return danh sách các đối tượng ClassLevel.
+     * @throws SQLException nếu có lỗi xảy ra trong quá trình truy xuất.
      */
     @Override
     public List<ClassLevel> getAllClassLevels() throws SQLException {
@@ -44,6 +61,7 @@ public class ClassLevelDAOImpl extends DBConnection implements IClassLevelDAO {
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
+                // Tạo đối tượng cấp lớp và thiết lập các giá trị từ kết quả truy vấn
                 ClassLevel classLevel = new ClassLevel();
                 classLevel.setClassLevelId(resultSet.getInt("class_level_id"));
                 classLevel.setClassLevelName(resultSet.getString("class_level_name"));
@@ -56,16 +74,16 @@ public class ClassLevelDAOImpl extends DBConnection implements IClassLevelDAO {
             LOGGER.log(Level.SEVERE, "Error retrieving class levels: " + e.getMessage(), e);
             throw e;
         } finally {
-            closeResources(resultSet, preparedStatement, connection);
+            closeResources(resultSet, preparedStatement, connection); // Đóng tài nguyên
         }
         return classLevelList;
     }
 
     /**
-     * Thêm một class level mới vào cơ sở dữ liệu.
+     * Thêm một cấp lớp mới vào cơ sở dữ liệu.
      *
-     * @param classLevel Đối tượng ClassLevel chứa thông tin của class level mới.
-     * @throws SQLException nếu có lỗi xảy ra khi truy vấn cơ sở dữ liệu.
+     * @param classLevel đối tượng ClassLevel chứa thông tin của cấp lớp mới.
+     * @throws SQLException nếu có lỗi xảy ra trong quá trình thêm.
      */
     @Override
     public void addClassLevel(ClassLevel classLevel) throws SQLException {
@@ -76,7 +94,7 @@ public class ClassLevelDAOImpl extends DBConnection implements IClassLevelDAO {
             preparedStatement.setString(2, classLevel.getDescription());
             preparedStatement.setInt(3, classLevel.getAgeRange());
 
-            preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate(); // Thực hiện thêm cấp lớp
             LOGGER.log(Level.INFO, "Class level added successfully.");
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Error adding class level: " + e.getMessage(), e);
@@ -85,10 +103,10 @@ public class ClassLevelDAOImpl extends DBConnection implements IClassLevelDAO {
     }
 
     /**
-     * Cập nhật thông tin của một class level trong cơ sở dữ liệu.
+     * Cập nhật thông tin của một cấp lớp trong cơ sở dữ liệu.
      *
-     * @param classLevel Đối tượng ClassLevel chứa thông tin cần cập nhật.
-     * @throws SQLException nếu có lỗi xảy ra khi truy vấn cơ sở dữ liệu.
+     * @param classLevel đối tượng ClassLevel chứa thông tin cần cập nhật.
+     * @throws SQLException nếu có lỗi xảy ra trong quá trình cập nhật.
      */
     @Override
     public void updateClassLevel(ClassLevel classLevel) throws SQLException {
@@ -100,7 +118,7 @@ public class ClassLevelDAOImpl extends DBConnection implements IClassLevelDAO {
             preparedStatement.setInt(3, classLevel.getAgeRange());
             preparedStatement.setInt(4, classLevel.getClassLevelId());
 
-            preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate(); // Thực hiện cập nhật cấp lớp
             LOGGER.log(Level.INFO, "Class level updated successfully.");
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Error updating class level: " + e.getMessage(), e);
@@ -109,10 +127,10 @@ public class ClassLevelDAOImpl extends DBConnection implements IClassLevelDAO {
     }
 
     /**
-     * Xóa một class level khỏi cơ sở dữ liệu.
+     * Xóa một cấp lớp khỏi cơ sở dữ liệu.
      *
-     * @param classLevelId ID của class level cần xóa.
-     * @throws SQLException nếu có lỗi xảy ra khi truy vấn cơ sở dữ liệu.
+     * @param classLevelId ID của cấp lớp cần xóa.
+     * @throws SQLException nếu có lỗi xảy ra trong quá trình xóa.
      */
     @Override
     public void deleteClassLevel(int classLevelId) throws SQLException {
@@ -120,7 +138,7 @@ public class ClassLevelDAOImpl extends DBConnection implements IClassLevelDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_CLASS_LEVEL_QUERY)) {
 
             preparedStatement.setInt(1, classLevelId);
-            preparedStatement.executeUpdate();
+            preparedStatement.executeUpdate(); // Thực hiện xóa cấp lớp
             LOGGER.log(Level.INFO, "Class level deleted successfully.");
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Error deleting class level: " + e.getMessage(), e);
@@ -129,7 +147,11 @@ public class ClassLevelDAOImpl extends DBConnection implements IClassLevelDAO {
     }
 
     /**
-     * Phương thức để đóng tài nguyên (ResultSet, PreparedStatement, Connection)
+     * Phương thức để đóng tài nguyên (ResultSet, PreparedStatement, Connection).
+     *
+     * @param resultSet đối tượng ResultSet cần đóng.
+     * @param preparedStatement đối tượng PreparedStatement cần đóng.
+     * @param connection đối tượng Connection cần đóng.
      */
     private void closeResources(ResultSet resultSet, PreparedStatement preparedStatement, Connection connection) {
         try {
@@ -142,6 +164,3 @@ public class ClassLevelDAOImpl extends DBConnection implements IClassLevelDAO {
         }
     }
 }
-
-
-

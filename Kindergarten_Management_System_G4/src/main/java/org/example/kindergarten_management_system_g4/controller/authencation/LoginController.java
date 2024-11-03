@@ -147,8 +147,11 @@ public class LoginController extends HttpServlet { // lớp LoginController đ�
             req.getRequestDispatcher("/Views/HomePage/HomePageForManager.jsp").forward(req, resp);
         } else if (user.getRoleId() == 2) {      //Id = 1 điều hướng người dùng đến trang  homepage của teacher
             req.getRequestDispatcher("/Views/HomePage/HomePageForTeacher.jsp").forward(req, resp);
+        }else if (user.getRoleId() == 5) {      //Id = 1 điều hướng người dùng đến trang  homepage của teacher
+            req.getRequestDispatcher("/Views/HomePage/HomePageForEnrollment.jsp").forward(req, resp);
         }
     }
+
     /**
      * Xử lý tình huống đăng nhập thất bại.
      * Phương thức này thiết lập các thuộc tính cần thiết trong request, bao gồm email,
