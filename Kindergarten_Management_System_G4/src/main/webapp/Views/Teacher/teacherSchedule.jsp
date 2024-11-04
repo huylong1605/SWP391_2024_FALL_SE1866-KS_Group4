@@ -156,7 +156,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="${pageContext.request.contextPath}/Views/Teacher/listAttendanceClass?classId=${teachingSchedules[0].classId}" class="btn btn-primary">View list attendance</a>
+                        <a href="${pageContext.request.contextPath}/Views/Teacher/listAttendanceClass?classId=${teachingSchedules[0].classId}&className=${teachingSchedules[0].className}" class="btn btn-primary">View list attendance</a>
                     </div>
                 </div>
             </div>

@@ -12,11 +12,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet( value = {"/Views/Teacher/attendStudent", "/Views/Teacher/listAttendanceClass" })
+@WebServlet( value = {"/Views/Teacher/attendStudent", "/Views/Teacher/listAttendanceClass", "/Views/Teacher/detailAttendance", "/Views/Teacher/exportAttendance", "/Views/Teacher/exportDetailAttendance" })
 public class AttendanceController extends HttpServlet {
     private IAttendanceDAO attendanceDAO;
 
@@ -29,10 +30,25 @@ public class AttendanceController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getServletPath();
 
-        if (path.equals("/Views/Teacher/attendStudent")) {
-            handleAttendStudent(request, response);
-        } else if (path.equals("/Views/Teacher/listAttendanceClass")) {
-            handleListAttendanceClass(request, response);
+        switch (path) {
+            case "/Views/Teacher/attendStudent":
+                handleAttendStudent(request, response);
+                break;
+            case "/Views/Teacher/listAttendanceClass":
+                handleListAttendanceClass(request, response);
+                break;
+            case "/Views/Teacher/detailAttendance":
+                handleDetailAttendance(request, response);
+                break;
+            case "/Views/Teacher/exportAttendance":
+                exportAttendance(request, response);
+                break;
+            case "/Views/Teacher/exportDetailAttendance":
+                exportDetailAttendance(request, response);
+                break;
+            default:
+                response.sendError(HttpServletResponse.SC_NOT_FOUND); // Không tìm thấy
+                break;
         }
     }
 
@@ -62,6 +78,7 @@ public class AttendanceController extends HttpServlet {
     private void handleListAttendanceClass(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Lấy thông tin từ request
         int classId = Integer.parseInt(request.getParameter("classId"));
+        String className = request.getParameter("className");
 
         // Lấy danh sách điểm danh tổng hợp cho lớp
         List<AttendanceRecord> summaryList = attendanceDAO.getAttendanceSummary(classId);
@@ -69,9 +86,88 @@ public class AttendanceController extends HttpServlet {
         // Đặt danh sách vào request
         request.setAttribute("summaryList", summaryList);
         request.setAttribute("classId", classId);
+        request.setAttribute("className", className);
 
         // Chuyển hướng tới trang ListAttendanceOfClass.jsp để hiển thị
         request.getRequestDispatcher("/Views/Teacher/listAttendanceClass.jsp").forward(request, response);
+    }
+
+
+    private void handleDetailAttendance(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            int classId = Integer.parseInt(request.getParameter("classId"));
+            int studentId = Integer.parseInt(request.getParameter("studentId")); // Lấy studentId từ request
+
+            // Lấy thông tin chi tiết điểm danh cho học sinh
+            List<AttendanceRecord> attendanceDetails = attendanceDAO.getAttendanceDetails(classId, studentId);
+            AttendanceRecord totalAttendance = attendanceDAO.getTotalAttendance(classId, studentId);
+
+            // Đặt thông tin vào request
+            request.setAttribute("attendanceDetails", attendanceDetails);
+            request.setAttribute("totalAttendance", totalAttendance);
+            request.setAttribute("classId", classId);
+            // Chuyển hướng tới trang detailAttendance.jsp để hiển thị
+            request.getRequestDispatcher("/Views/Teacher/detailAttendance.jsp").forward(request, response);
+        } catch (NumberFormatException e) {
+            request.setAttribute("errorMessage", "Invalid input data.");
+            request.getRequestDispatcher("/errorPage.jsp").forward(request, response);
+        }
+    }
+
+
+    private void exportAttendance(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int classId = Integer.parseInt(request.getParameter("classId"));
+        String className = request.getParameter("className");
+
+        // Lấy danh sách điểm danh tổng hợp
+        List<AttendanceRecord> summaryList = attendanceDAO.getAttendanceSummary(classId);
+
+        // Thiết lập định dạng file CSV
+        response.setContentType("text/csv; charset=utf-8");
+        response.setHeader("Content-Disposition", "attachment; filename=\"attendance_summary_" + className + ".csv\"");
+
+        PrintWriter writer = response.getWriter();
+        writer.println("Student ID,Student Name,Total Attendance,Present,Absent"); // Tiêu đề
+
+        for (AttendanceRecord record : summaryList) {
+            writer.println(record.getStudentId() + "," + record.getStudentName() + "," +
+                    record.getTotalAttendance() + "," + record.getTotalPresent() + "," +
+                    record.getTotalAbsent());
+        }
+
+        writer.flush();
+        writer.close();
+    }
+
+    private void exportDetailAttendance(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int classId = Integer.parseInt(request.getParameter("classId"));
+        int studentId = Integer.parseInt(request.getParameter("studentId")); // Lấy studentId từ request
+        String studentName = request.getParameter("studentName");
+        // Lấy thông tin chi tiết điểm danh cho học sinh
+        List<AttendanceRecord> attendanceDetails = attendanceDAO.getAttendanceDetails(classId, studentId);
+        AttendanceRecord totalAttendance = attendanceDAO.getTotalAttendance(classId, studentId); // Lấy thông tin tổng hợp điểm danh
+
+        // Thiết lập định dạng file CSV
+        response.setContentType("text/csv; charset=utf-8");
+        response.setHeader("Content-Disposition", "attachment; filename=\"attendance_details_student_" + studentName + ".csv\"");
+
+        PrintWriter writer = response.getWriter();
+        writer.println("Date,Slot Name,Attendance Status"); // Tiêu đề
+
+        // Xuất các bản ghi chi tiết điểm danh
+        for (AttendanceRecord record : attendanceDetails) {
+            writer.println(record.getDate() + "," + record.getSlotName() + "," + record.getAttendStatus());
+        }
+
+        // Xuất thông tin tổng hợp điểm danh
+        writer.println(); // Thêm một dòng trống để phân cách
+        writer.println("Student Name: ," + studentName);
+        writer.println("Total Attendance," + totalAttendance.getTotalAttendance());
+        writer.println("Total Present," + totalAttendance.getTotalPresent());
+        writer.println("Total Absent," + totalAttendance.getTotalAbsent());
+
+        writer.flush();
+        writer.close();
     }
 
     @Override

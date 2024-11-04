@@ -2,9 +2,14 @@ package org.example.kindergarten_management_system_g4.dao.AttendanceDAO;
 
 import org.example.kindergarten_management_system_g4.connection.DBConnection;
 import org.example.kindergarten_management_system_g4.model.*;
+
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -228,37 +233,6 @@ public class AttendanceDAO extends DBConnection implements IAttendanceDAO {
         return attendanceSummary;
     }
 
-
-    public static void main(String[] args) {
-        AttendanceDAO attendanceService = new AttendanceDAO(); // Giả sử bạn có lớp này
-
-        // Thay đổi classId và studentId theo nhu cầu kiểm tra của bạn
-        int classId = 1;
-        int studentId = 1;
-
-        // Kiểm tra phương thức getAttendanceSummary
-        System.out.println("Attendance Summary:");
-        List<AttendanceRecord> summary = attendanceService.getAttendanceSummary(classId);
-        for (AttendanceRecord record : summary) {
-            System.out.println(record);
-        }
-
-        // Kiểm tra phương thức getAttendanceDetails
-        System.out.println("\nAttendance Details:");
-        List<AttendanceRecord> details = attendanceService.getAttendanceDetails(classId, studentId);
-        for (AttendanceRecord record : details) {
-            System.out.println(record);
-        }
-
-        // Kiểm tra phương thức getTotalAttendance
-        System.out.println("\nTotal Attendance:");
-        AttendanceRecord totalAttendance = attendanceService.getTotalAttendance(classId, studentId);
-        if (totalAttendance != null) {
-            System.out.println(totalAttendance);
-        } else {
-            System.out.println("No attendance record found for the student.");
-        }
-    }
 
     private void closeResources(ResultSet resultSet, PreparedStatement preparedStatement, Connection connection) {
         // Đóng ResultSet
