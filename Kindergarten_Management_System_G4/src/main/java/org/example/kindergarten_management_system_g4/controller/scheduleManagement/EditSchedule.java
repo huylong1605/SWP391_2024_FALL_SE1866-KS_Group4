@@ -55,7 +55,7 @@ public class EditSchedule extends HttpServlet {
             req.setAttribute("schedules", schedule);
             req.getRequestDispatcher("editSchedule.jsp").forward(req, resp);
         } catch (SQLException e) {
-            req.getRequestDispatcher("error.jsp").forward(req, resp);
+
             throw new RuntimeException(e);
         }
 
@@ -183,7 +183,7 @@ public class EditSchedule extends HttpServlet {
             // Chuyển hướng đến danh sách lớp
             resp.sendRedirect("listSchedule?classSelect=" + classId + "&startDate=&endDate=");
         } catch (SQLException e) {
-            req.getRequestDispatcher("error.jsp").forward(req, resp);
+
             throw new RuntimeException(e);
         }
     }

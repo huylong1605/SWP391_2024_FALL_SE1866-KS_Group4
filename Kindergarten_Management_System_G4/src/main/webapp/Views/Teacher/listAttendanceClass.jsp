@@ -10,14 +10,14 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 </head>
 <body>
-
+<%@ include file="/Views/common/header.jsp" %>
 <div class="container mt-4">
   <h2>Attendance Summary for class: ${className}</h2>
 
   <table class="table table-striped">
     <thead>
     <tr>
-      <th>Student ID</th>
+      <%--<th>Student ID</th>--%>
       <th>Student Name</th>
       <th>Total Attendance</th>
       <th>Present</th>
@@ -27,7 +27,7 @@
     <tbody>
     <c:forEach var="attendance" items="${summaryList}">
       <tr>
-        <td>${attendance.studentId}</td>
+        <%--<td>${attendance.studentId}</td>--%>
         <td>
           <a href="${pageContext.request.contextPath}/Views/Teacher/detailAttendance?studentId=${attendance.studentId}&classId=${classId}">
               ${attendance.studentName}
@@ -46,7 +46,7 @@
     <a href="${pageContext.request.contextPath}/Views/Teacher/exportAttendance?classId=${classId}&className=${className}" class="btn btn-success">Export Attendance</a>
   </div>
 </div>
-
+<%@ include file="/Views/common/footer.jsp" %>
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

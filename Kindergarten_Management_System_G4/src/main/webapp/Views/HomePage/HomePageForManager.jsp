@@ -59,7 +59,7 @@
         <a href="${pageContext.request.contextPath}/view-extracurricular-activities" class="items-nav-manager">
              Manage Activity
         </a>
-        <a href="${pageContext.request.contextPath}/createSchedule" class="items-nav-manager">
+        <%--<a href="${pageContext.request.contextPath}/createSchedule" class="items-nav-manager">--%>
         <a href="${pageContext.request.contextPath}/listSchedule" class="items-nav-manager">
             Manage Schedule
         </a>

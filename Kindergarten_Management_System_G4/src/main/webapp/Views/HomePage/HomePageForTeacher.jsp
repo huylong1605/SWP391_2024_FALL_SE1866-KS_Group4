@@ -50,9 +50,10 @@
         <a href="${pageContext.request.contextPath}/teacher-term" class="items-nav-manager">
             View Semester
         </a>
-        <a href="#" class="items-nav-manager">
+        <%--<a href="#" class="items-nav-manager">
             Assessment
-        </a>
+        </a>--%>
+
         <a href="#" class="items-nav-manager">
             Manage Room
         </a>

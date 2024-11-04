@@ -168,7 +168,7 @@
                                                             </button>
                                                         </td>
                                                         <td class="text-center">
-                                                            <a href="">Send Email For Parent</a>
+                                                            <a style="margin-top: 15px; font-size: 10px" class="btn btn-primary" href="#">Notification Parent</a>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>

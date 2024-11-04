@@ -64,9 +64,14 @@
         <div class="container row">
             <div id="carouselExampleIndicators" class="carousel slide col-md-6" data-ride="carousel" style="padding-top: 30px">
                 <div class="parent-items">
-                    <button class="btn btn-primary" style="width: 60%">
+                    <%--<button class="btn btn-primary" style="width: 60%">
                         <a class="text-light" href="">View Child Information</a>
-                    </button>
+                    </button>--%>
+                        <%--<div class="col-md-6 mb-2">--%>
+                            <button class="btn btn-primary" style="width: 60%">
+                                <a class="text-light" href="${pageContext.request.contextPath}/student/evaluations/list">Student Evaluation</a>
+                            </button>
+                        <%--</div>--%>
                     <button class="btn btn-primary" style="width: 60%">
                         <a class="text-light" href="">View Class Of Child</a>
                     </button>
@@ -74,8 +79,11 @@
 
                         <a class="text-light" href="${pageContext.request.contextPath}/scheduleStudent?parentId=${sessionScope.user.userID}">View Schedule Of Child </a>
                     </button>
-                    <button class="btn btn-primary" style="width: 60%">
+                   <%-- <button class="btn btn-primary" style="width: 60%">
                         <a class="text-light" href="">View Student Information</a>
+                    </button>--%>
+                    <button class="btn btn-primary" style="width: 60%">
+                        <a class="text-light" href="${pageContext.request.contextPath}/parent-term">View Semester</a>
                     </button>
                     <button class="btn btn-primary" style="width: 60%">
                          <a class="text-light" href="registerStudent.jsp">Register New Child</a>
@@ -87,9 +95,7 @@
                     <button class="btn btn-primary" style="width: 60%">
                         <a class="text-light" href="${pageContext.request.contextPath}/view-applications">Send/View Application</a>
                     </button>
-                    <button class="btn btn-primary" style="width: 60%">
-                        <a class="text-light" href="${pageContext.request.contextPath}/parent-term">View Semester</a>
-                    </button>
+
 
 
                 </div>
