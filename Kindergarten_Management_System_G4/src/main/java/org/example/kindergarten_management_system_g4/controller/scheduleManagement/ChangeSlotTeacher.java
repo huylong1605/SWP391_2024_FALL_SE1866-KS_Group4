@@ -5,6 +5,7 @@ import org.example.kindergarten_management_system_g4.dao.scheduledao.implimentat
 import org.example.kindergarten_management_system_g4.model.Schedule;
 import org.example.kindergarten_management_system_g4.model.Slot;
 import org.example.kindergarten_management_system_g4.model.Subject;
+import org.example.kindergarten_management_system_g4.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -133,14 +134,18 @@ public class ChangeSlotTeacher extends HttpServlet {
                 req.getRequestDispatcher("changeSlot.jsp").forward(req, resp);
                 return;
             }
+            HttpSession session = req.getSession();
+
+            // Lấy thông báo từ phiên nếu có
 
             Schedule schedule = new Schedule(schedulesId, dayOfWeek, dateOfDay, slotId);
             iScheduleDAO.changeSlot(schedule);
-            HttpSession session = req.getSession();
+            /*HttpSession session = req.getSession();*/
+            User user = (User) session.getAttribute("user");
             // Đặt thông báo thành công vào session
             session.setAttribute("changeSlotSuccessful", "Change slot successfully");
             // Chuyển hướng đến danh sách lớp
-            resp.sendRedirect("Views/Teacher/teacherSchedule");
+            resp.sendRedirect("Views/Teacher/teacherSchedule?teacherId="+user.getUserID());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

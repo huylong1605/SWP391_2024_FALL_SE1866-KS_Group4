@@ -171,4 +171,45 @@ public class StudentDAO {
         return false;
     }
 
+    public List<Student> getStudentsByUserId(int userId) throws ClassNotFoundException {
+        List<Student> students = new ArrayList<>();
+
+        String SELECT_STUDENTS_BY_USER_ID =
+                "SELECT s.Student_ID, s.Date_of_birth, s.gender, s.Student_name, " +
+                        "u.address, u.phoneNumber " +
+                        "FROM student s " +
+                        "JOIN user u ON s.User_id = u.User_id " +
+                        "WHERE u.User_id = ?";
+
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_STUDENTS_BY_USER_ID)) {
+
+            // Set the userId parameter in the query
+            preparedStatement.setInt(1, userId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                // Retrieve data from the result set
+                int studentId = resultSet.getInt("Student_ID");
+                LocalDate dob = resultSet.getDate("Date_of_birth").toLocalDate();
+                boolean gender = resultSet.getBoolean("gender");
+                String studentName = resultSet.getString("Student_name");
+                String address = resultSet.getString("address");
+                String phoneNumber = resultSet.getString("phoneNumber");
+
+                // Create a Student object and add it to the list
+                Student student = new Student(studentId, dob, gender, studentName, address, phoneNumber);
+                students.add(student);
+            }
+
+        } catch (SQLException e) {
+            // Print detailed SQL error if an error occurs
+            printSQLException(e);
+        }
+
+        System.out.println(students); // Print the list of students for debugging
+        return students; // Return the list of students
+    }
+
 }

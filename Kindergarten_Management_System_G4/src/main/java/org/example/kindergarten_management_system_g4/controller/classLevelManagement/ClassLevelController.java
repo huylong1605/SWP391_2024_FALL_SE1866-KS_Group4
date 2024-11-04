@@ -5,7 +5,7 @@
  *
  * Record of change:
  * DATE           Version                  AUTHOR                          DESCRIPTION
- * 12/10/2024       1.1              Đào Xuân Bình - HE163115        View Class Level
+ * 12/10/2024       1.1              Đào Xuân Bình - HE163115        Class Level Controller
  */
 
 package org.example.kindergarten_management_system_g4.controller.classLevelManagement;

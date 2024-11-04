@@ -48,7 +48,7 @@
 <body class="g-sidenav-show bg-gray-200">
 <%@include file="../common/header.jsp"%>
 <% if (request.getAttribute("changeSlotSuccessful") != null) { %>
-<div class="alert alert-success">
+<div class="alert alert-success" id="successMessage">
     <%= request.getAttribute("changeSlotSuccessful") %>
 </div>
 <% } %>
@@ -212,6 +212,14 @@
             }, 3000);
         }
     };
+
+    const successMessage = document.getElementById('successMessage');
+    if (successMessage) {
+        // Đặt timeout để ẩn thông báo sau 5 giây
+        setTimeout(() => {
+            successMessage.style.display = 'none';
+        }, 5000); // 5000 milliseconds = 5 giây
+    }
 </script>
 
 

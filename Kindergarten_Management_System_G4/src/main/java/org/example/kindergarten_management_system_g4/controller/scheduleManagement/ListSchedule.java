@@ -7,11 +7,13 @@ import org.example.kindergarten_management_system_g4.dao.scheduledao.implimentat
 import org.example.kindergarten_management_system_g4.model.Classes;
 import org.example.kindergarten_management_system_g4.model.ScheduleDAL;
 
+import javax.mail.Session;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -61,11 +63,13 @@ public class ListSchedule extends HttpServlet {
                 scheduleDALS = iScheduleDAO.getListScheduleByClass(Integer.parseInt(classId), startDateGet, endDateGet);
                 LOGGER.info("list schedule: "+ scheduleDALS );
             }
-
+            HttpSession session = req.getSession();
+           String EditScheduleSuccessful = (String) session.getAttribute("EditScheduleSuccessful");
 
             req.setAttribute("dates", dates);
             req.setAttribute("Classes", classDALList);
             req.setAttribute("schedules", scheduleDALS);
+            req.setAttribute("EditScheduleSuccessful", EditScheduleSuccessful);
             req.getRequestDispatcher("listScheduleManagement.jsp").forward(req, resp);
         } catch (SQLException e) {
             throw new RuntimeException(e);
