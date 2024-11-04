@@ -12,7 +12,7 @@
 <body>
 
 <div class="container mt-4">
-  <h2>Attendance Summary for Class ID: ${classId}</h2>
+  <h2>Attendance Summary for class: ${className}</h2>
 
   <table class="table table-striped">
     <thead>
@@ -28,7 +28,11 @@
     <c:forEach var="attendance" items="${summaryList}">
       <tr>
         <td>${attendance.studentId}</td>
-        <td>${attendance.studentName}</td>
+        <td>
+          <a href="${pageContext.request.contextPath}/Views/Teacher/detailAttendance?studentId=${attendance.studentId}&classId=${classId}">
+              ${attendance.studentName}
+          </a>
+        </td>
         <td>${attendance.totalAttendance}</td>
         <td>${attendance.totalPresent}</td>
         <td>${attendance.totalAbsent}</td>
@@ -39,6 +43,7 @@
 
   <div class="mt-3">
     <a href="${pageContext.request.contextPath}/Views/Teacher/teacherSchedule?teacherId=${sessionScope.user.userID}" class="btn btn-primary">Back to Attendance</a>
+    <a href="${pageContext.request.contextPath}/Views/Teacher/exportAttendance?classId=${classId}&className=${className}" class="btn btn-success">Export Attendance</a>
   </div>
 </div>
 
