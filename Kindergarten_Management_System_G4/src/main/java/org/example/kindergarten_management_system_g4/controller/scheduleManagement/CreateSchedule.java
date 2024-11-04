@@ -131,6 +131,7 @@ public class CreateSchedule extends HttpServlet {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {
+            req.getRequestDispatcher("error.jsp").forward(req, resp);
             throw new RuntimeException(e);
         }
 

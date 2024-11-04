@@ -7,7 +7,6 @@ import org.example.kindergarten_management_system_g4.dao.scheduledao.implimentat
 import org.example.kindergarten_management_system_g4.model.Classes;
 import org.example.kindergarten_management_system_g4.model.ScheduleDAL;
 
-import javax.mail.Session;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,6 +27,7 @@ public class ListSchedule extends HttpServlet {
     private static final Logger LOGGER = Logger.getLogger(ListSchedule.class.getName());
     private IScheduleDAO iScheduleDAO; // Interface cho các phương thức quản lý lớp học
     private IClassDAO iClassDAO;
+
     /**
      * Phương thức init được gọi khi servlet được khởi tạo.
      * Sử dụng để khởi tạo các đối tượng cần thiết, chẳng hạn như iClassDAO.
@@ -42,12 +42,12 @@ public class ListSchedule extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<LocalDate> dates = new ArrayList<>();
-            LocalDate startDate = LocalDate.now();
-            LocalDate endDate = LocalDate.of(2026, 12, 31);
+        LocalDate startDate = LocalDate.now();
+        LocalDate endDate = LocalDate.of(2026, 12, 31);
 
-            while (!startDate.isAfter(endDate)) {
-                dates.add(startDate);
-                startDate = startDate.plusDays(1); // Tăng thêm một ngày
+        while (!startDate.isAfter(endDate)) {
+            dates.add(startDate);
+            startDate = startDate.plusDays(1); // Tăng thêm một ngày
         }
 
 
@@ -61,10 +61,10 @@ public class ListSchedule extends HttpServlet {
 
             if (classId != null && !classId.isEmpty()) {
                 scheduleDALS = iScheduleDAO.getListScheduleByClass(Integer.parseInt(classId), startDateGet, endDateGet);
-                LOGGER.info("list schedule: "+ scheduleDALS );
+                LOGGER.info("list schedule: " + scheduleDALS);
             }
             HttpSession session = req.getSession();
-           String EditScheduleSuccessful = (String) session.getAttribute("EditScheduleSuccessful");
+            String EditScheduleSuccessful = (String) session.getAttribute("EditScheduleSuccessful");
 
             req.setAttribute("dates", dates);
             req.setAttribute("Classes", classDALList);
@@ -72,6 +72,7 @@ public class ListSchedule extends HttpServlet {
             req.setAttribute("EditScheduleSuccessful", EditScheduleSuccessful);
             req.getRequestDispatcher("listScheduleManagement.jsp").forward(req, resp);
         } catch (SQLException e) {
+            req.getRequestDispatcher("error.jsp").forward(req, resp);
             throw new RuntimeException(e);
         }
     }

@@ -111,8 +111,7 @@
             <!-- Right Column - Action Buttons -->
             <div class="col-md-4 d-flex flex-column align-items-center justify-content-center">
                 <button type="submit" class="btn btn-primary mb-2">Create Schedule</button>
-                <a href="listSchedule" class="btn btn-secondary mb-2">Cancel</a>
-                <a href="listSchedule" class="btn btn-link">Back to List</a>
+                <a href="listSchedule" class="btn btn-secondary mb-2">Back to List</a>
             </div>
         </div>
     </form>

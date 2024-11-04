@@ -3,14 +3,12 @@ package org.example.kindergarten_management_system_g4.controller.scheduleManagem
 import org.example.kindergarten_management_system_g4.dao.scheduledao.IScheduleDAO;
 import org.example.kindergarten_management_system_g4.dao.scheduledao.implimentation.ScheduleDAOImpl;
 import org.example.kindergarten_management_system_g4.model.ScheduleDAL;
-import org.example.kindergarten_management_system_g4.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.DayOfWeek;
@@ -104,6 +102,7 @@ public class ScheduleListOfStudent extends HttpServlet {
             // Forward request và response tới trang JSP
             req.getRequestDispatcher("scheduleStudent.jsp").forward(req, resp);
         } catch (SQLException e) {
+            req.getRequestDispatcher("error.jsp").forward(req, resp);
             throw new RuntimeException(e);
         }
     }

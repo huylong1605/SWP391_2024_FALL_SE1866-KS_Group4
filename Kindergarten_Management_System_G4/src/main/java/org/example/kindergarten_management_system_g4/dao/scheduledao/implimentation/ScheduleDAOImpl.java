@@ -75,10 +75,10 @@ public class ScheduleDAOImpl extends DBConnection implements IScheduleDAO {
             "schedule sch on sch.slotId =  s.slot_id where sch.schedule_ID = ? ;\n" +
             "\n";
 
-    public static final String GET_SCHEDULE_BY_ID = "SELECT * FROM schedule where schedule_ID = ?;" ;
+    public static final String GET_SCHEDULE_BY_ID = "SELECT * FROM schedule where schedule_ID = ?;";
     public static final String GET_SUBJECT_BY_SCHEDULE_ID = "SELECT s.subject_ID ,s.subject_name FROM " +
             "subject s join " +
-            "subject_schedule ss on s.subject_ID = ss.subject_ID where ss.schedule_ID = ?;\n" ;
+            "subject_schedule ss on s.subject_ID = ss.subject_ID where ss.schedule_ID = ?;\n";
     public static final String GET_ALL_SCHEDULE_BY_CLASS =
             "SELECT sch.schedule_ID, sch.day_of_week, sch.date, s.subject_name, " +
                     "sl.slot_name, sl.start_time, sl.end_time, u.fullname " +
