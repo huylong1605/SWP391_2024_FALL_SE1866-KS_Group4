@@ -64,7 +64,7 @@
         <div class="container row">
             <div id="carouselExampleIndicators" class="carousel slide col-md-6" data-ride="carousel" style="padding-top: 30px">
                 <div class="parent-items">
-                    <button class="btn btn-primary" style="width: 40%">
+                    <button class="btn btn-primary" style="width: 40%" onclick="openStudentModal()">
                         <a class="text-light" href="">View Child Information</a>
                     </button>
                     <button class="btn btn-primary" style="width: 40%">
@@ -76,7 +76,7 @@
                     <button class="btn btn-primary" style="width: 40%">
                         <a class="text-light" href="${pageContext.request.contextPath}/scheduleStudent?parentId=${sessionScope.user.userID}">View Schedule Of Child </a>
                     </button>
-                    <button class="btn btn-primary" style="width: 60%" onclick="openStudentModal()">View Student Information
+
                     <button class="btn btn-primary" style="width: 40%">
                         <a class="text-light" href="${pageContext.request.contextPath}/parent-term">View Semester</a>
                     </button>
@@ -148,7 +148,6 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="successModalLabel">Registration Status</h5>
-
                         </div>
                         <div class="modal-body">
                             ${registrationSuccess}
