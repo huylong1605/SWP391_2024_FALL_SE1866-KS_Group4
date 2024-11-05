@@ -80,9 +80,13 @@
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="${pageContext.request.contextPath}/Views/Teacher/teacherSchedule" class="sidebar-link">
+                    <a href="${pageContext.request.contextPath}/Views/Teacher/teacherSchedule?teacherId=${sessionScope.user.userID}" class="sidebar-link">
                         <i class="lni lni-user"></i>
                         <span>View Schedule</span>
+                    </a>
+                    <a href="${pageContext.request.contextPath}/Views/Teacher/listAttendanceClass?classId=${classId}&className=${className}" class="sidebar-link">
+                        <i class="lni lni-user"></i>
+                        <span>View list attendance</span>
                     </a>
                 </li>
             </ul>
