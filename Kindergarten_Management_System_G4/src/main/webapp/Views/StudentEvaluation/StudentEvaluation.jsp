@@ -105,7 +105,7 @@
 
     function exportToWord() {
         const termId = document.getElementById("termId").value;
-        const linkDownload = `http://localhost:8086${window.location.origin}${pageContext.request.contextPath}/student/evaluations/export?termId=` + termId;
+        const linkDownload = `http://localhost:8080${window.location.origin}${pageContext.request.contextPath}/student/evaluations/export?termId=` + termId;
         window.location.href = linkDownload;
     }
 </script>

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 </head>
 <body>
-
+<%@ include file="/Views/common/header.jsp" %>
 <div class="container mt-4">
     <h2>Student Name: ${totalAttendance.studentName}</h2>
     <h2>Student ID: ${totalAttendance.studentId}</h2>
@@ -67,7 +67,7 @@
         <a href="${pageContext.request.contextPath}/Views/Teacher/exportDetailAttendance?classId=${classId}&studentId=${totalAttendance.studentId}&studentName=${totalAttendance.studentName}" class="btn btn-success">Export Attendance</a>
     </div>
 </div>
-
+<%@ include file="/Views/common/footer.jsp" %>
 <script src="${pageContext.request.contextPath}/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
