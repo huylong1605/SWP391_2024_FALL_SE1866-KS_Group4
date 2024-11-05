@@ -133,14 +133,6 @@ CREATE TABLE subject_Schedule (
     FOREIGN KEY (subject_ID) REFERENCES Subject(subject_ID)
 );
 
-CREATE TABLE Mark (
-    mark_ID INT PRIMARY KEY AUTO_INCREMENT,
-     student_ID INT,
-    subject_ID INT,
-    final_mark VARCHAR(5),
-    FOREIGN KEY (student_ID) REFERENCES Student(student_ID),
-    FOREIGN KEY (subject_ID) REFERENCES Subject(subject_ID)
-);
 
 CREATE TABLE Extracurricular_Activities (
     activity_id INT PRIMARY KEY AUTO_INCREMENT,

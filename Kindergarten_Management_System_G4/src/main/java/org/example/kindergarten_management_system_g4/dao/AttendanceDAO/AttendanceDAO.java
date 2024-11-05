@@ -233,6 +233,80 @@ public class AttendanceDAO extends DBConnection implements IAttendanceDAO {
         return attendanceSummary;
     }
 
+    public void sendAbsenceNotifications(int classId, String date, int slotId) {
+        List<StudentAttendance> absentees = getStudentAttendance(classId, date, slotId);
+
+        for (StudentAttendance student : absentees) {
+            if (!student.getAttendStatus()) { // Kiểm tra nếu học sinh vắng mặt
+                String parentEmail = getParentEmail(student.getStudentId());
+                String subject = "Thông báo: Học sinh vắng mặt";
+                String message = "Kính gửi phụ huynh,\n\n" +
+                        "Học sinh " + student.getStudentName() + " đã vắng mặt vào ngày " + date + " trong slot " + slotId + ".\n" +
+                        "Xin vui lòng liên hệ với trường để biết thêm chi tiết.\n\n" +
+                        "Trân trọng,\n" +
+                        "Trường Mẫu Giáo";
+
+                sendEmail(parentEmail, subject, message);
+            }
+        }
+    }
+
+    private void sendEmail(String to, String subject, String message) {
+        // Cấu hình thông tin server gửi mail
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com"); // Thay smtp.example.com bằng SMTP server của bạn
+        props.put("mail.smtp.port", "587"); // Port SMTP
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+
+        // Tạo phiên làm việc
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("tcnatsu150977@gmail.com", "yqxf ijdq ypze lhed"); // Thay bằng thông tin đăng nhập email của bạn
+            }
+        });
+
+        try {
+            // Tạo đối tượng MimeMessage
+            Message mimeMessage = new MimeMessage(session);
+            mimeMessage.setFrom(new InternetAddress("tcnatsu150977@gmail.com")); // Địa chỉ email của bạn
+            mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+            mimeMessage.setSubject(subject);
+            mimeMessage.setText(message);
+
+            Transport.send(mimeMessage); // Gửi email
+            LOGGER.log(Level.INFO, "Email sent successfully to: " + to);
+        } catch (MessagingException e) {
+            LOGGER.log(Level.SEVERE, "Error sending email", e);
+        }
+    }
+
+
+    private String getParentEmail(int studentId) {
+        String email = null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = getConnection();
+            String query = "SELECT u.email FROM user u INNER JOIN student s ON u.user_id = s.user_id WHERE s.student_ID = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, studentId);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                email = resultSet.getString("email");
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error fetching parent email", e);
+        } finally {
+            closeResources(resultSet, preparedStatement, connection);
+        }
+
+        return email;
+    }
+
 
     private void closeResources(ResultSet resultSet, PreparedStatement preparedStatement, Connection connection) {
         // Đóng ResultSet
