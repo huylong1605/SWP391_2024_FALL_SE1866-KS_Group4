@@ -74,8 +74,7 @@
 
                         <a class="text-light" href="${pageContext.request.contextPath}/scheduleStudent?parentId=${sessionScope.user.userID}">View Schedule Of Child </a>
                     </button>
-                    <button class="btn btn-primary" style="width: 60%">
-                        <a class="text-light" href="">View Student Information</a>
+                    <button class="btn btn-primary" style="width: 60%" onclick="openStudentModal()">View Student Information
                     </button>
                     <button class="btn btn-primary" style="width: 60%">
                          <a class="text-light" href="registerStudent.jsp">Register New Child</a>
@@ -91,6 +90,48 @@
         </div>
     </section>
     <!-- end slider section -->
+<!-- Modal -->
+<div class="modal fade" id="studentModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="studentModalLabel">Student Information</h5>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Date of Birth</th>
+                            <th>Age</th>
+                            <th>Gender</th>
+                            <th>Class ID</th>
+                            <th>Class Name</th>
+                            <th>Address</th>
+                            <th>Phone Number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="student" items="${listChild}">
+                            <tr>
+                                <td>${student.studentId}</td>
+                                <td>${student.name}</td>
+                                <td>${student.dob}</td>
+                                <td>${student.age}</td>
+                                <td>${student.gender ? 'Male' : 'Female'}</td>
+                                <td>${student.classId}</td>
+                                <td>${student.className}</td>
+                                <td>${student.address}</td>
+                                <td>${student.phoneNumber}</td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 
     <!-- Success Modal - Visible only if registrationSuccess is set -->
@@ -151,6 +192,12 @@
         </div>
     </div>
 </section>
+<script>
+    function openStudentModal() {
+        new bootstrap.Modal(document.getElementById('studentModal')).show();
+    }
+</script>
+
 <%@ include file="/Views/common/footer.jsp" %>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
