@@ -11,12 +11,13 @@ public class AttendanceRecord {
     private int totalAbsent;     // Chỉ dùng cho tóm tắt
     private Date date;           // Chỉ dùng cho chi tiết
     private String slotName;     // Chỉ dùng cho chi tiết
-    private String attendanceStatus; // Chỉ dùng cho chi tiết
+    private String attendStatus; // Chỉ dùng cho chi tiết
+
 
     public AttendanceRecord(java.sql.Date date, String slotName, String attendStatus) {
         this.date = date;
         this.slotName = slotName;
-        this.attendanceStatus = attendStatus;
+        this.attendStatus = attendStatus;
     }
 
     public AttendanceRecord(int studentId, String studentName, int totalAttendance, int presentCount, int absentCount) {
@@ -42,8 +43,8 @@ public class AttendanceRecord {
     public void setDate(Date date) { this.date = date; }
     public String getSlotName() { return slotName; }
     public void setSlotName(String slotName) { this.slotName = slotName; }
-    public String getAttendanceStatus() { return attendanceStatus; }
-    public void setAttendanceStatus(String attendanceStatus) { this.attendanceStatus = attendanceStatus; }
+    public String getAttendStatus() { return attendStatus; }
+    public void setAttendStatus(String attendStatus) { this.attendStatus = attendStatus; }
 
     @Override
     public String toString() {
@@ -59,7 +60,7 @@ public class AttendanceRecord {
             return "AttendanceRecord{" +
                     "date=" + date +
                     ", slotName='" + slotName + '\'' +
-                    ", attendanceStatus='" + attendanceStatus + '\'' +
+                    ", attendanceStatus='" + attendStatus + '\'' +
                     '}';
         }
     }

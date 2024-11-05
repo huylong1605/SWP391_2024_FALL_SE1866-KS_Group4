@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.DayOfWeek;
@@ -54,6 +55,7 @@ public class EditSchedule extends HttpServlet {
             req.setAttribute("schedules", schedule);
             req.getRequestDispatcher("editSchedule.jsp").forward(req, resp);
         } catch (SQLException e) {
+
             throw new RuntimeException(e);
         }
 
@@ -175,12 +177,13 @@ public class EditSchedule extends HttpServlet {
 
             Schedule schedule = new Schedule(schedulesId, dayOfWeek, dateOfDay, termId, classId, slotId);
             iScheduleDAO.editSchedule(schedule, subjectId);
-            /*HttpSession session = req.getSession();
+            HttpSession session = req.getSession();
             // Đặt thông báo thành công vào session
-            session.setAttribute("AddScheduleSuccessful", "Add class to schedule successful");*/
+            session.setAttribute("EditScheduleSuccessful", "Edit class to schedule successful");
             // Chuyển hướng đến danh sách lớp
             resp.sendRedirect("listSchedule?classSelect=" + classId + "&startDate=&endDate=");
         } catch (SQLException e) {
+
             throw new RuntimeException(e);
         }
     }

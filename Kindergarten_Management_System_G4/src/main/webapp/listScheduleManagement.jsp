@@ -34,6 +34,7 @@
 
 <%@ include file="/Views/common/header.jsp" %>
 
+
 <div class="container">
     <!-- Top section with combo boxes and create button -->
     <div class="container">
@@ -86,7 +87,11 @@
             <!-- Create new schedule button -->
             <a href="createSchedule" class="btn btn-primary btn-sm">Add class to Schedule</a>
         </div>
-
+        <% if (request.getAttribute("EditScheduleSuccessful") != null) { %>
+        <div class="alert alert-success" id="successMessage">
+            <%= request.getAttribute("EditScheduleSuccessful") %>
+        </div>
+        <% } %>
     <!-- Display schedule list -->
     <div id="scheduleList" class="schedule-list">
         <div class="table-container">
@@ -161,6 +166,14 @@
 
     // Gọi hàm để tạo tùy chọn khi tải trang
     document.addEventListener('DOMContentLoaded', populateDateOptions);
+
+    const successMessage = document.getElementById('successMessage');
+    if (successMessage) {
+        // Đặt timeout để ẩn thông báo sau 5 giây
+        setTimeout(() => {
+            successMessage.style.display = 'none';
+        }, 5000); // 5000 milliseconds = 5 giây
+    }
 </script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

@@ -5,20 +5,20 @@ public class Subject {
     private String subjectCode;
     private String subjectName;
     private String description;
-    private int userId;  // This is a foreign key referencing User
     private String status;
     // Constructor
     public Subject() {}
 
-    public Subject(int subjectId, String subjectCode, String subjectName, String description, int userId) {
+    public Subject(int subjectId, String subjectCode, String subjectName, String description, String status) {
         this.subjectId = subjectId;
         this.subjectCode = subjectCode;
         this.subjectName = subjectName;
         this.description = description;
-        this.userId = userId;
+        this.status = status;
     }
 
-    // Getters and Setters
+
+    // Getters and Setters<%@ include file="Views/common/header.jsp" %>
     public int getSubjectId() {
         return subjectId;
     }
@@ -57,13 +57,6 @@ public class Subject {
         this.description = description;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 
     @Override
     public String toString() {
@@ -72,7 +65,6 @@ public class Subject {
                 ", subjectCode='" + subjectCode + '\'' +
                 ", subjectName='" + subjectName + '\'' +
                 ", description='" + description + '\'' +
-                ", userId=" + userId +
                 '}';
     }
 }

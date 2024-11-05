@@ -61,6 +61,7 @@ public class ChangeSlotTeacher extends HttpServlet {
             req.setAttribute("schedules", schedule);
             req.getRequestDispatcher("changeSlot.jsp").forward(req, resp);
         } catch (SQLException e) {
+            req.getRequestDispatcher("error.jsp").forward(req, resp);
             throw new RuntimeException(e);
         }
     }
@@ -145,8 +146,9 @@ public class ChangeSlotTeacher extends HttpServlet {
             // Đặt thông báo thành công vào session
             session.setAttribute("changeSlotSuccessful", "Change slot successfully");
             // Chuyển hướng đến danh sách lớp
-            resp.sendRedirect("Views/Teacher/teacherSchedule?teacherId="+user.getUserID());
+            resp.sendRedirect("Views/Teacher/teacherSchedule?teacherId=" + user.getUserID());
         } catch (SQLException e) {
+            req.getRequestDispatcher("error.jsp").forward(req, resp);
             throw new RuntimeException(e);
         }
     }

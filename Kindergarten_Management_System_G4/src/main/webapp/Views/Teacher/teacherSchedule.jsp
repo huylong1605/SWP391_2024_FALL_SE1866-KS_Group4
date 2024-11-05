@@ -48,7 +48,7 @@
 <body class="g-sidenav-show bg-gray-200">
 <%@include file="../common/header.jsp"%>
 <% if (request.getAttribute("changeSlotSuccessful") != null) { %>
-<div class="alert alert-success">
+<div class="alert alert-success" id="successMessage">
     <%= request.getAttribute("changeSlotSuccessful") %>
 </div>
 <% } %>
@@ -65,9 +65,13 @@
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="${pageContext.request.contextPath}/Views/Teacher/teacherSchedule" class="sidebar-link">
+                    <a href="${pageContext.request.contextPath}/Views/Teacher/teacherSchedule?teacherId=${sessionScope.user.userID}" class="sidebar-link">
                         <i class="lni lni-user"></i>
                         <span>View Schedule</span>
+                    </a>
+                    <a href="${pageContext.request.contextPath}/Views/Teacher/listAttendanceClass?classId=${teachingSchedules[0].classId}&className=${teachingSchedules[0].className}" class="sidebar-link">
+                        <i class="lni lni-user"></i>
+                        <span>View list attendance</span>
                     </a>
                 </li>
             </ul>
@@ -156,7 +160,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="${pageContext.request.contextPath}/Views/Teacher/listAttendanceClass?classId=${teachingSchedules[0].classId}" class="btn btn-primary">View list attendance</a>
+                        <a href="${pageContext.request.contextPath}/Views/Teacher/listAttendanceClass?classId=${teachingSchedules[0].classId}&className=${teachingSchedules[0].className}" class="btn btn-primary">View list attendance</a>
                     </div>
                 </div>
             </div>
@@ -212,6 +216,14 @@
             }, 3000);
         }
     };
+
+    const successMessage = document.getElementById('successMessage');
+    if (successMessage) {
+        // Đặt timeout để ẩn thông báo sau 5 giây
+        setTimeout(() => {
+            successMessage.style.display = 'none';
+        }, 5000); // 5000 milliseconds = 5 giây
+    }
 </script>
 
 

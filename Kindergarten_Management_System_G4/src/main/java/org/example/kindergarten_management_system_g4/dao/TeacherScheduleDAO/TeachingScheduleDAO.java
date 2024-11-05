@@ -21,7 +21,7 @@ public class TeachingScheduleDAO extends DBConnection {
             "JOIN term t ON s.term_ID = t.term_ID\n" +
             "JOIN room r ON c.room_ID = r.room_ID\n" +
             "WHERE c.user_id = ?\n" +
-            "ORDER BY s.schedule_ID;";
+            "ORDER BY s.date;";
 
     private static final Logger LOGGER = Logger.getLogger(TeachingScheduleDAO.class.getName());
 

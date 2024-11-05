@@ -64,7 +64,6 @@ public class SubjectController extends HttpServlet {
         String subjectCode = request.getParameter("subjectCode");
         String subjectName = request.getParameter("subjectName");
         String description = request.getParameter("description");
-        String userId = request.getParameter("userId");
         String status = request.getParameter("status");
 
         // Check kí tự đúng form
@@ -124,20 +123,12 @@ public class SubjectController extends HttpServlet {
             return;
         }
 
-        // Check UserID > 0
-        if (Integer.parseInt(userId) < 0 ) {
-            session.setAttribute("errorMessage", "Alert: ID user must be a integer number !");
-            response.sendRedirect("subject");
-            return;
-        }
-
 
 
         Subject newSubject = new Subject();
         newSubject.setSubjectCode(subjectCode);
         newSubject.setSubjectName(subjectName);
         newSubject.setDescription(description);
-        newSubject.setUserId(Integer.parseInt(userId));
         newSubject.setStatus(status);
 
         boolean success = false;
@@ -160,9 +151,8 @@ public class SubjectController extends HttpServlet {
         String subjectCode = request.getParameter("subjectCode");
         String subjectName = request.getParameter("subjectName");
         String description = request.getParameter("description");
-        int userId = Integer.parseInt(request.getParameter("userId"));
         String status = request.getParameter("status");
-        Subject subject = new Subject(subjectId, subjectCode, subjectName, description, userId);
+        Subject subject = new Subject(subjectId, subjectCode, subjectName, description, status);
         subject.setStatus(status);
 
 
@@ -199,36 +189,12 @@ public class SubjectController extends HttpServlet {
         subjectName = cleanedSubjectName;
 
 
-        // Kiểm tra trùng lặp subjectCode và subjectName
-        boolean isDuplicateCode = subjectDAO.checkDuplicateSubjectCode(subjectCode);
-        boolean isDuplicateName = subjectDAO.checkDuplicateSubjectName(subjectName);
-
-        if (isDuplicateCode) {
-            session.setAttribute("errorMessage", "Alert: Subject code already exists!");
-            response.sendRedirect("subject");
-            return;
-        }
-
-        if (isDuplicateName) {
-            session.setAttribute("errorMessage", "Alert: Subject name already exists!");
-            response.sendRedirect("subject");
-            return;
-        }
-
 //         Ktra description
         if (!description.matches(descriptionPattern)) {
             session.setAttribute("errorMessage", "Alert: Description contains special characters!");
             response.sendRedirect("subject");
             return;
         }
-
-        // Check UserID > 0
-        if (userId < 0 ) {
-            session.setAttribute("errorMessage", "Alert: ID user must be a integer number !");
-            response.sendRedirect("subject");
-            return;
-        }
-
 
 
         // Update the subject

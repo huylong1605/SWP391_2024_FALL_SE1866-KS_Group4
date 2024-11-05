@@ -77,7 +77,7 @@ public class LoginController extends HttpServlet { // lớp LoginController đ�
                     redirectUserBasedOnRole(user, req, resp); //Điều hướng người dùng khi đăng nhập thành công
 
                     // Sử dụng  runAsync giúp việc gửi thông tin đến người dùng qua email nhanh hơn
-                    CompletableFuture.runAsync(() -> sendLoginNotification(email, user));
+                    /*CompletableFuture.runAsync(() -> sendLoginNotification(email, user));*/
                 }
             } else {
                 LOGGER.warning("Login attempt failed for user: " + email); // Ghi log khi đăng nhập thất bại

@@ -40,6 +40,18 @@
             width: 100%;
             table-layout: fixed;
         }
+
+        .table tbody tr td {
+            padding: 0.3rem; /* Padding nhỏ hơn */
+        }
+        .table tbody tr {
+            min-height: 30px; /* Chiều cao tối thiểu */
+        }
+        .table {
+            font-size: 0.85rem; /* Kích thước chữ nhỏ hơn */
+        }
+
+
         .wrapper{
             height: 860px;
         }
@@ -50,6 +62,7 @@
             right: 20px;
             z-index: 9999;
         }
+
     </style>
 </head>
 <body class="g-sidenav-show bg-gray-200">
@@ -67,9 +80,13 @@
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="${pageContext.request.contextPath}/Views/Teacher/teacherSchedule" class="sidebar-link">
+                    <a href="${pageContext.request.contextPath}/Views/Teacher/teacherSchedule?teacherId=${sessionScope.user.userID}" class="sidebar-link">
                         <i class="lni lni-user"></i>
                         <span>View Schedule</span>
+                    </a>
+                    <a href="${pageContext.request.contextPath}/Views/Teacher/listAttendanceClass?classId=${classId}&className=${className}" class="sidebar-link">
+                        <i class="lni lni-user"></i>
+                        <span>View list attendance</span>
                     </a>
                 </li>
             </ul>
@@ -123,7 +140,7 @@
                                                 <thead>
                                                 <tr>
                                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">STT</th>
-                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Student ID</th>
+<%--                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Student ID</th>--%>
                                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Student Name</th>
                                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Date of Birth</th>
                                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Attendance Status</th>
@@ -134,7 +151,7 @@
                                                 <c:forEach var="student" items="${attendanceList}" varStatus="status">
                                                     <tr style="font-weight: bold">
                                                         <td class="text-center">${status.index + 1}</td>
-                                                        <td class="text-center">${student.studentId}</td>
+<%--                                                        <td class="text-center">${student.studentId}</td>--%>
                                                         <td class="text-center">${student.studentName}</td>
                                                         <td class="text-center">${student.dateOfBirth}</td>
                                                         <td class="text-center">
@@ -150,9 +167,12 @@
 <%--                                                            </a>--%>
 <%--                                                        </td>--%>
                                                         <td class="text-center">
-                                                            <button style="margin-top: 15px;" type="button" class="btn btn-warning" onclick="toggleAttendance(${student.studentId})">
+                                                            <button style="margin-top: 15px; font-size: 10px" type="button" class="btn btn-warning" onclick="toggleAttendance(${student.studentId})">
                                                                 Take Attendance
                                                             </button>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <a style="margin-top: 15px; font-size: 10px" class="btn btn-primary" href="#">Notification Parent</a>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
