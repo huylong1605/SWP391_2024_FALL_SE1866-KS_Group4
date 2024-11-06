@@ -32,15 +32,6 @@
             border-left: 3px solid white;
             color: white;
         }
-
-        /*.table-responsive {*/
-        /*    max-height: 425px; !*
-        /*    overflow-y: auto; !*
-        /*}*/
-        /*table {*/
-        /*    width: 100%;*/
-        /*    table-layout: fixed;*/
-        /*}*/
         .wrapper {
             height: 860px;
         }

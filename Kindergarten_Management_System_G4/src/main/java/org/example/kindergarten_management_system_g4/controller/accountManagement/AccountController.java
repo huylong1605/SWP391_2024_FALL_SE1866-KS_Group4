@@ -11,7 +11,7 @@
 
 package org.example.kindergarten_management_system_g4.controller.accountManagement;
 
-import org.example.kindergarten_management_system_g4.dao.AccountDAO.AccountDAO;
+import org.example.kindergarten_management_system_g4.dao.accountDAO.AccountDAO;
 import org.example.kindergarten_management_system_g4.model.User;
 
 import javax.servlet.ServletException;
@@ -36,7 +36,7 @@ import java.util.List;
  */
 
 @WebServlet(value = {"/Views/Admin/accountManage", "/Views/Admin/accountManage/Detail", "/Views/Admin/accountManage/Create"})
-public class accountController extends HttpServlet {
+public class AccountController extends HttpServlet {
     private AccountDAO accountDAO;
 
     @Override
