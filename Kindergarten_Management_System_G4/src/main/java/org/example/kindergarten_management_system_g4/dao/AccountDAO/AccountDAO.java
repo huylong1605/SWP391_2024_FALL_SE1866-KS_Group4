@@ -9,7 +9,7 @@
  * <10/2/2024>                 <1.1>           <Vu Viet Chuc>            <Update getAccount method>
  */
 
-package org.example.kindergarten_management_system_g4.dao.accountDAO;
+package org.example.kindergarten_management_system_g4.dao.AccountDAO;
 import org.example.kindergarten_management_system_g4.connection.DBConnection;
 import org.example.kindergarten_management_system_g4.model.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

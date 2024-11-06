@@ -1,6 +1,6 @@
 package org.example.kindergarten_management_system_g4.controller.teacherScheduleManagement;
 
-import org.example.kindergarten_management_system_g4.dao.teacherScheduleDAO.TeachingScheduleDAO;
+import org.example.kindergarten_management_system_g4.dao.TeacherScheduleDAO.TeachingScheduleDAO;
 import org.example.kindergarten_management_system_g4.model.TeacherSchedule;
 
 import javax.servlet.ServletException;
