@@ -71,7 +71,7 @@
                         <a class="text-light" href="${pageContext.request.contextPath}/student/evaluations/list">Student Evaluation</a>
                     </button>
                     <button class="btn btn-primary" style="width: 40%">
-                        <a class="text-light" href="">View Class Of Child</a>
+                        <a class="text-light" href="${pageContext.request.contextPath}/parent-notification">NEWS</a>
                     </button>
                     <button class="btn btn-primary" style="width: 40%">
                         <a class="text-light" href="${pageContext.request.contextPath}/scheduleStudent?parentId=${sessionScope.user.userID}">View Schedule Of Child </a>

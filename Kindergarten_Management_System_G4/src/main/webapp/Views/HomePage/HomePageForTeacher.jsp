@@ -53,6 +53,9 @@
         <a href="teacher/evaluations/list" class="items-nav-manager">
             Manage Student Evaluation
         </a>
+        <a class="items-nav-manager" href="${pageContext.request.contextPath}/parent-notification">
+            NEWS
+        </a>
     </div>
     <div class=" aa d-flex justify-content-center align-items-center">
         <div class="admin-page">

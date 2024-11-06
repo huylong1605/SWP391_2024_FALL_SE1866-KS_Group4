@@ -135,7 +135,7 @@
     function exportToExcel() {
         const classId = document.getElementById("classId").value;
         const termId = document.getElementById("termId").value;
-        const linkDownload = `http://localhost:8081${window.location.origin}${pageContext.request.contextPath}/teacher/evaluations/export?classId=` + classId + `&termId=` + termId;
+        const linkDownload = `http://localhost:8080${window.location.origin}${pageContext.request.contextPath}/teacher/evaluations/export?classId=` + classId + `&termId=` + termId;
         window.location.href = linkDownload;
     }
 
