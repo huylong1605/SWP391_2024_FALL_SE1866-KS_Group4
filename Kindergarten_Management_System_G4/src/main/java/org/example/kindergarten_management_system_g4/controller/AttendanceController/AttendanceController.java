@@ -1,6 +1,6 @@
-package org.example.kindergarten_management_system_g4.controller.attendanceController;
-import org.example.kindergarten_management_system_g4.dao.attendanceDAO.AttendanceDAO;
-import org.example.kindergarten_management_system_g4.dao.attendanceDAO.IAttendanceDAO;
+package org.example.kindergarten_management_system_g4.controller.AttendanceController;
+import org.example.kindergarten_management_system_g4.dao.AttendanceDAO.AttendanceDAO;
+import org.example.kindergarten_management_system_g4.dao.AttendanceDAO.IAttendanceDAO;
 import org.example.kindergarten_management_system_g4.model.AttendanceRecord;
 import org.example.kindergarten_management_system_g4.model.StudentAttendance;
 import javax.servlet.ServletException;

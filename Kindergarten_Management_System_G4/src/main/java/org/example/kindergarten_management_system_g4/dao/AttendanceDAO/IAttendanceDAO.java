@@ -1,4 +1,4 @@
-package org.example.kindergarten_management_system_g4.dao.attendanceDAO;
+package org.example.kindergarten_management_system_g4.dao.AttendanceDAO;
 
 import org.example.kindergarten_management_system_g4.model.AttendanceRecord;
 import org.example.kindergarten_management_system_g4.model.StudentAttendance;
