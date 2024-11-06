@@ -13,9 +13,21 @@ public class TeacherSchedule {
     private String dayOfWeek;
     private String startTime;
     private String endTime;
+    private boolean attendanceMarked;
+
+    private boolean canAttend; // Thêm thuộc tính này
+
+    // Getter và Setter cho canAttend
+    public boolean isCanAttend() {
+        return canAttend;
+    }
+
+    public void setCanAttend(boolean canAttend) {
+        this.canAttend = canAttend;
+    }
 
     public TeacherSchedule(int scheduleID, int classId, String className, String subjectName, int slotId, String slotName,
-                           String date, String room, String termName, String dayOfWeek, String startTime, String endTime) {
+                           String date, String room, String termName, String dayOfWeek, String startTime, String endTime, boolean attendanceMarked) {
         this.scheduleID = scheduleID;
         this.classId = classId; // Khởi tạo classId
         this.className = className;
@@ -28,6 +40,15 @@ public class TeacherSchedule {
         this.dayOfWeek = dayOfWeek;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.attendanceMarked = attendanceMarked;
+    }
+
+    public boolean isAttendanceMarked() {
+        return attendanceMarked;
+    }
+
+    public void setAttendanceMarked(boolean attendanceMarked) {
+        this.attendanceMarked = attendanceMarked;
     }
 
     public int getScheduleID() {

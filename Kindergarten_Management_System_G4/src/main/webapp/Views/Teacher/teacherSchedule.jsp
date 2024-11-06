@@ -65,9 +65,13 @@
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="${pageContext.request.contextPath}/Views/Teacher/teacherSchedule" class="sidebar-link">
+                    <a href="${pageContext.request.contextPath}/Views/Teacher/teacherSchedule?teacherId=${sessionScope.user.userID}" class="sidebar-link">
                         <i class="lni lni-user"></i>
                         <span>View Schedule</span>
+                    </a>
+                    <a href="${pageContext.request.contextPath}/Views/Teacher/listAttendanceClass?classId=${teachingSchedules[0].classId}&className=${teachingSchedules[0].className}" class="sidebar-link">
+                        <i class="lni lni-user"></i>
+                        <span>View list attendance</span>
                     </a>
                 </li>
             </ul>
@@ -121,8 +125,6 @@
                                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Day Of Week</th>
                                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Subject</th>
                                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Slot</th>
-                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Time Start</th>
-                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Time End</th>
                                                     <th class="text-secondary opacity-7"></th>
                                                 </tr>
                                                 </thead>
@@ -132,23 +134,50 @@
                                                         <td class="text-center">${schedule.date}</td>
                                                         <td class="text-center">${schedule.dayOfWeek}</td>
                                                         <td class="text-center">${schedule.subjectName}</td>
-                                                        <td class="text-center">${schedule.slotName}</td>
-                                                        <td class="text-center">${schedule.startTime}</td>
-                                                        <td class="text-center">${schedule.endTime}</td>
+                                                        <c:if test="${schedule.slotId == 1}">
+                                                            <td class="text-center"><span style="color: #0af40a">${schedule.slotName}</span>
+                                                                <div class="time-range">(${schedule.startTime} - ${schedule.endTime})</div>
+                                                            </td>
+                                                        </c:if>
+                                                        <c:if test="${schedule.slotId == 2}">
+                                                            <td class="text-center"><span style="color: #f60d0d">${schedule.slotName}</span>
+                                                                <div class="time-range">(${schedule.startTime} - ${schedule.endTime})</div>
+                                                            </td>
+                                                        </c:if>
                                                         <td class="align-middle">
                                                             <a href="${pageContext.request.contextPath}/changeSlotTeacher?schedulesId=${schedule.scheduleID}" class="text-light font-weight-bold text-xs"
                                                                style="background-color: #5151ff; padding: 5px; color: white; border-radius: 10px; margin-right: 5px"
                                                                data-toggle="tooltip" data-original-title="View Details">
                                                                 Change Slot
                                                             </a>
-                                                            <a href="${pageContext.request.contextPath}/Views/Teacher/attendStudent?classId=${schedule.classId}&date=${schedule.date}&slotId=${schedule.slotId}&className=${schedule.className}&slotName=${schedule.slotName}"
-                                                               class="text-light font-weight-bold text-xs"
-                                                               style="background-color: #5151ff; padding: 5px; color: white; border-radius: 10px"
-                                                               data-toggle="tooltip" data-original-title="View Details">Attendance
-                                                            </a>
+                                                            <input type="hidden" id="currentDate" value="${currentDate}">
+                                                            <c:if test="${schedule.date <= currentDate}">
+                                                                <c:choose>
+                                                                    <c:when test="${schedule.attendanceMarked}">
+                                                                        <a href="${pageContext.request.contextPath}/Views/Teacher/attendStudent?classId=${schedule.classId}&date=${schedule.date}&slotId=${schedule.slotId}&className=${schedule.className}&slotName=${schedule.slotName}"
+                                                                           class="text-light font-weight-bold text-xs"
+                                                                           style="background-color: #05a605; padding: 5px; color: white; border-radius: 10px"
+                                                                           data-toggle="tooltip" data-original-title="Mark Attendance">
+                                                                            Edit Attendance
+                                                                        </a>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <a href="${pageContext.request.contextPath}/Views/Teacher/attendStudent?classId=${schedule.classId}&date=${schedule.date}&slotId=${schedule.slotId}&className=${schedule.className}&slotName=${schedule.slotName}"
+                                                                           class="text-light font-weight-bold text-xs"
+                                                                           style="background-color: #ff2525; padding: 5px; color: white; border-radius: 10px"
+                                                                           data-toggle="tooltip" data-original-title="Mark Attendance">
+                                                                            Attendance
+                                                                        </a>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </c:if>
+                                                            <c:if test="${schedule.date > currentDate}">
+                                                                <span class="text-light font-weight-bold text-xs" style="background-color: #d3d3d3; padding: 5px; border-radius: 10px;">Attendance</span>
+                                                            </c:if>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
+
                                                 </tbody>
                                             </table>
                                         </c:otherwise>

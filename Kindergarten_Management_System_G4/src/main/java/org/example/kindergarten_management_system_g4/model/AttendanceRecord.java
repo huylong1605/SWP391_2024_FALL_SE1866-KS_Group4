@@ -12,12 +12,22 @@ public class AttendanceRecord {
     private Date date;           // Chỉ dùng cho chi tiết
     private String slotName;     // Chỉ dùng cho chi tiết
     private String attendStatus; // Chỉ dùng cho chi tiết
+    private Date dateOfBirth;
 
 
     public AttendanceRecord(java.sql.Date date, String slotName, String attendStatus) {
         this.date = date;
         this.slotName = slotName;
         this.attendStatus = attendStatus;
+    }
+
+    public AttendanceRecord(int studentId, String studentName, Date dateOfBirth, int totalAttendance, int presentCount, int absentCount) {
+        this.studentId = studentId;
+        this.studentName = studentName;
+        this.dateOfBirth = dateOfBirth;
+        this.totalAttendance = totalAttendance;
+        this.totalPresent = presentCount;
+        this.totalAbsent = absentCount;
     }
 
     public AttendanceRecord(int studentId, String studentName, int totalAttendance, int presentCount, int absentCount) {
@@ -29,6 +39,13 @@ public class AttendanceRecord {
     }
 
     // Getters và setters
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
     public int getStudentId() { return studentId; }
     public void setStudentId(int studentId) { this.studentId = studentId; }
     public String getStudentName() { return studentName; }
