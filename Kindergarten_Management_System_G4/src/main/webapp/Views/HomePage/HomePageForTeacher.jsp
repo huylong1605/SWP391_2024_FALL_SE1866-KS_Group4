@@ -57,9 +57,10 @@
         <a href="teacher/evaluations/list" class="items-nav-manager">
             Manage Student Evaluation
         </a>
-        <button class="btn btn-primary" style="width: 40%">
-            <a class="text-light" href="${pageContext.request.contextPath}/parent-notification">NEWS</a>
-        </button>
+        <a class="items-nav-manager" href="${pageContext.request.contextPath}/parent-notification">
+            NEWS
+        </a>
+
     </div>
     <div class=" aa d-flex justify-content-center align-items-center">
         <div class="admin-page">
