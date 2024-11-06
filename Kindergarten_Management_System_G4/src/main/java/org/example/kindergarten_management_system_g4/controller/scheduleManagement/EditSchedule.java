@@ -177,6 +177,7 @@ public class EditSchedule extends HttpServlet {
 
             Schedule schedule = new Schedule(schedulesId, dayOfWeek, dateOfDay, termId, classId, slotId);
             iScheduleDAO.editSchedule(schedule, subjectId);
+            LOGGER.info("schedule: " + schedule);
             HttpSession session = req.getSession();
             // Đặt thông báo thành công vào session
             session.setAttribute("EditScheduleSuccessful", "Edit class to schedule successful");
