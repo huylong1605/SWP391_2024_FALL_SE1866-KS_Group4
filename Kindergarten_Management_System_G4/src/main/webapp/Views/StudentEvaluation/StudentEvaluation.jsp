@@ -25,6 +25,9 @@
 <%@ include file="../common/header.jsp" %>
 <div class="container mt-5">
     <h2 style="font-family: 'Roboto', Helvetica, Arial, sans-serif">Your Evaluations</h2>
+    <a href="${pageContext.request.contextPath}/Views/HomePage/HomePage.jsp" type="button" class="btn btn-primary mb-3">
+        Back
+    </a>
 
     <!-- Form to select term -->
     <form id="termSelectionForm" class="form-inline mb-3" onsubmit="return validateForm()">
@@ -105,7 +108,7 @@
 
     function exportToWord() {
         const termId = document.getElementById("termId").value;
-        const linkDownload = `http://localhost:8080${window.location.origin}${pageContext.request.contextPath}/student/evaluations/export?termId=` + termId;
+        const linkDownload = `http://localhost:8081${window.location.origin}${pageContext.request.contextPath}/student/evaluations/export?termId=` + termId;
         window.location.href = linkDownload;
     }
 </script>
