@@ -62,7 +62,7 @@
         <div class="alert alert-danger">${errorMessage}</div>
     </c:if>
     <div class="mt-3">
-        <a href="" class="btn btn-primary">Back to home</a>
+        <a href="${pageContext.request.contextPath}/Views/HomePage/HomePage.jsp" class="btn btn-primary">Back to home</a>
     </div>
 </div>
 <%@ include file="/Views/common/footer.jsp" %>

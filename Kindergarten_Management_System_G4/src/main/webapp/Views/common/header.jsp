@@ -50,8 +50,8 @@
     <div class="collapse navbar-collapse" id="navbarCollapse" style="margin-left: 200px; font-size: 20px">
         <div class="navbar-nav mx-auto">
             <a href="${pageContext.request.contextPath}/Views/HomePage/HomePage.jsp" class="nav-item nav-link active">Home</a>
-            <a href="/" class="nav-item nav-link">About Us</a>
-            <a href="" class="nav-item nav-link">Contact Us</a>
+            <a href="#" class="nav-item nav-link">About Us</a>
+            <a href="#" class="nav-item nav-link">Contact Us</a>
             
         </div>
 
