@@ -41,6 +41,7 @@
         <a href="#" class="items-nav-manager">
             Manage Class
         </a>
+
         <a href="${pageContext.request.contextPath}/teacher/applications" class="items-nav-manager">
             Manage Application
         </a>
@@ -56,6 +57,9 @@
         <a href="teacher/evaluations/list" class="items-nav-manager">
             Manage Student Evaluation
         </a>
+        <button class="btn btn-primary" style="width: 40%">
+            <a class="text-light" href="${pageContext.request.contextPath}/parent-notification">NEWS</a>
+        </button>
     </div>
     <div class=" aa d-flex justify-content-center align-items-center">
         <div class="admin-page">
