@@ -87,15 +87,57 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="mb-3"><label for="addActivityName" class="form-label">Activity Name<span style="color:red;">*</span></label><input type="text" class="form-control" id="addActivityName" name="activityName" minlength="5" maxlength="50" required></div>
-                        <div class="mb-3"><label for="addDescription" class="form-label">Description<span style="color:red;">*</span></label><input type="text" class="form-control" id="addDescription" name="description" minlength="5" maxlength="250" required></div>
-                        <div class="mb-3"><label for="addDate" class="form-label">Date<span style="color:red;">*</span></label><input type="date" class="form-control" id="addDate" name="date" required></div>
-                        <div class="mb-3"><label for="addStartTime" class="form-label">Start Time<span style="color:red;">*</span></label><input type="time" class="form-control" id="addStartTime" name="start_time" required></div>
-                        <div class="mb-3"><label for="addEndTime" class="form-label">End Time<span style="color:red;">*</span></label><input type="time" class="form-control" id="addEndTime" name="end_time" required></div>
-                        <div class="mb-3"><label for="addLocation" class="form-label">Location<span style="color:red;">*</span></label><input type="text" class="form-control" id="addLocation" name="location" minlength="5"  maxlength="50" required></div>
-                        <div class="mb-3"><label for="addMaterial" class="form-label">Materials<span style="color:red;">*</span></label><input type="text" class="form-control" id="addMaterial" name="material" minlength="5"  maxlength="50" required></div>
+                        <!-- Activity Name -->
+                        <div class="mb-3">
+                            <label for="addActivityName" class="form-label">Activity Name<span style="color:red;">*</span></label>
+                            <input type="text" class="form-control" id="addActivityName" name="activityName" minlength="5" maxlength="50" required>
+                            <small id="activityNameError" style="color:red; display:none;">Activity name must be between 5 and 50 characters.</small>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <label for="addDescription" class="form-label">Description<span style="color:red;">*</span></label>
+                            <input type="text" class="form-control" id="addDescription" name="description" minlength="5" maxlength="250" required>
+                            <small id="descriptionError" style="color:red; display:none;">Description must be between 5 and 250 characters.</small>
+                        </div>
+
+                        <!-- Date -->
+                        <div class="mb-3">
+                            <label for="addDate" class="form-label">Date<span style="color:red;">*</span></label>
+                            <input type="date" class="form-control" id="addDate" name="date" required>
+                            <small id="dateError" style="color:red; display:none;">Date cannot be in the past.</small>
+                        </div>
+
+                        <!-- Start Time -->
+                        <div class="mb-3">
+                            <label for="addStartTime" class="form-label">Start Time<span style="color:red;">*</span></label>
+                            <input type="time" class="form-control" id="addStartTime" name="start_time" required>
+                        </div>
+
+                        <!-- End Time -->
+                        <div class="mb-3">
+                            <label for="addEndTime" class="form-label">End Time<span style="color:red;">*</span></label>
+                            <input type="time" class="form-control" id="addEndTime" name="end_time" required>
+                            <small id="timeError" style="color:red; display:none;">End time must be after start time.</small>
+                        </div>
+
+                        <!-- Location -->
+                        <div class="mb-3">
+                            <label for="addLocation" class="form-label">Location<span style="color:red;">*</span></label>
+                            <input type="text" class="form-control" id="addLocation" name="location" minlength="5" maxlength="50" required>
+                            <small id="locationError" style="color:red; display:none;">Location must be between 5 and 50 characters.</small>
+                        </div>
+
+                        <!-- Materials -->
+                        <div class="mb-3">
+                            <label for="addMaterial" class="form-label">Materials<span style="color:red;">*</span></label>
+                            <input type="text" class="form-control" id="addMaterial" name="material" minlength="5" maxlength="50" required>
+                            <small id="materialError" style="color:red; display:none;">Material must be between 5 and 50 characters.</small>
+                        </div>
                     </div>
-                    <div class="modal-footer"><button type="submit" class="btn btn-success">Save</button></div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Save</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -104,20 +146,60 @@
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="updateActivity" method="POST">
+                <form action="updateActivity" method="POST" id="updateActivityForm">
                     <input type="hidden" id="editActivityId" name="activityId">
-                    <div class="modal-header"><h5 class="modal-title" id="editModalLabel">Edit Activity</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
-                    <div class="modal-body">
-                        <div class="mb-3"><label for="editActivityName" class="form-label">Activity Name<span style="color:red;">*</span></label><input type="text" class="form-control" id="editActivityName" name="activityName"  minlength="5"  maxlength="50" required></div>
-                        <div class="mb-3"><label for="editDescription" class="form-label">Description<span style="color:red;">*</span></label><input type="text" class="form-control" id="editDescription" name="description" minlength="5"  maxlength="250" required></div>
-                        <div class="mb-3"><label for="editDate" class="form-label">Date<span style="color:red;">*</span></label><input type="date" class="form-control" id="editDate" name="date"></div>
-                        <div class="mb-3"><label for="editStartTime" class="form-label">Start Time<span style="color:red;">*</span></label><input type="time" class="form-control" id="editStartTime" name="startTime"></div>
-                        <div class="mb-3"><label for="editEndTime" class="form-label">End Time<span style="color:red;">*</span></label><input type="time" class="form-control" id="editEndTime" name="endTime"></div>
-                        <div class="mb-3"><label for="editLocation" class="form-label">Location<span style="color:red;">*</span></label><input type="text" class="form-control" id="editLocation" name="location" minlength="5"  maxlength="50" required></div>
-                        <div class="mb-3"><label for="editMaterialsNeeded" class="form-label">Materials Needed<span style="color:red;">*</span></label><input type="text" class="form-control" id="editMaterialsNeeded" name="materialsNeeded" minlength="5"  maxlength="50" required></div>
-                        <div class="mb-3"><label for="editStatus" class="form-label">Status<span style="color:red;">*</span></label><select class="form-control" id="editStatus" name="status"><option value="Planned">Planned</option><option value="Completed">Completed</option><option value="Cancelled">Cancelled</option></select></div>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">Edit Activity</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button><button type="submit" class="btn btn-success">Save changes</button></div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="editActivityName" class="form-label">Activity Name<span style="color:red;">*</span></label>
+                            <input type="text" class="form-control" id="editActivityName" name="activityName" minlength="5" maxlength="50" required>
+                            <small id="editActivityNameError" style="color:red; display:none;">Activity name must be between 5 and 50 characters.</small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editDescription" class="form-label">Description<span style="color:red;">*</span></label>
+                            <input type="text" class="form-control" id="editDescription" name="description" minlength="5" maxlength="250" required>
+                            <small id="editDescriptionError" style="color:red; display:none;">Description must be between 5 and 250 characters.</small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editDate" class="form-label">Date<span style="color:red;">*</span></label>
+                            <input type="date" class="form-control" id="editDate" name="date" required>
+                            <small id="editDateError" style="color:red; display:none;">Date cannot be in the past.</small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editStartTime" class="form-label">Start Time<span style="color:red;">*</span></label>
+                            <input type="time" class="form-control" id="editStartTime" name="startTime" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editEndTime" class="form-label">End Time<span style="color:red;">*</span></label>
+                            <input type="time" class="form-control" id="editEndTime" name="endTime" required>
+                            <small id="editTimeError" style="color:red; display:none;">End time must be after start time.</small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editLocation" class="form-label">Location<span style="color:red;">*</span></label>
+                            <input type="text" class="form-control" id="editLocation" name="location" minlength="5" maxlength="50" required>
+                            <small id="editLocationError" style="color:red; display:none;">Location must be between 5 and 50 characters.</small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editMaterialsNeeded" class="form-label">Materials Needed<span style="color:red;">*</span></label>
+                            <input type="text" class="form-control" id="editMaterialsNeeded" name="materialsNeeded" minlength="5" maxlength="50" required>
+                            <small id="editMaterialsNeededError" style="color:red; display:none;">Materials needed must be between 5 and 50 characters.</small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editStatus" class="form-label">Status<span style="color:red;">*</span></label>
+                            <select class="form-control" id="editStatus" name="status" required>
+                                <option value="Planned">Planned</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Save changes</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -211,6 +293,147 @@
             else if (urlParams.has('success') && urlParams.get('success') === 'false') { showFalseDeleteModal(); }
         });
     </script>
+    <script>
+        function confirmAdd() {
+            let isValid = true;
+
+            // Activity Name validation
+            const activityName = document.getElementById("addActivityName");
+            const activityNameError = document.getElementById("activityNameError");
+            if (activityName.value.length < 5 || activityName.value.length > 50) {
+                activityNameError.style.display = "block";
+                isValid = false;
+            } else {
+                activityNameError.style.display = "none";
+            }
+
+            // Description validation
+            const description = document.getElementById("addDescription");
+            const descriptionError = document.getElementById("descriptionError");
+            if (description.value.length < 5 || description.value.length > 250) {
+                descriptionError.style.display = "block";
+                isValid = false;
+            } else {
+                descriptionError.style.display = "none";
+            }
+
+            // Date validation
+            const date = document.getElementById("addDate");
+            const dateError = document.getElementById("dateError");
+            const today = new Date().toISOString().split("T")[0];
+            if (date.value < today) {
+                dateError.style.display = "block";
+                isValid = false;
+            } else {
+                dateError.style.display = "none";
+            }
+
+            // Time validation
+            const startTime = document.getElementById("addStartTime").value;
+            const endTime = document.getElementById("addEndTime").value;
+            const timeError = document.getElementById("timeError");
+            if (startTime && endTime && startTime >= endTime) {
+                timeError.style.display = "block";
+                isValid = false;
+            } else {
+                timeError.style.display = "none";
+            }
+
+            // Location validation
+            const location = document.getElementById("addLocation");
+            const locationError = document.getElementById("locationError");
+            if (location.value.length < 5 || location.value.length > 50) {
+                locationError.style.display = "block";
+                isValid = false;
+            } else {
+                locationError.style.display = "none";
+            }
+
+            // Material validation
+            const material = document.getElementById("addMaterial");
+            const materialError = document.getElementById("materialError");
+            if (material.value.length < 5 || material.value.length > 50) {
+                materialError.style.display = "block";
+                isValid = false;
+            } else {
+                materialError.style.display = "none";
+            }
+
+            return isValid;
+        }
+    </script>
+    <script>
+        document.getElementById('updateActivityForm').addEventListener('submit', function(event) {
+            let isValid = true;
+
+            // Activity Name validation
+            const editActivityName = document.getElementById("editActivityName");
+            const editActivityNameError = document.getElementById("editActivityNameError");
+            if (editActivityName.value.length < 5 || editActivityName.value.length > 50) {
+                editActivityNameError.style.display = "block";
+                isValid = false;
+            } else {
+                editActivityNameError.style.display = "none";
+            }
+
+            // Description validation
+            const editDescription = document.getElementById("editDescription");
+            const editDescriptionError = document.getElementById("editDescriptionError");
+            if (editDescription.value.length < 5 || editDescription.value.length > 250) {
+                editDescriptionError.style.display = "block";
+                isValid = false;
+            } else {
+                editDescriptionError.style.display = "none";
+            }
+
+            // Date validation
+            const editDate = document.getElementById("editDate");
+            const editDateError = document.getElementById("editDateError");
+            const today = new Date().toISOString().split("T")[0];
+            if (editDate.value < today) {
+                editDateError.style.display = "block";
+                isValid = false;
+            } else {
+                editDateError.style.display = "none";
+            }
+
+            // Time validation
+            const editStartTime = document.getElementById("editStartTime").value;
+            const editEndTime = document.getElementById("editEndTime").value;
+            const editTimeError = document.getElementById("editTimeError");
+            if (editStartTime && editEndTime && editStartTime >= editEndTime) {
+                editTimeError.style.display = "block";
+                isValid = false;
+            } else {
+                editTimeError.style.display = "none";
+            }
+
+            // Location validation
+            const editLocation = document.getElementById("editLocation");
+            const editLocationError = document.getElementById("editLocationError");
+            if (editLocation.value.length < 5 || editLocation.value.length > 50) {
+                editLocationError.style.display = "block";
+                isValid = false;
+            } else {
+                editLocationError.style.display = "none";
+            }
+
+            // Materials Needed validation
+            const editMaterialsNeeded = document.getElementById("editMaterialsNeeded");
+            const editMaterialsNeededError = document.getElementById("editMaterialsNeededError");
+            if (editMaterialsNeeded.value.length < 5 || editMaterialsNeeded.value.length > 50) {
+                editMaterialsNeededError.style.display = "block";
+                isValid = false;
+            } else {
+                editMaterialsNeededError.style.display = "none";
+            }
+
+            if (!isValid) {
+                event.preventDefault();
+            }
+        });
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
 </html>

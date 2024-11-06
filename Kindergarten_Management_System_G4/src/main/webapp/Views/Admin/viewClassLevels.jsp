@@ -136,7 +136,8 @@
                             </div>
                             <div class="mb-3">
                                 <label for="addAgeRange" class="form-label">Age Range<span style="color:red;">*</span></label>
-                                <input type="number" class="form-control" id="addAgeRange" name="ageRange" max-value="6" required>
+                                <input type="number" class="form-control" id="addAgeRange" name="ageRange" min="1" max="6" required>
+                                <small id="addAgeRangeError" style="color:red; display:none;">Age must be between 1 and 6 years.</small>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -168,7 +169,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="editAgeRange" class="form-label">Age Range<span style="color:red;">*</span></label>
-                            <input type="number" class="form-control" id="editAgeRange" name="ageRange" max-value="6" required>
+                            <input type="number" class="form-control" id="editAgeRange" name="ageRange" min="1" max="6" required>
+                            <small id="ageRangeError" style="color:red; display:none;">Age must be between 1 and 6 years.</small>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -396,6 +398,36 @@
                 showSuccessModal();
             } else if (urlParams.has('success') && urlParams.get('success') === 'false') {
                 showFalseDeleteModal();
+            }
+        });
+    </script>
+    <script>
+        document.getElementById("addAgeRange").addEventListener("input", function () {
+            const ageInput = document.getElementById("addAgeRange");
+            const ageError = document.getElementById("addAgeRangeError");
+
+            // Kiểm tra nếu tuổi nằm ngoài khoảng từ 1 đến 6
+            if (ageInput.value < 1 || ageInput.value > 6) {
+                ageError.style.display = "block"; // Hiển thị thông báo lỗi
+                ageInput.setCustomValidity("Age must be between 1 and 6 years.");
+            } else {
+                ageError.style.display = "none"; // Ẩn thông báo lỗi
+                ageInput.setCustomValidity(""); // Xóa thông báo lỗi mặc định
+            }
+        });
+    </script>
+    <script>
+        document.getElementById("editAgeRange").addEventListener("input", function () {
+            const ageInput = document.getElementById("editAgeRange");
+            const ageError = document.getElementById("ageRangeError");
+
+            // Kiểm tra nếu tuổi nằm ngoài khoảng từ 1 đến 6
+            if (ageInput.value < 1 || ageInput.value > 6) {
+                ageError.style.display = "block"; // Hiển thị thông báo lỗi
+                ageInput.setCustomValidity("Age must be between 1 and 6 years.");
+            } else {
+                ageError.style.display = "none"; // Ẩn thông báo lỗi
+                ageInput.setCustomValidity(""); // Xóa thông báo lỗi mặc định
             }
         });
     </script>

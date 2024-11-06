@@ -183,7 +183,7 @@
         </div>
     </div>
 
-          <!-- Modal for displaying student information -->
+          <!-- Modal for update student information -->
             <div class="modal fade" id="updateStudentModal" tabindex="-1" aria-labelledby="updateStudentModal" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -199,20 +199,19 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="updateStudentName" class="form-label">Name:<span style="color:red;">*</span></label>
-                                    <input type="text" class="form-control" id="updateStudentName" name="name"  minlength="5"  maxlength="50" required>
+                                    <input type="text" class="form-control" id="updateStudentName" name="name" minlength="5" maxlength="50" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="updateStudentDob" class="form-label">Date of Birth:<span style="color:red;">*</span></label>
                                     <input type="date" class="form-control" id="updateStudentDob" name="dob" required>
                                 </div>
-                               <div class="mb-3">
-                                   <label for="updateStudentGender" class="form-label">Gender:<span style="color:red;">*</span></label>
-                                   <select class="form-control" id="updateStudentGender" name="gender" required>
-                                       <option value="Male">Male</option>
-                                       <option value="Female">Female</option>
-                                   </select>
-                               </div>
-
+                                <div class="mb-3">
+                                    <label for="updateStudentGender" class="form-label">Gender:<span style="color:red;">*</span></label>
+                                    <select class="form-control" id="updateStudentGender" name="gender" required>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
                                 <div class="mb-3">
                                     <label for="updateStudentAddress" class="form-label">Address:<span style="color:red;">*</span></label>
                                     <input type="text" class="form-control" id="updateStudentAddress" name="address" readonly>
@@ -274,6 +273,7 @@
             });
         }
 
+
         // Sort function
         function sortTable() {
             const tableBody = document.getElementById('studentTableBody');
@@ -296,6 +296,13 @@
 
             rows.forEach(row => tableBody.appendChild(row));
         }
+    </script>
+    <script>
+        // Thiết lập giá trị tối đa cho trường ngày sinh là ngày hiện tại
+        document.addEventListener("DOMContentLoaded", function() {
+            const today = new Date().toISOString().split("T")[0];
+            document.getElementById("updateStudentDob").setAttribute("max", today);
+        });
     </script>
 
     <!-- Include Bootstrap JavaScript -->
