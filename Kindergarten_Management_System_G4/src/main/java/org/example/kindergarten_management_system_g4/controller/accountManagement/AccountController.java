@@ -9,7 +9,7 @@
  * <10/2/2024>                 <1.1>           <Vu Viet Chuc>            <Update List Account method>
  */
 
-package org.example.kindergarten_management_system_g4.controller.AccountManagement;
+package org.example.kindergarten_management_system_g4.controller.accountManagement;
 
 import org.example.kindergarten_management_system_g4.dao.AccountDAO.AccountDAO;
 import org.example.kindergarten_management_system_g4.model.User;
