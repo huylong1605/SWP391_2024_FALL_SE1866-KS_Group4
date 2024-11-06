@@ -148,6 +148,7 @@ public class ChangeSlotTeacher extends HttpServlet {
             // Chuyển hướng đến danh sách lớp
             resp.sendRedirect("Views/Teacher/teacherSchedule?teacherId=" + user.getUserID());
         } catch (SQLException e) {
+            LOGGER.info("Exeption change slot: " + e.getMessage());
             req.getRequestDispatcher("error.jsp").forward(req, resp);
             throw new RuntimeException(e);
         }

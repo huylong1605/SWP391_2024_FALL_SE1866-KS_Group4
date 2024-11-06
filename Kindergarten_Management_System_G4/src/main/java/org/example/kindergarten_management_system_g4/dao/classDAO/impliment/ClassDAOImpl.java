@@ -30,31 +30,31 @@ import java.util.logging.Logger;
  * @author Nguyễn Huy Long
  */
 public class ClassDAOImpl extends DBConnection implements IClassDAO {
-    public static final String GET_LIST_ROOM = "SELECT r.* \n" +
+    private static final String GET_LIST_ROOM = "SELECT r.* \n" +
             "FROM room r\n" +
             "LEFT JOIN class c \n" +
             "ON r.Room_ID = c.Room_ID\n" +
             "WHERE c.Room_ID IS NULL;";
-    public static final String GET_LIST_ROOM_2 = "select r.* \n" +
+    private static final String GET_LIST_ROOM_2 = "select r.* \n" +
             "FROM room r\n" +
             "LEFT JOIN class c \n" +
             "ON r.Room_ID = c.Room_ID\n" +
             "WHERE c.Room_ID IS NULL OR r.Room_ID = ?;";
-    public static final String GET_CLASS_BY_ID = "SELECT * from class where Class_ID = ?";
-    public static final String GET_LIST_TEACHER = "SELECT u.* \n" +
+    private static final String GET_CLASS_BY_ID = "SELECT * from class where Class_ID = ?";
+    private static final String GET_LIST_TEACHER = "SELECT u.* \n" +
             "FROM user u\n" +
             "LEFT JOIN class c \n" +
             "ON u.User_id = c.User_id\n" +
             "WHERE c.User_id IS NULL And u.Role_id = 2;";
-    public static final String GET_LIST_TEACHER_2 = "SELECT u.* \n" +
+    private static final String GET_LIST_TEACHER_2 = "SELECT u.* \n" +
             "FROM user u\n" +
             "LEFT JOIN class c \n" +
             "ON u.User_id = c.User_id\n" +
             "WHERE c.User_id IS NULL OR u.User_id = ? And u.Role_id = 2;";
-    public static final String GET_LIST_CLASS_LEVEL = "SELECT * from class_level";
-    public static final String GET_CLASS_NAME = "SELECT Class_name from class where Class_name = ?";
-    public static final String GET_CLASS_NAME_UPDATE = "SELECT Class_name from class where Class_name = ? AND Class_ID != ?";
-    public static final String GET_CLASS_DETAIL = "SELECT\n" +
+    private static final String GET_LIST_CLASS_LEVEL = "SELECT * from class_level";
+    private static final String GET_CLASS_NAME = "SELECT Class_name from class where Class_name = ?";
+    private static final String GET_CLASS_NAME_UPDATE = "SELECT Class_name from class where Class_name = ? AND Class_ID != ?";
+    private static final String GET_CLASS_DETAIL = "SELECT\n" +
             "    c.Class_ID, \n" +
             "    c.Class_name,\n" +
             "    cl.Class_level_name,\n" +
@@ -73,7 +73,7 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
             "    room r ON c.Room_ID = r.Room_ID\n" +
             "WHERE \n" +
             "    c.Class_ID = ?;\n";
-    public static final String GET_LIST_CLASS = "SELECT \n" +
+    private static final String GET_LIST_CLASS = "SELECT \n" +
             "    c.Class_ID, \n" +
             "    c.Class_name, \n" +
             "    cl.Class_level_name, \n" +
@@ -89,7 +89,7 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
             "    room r ON c.Room_ID = r.Room_ID\n" +
             "WHERE \n" +
             "    u.Role_id = 2;\n";
-    public static final String GET_LIST_CLASS_FILTER = "SELECT \n" +
+    private static final String GET_LIST_CLASS_FILTER = "SELECT \n" +
             "    c.Class_ID, \n" +
             "    c.Class_name, \n" +
             "    cl.Class_level_name, \n" +
@@ -105,7 +105,7 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
             "    room r ON c.Room_ID = r.Room_ID\n" +
             "WHERE \n" +
             "    cl.Class_level_ID = ?;\n";
-    public static final String GET_LIST_CLASS_SEARCH_FILTER = "SELECT \n" +
+    private static final String GET_LIST_CLASS_SEARCH_FILTER = "SELECT \n" +
             "    c.Class_ID, \n" +
             "    c.Class_name, \n" +
             "    cl.Class_level_name, \n" +
@@ -121,7 +121,7 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
             "    room r ON c.Room_ID = r.Room_ID\n" +
             "WHERE \n" +
             "   cl.Class_level_ID = ? AND c.Class_name like ?;\n";
-    public static final String GET_LIST_CLASS_SEARCH = "SELECT \n" +
+    private static final String GET_LIST_CLASS_SEARCH = "SELECT \n" +
             "    c.Class_ID, \n" +
             "    c.Class_name, \n" +
             "    cl.Class_level_name, \n" +
@@ -137,7 +137,7 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
             "    room r ON c.Room_ID = r.Room_ID\n" +
             "WHERE \n" +
             "  c.Class_name like ?";
-    public static final String DELETE_CLASS = "DELETE FROM class\n" +
+    private static final String DELETE_CLASS = "DELETE FROM class\n" +
             "WHERE Class_ID = ?\n" +
             "AND NOT EXISTS (\n" +
             "    SELECT 1\n" +

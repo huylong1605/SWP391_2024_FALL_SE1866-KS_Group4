@@ -89,6 +89,9 @@
                     <button class="btn btn-primary" style="width: 40%">
                         <a class="text-light" href="${pageContext.request.contextPath}/view-applications">Send/View Application</a>
                     </button>
+                    <button class="btn btn-primary" style="width: 40%">
+                        <a class="text-light" href="${pageContext.request.contextPath}/Views/Parent/viewChildAttendance?userId=${sessionScope.user.userID}">View Attendance Of Child</a>
+                    </button>
                 </div>
             </div>
             <div class=" col-md-6">

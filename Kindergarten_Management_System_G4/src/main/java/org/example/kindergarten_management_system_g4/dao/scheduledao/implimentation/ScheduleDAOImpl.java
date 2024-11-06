@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ScheduleDAOImpl extends DBConnection implements IScheduleDAO {
-    public static final String GET_SCHEDULE_FOR_STUDENT = "SELECT \n" +
+    private static final String GET_SCHEDULE_FOR_STUDENT = "SELECT \n" +
             "    ss.Schedule_ID,\n" +
             "    s.Subject_name ,\n" +
             "    cl.Class_name,\n" +
@@ -52,34 +52,34 @@ public class ScheduleDAOImpl extends DBConnection implements IScheduleDAO {
             "    OR (? IS NULL AND ? IS NULL) " +
             ") " +
             "ORDER BY sch.date;";
-    public static final String GET_ALL_TERM = "SELECT * FROM term;";
-    public static final String GET_TERM_BY_ID = "SELECT * FROM term where term_ID = ?;";
-    public static final String GET_ALL_SUBJECT = "SELECT * FROM subject where status = 'Active';";
-    public static final String GET_ALL_CLASS = "SELECT * FROM class;";
-    public static final String GET_ALL_SLOT = "SELECT * FROM slot;";
-    public static final String INSERT_SCHEDULE = "INSERT INTO Schedule (day_of_week, date, term_ID, class_id, slotId) VALUES\n" +
+    private static final String GET_ALL_TERM = "SELECT * FROM term;";
+    private static final String GET_TERM_BY_ID = "SELECT * FROM term where term_ID = ?;";
+    private static final String GET_ALL_SUBJECT = "SELECT * FROM subject where status = 'Active';";
+    private static final String GET_ALL_CLASS = "SELECT * FROM class;";
+    private static final String GET_ALL_SLOT = "SELECT * FROM slot;";
+    private static final String INSERT_SCHEDULE = "INSERT INTO Schedule (day_of_week, date, term_ID, class_id, slotId) VALUES\n" +
             "(?, ?, ?, ?, ?);\n";
 
-    public static final String EDIT_SCHEDULE = "UPDATE Schedule SET day_of_week = ?, date = ?, term_ID = ?" +
+    private static final String EDIT_SCHEDULE = "UPDATE Schedule SET day_of_week = ?, date = ?, term_ID = ?" +
             ", class_id = ?, slotId = ? WHERE schedule_ID = ?;\n";
 
-    public static final String CHANGE_SLOT = "UPDATE Schedule SET day_of_week = ?, date = ?, " +
+    private static final String CHANGE_SLOT = "UPDATE Schedule SET day_of_week = ?, date = ?, " +
             "slotId = ? WHERE schedule_ID = ?;\n";
 
-    public static final String GET_EXIST_SCHEDULE = "SELECT * FROM schedule where date = ? " +
+    private static final String GET_EXIST_SCHEDULE = "SELECT * FROM schedule where date = ? " +
             "AND class_id = ? AND slotId = ? and schedule_ID != ?;";
-    public static final String GET_EXIST_SCHEDULE_2 = "SELECT * FROM schedule where date = ? " +
+    private static final String GET_EXIST_SCHEDULE_2 = "SELECT * FROM schedule where date = ? " +
             "AND slotId = ? and schedule_ID != ?;";
 
-    public static final String GET_SLOT_BY_SCHEDULE_ID = "SELECT * FROM slot s join " +
+    private static final String GET_SLOT_BY_SCHEDULE_ID = "SELECT * FROM slot s join " +
             "schedule sch on sch.slotId =  s.slot_id where sch.schedule_ID = ? ;\n" +
             "\n";
 
-    public static final String GET_SCHEDULE_BY_ID = "SELECT * FROM schedule where schedule_ID = ?;";
-    public static final String GET_SUBJECT_BY_SCHEDULE_ID = "SELECT s.subject_ID ,s.subject_name FROM " +
+    private static final String GET_SCHEDULE_BY_ID = "SELECT * FROM schedule where schedule_ID = ?;";
+    private static final String GET_SUBJECT_BY_SCHEDULE_ID = "SELECT s.subject_ID ,s.subject_name FROM " +
             "subject s join " +
             "subject_schedule ss on s.subject_ID = ss.subject_ID where ss.schedule_ID = ?;\n";
-    public static final String GET_ALL_SCHEDULE_BY_CLASS =
+    private static final String GET_ALL_SCHEDULE_BY_CLASS =
             "SELECT sch.schedule_ID, sch.day_of_week, sch.date, s.subject_name, " +
                     "sl.slot_name, sl.start_time, sl.end_time, u.fullname " +
                     "FROM schedule sch " +
