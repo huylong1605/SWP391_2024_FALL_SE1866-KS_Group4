@@ -9,6 +9,15 @@ public class Subject {
     // Constructor
     public Subject() {}
 
+    /**
+     * Constructor to initialize the Subject with all fields.
+     *
+     * @param subjectId The unique ID of the subject.
+     * @param subjectCode The code of the subject.
+     * @param subjectName The name of the subject.
+     * @param description The description of the subject.
+     * @param status The status of the subject.
+     */
     public Subject(int subjectId, String subjectCode, String subjectName, String description, String status) {
         this.subjectId = subjectId;
         this.subjectCode = subjectCode;

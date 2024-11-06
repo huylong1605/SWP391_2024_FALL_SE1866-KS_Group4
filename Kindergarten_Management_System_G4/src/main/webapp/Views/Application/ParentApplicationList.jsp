@@ -47,6 +47,7 @@
     <table class="table table-bordered table-hover">
         <thead>
         <tr>
+            <th>Title</th>
             <th>Application Content</th>
             <th>Date Created</th>
             <th>Status</th>
@@ -57,6 +58,7 @@
         <tbody>
         <c:forEach var="application" items="${applications}">
             <tr>
+                <td>${application.title}</td>
                 <td>${application.applicationContent}</td>
                 <td>${application.dateCreate}</td>
                 <td>${application.status}</td>

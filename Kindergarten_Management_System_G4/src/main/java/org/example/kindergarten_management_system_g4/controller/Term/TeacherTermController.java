@@ -20,6 +20,14 @@ public class TeacherTermController extends HttpServlet {
         termDAO = new TermDAO();
     }
 
+    /**
+     * Handles GET requests to fetch the list of terms and display them on the TeacherTermList JSP page.
+     *
+     * @param request HttpServletRequest object containing the client's request data
+     * @param response HttpServletResponse object used to send responses back to the client
+     * @throws ServletException if an error occurs during request processing
+     * @throws IOException if an input or output error occurs while handling the request
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Fetch the list of terms
         List<Term> termList = termDAO.getAllTerms();

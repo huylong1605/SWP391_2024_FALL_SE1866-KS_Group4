@@ -25,6 +25,14 @@ public class ParentCreateApplication extends HttpServlet {
         applicationDAO = new ApplicationDAO();
     }
 
+    /**
+     * Handles the GET request to display the parent application form.
+     *
+     * @param req HttpServletRequest object containing the client's request data
+     * @param resp HttpServletResponse object used to send responses back to the client
+     * @throws ServletException if an error occurs during request processing
+     * @throws IOException if an input or output error occurs while handling the request
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
@@ -41,8 +49,17 @@ public class ParentCreateApplication extends HttpServlet {
         req.getRequestDispatcher("/Views/Application/ParentApplication.jsp").forward(req, resp);
     }
 
+    /**
+     * Handles the POST request to submit the application form data.
+     *
+     * @param req HttpServletRequest object containing the client's request data
+     * @param resp HttpServletResponse object used to send responses back to the client
+     * @throws ServletException if an error occurs during request processing
+     * @throws IOException if an input or output error occurs while handling the request
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String title = req.getParameter("title");
         String applicationContent = req.getParameter("applicationContent");
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
@@ -54,6 +71,7 @@ public class ParentCreateApplication extends HttpServlet {
         Date dateCreate = new Date(); // Set current date as creation date
 
         Application application = new Application();
+        application.setTitle(title);
         application.setApplicationContent(applicationContent);
         application.setUserId(userId);
         application.setDateCreate(dateCreate);

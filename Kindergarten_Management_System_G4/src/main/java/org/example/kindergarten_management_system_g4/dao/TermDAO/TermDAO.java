@@ -77,7 +77,7 @@ public class TermDAO {
             return rowsAffected > 0;
         } catch (SQLException e) {
             e.printStackTrace();
-            return false; // Trả về false nếu có lỗi xảy ra
+            return false;
         }
     }
 
