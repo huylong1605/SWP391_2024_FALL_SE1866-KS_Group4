@@ -37,7 +37,7 @@
 <%@ include file="/Views/common/header.jsp" %>
 
 <div class="container-fluid home-manager">
-    <div class="item-nav-manager d-flex justify-content-center">
+    <div class="item-nav-manager d-flex justify-content-center flex-wrap">
         <a href="${pageContext.request.contextPath}/listClass" class="items-nav-manager">
             Manage Class
         </a>

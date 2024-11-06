@@ -38,9 +38,6 @@
 
 <div class="container-fluid home-manager">
     <div class="item-nav-manager d-flex justify-content-center">
-        <a href="#" class="items-nav-manager">
-            Manage Class
-        </a>
         <a href="${pageContext.request.contextPath}/teacher/applications" class="items-nav-manager">
             Manage Application
         </a>
