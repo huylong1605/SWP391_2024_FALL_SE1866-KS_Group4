@@ -1,4 +1,4 @@
-package org.example.kindergarten_management_system_g4.dao.TeacherScheduleDAO;
+package org.example.kindergarten_management_system_g4.dao.teacherScheduleDAO;
 
 import org.example.kindergarten_management_system_g4.connection.DBConnection;
 import org.example.kindergarten_management_system_g4.model.TeacherSchedule;

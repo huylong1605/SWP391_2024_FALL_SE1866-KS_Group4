@@ -1,9 +1,8 @@
-package org.example.kindergarten_management_system_g4.dao.AttendanceDAO;
+package org.example.kindergarten_management_system_g4.dao.attendanceDAO;
 
 import org.example.kindergarten_management_system_g4.model.AttendanceRecord;
 import org.example.kindergarten_management_system_g4.model.StudentAttendance;
 
-import java.sql.Date;
 import java.util.List;
 
 public interface IAttendanceDAO {
