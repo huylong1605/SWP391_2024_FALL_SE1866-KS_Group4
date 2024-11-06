@@ -87,7 +87,7 @@ public class RegisterStudentServlet extends HttpServlet {
         Date currentDate = new Date();
         // Kiểm tra nếu ngày sinh được chọn vượt quá ngày hiện tại
         if (selectedDate.after(currentDate)) {
-            req.setAttribute("dateFalse", "Ngày sinh không được vượt quá ngày hiện tại"); // Thông báo lỗi
+            req.setAttribute("dateFalse", "Date of birth cannot exceed current date!!!"); // Thông báo lỗi
             req.getRequestDispatcher("registerStudent.jsp").forward(req, resp);
             return;
         }

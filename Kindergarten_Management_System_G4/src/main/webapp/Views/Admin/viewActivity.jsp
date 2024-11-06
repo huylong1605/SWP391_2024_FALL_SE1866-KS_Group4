@@ -390,9 +390,12 @@
             const editDate = document.getElementById("editDate");
             const editDateError = document.getElementById("editDateError");
             const today = new Date().toISOString().split("T")[0];
-            if (editDate.value < today) {
+            if (!editDate.value) {
+                editDateError.innerText = "Date is required.";
                 editDateError.style.display = "block";
                 isValid = false;
+            } else if (editDate.value < today) {
+                editDateError.style.display = "block";
             } else {
                 editDateError.style.display = "none";
             }
