@@ -28,7 +28,17 @@
         </div>
     </div>
 
-    <a href="${pageContext.request.contextPath}/Views/Admin/notifications" class="btn btn-primary mt-3">Back to Notifications</a>
+    <c:choose>
+        <c:when test="${user.getRoleId() == '1'}">
+            <a href="${pageContext.request.contextPath}/Views/Admin/notifications" class="btn btn-primary mt-3">Back to Notifications</a>
+        </c:when>
+        <c:when test="${user.getRoleId() == '2'}">
+            <a href="${pageContext.request.contextPath}/teacher-notification" class="btn btn-primary mt-3">Back to Notifications</a>
+        </c:when>
+        <c:when test="${user.getRoleId() == '3'}">
+            <a href="${pageContext.request.contextPath}/parent-notification" class="btn btn-primary mt-3">Back to Notifications</a>
+        </c:when>
+    </c:choose>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"

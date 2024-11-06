@@ -65,7 +65,7 @@
             <div id="carouselExampleIndicators" class="carousel slide col-md-6" data-ride="carousel" style="padding-top: 30px">
                 <div class="parent-items">
                     <button class="btn btn-primary" style="width: 40%" onclick="openStudentModal()">
-                        <a class="text-light" href="">View Child Information</a>
+                        View Child Information
                     </button>
                     <button class="btn btn-primary" style="width: 40%">
                         <a class="text-light" href="${pageContext.request.contextPath}/student/evaluations/list">Student Evaluation</a>
@@ -81,7 +81,7 @@
                         <a class="text-light" href="${pageContext.request.contextPath}/parent-term">View Semester</a>
                     </button>
                     <button class="btn btn-primary" style="width: 40%">
-                        <a class="text-light" href="registerStudent.jsp">Register New Child</a>
+                        <a class="text-light" href="${pageContext.request.contextPath}/registerStudent.jsp">Register New Child</a>
                     </button>
                     <button class="btn btn-primary" style="width: 40%">
                         <a class="text-light" href="${pageContext.request.contextPath}/parent-subject">View Subjects</a>
@@ -105,35 +105,25 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="studentModalLabel">Student Information</h5>
+                <h5 class="modal-title" id="studentModalLabel">View Child Information</h5>
             </div>
             <div class="modal-body">
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Name</th>
                             <th>Date of Birth</th>
-                            <th>Age</th>
                             <th>Gender</th>
-                            <th>Class ID</th>
-                            <th>Class Name</th>
                             <th>Address</th>
-                            <th>Phone Number</th>
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach var="student" items="${listChild}">
                             <tr>
-                                <td>${student.studentId}</td>
                                 <td>${student.name}</td>
                                 <td>${student.dob}</td>
-                                <td>${student.age}</td>
                                 <td>${student.gender ? 'Male' : 'Female'}</td>
-                                <td>${student.classId}</td>
-                                <td>${student.className}</td>
                                 <td>${student.address}</td>
-                                <td>${student.phoneNumber}</td>
                             </tr>
                         </c:forEach>
                     </tbody>
@@ -142,6 +132,7 @@
         </div>
     </div>
 </div>
+
 
 
     <!-- Success Modal - Visible only if registrationSuccess is set -->
@@ -178,17 +169,11 @@
                 <div class="detail-box">
                     <div class="heading_container">
                         <h2 style="font-family: 'Roboto', Helvetica, Arial, sans-serif">
-                            A Few words about us
+                            A few things about us
                         </h2>
                     </div>
                     <p>
-                        It is a long established fact that a reader will be distracted by the readable content of a page
-                        when
-                        looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
-                        distribution
-                        of letters, as opposed to using 'Content here, content here', making it look like readable
-                        English. Many
-                        desktop publishing packages and web
+                        The Kindergarten Management System is a comprehensive software solution designed to optimize management operations in kindergartens. The system supports everything from managing student and teacher records, timetables, to tracking and updating childrens development progress. With a friendly and easy-to-use interface, the system helps automate administrative management processes such as attendance and timetables.
                     </p>
                     <div>
                         <a href="">

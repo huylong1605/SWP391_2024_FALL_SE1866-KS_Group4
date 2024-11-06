@@ -216,7 +216,8 @@
                                                         <a href="#" class="text-danger" data-bs-toggle="modal"
                                                            data-bs-target="#deleteModal"
                                                            data-room-id="${room.roomId}"
-                                                           data-room-number="${room.roomNumber}">Delete</a>
+                                                           data-room-number="${room.roomNumber}">Delete
+                                                        </a>
                                                     </td>
                                                 </tr>
                                             </c:forEach>

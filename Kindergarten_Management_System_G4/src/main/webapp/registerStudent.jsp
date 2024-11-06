@@ -79,7 +79,13 @@
     </style>
 </head>
 <body>
+
 <%@ include file="/Views/common/header.jsp" %>
+<% if (request.getAttribute("dateFalse") != null) { %>
+    <div class="alert alert-danger">
+        <%= request.getAttribute("dateFalse") %>
+    </div>
+    <% } %>
 <div class="content">
     <div class="registration-form">
 <h2>Register Student</h2>
@@ -108,6 +114,17 @@
     </form>
     </div>
 </div>
+<%
+    String registrationSuccess = (String) request.getAttribute("registrationSuccess");
+    if (registrationSuccess != null) {
+%>
+    <div class="alert alert-success">
+        <%= registrationSuccess %>
+    </div>
+<%
+    }
+%>
+
 <%@ include file="/Views/common/footer.jsp" %>
 </body>
 </html>

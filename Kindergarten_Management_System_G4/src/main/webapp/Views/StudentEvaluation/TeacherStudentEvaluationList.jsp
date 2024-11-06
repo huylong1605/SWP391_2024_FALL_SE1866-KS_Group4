@@ -25,10 +25,14 @@
 <%@ include file="../common/header.jsp" %>
 <div class="container mt-5">
     <h2 style="font-family: 'Roboto', Helvetica, Arial, sans-serif">Student Evaluation List</h2>
-
+    <a href="${pageContext.request.contextPath}/Views/HomePage/HomePageForTeacher.jsp" type="button" class="btn btn-primary mb-3">
+        Back
+    </a>
     <!-- Form to select class and term -->
     <form action="${pageContext.request.contextPath}/teacher/evaluations/list" method="get" class="form-inline mb-3"
           onsubmit="return validateForm()">
+
+
         <!-- Class Dropdown -->
         <select name="classId" id="classId" class="form-control mr-2">
             <option value="">Select Class</option>
@@ -131,7 +135,7 @@
     function exportToExcel() {
         const classId = document.getElementById("classId").value;
         const termId = document.getElementById("termId").value;
-        const linkDownload = `http://localhost:8080${window.location.origin}${pageContext.request.contextPath}/teacher/evaluations/export?classId=` + classId + `&termId=` + termId;
+        const linkDownload = `http://localhost:8081${window.location.origin}${pageContext.request.contextPath}/teacher/evaluations/export?classId=` + classId + `&termId=` + termId;
         window.location.href = linkDownload;
     }
 

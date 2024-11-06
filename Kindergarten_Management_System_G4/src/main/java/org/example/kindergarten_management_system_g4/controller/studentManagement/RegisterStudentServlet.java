@@ -1,11 +1,11 @@
 /*
- * Copyright(C) 2005,  SWP_G4.
+ * Copyright(C) 2005, SWP_G4.
  * KMS :
  * Kindergarten Management System
  *
  * Record of change:
- * DATE           Version                  AUTHOR                          DESCRIPTION
- * 12/10/2024       1.1              Đào Xuân Bình - HE163115        Register Student By Parent
+ * DATE           Version              AUTHOR                        DESCRIPTION
+ * 12/10/2024     1.1                  Đào Xuân Bình - HE163115      Register Student By Parent
  */
 
 package org.example.kindergarten_management_system_g4.controller.studentManagement;
@@ -21,7 +21,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -53,10 +56,10 @@ public class RegisterStudentServlet extends HttpServlet {
      * Dữ liệu sinh viên được lấy từ form, kiểm tra sự tồn tại, và thêm vào cơ sở dữ liệu nếu chưa tồn tại.
      * Nếu sinh viên đã tồn tại, trả về mã lỗi xung đột (409).
      *
-     * @param req đối tượng HttpServletRequest chứa yêu cầu từ phía client
+     * @param req  đối tượng HttpServletRequest chứa yêu cầu từ phía client
      * @param resp đối tượng HttpServletResponse chứa phản hồi của servlet
      * @throws ServletException nếu có lỗi đặc thù của servlet xảy ra
-     * @throws IOException nếu có lỗi đầu vào hoặc đầu ra được phát hiện khi servlet xử lý yêu cầu POST
+     * @throws IOException      nếu có lỗi đầu vào hoặc đầu ra được phát hiện khi servlet xử lý yêu cầu POST
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -64,37 +67,59 @@ public class RegisterStudentServlet extends HttpServlet {
         HttpSession session = req.getSession();
         // Lấy thông tin người dùng từ session
         User user = (User) session.getAttribute("user");
-        // Lấy thông tin sinh viên từ yêu cầu
-        String name = req.getParameter("name");  // Tên sinh viên
-        LocalDate dob = LocalDate.parse(req.getParameter("dob"));  // Ngày sinh của sinh viên
-        boolean gender = Boolean.parseBoolean(req.getParameter("gender"));  // Giới tính của sinh viên
 
+        // Lấy thông tin sinh viên từ yêu cầu
+        String name = req.getParameter("name"); // Tên sinh viên
+        LocalDate dob = LocalDate.parse(req.getParameter("dob")); // Ngày sinh của sinh viên
+        boolean gender = Boolean.parseBoolean(req.getParameter("gender")); // Giới tính của sinh viên
+
+        // Định dạng ngày sinh
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date selectedDate = null;
 
         try {
-            System.out.println(" Test"+studentDAO.getStudentsByUserId(user.getUserID()).size());
-            // Kiểm tra sinh viên đã tồn tại dựa trên tên, ngày sinh, và ID người dùng
-            if (studentDAO.isStudentExist(name, dob, user.getUserID())||studentDAO.getStudentsByUserId(user.getUserID()).size()>0) {
+            // Chuyển đổi dob từ LocalDate sang Date để so sánh với ngày hiện tại
+            selectedDate = dateFormat.parse(dob.toString());
+        } catch (ParseException e) {
+            throw new RuntimeException(e); // Ném ngoại lệ nếu có lỗi khi phân tích cú pháp
+        }
+
+        Date currentDate = new Date();
+        // Kiểm tra nếu ngày sinh được chọn vượt quá ngày hiện tại
+        if (selectedDate.after(currentDate)) {
+            req.setAttribute("dateFalse", "Date of birth cannot exceed current date!!!"); // Thông báo lỗi
+            req.getRequestDispatcher("registerStudent.jsp").forward(req, resp);
+            return;
+        }
+
+        try {
+            // Debug: In ra số lượng sinh viên hiện có của người dùng
+            System.out.println("Test: " + studentDAO.getStudentsByUserId(user.getUserID()).size());
+
+            // Kiểm tra sinh viên đã tồn tại dựa trên tên, ngày sinh và ID người dùng
+            if (studentDAO.isStudentExist(name, dob, user.getUserID()) || studentDAO.getStudentsByUserId(user.getUserID()).size() > 0) {
                 // Nếu sinh viên đã tồn tại, trả về lỗi xung đột (409)
                 req.setAttribute("registrationSuccess", "Register Erroll !!!!! ");
-                // Chuyển tiếp yêu cầu đến trang chủ của phụ huynh
+
+                // Chuyển tiếp yêu cầu đến trang chủ của phụ huynh với danh sách sinh viên
                 List<Student> listChild = studentDAO.getStudentsByUserId(user.getUserID());
-                req.setAttribute("listChild",listChild);
-                req.getRequestDispatcher("/Views/HomePage/HomePage.jsp").forward(req, resp);
+                req.setAttribute("listChild", listChild);
+                req.getRequestDispatcher("Views/HomePage/HomePage.jsp").forward(req, resp);
             } else {
                 // Nếu sinh viên chưa tồn tại, tạo đối tượng sinh viên mới
                 Student newStudent = new Student(0, dob, gender, name, user.getUserID()); // studentId sẽ được tự động tạo
+
                 // Thêm sinh viên mới vào cơ sở dữ liệu
                 studentDAO.addStudent(newStudent);
-                // Set a success attribute to display the modal
-                req.setAttribute("registrationSuccess", "Register Successful !!!!! ");
-                // Chuyển tiếp yêu cầu đến trang chủ của phụ huynh
-                List<Student> listChild = studentDAO.getStudentsByUserId(user.getUserID());
-                req.setAttribute("listChild",listChild);
-                req.getRequestDispatcher("/Kindergarten_Management_System_G4/login").forward(req, resp);
-            }
-            // Chuyển tiếp yêu cầu đến trang JSP để hiển thị
-            req.getRequestDispatcher("/registerStudent.jsp").forward(req, resp);
 
+                // Thiết lập thông báo thành công và chuyển tiếp đến trang chủ của phụ huynh
+                req.setAttribute("registrationSuccess", "Register Successful !!!!! ");
+
+                // Lấy danh sách con của người dùng và chuyển tiếp yêu cầu về trang chủ
+                List<Student> listChild = studentDAO.getStudentsByUserId(user.getUserID());
+                req.setAttribute("listChild", listChild);
+                req.getRequestDispatcher("Views/HomePage/HomePage.jsp").forward(req, resp);
+            }
         } catch (Exception e) {
             // Xử lý ngoại lệ và gửi lỗi máy chủ nội bộ (500)
             e.printStackTrace();
