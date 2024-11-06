@@ -21,6 +21,14 @@ public class ParentSubjectController extends HttpServlet {
         subjectDAO = new SubjectDAO();
     }
 
+    /**
+     * Handles GET requests to fetch the list of subjects for the parent role and display them on the ParentSubjectList JSP page.
+     *
+     * @param request HttpServletRequest object containing the client's request data
+     * @param response HttpServletResponse object used to send responses back to the client
+     * @throws ServletException if an error occurs during request processing
+     * @throws IOException if an input or output error occurs while handling the request
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Subject> filteredsubjectList = subjectDAO.parentGetAllSubjects();

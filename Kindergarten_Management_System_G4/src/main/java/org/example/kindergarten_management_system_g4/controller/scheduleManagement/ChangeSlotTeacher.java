@@ -1,12 +1,20 @@
-package org.example.kindergarten_management_system_g4.controller.scheduleManagement;
+/*
+ * Copyright(C) 2005,  SWP_G4.
+ * KMS :
+ * Kindergarten Management System
+ *
+ * Record of change:
+ * DATE           Version                  AUTHOR                              DESCRIPTION
+ * 6/11/2024       1.1              Nguyễn Huy Long - He160140             Change slot teacher
+ */
 
+package org.example.kindergarten_management_system_g4.controller.scheduleManagement;
 import org.example.kindergarten_management_system_g4.dao.scheduledao.IScheduleDAO;
 import org.example.kindergarten_management_system_g4.dao.scheduledao.implimentation.ScheduleDAOImpl;
 import org.example.kindergarten_management_system_g4.model.Schedule;
 import org.example.kindergarten_management_system_g4.model.Slot;
 import org.example.kindergarten_management_system_g4.model.Subject;
 import org.example.kindergarten_management_system_g4.model.User;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,6 +45,15 @@ public class ChangeSlotTeacher extends HttpServlet {
         iScheduleDAO = new ScheduleDAOImpl(); // Khởi tạo đối tượng DAO cho lớp học
     }
 
+    /**
+     * Xử lý yêu cầu GET để lấy thông tin lịch học và slot cho ID lịch cụ thể.
+     * Thiết lập các thuộc tính liên quan cho JSP để hiển thị.
+     *
+     * @param req Đối tượng HttpServletRequest
+     * @param resp Đối tượng HttpServletResponse
+     * @throws ServletException nếu xảy ra lỗi trong xử lý yêu cầu
+     * @throws IOException nếu phát hiện lỗi nhập/xuất
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -66,6 +83,15 @@ public class ChangeSlotTeacher extends HttpServlet {
         }
     }
 
+    /**
+     * Xử lý yêu cầu POST để thay đổi slot của lịch học cho ID lịch cụ thể.
+     * Xác minh ngày nhập vào, kiểm tra xung đột lịch, và cập nhật slot nếu hợp lệ.
+     *
+     * @param req Đối tượng HttpServletRequest
+     * @param resp Đối tượng HttpServletResponse
+     * @throws ServletException nếu xảy ra lỗi trong xử lý yêu cầu
+     * @throws IOException nếu phát hiện lỗi nhập/xuất
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int schedulesId = Integer.parseInt(req.getParameter("scheduleIdd"));

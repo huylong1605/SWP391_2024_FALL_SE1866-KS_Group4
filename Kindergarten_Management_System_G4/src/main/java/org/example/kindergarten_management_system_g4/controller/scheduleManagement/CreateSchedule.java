@@ -35,6 +35,10 @@ public class CreateSchedule extends HttpServlet {
         iScheduleDAO = new ScheduleDAOImpl(); // Khởi tạo đối tượng DAO cho lớp học
     }
 
+    /**
+     * Phương thức doGet xử lý yêu cầu GET để hiển thị danh sách các học kỳ, môn học, lớp và slot.
+     * Thiết lập các thuộc tính này để JSP có thể hiển thị chúng.
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
@@ -54,6 +58,11 @@ public class CreateSchedule extends HttpServlet {
         }
     }
 
+
+    /**
+     * Phương thức doPost xử lý yêu cầu POST để tạo lịch học mới.
+     * Kiểm tra ngày hợp lệ, kiểm tra trùng lịch, và tạo lịch học nếu các điều kiện hợp lệ.
+     */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         /*String dayOfWeek = req.getParameter("dayOfWeek");*/

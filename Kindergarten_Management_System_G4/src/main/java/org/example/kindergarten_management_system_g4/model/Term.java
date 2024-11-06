@@ -12,6 +12,15 @@ public class Term {
     // Constructor
     public Term() {}
 
+    /**
+     * Constructor to initialize the Term with all fields.
+     *
+     * @param termId The unique ID of the term.
+     * @param termName The name of the term.
+     * @param startDate The start date of the term.
+     * @param endDate The end date of the term.
+     * @param year The year associated with the term.
+     */
     public Term(int termId, String termName, Date startDate, Date endDate, int year) {
         this.termId = termId;
         this.termName = termName;

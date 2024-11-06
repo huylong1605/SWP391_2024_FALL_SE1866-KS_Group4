@@ -113,7 +113,6 @@
                         <tr>
                             <th>Name</th>
                             <th>Date of Birth</th>
-                            <th>Age</th>
                             <th>Gender</th>
                             <th>Address</th>
                         </tr>
@@ -123,7 +122,6 @@
                             <tr>
                                 <td>${student.name}</td>
                                 <td>${student.dob}</td>
-                                <td>${student.age}</td>
                                 <td>${student.gender ? 'Male' : 'Female'}</td>
                                 <td>${student.address}</td>
                             </tr>

@@ -19,6 +19,15 @@ public class TeacherApplication extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private ApplicationDAO applicationDAO = new ApplicationDAO();
 
+    /**
+     * Handles the GET request to view or edit applications based on the action
+     * specified in the URL path.
+     *
+     * @param request HttpServletRequest object containing the client's request data
+     * @param response HttpServletResponse object used to send responses back to the client
+     * @throws ServletException if an error occurs during request processing
+     * @throws IOException if an input or output error occurs while handling the request
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
@@ -51,6 +60,15 @@ public class TeacherApplication extends HttpServlet {
         }
     }
 
+
+    /**
+     * Handles the POST request to update an application based on the provided form data.
+     *
+     * @param request HttpServletRequest object containing the client's request data
+     * @param response HttpServletResponse object used to send responses back to the client
+     * @throws ServletException if an error occurs during request processing
+     * @throws IOException if an input or output error occurs while handling the request
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getPathInfo();
 
@@ -59,6 +77,7 @@ public class TeacherApplication extends HttpServlet {
             String applicationContent = request.getParameter("applicationContent");
             String status = request.getParameter("status");
             String applicationResponse = request.getParameter("applicationResponse");
+
 
             Application application = new Application();
             application.setApplicationId(id);

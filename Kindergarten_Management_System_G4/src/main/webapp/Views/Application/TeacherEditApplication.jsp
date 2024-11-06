@@ -12,6 +12,9 @@
 <div class="container mt-5">
     <h2>Edit Application</h2>
     <!-- Button to navigate to send-application -->
+    <%--    <a href="${pageContext.request.contextPath}/teacher/applications" class="btn btn-primary btn-custom">--%>
+    <%--        Back to List--%>
+    <%--    </a>--%>
     <a href="${pageContext.request.contextPath}/teacher/applications" class="btn btn-primary btn-custom">
         Back to List
     </a>
@@ -24,6 +27,11 @@
 
     <form action="${pageContext.request.contextPath}/teacher/update-application" method="post">
         <input type="hidden" name="id" value="${application.applicationId}">
+
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" name="title" readonly value="${application.title}">
+        </div>
 
         <div class="form-group">
             <label for="applicationContent">Application Content</label>
@@ -46,7 +54,7 @@
                       rows="3" required>${application.applicationResponse}</textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="submit" class="btn btn-primary">Send</button>
     </form>
 </div>
 <%@include file="../common/footer.jsp" %>

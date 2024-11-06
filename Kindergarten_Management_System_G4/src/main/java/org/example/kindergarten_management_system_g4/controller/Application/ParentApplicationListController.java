@@ -18,6 +18,15 @@ import java.util.List;
 public class ParentApplicationListController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Handles GET requests to fetch and display a list of applications for the parent user role.
+     * The list is displayed on the ParentApplicationList JSP page.
+     *
+     * @param request HttpServletRequest object containing the client's request data
+     * @param response HttpServletResponse object used to send responses back to the client
+     * @throws ServletException if an error occurs during request processing
+     * @throws IOException if an input or output error occurs while handling the request
+     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ApplicationDAO applicationDAO = new ApplicationDAO();
         HttpSession session = request.getSession();

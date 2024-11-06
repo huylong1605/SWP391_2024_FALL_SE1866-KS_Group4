@@ -29,7 +29,6 @@
     <h2>Submit an Application</h2>
 
     <a href="${pageContext.request.contextPath}/view-applications" class="btn btn-primary btn-custom">Back To List</a>
-    <!-- Hiển thị thông báo nếu có -->
     <c:if test="${not empty message}">
         <div class="alert alert-success">
                 ${message}
@@ -38,6 +37,22 @@
 
     <form action="send-application" method="post">
         <input type="hidden" name="action" value="submitApplication">
+
+        <div class="form-group">
+            <label for="title">Application Type</label>
+            <select class="form-control" id="title" name="title" required>
+                <option value="" disabled selected>Choose Application Type</option>
+                <option value="Leave of Absence Form">Leave of Absence Form</option>
+                <option value="Class Change Request">Class Change Request</option>
+                <option value="Permission to Leave School">Permission to Leave School</option>
+                <option value="Certificate Request Form">Certificate Request Form</option>
+                <option value="Long-term Leave Request">Long-term Leave Request</option>
+                <option value="Scholarship Application Form">Scholarship Application Form</option>
+                <option value="Extracurricular Activity Registration">Extracurricular Activity Registration</option>
+                <option value="Re-admission Application Form">Re-admission Application Form</option>
+            </select>
+        </div>
+
 
         <div class="form-group">
             <label for="applicationContent">Application Content</label>
