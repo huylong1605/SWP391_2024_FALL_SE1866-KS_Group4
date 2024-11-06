@@ -13,6 +13,11 @@ package org.example.kindergarten_management_system_g4.model;
 /**
  * Lớp Room đại diện cho một phòng trong hệ thống quản lý mầm non.
  * Chứa thông tin về ID phòng, số phòng, trạng thái và sức chứa.
+ *
+ * <p>Lỗi: Không có lỗi nào được biết đến</p>
+ *
+ * <p>Trạng thái phòng: 0 - không hoạt động, 1 - hoạt động</p>
+ *
  * @author Nguyễn Huy Long
  */
 public class Room {
@@ -22,7 +27,9 @@ public class Room {
     private int status;          // Trạng thái phòng (0: không hoạt động, 1: hoạt động)
     private int capacity;        // Sức chứa của phòng
 
-    // Constructor không tham số
+    /**
+     * Constructor không tham số để khởi tạo một đối tượng Room trống.
+     */
     public Room() {
     }
 
@@ -31,7 +38,7 @@ public class Room {
      *
      * @param roomId ID của phòng
      * @param roomNumber Số phòng
-     * @param status Trạng thái phòng
+     * @param status Trạng thái phòng (0: không hoạt động, 1: hoạt động)
      * @param capacity Sức chứa của phòng
      */
     public Room(int roomId, String roomNumber, int status, int capacity) {
@@ -40,44 +47,52 @@ public class Room {
         this.status = status;
         this.capacity = capacity;
     }
-    public Room( String roomNumber, int status, int capacity) {
+
+    /**
+     * Constructor không bao gồm roomId, dùng khi tạo mới phòng trong cơ sở dữ liệu.
+     *
+     * @param roomNumber Số phòng
+     * @param status Trạng thái phòng (0: không hoạt động, 1: hoạt động)
+     * @param capacity Sức chứa của phòng
+     */
+    public Room(String roomNumber, int status, int capacity) {
         this.roomNumber = roomNumber;
         this.status = status;
         this.capacity = capacity;
     }
 
-
-    // Phương thức getter và setter cho các thuộc tính
+    // Các phương thức getter và setter cho từng thuộc tính
 
     public int getRoomId() {
-        return roomId; // Trả về ID của phòng
+        return roomId;
     }
 
     public void setRoomId(int roomId) {
-        this.roomId = roomId; // Cập nhật ID của phòng
+        this.roomId = roomId;
     }
 
     public String getRoomNumber() {
-        return roomNumber; // Trả về số phòng
+        return roomNumber;
     }
 
     public void setRoomNumber(String roomNumber) {
-        this.roomNumber = roomNumber; // Cập nhật số phòng
+        this.roomNumber = roomNumber;
     }
 
     public int getStatus() {
-        return status; // Trả về trạng thái của phòng
+        return status;
     }
 
     public void setStatus(int status) {
-        this.status = status; // Cập nhật trạng thái của phòng
+        this.status = status;
     }
 
     public int getCapacity() {
-        return capacity; // Trả về sức chứa của phòng
+        return capacity;
     }
 
     public void setCapacity(int capacity) {
-        this.capacity = capacity; // Cập nhật sức chứa của phòng
+        this.capacity = capacity;
     }
 }
+

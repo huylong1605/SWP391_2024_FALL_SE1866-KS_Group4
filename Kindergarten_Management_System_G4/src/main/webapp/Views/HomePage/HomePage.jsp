@@ -67,11 +67,11 @@
                     <%--<button class="btn btn-primary" style="width: 60%">
                         <a class="text-light" href="">View Child Information</a>
                     </button>--%>
-                        <%--<div class="col-md-6 mb-2">--%>
-                            <button class="btn btn-primary" style="width: 60%">
-                                <a class="text-light" href="${pageContext.request.contextPath}/student/evaluations/list">Student Evaluation</a>
-                            </button>
-                        <%--</div>--%>
+                    <%--<div class="col-md-6 mb-2">--%>
+                    <button class="btn btn-primary" style="width: 60%">
+                        <a class="text-light" href="${pageContext.request.contextPath}/student/evaluations/list">Student Evaluation</a>
+                    </button>
+                    <%--</div>--%>
                     <button class="btn btn-primary" style="width: 60%">
                         <a class="text-light" href="">View Class Of Child</a>
                     </button>
@@ -79,14 +79,17 @@
 
                         <a class="text-light" href="${pageContext.request.contextPath}/scheduleStudent?parentId=${sessionScope.user.userID}">View Schedule Of Child </a>
                     </button>
-                   <%-- <button class="btn btn-primary" style="width: 60%">
-                        <a class="text-light" href="">View Student Information</a>
-                    </button>--%>
+
+                    <button class="btn btn-primary" style="width: 60%">
+                        <a class="text-light" href="${pageContext.request.contextPath}/parent-notification">News</a>
+                    </button>
+
                     <button class="btn btn-primary" style="width: 60%">
                         <a class="text-light" href="${pageContext.request.contextPath}/parent-term">View Semester</a>
                     </button>
+
                     <button class="btn btn-primary" style="width: 60%">
-                         <a class="text-light" href="registerStudent.jsp">Register New Child</a>
+                        <a class="text-light" href="registerStudent.jsp">Register New Child</a>
                     </button>
 
                     <button class="btn btn-primary" style="width: 60%">
@@ -109,24 +112,24 @@
 
 
     <!-- Success Modal - Visible only if registrationSuccess is set -->
-        <c:if test="${not empty registrationSuccess}">
-            <div class="modal fade show" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-modal="true" role="dialog" style="display: block;">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="successModalLabel">Registration Status</h5>
+    <c:if test="${not empty registrationSuccess}">
+        <div class="modal fade show" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-modal="true" role="dialog" style="display: block;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">Registration Status</h5>
 
-                        </div>
-                        <div class="modal-body">
+                    </div>
+                    <div class="modal-body">
                             ${registrationSuccess}
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="window.location.href='${pageContext.request.contextPath}/Views/HomePage/HomePage.jsp'">OK</button>
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="window.location.href='${pageContext.request.contextPath}/Views/HomePage/HomePage.jsp'">OK</button>
                     </div>
                 </div>
             </div>
-        </c:if>
+        </div>
+    </c:if>
 </div>
 
 
