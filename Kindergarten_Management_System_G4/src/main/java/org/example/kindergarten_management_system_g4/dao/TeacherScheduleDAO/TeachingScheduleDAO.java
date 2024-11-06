@@ -12,16 +12,21 @@ import java.util.logging.Logger;
 
 public class TeachingScheduleDAO extends DBConnection {
     private static final String GET_TEACHER_SCHEDULE = "SELECT s.schedule_ID, c.class_ID, c.class_name, sub.subject_name, sl.slot_id, sl.slot_name, s.date, \n" +
-            "       r.room_number, t.term_name, s.day_of_week, sl.start_time, sl.end_time \n" +
-            "FROM schedule s \n" +
-            "JOIN class c ON s.class_id = c.class_ID \n" +
-            "JOIN subject_schedule ss ON s.schedule_ID = ss.schedule_ID \n" +
-            "JOIN subject sub ON ss.subject_ID = sub.subject_ID \n" +
+            "       r.room_number, t.term_name, s.day_of_week, sl.start_time, sl.end_time, \n" +
+            "       MAX(a.attendanceMarked) AS attendanceMarked\n" +
+            "FROM schedule s\n" +
+            "JOIN class c ON s.class_id = c.class_ID\n" +
+            "JOIN subject_schedule ss ON s.schedule_ID = ss.schedule_ID\n" +
+            "JOIN subject sub ON ss.subject_ID = sub.subject_ID\n" +
             "JOIN slot sl ON s.slotId = sl.slot_id\n" +
             "JOIN term t ON s.term_ID = t.term_ID\n" +
             "JOIN room r ON c.room_ID = r.room_ID\n" +
+            "LEFT JOIN attendance a ON a.slotId = s.slotId AND a.date = s.date\n" +
             "WHERE c.user_id = ?\n" +
-            "ORDER BY s.date;";
+            "GROUP BY s.schedule_ID, c.class_ID, c.class_name, sub.subject_name, sl.slot_id, sl.slot_name, s.date, \n" +
+            "         r.room_number, t.term_name, s.day_of_week, sl.start_time, sl.end_time\n" +
+            "ORDER BY s.date\n" +
+            "LIMIT 0, 1000;\n";
 
     private static final Logger LOGGER = Logger.getLogger(TeachingScheduleDAO.class.getName());
 
@@ -44,45 +49,14 @@ public class TeachingScheduleDAO extends DBConnection {
                 String dayOfWeek = resultSet.getString("day_of_week");
                 String startTime = resultSet.getString("start_time");
                 String endTime = resultSet.getString("end_time");
+                boolean attendanceMarked = resultSet.getBoolean("attendanceMarked");
                 teachingSchedules.add(new TeacherSchedule(scheduleID, classId, className, subjectName, slotId, slotName, date,
-                        room, termName, dayOfWeek, startTime, endTime)); // Cập nhật constructor
+                        room, termName, dayOfWeek, startTime, endTime, attendanceMarked)); // Cập nhật constructor
             }
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Error getting teaching schedules", e);
         }
         return teachingSchedules;
     }
-
-
-    public static void main(String[] args) {
-        // Giả sử bạn có ID giáo viên cần kiểm tra
-        int teacherId = 6; // Thay đổi ID theo yêu cầu của bạn
-
-        TeachingScheduleDAO teachingScheduleDAO = new TeachingScheduleDAO();
-        List<TeacherSchedule> schedules = teachingScheduleDAO.getTeachingSchedules(teacherId);
-
-        // Kiểm tra và in ra danh sách lịch dạy
-        if (schedules.isEmpty()) {
-            System.out.println("Không có lịch dạy nào cho giáo viên với ID: " + teacherId);
-        } else {
-            System.out.println("Lịch dạy cho giáo viên với ID: " + teacherId);
-            for (TeacherSchedule schedule : schedules) {
-                System.out.println("Schedule ID: " + schedule.getScheduleID());
-                System.out.println("Class ID: " + schedule.getClassId());
-                System.out.println("Class Name: " + schedule.getClassName());
-                System.out.println("Subject Name: " + schedule.getSubjectName());
-                System.out.println("Slot ID: " + schedule.getSlotId());
-                System.out.println("Slot Name: " + schedule.getSlotName());
-                System.out.println("Date: " + schedule.getDate());
-                System.out.println("Room: " + schedule.getRoom());
-                System.out.println("Term Name: " + schedule.getTermName());
-                System.out.println("Day of Week: " + schedule.getDayOfWeek());
-                System.out.println("Start Time: " + schedule.getStartTime());
-                System.out.println("End Time: " + schedule.getEndTime());
-                System.out.println("----------------------------");
-            }
-        }
-    }
-
 
 }

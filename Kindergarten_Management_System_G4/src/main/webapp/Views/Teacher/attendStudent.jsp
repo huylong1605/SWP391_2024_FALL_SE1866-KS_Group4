@@ -61,6 +61,24 @@
             top: 20px;
             right: 20px;
             z-index: 9999;
+            padding-top: 10px;
+        }
+
+        .toast {
+            min-width: 250px;
+            opacity: 0.9;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .toast-header {
+            border-radius: 5px 5px 0 0;
+        }
+        .toast-body {
+            border-radius: 0 0 5px 5px;
+        }
+        /* Thêm hiệu ứng để toast mượt mà hơn */
+        .toast.show {
+            opacity: 1;
         }
 
     </style>
@@ -91,7 +109,6 @@
                 </li>
             </ul>
         </aside>
-
         <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg col-md-10">
             <!-- Navbar -->
             <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
@@ -106,7 +123,6 @@
 
                 </div>
             </nav>
-
             <!-- End Navbar -->
             <div class="container-fluid py-4">
                 <div class="row">
@@ -155,24 +171,16 @@
                                                         <td class="text-center">${student.studentName}</td>
                                                         <td class="text-center">${student.dateOfBirth}</td>
                                                         <td class="text-center">
-                                                            <span id="statusText_${student.studentId}">${student.attendStatus ? 'Present' : 'Absent'}</span>
+                                                            <span id="statusText_${student.studentId}" style="color: ${student.attendStatus ? 'green' : 'red'};">
+                                                                    ${student.attendStatus ? 'Present' : 'Absent'}
+                                                            </span>
                                                             <input type="hidden" id="attendStatus_${student.studentId}" name="attendStatus" value="${student.attendStatus}">
-                                                            <input type="hidden" name="studentId" value="${student.studentId}"> <!-- Thêm dòng này -->
+                                                            <input type="hidden" name="studentId" value="${student.studentId}">
                                                         </td>
-<%--                                                        <td class="align-middle">--%>
-<%--                                                            <a href="#" class="text-light font-weight-bold text-xs"--%>
-<%--                                                               style="background-color: #5151ff; padding: 5px; color: white; border-radius: 10px"--%>
-<%--                                                               data-toggle="tooltip" data-original-title="View Details">--%>
-<%--                                                                Change Slot--%>
-<%--                                                            </a>--%>
-<%--                                                        </td>--%>
                                                         <td class="text-center">
                                                             <button style="margin-top: 15px; font-size: 10px" type="button" class="btn btn-warning" onclick="toggleAttendance(${student.studentId})">
                                                                 Take Attendance
                                                             </button>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <a style="margin-top: 15px; font-size: 10px" class="btn btn-primary" href="#">Notification Parent</a>
                                                         </td>
                                                     </tr>
                                                 </c:forEach>
@@ -185,9 +193,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="text-center d-flex">
+                    <div class="text-center d-flex align-content-around">
                         <a href="${pageContext.request.contextPath}/Views/Teacher/teacherSchedule?teacherId=${sessionScope.user.userID}" class="btn btn-primary">Back To Schedule</a>
                         <button type="submit" class="btn btn-primary" style="background-color: #4b4bff; margin-left: 15px">Save Attendance</button>
+                        <a href="${pageContext.request.contextPath}/Views/Teacher/sendAbsenceNotifications?classId=${classId}&date=${date}&slotId=${slotId}&className=${className}&slotName=${slotName}" class="btn btn-primary" style="background-color: red; margin-left: 15px">Notification Parent</a>
                     </div>
                     </form>
                 </div>
@@ -199,8 +208,9 @@
 <div class="toast-container text-center">
     <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3000">
         <div class="toast-header">
-            <strong class="mr-auto text-success">Success</strong>
-            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+            <strong style="font-size: 24px" class="me-auto text-success">Successfully</strong>
+            <small class="text-muted">just now</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -210,18 +220,47 @@
     </div>
 </div>
 
+<div class="toast-container text-center">
+    <div id="errorToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3000">
+        <div class="toast-header">
+            <strong style="font-size: 24px" class="me-auto text-danger">Error</strong>
+            <small class="text-muted">just now</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="toast-body">
+            ${sessionScope.errorMessage}
+        </div>
+    </div>
+</div>
 
 <script>
     function toggleAttendance(studentId) {
+        // Lấy phần tử hiển thị trạng thái và giá trị trạng thái hiện tại
         var attendanceStatusElement = document.getElementById("attendStatus_" + studentId);
+        var statusTextElement = document.getElementById("statusText_" + studentId);
+
+        // Cập nhật trạng thái
         var currentStatus = attendanceStatusElement.value === "true";
         var newStatus = !currentStatus;
         attendanceStatusElement.value = newStatus;
-        var statusTextElement = document.getElementById("statusText_" + studentId);
+
+        // Cập nhật văn bản và màu sắc dựa trên trạng thái mới
         statusTextElement.textContent = newStatus ? "Present" : "Absent";
+        statusTextElement.style.color = newStatus ? "green" : "red";
     }
 
+
     // Hiển thị Toast nếu có thông báo thành công trong session
+    $(document).ready(function() {
+        <c:if test="${not empty sessionScope.errorMessage}">
+        $('#errorToast').toast('show');
+        <%-- Xóa thông báo sau khi hiển thị --%>
+        <c:remove var="errorMessage" scope="session" />
+        </c:if>
+    });
+
     $(document).ready(function() {
         <c:if test="${not empty sessionScope.successMessage}">
         $('#successToast').toast('show');
