@@ -25,19 +25,26 @@ public class TeacherScheduleController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Lấy teacherId từ tham số yêu cầu
         int teacherId = Integer.parseInt(req.getParameter("teacherId"));
         HttpSession session = req.getSession();
 
-        // Lấy thông báo từ phiên nếu có
         String changeSlotSuccessful = (String) session.getAttribute("changeSlotSuccessful");
-        // Lấy danh sách lịch dạy của giáo viên
+
         List<TeacherSchedule> teachingSchedules = teachingScheduleDAO.getTeachingSchedules(teacherId);
 
-        // Đặt danh sách lịch dạy vào thuộc tính request để hiển thị trên JSP
+        // Lấy ngày hiện tại
+        java.util.Date currentDate = new java.util.Date();
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+        String currentDateString = sdf.format(currentDate);
+
+        // Chuyển đổi danh sách lịch dạy để thêm thông tin "có thể điểm danh hay không"
+        for (TeacherSchedule schedule : teachingSchedules) {
+            boolean canAttend = schedule.getDate().compareTo(currentDateString) <= 0;
+            schedule.setCanAttend(canAttend); // Thêm trường "canAttend" vào model nếu cần
+        }
+        req.setAttribute("currentDate", currentDateString);
         req.setAttribute("teachingSchedules", teachingSchedules);
         req.setAttribute("changeSlotSuccessful", changeSlotSuccessful);
-        // Chuyển hướng đến trang JSP để hiển thị lịch dạy
         req.getRequestDispatcher("/Views/Teacher/teacherSchedule.jsp").forward(req, resp);
     }
 

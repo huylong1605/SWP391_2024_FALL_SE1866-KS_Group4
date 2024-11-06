@@ -77,6 +77,8 @@ public class RegisterStudentServlet extends HttpServlet {
                 // Nếu sinh viên đã tồn tại, trả về lỗi xung đột (409)
                 req.setAttribute("registrationSuccess", "Register Erroll !!!!! ");
                 // Chuyển tiếp yêu cầu đến trang chủ của phụ huynh
+                List<Student> listChild = studentDAO.getStudentsByUserId(user.getUserID());
+                req.setAttribute("listChild",listChild);
                 req.getRequestDispatcher("/Views/HomePage/HomePage.jsp").forward(req, resp);
             } else {
                 // Nếu sinh viên chưa tồn tại, tạo đối tượng sinh viên mới
@@ -86,7 +88,9 @@ public class RegisterStudentServlet extends HttpServlet {
                 // Set a success attribute to display the modal
                 req.setAttribute("registrationSuccess", "Register Successful !!!!! ");
                 // Chuyển tiếp yêu cầu đến trang chủ của phụ huynh
-                req.getRequestDispatcher("/Views/HomePage/HomePage.jsp").forward(req, resp);
+                List<Student> listChild = studentDAO.getStudentsByUserId(user.getUserID());
+                req.setAttribute("listChild",listChild);
+                req.getRequestDispatcher("/Kindergarten_Management_System_G4/login").forward(req, resp);
             }
             // Chuyển tiếp yêu cầu đến trang JSP để hiển thị
             req.getRequestDispatcher("/registerStudent.jsp").forward(req, resp);

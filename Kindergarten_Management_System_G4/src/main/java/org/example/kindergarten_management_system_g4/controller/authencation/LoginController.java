@@ -11,7 +11,9 @@
 package org.example.kindergarten_management_system_g4.controller.authencation;
 
 import org.example.kindergarten_management_system_g4.dao.AuthenDAO.LoginDAO;
+import org.example.kindergarten_management_system_g4.dao.StudentDAO.StudentDAO;
 import org.example.kindergarten_management_system_g4.javaMail.EmailService;
+import org.example.kindergarten_management_system_g4.model.Student;
 import org.example.kindergarten_management_system_g4.model.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +22,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 
@@ -30,7 +33,7 @@ import java.util.logging.Logger;
 @WebServlet(name = "login", value = "/login")
 public class LoginController extends HttpServlet { // lớp LoginController để kiểm tra đăng nhập của người dùng
     private LoginDAO loginDAO;
-
+    private StudentDAO studentDAO;
 
 
     private static final Logger LOGGER = Logger.getLogger(LoginController.class.getName());
@@ -39,8 +42,8 @@ public class LoginController extends HttpServlet { // lớp LoginController đ�
     public void init() throws ServletException {
         super.init();
         loginDAO = new LoginDAO();
+        studentDAO = new StudentDAO(); // Khởi tạo đối tượng StudentDAO
     }
-
     /**
      * Phương thức doPost xử lý yêu cầu POST từ người dùng khi đăng nhập.
      * Nó kiểm tra email và mật khẩu, mã hóa mật khẩu, lưu trữ thông tin trong session và cookie,
@@ -138,8 +141,11 @@ public class LoginController extends HttpServlet { // lớp LoginController đ�
      * @throws ServletException Nếu có lỗi trong quá trình xử lý Servlet.
      * @throws IOException      Nếu có lỗi đầu vào/đầu ra.
      */
-    private void redirectUserBasedOnRole(User user, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void redirectUserBasedOnRole(User user, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ClassNotFoundException {
         if (user.getRoleId() == 3) {         //Id = 3 điều hướng người dùng đến trang  homepage của parent
+            List<Student> listChild = studentDAO.getStudentsByUserId(user.getUserID());
+            req.setAttribute("listChild",listChild);
+            System.out.println("Test01"+listChild);
             req.getRequestDispatcher("/Views/HomePage/HomePage.jsp").forward(req, resp);
         } else if (user.getRoleId() == 1) {      //Id = 1 điều hướng người dùng đến trang  homepage của Admin
             req.getRequestDispatcher("/Views/HomePage/HomePageForAdmin.jsp").forward(req, resp);

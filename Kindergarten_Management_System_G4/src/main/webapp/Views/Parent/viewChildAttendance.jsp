@@ -61,10 +61,8 @@
     <c:if test="${not empty errorMessage}">
         <div class="alert alert-danger">${errorMessage}</div>
     </c:if>
-
     <div class="mt-3">
-        <a href="${pageContext.request.contextPath}/Views/Teacher/listAttendanceClass?classId=${classId}" class="btn btn-primary">Back to Attendance List</a>
-        <a href="${pageContext.request.contextPath}/Views/Teacher/exportDetailAttendance?classId=${classId}&studentId=${totalAttendance.studentId}&studentName=${totalAttendance.studentName}" class="btn btn-success">Export Attendance</a>
+        <a href="" class="btn btn-primary">Back to home</a>
     </div>
 </div>
 <%@ include file="/Views/common/footer.jsp" %>

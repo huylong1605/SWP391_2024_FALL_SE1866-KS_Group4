@@ -50,17 +50,9 @@
         <a href="${pageContext.request.contextPath}/teacher-term" class="items-nav-manager">
             View Semester
         </a>
-        <%--<a href="#" class="items-nav-manager">
-            Assessment
-        </a>--%>
-
-        <a href="#" class="items-nav-manager">
-            Manage Room
-        </a>
         <a href="${pageContext.request.contextPath}/Views/Teacher/teacherSchedule?teacherId=${sessionScope.user.userID}" class="items-nav-manager">
             View Schedule
         </a>
-
         <a href="teacher/evaluations/list" class="items-nav-manager">
             Manage Student Evaluation
         </a>

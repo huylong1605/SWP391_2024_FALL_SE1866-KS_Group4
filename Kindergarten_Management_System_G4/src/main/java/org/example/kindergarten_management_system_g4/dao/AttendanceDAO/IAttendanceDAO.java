@@ -17,6 +17,16 @@ public interface IAttendanceDAO {
      List<AttendanceRecord> getAttendanceDetails(int classId, int studentId);
 
      AttendanceRecord getTotalAttendance(int classId, int studentId);
+
+     void sendAbsenceNotifications(int classId, String date, int slotId);
+
+     boolean isAttendanceSaved(int classId, String date, int slotId);
+
+     void markAttendance(int classId, String date, int slotId);
+
+     List<AttendanceRecord> getChildDetailAttendance(int userId);
+
+     AttendanceRecord getChildTotalAttendance(int userId);
 }
 
 
