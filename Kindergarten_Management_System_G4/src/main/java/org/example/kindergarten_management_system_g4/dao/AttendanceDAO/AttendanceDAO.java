@@ -1,8 +1,17 @@
-package org.example.kindergarten_management_system_g4.dao.AttendanceDAO;
 
+/*
+ * Copyright(C) 2005,  <SWP_G4>.
+ * <KMS> :
+ *  <Kindergarten Management System>
+ *
+ * Record of change:
+ * DATE                       Version             AUTHOR                       DESCRIPTION
+ * <11/3/2024>                 <1.1>           <Vu Viet Chuc>            <Update markAttendance method>
+ */
+
+package org.example.kindergarten_management_system_g4.dao.AttendanceDAO;
 import org.example.kindergarten_management_system_g4.connection.DBConnection;
 import org.example.kindergarten_management_system_g4.model.*;
-
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -12,6 +21,23 @@ import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+
+/**
+ * The AttendanceDAO class provides data access methods for handling attendance records
+ * in a student management system. It extends DBConnection, enabling access to the database
+ * and implements the IAttendanceDAO interface to enforce specific attendance-related methods.
+ *
+ * The class contains SQL query strings and data access methods for:
+ * - Retrieving student attendance for a given date and slot (GET_STUDENT_ATTENDANCE)
+ * - Saving student attendance with the option to update existing records (SAVE_STUDENT_ATTENDANCE)
+ * - Summarizing attendance data including counts of total, present, and absent instances (GET_ATTENDANCE_SUMMARY)
+ * - Getting detailed attendance information for a specific student (GET_ATTENDANCE_DETAILS)
+ * - Calculating total attendance records for students, incorporating presence and absence counts (GET_TOTAL_ATTENDANCE)
+ *
+ * The class also employs a logger (LOGGER) for logging actions and potential issues, facilitating
+ * easier debugging and monitoring.
+ */
 
 public class AttendanceDAO extends DBConnection implements IAttendanceDAO {
     private static final Logger LOGGER = Logger.getLogger(AttendanceDAO.class.getName());
@@ -246,8 +272,7 @@ public class AttendanceDAO extends DBConnection implements IAttendanceDAO {
         }
         return attendanceSummary;
     }
-
-
+    @Override
     public List<AttendanceRecord> getChildDetailAttendance(int userId) {
         List<AttendanceRecord> attendanceList = new ArrayList<>();
         Connection connection = null;
@@ -292,7 +317,7 @@ public class AttendanceDAO extends DBConnection implements IAttendanceDAO {
 
         return attendanceList;
     }
-
+    @Override
     public AttendanceRecord getChildTotalAttendance(int userId) {
         AttendanceRecord attendanceSummary = null;
         List<AttendanceRecord> attendanceList = new ArrayList<>();
@@ -341,7 +366,7 @@ public class AttendanceDAO extends DBConnection implements IAttendanceDAO {
         }
         return attendanceSummary;
     }
-
+    @Override
     public void sendAbsenceNotifications(int classId, String date, int slotId) {
         List<StudentAttendance> absentees = getStudentAttendance(classId, date, slotId);
         for (StudentAttendance student : absentees) {
