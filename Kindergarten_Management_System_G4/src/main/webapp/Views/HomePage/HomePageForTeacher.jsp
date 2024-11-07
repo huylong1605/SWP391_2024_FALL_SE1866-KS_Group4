@@ -38,10 +38,6 @@
 
 <div class="container-fluid home-manager">
     <div class="item-nav-manager d-flex justify-content-center">
-        <a href="#" class="items-nav-manager">
-            Manage Class
-        </a>
-
         <a href="${pageContext.request.contextPath}/teacher/applications" class="items-nav-manager">
             Manage Application
         </a>
@@ -60,7 +56,6 @@
         <a class="items-nav-manager" href="${pageContext.request.contextPath}/parent-notification">
             NEWS
         </a>
-
     </div>
     <div class=" aa d-flex justify-content-center align-items-center">
         <div class="admin-page">
