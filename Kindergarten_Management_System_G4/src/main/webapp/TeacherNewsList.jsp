@@ -23,7 +23,7 @@
 
 <main class="main-content container mt-5">
     <h4 class="text-3xl font-weight-bolder mb-4">Notifications</h4>
-    <a href="Views/HomePage/HomePageForTeacher.jsp" type="button" class="btn btn-primary mb-3">
+    <a href="${pageContext.request.contextPath}/Views/HomePage/HomePageForTeacher.jsp" type="button" class="btn btn-primary mb-3">
         Back
     </a>
     <div class="table-responsive">

@@ -54,7 +54,7 @@
         <a href="${pageContext.request.contextPath}/Views/Teacher/teacherSchedule?teacherId=${sessionScope.user.userID}" class="items-nav-manager">
             View Schedule
         </a>
-        <a href="teacher/evaluations/list" class="items-nav-manager">
+        <a href="${pageContext.request.contextPath}/teacher/evaluations/list" class="items-nav-manager">
             Manage Student Evaluation
         </a>
         <a class="items-nav-manager" href="${pageContext.request.contextPath}/parent-notification">

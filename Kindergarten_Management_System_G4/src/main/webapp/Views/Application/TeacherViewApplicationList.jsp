@@ -34,7 +34,7 @@
     <!-- Dropdown to select class -->
     <form action="${pageContext.request.contextPath}/teacher/applications" method="get">
         <select name="classId" class="form-control" onchange="this.form.submit()">
-            <option value="">Select Class</option>
+            <option value="" disabled selected>Select Class</option>
             <c:forEach var="classItem" items="${classes}">
                 <option value="${classItem.classId}" ${classItem.classId == classIdSelected ? 'selected' : ''}>${classItem.className}</option>
             </c:forEach>
@@ -45,7 +45,7 @@
         <thead>
         <tr>
             <th>Parent Name</th>
-            <th>Title</th>
+            <th>Type</th>
             <th>Application Content</th>
             <th>Date Created</th>
             <th>Status</th>

@@ -47,7 +47,7 @@
     <table class="table table-bordered table-hover">
         <thead>
         <tr>
-            <th>Title</th>
+            <th>Type</th>
             <th>Application Content</th>
             <th>Date Created</th>
             <th>Status</th>
