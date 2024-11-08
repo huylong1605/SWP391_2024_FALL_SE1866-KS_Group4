@@ -23,8 +23,10 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 
 /**
@@ -61,38 +63,56 @@ public class ExtracurricularActivityUpdateController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int activityId = Integer.parseInt(req.getParameter("activityId")); // Lấy ID hoạt động từ biểu mẫu
-        String activityName = req.getParameter("activityName"); // Tên hoạt động
-        String description = req.getParameter("description"); // Mô tả hoạt động
-        String location = req.getParameter("location"); // Địa điểm hoạt động
-        String materialsNeeded = req.getParameter("materialsNeeded"); // Vật liệu cần thiết
-        String status = req.getParameter("status"); // Trạng thái hoạt động
-
-        // Định dạng và chuyển đổi thời gian bắt đầu và kết thúc
-        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
-        LocalTime startTime = LocalTime.parse(req.getParameter("startTime"), timeFormat); // Thời gian bắt đầu
-        LocalTime endTime = LocalTime.parse(req.getParameter("endTime"), timeFormat); // Thời gian kết thúc
-
         try {
-            // Thiết lập tất cả các trường trong đối tượng hoạt động
+            // Retrieve parameters with null checks
+            int activityId = Integer.parseInt(req.getParameter("activityId"));
+            String activityName = req.getParameter("activityName");
+            String description = req.getParameter("description");
+            String location = req.getParameter("location");
+            String materialsNeeded = req.getParameter("materialsNeeded");
+            String status = req.getParameter("status");
+            String dateString = req.getParameter("date");
+
+            if (activityName == null || description == null || location == null || materialsNeeded == null || status == null || dateString == null) {
+                throw new IllegalArgumentException("All fields are required.");
+            }
+
+            // Convert date and time fields with appropriate formats
+            LocalDate date = LocalDate.parse(dateString);
+            DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
+            LocalTime startTime = LocalTime.parse(req.getParameter("startTime"), timeFormat);
+            LocalTime endTime = LocalTime.parse(req.getParameter("endTime"), timeFormat);
+
+            // Populate activity object
             ExtracurricularActivities activity = new ExtracurricularActivities();
             activity.setActivity_id(activityId);
             activity.setActivity_name(activityName);
             activity.setDescription(description);
+            activity.setDate(date);
             activity.setLocation(location);
             activity.setMaterials_needed(materialsNeeded);
             activity.setStatus(status);
             activity.setStart_time(startTime);
             activity.setEnd_time(endTime);
 
-            // Cập nhật hoạt động trong cơ sở dữ liệu
+            // Update activity in the database
             extracurricularActivitiesDAO.updateActivity(activity);
 
-            // Chuyển hướng với thông báo thành công
+            // Redirect with success message
             resp.sendRedirect(req.getContextPath() + "/view-extracurricular-activities?success=true");
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            resp.sendRedirect("error.jsp?error=Invalid ID format");
+        } catch (DateTimeParseException e) {
+            e.printStackTrace();
+            resp.sendRedirect("error.jsp?error=Invalid date or time format");
         } catch (SQLException e) {
-            e.printStackTrace(); // In lỗi SQLException ra console để kiểm tra
-            resp.sendRedirect("error.jsp"); // Chuyển hướng tới trang lỗi nếu có lỗi SQL xảy ra
+            e.printStackTrace();
+            resp.sendRedirect("error.jsp?error=Database error");
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            resp.sendRedirect("error.jsp?error=" + e.getMessage());
         }
     }
+
 }
