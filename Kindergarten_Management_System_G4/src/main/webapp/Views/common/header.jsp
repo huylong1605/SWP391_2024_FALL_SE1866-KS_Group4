@@ -1,4 +1,4 @@
-<%--
+<%@ page import="org.example.kindergarten_management_system_g4.model.User" %><%--
   Created by IntelliJ IDEA.
   User: chuc2
   Date: 9/25/2024
@@ -15,6 +15,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
+
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -49,16 +50,50 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse" style="margin-left: 200px; font-size: 20px">
         <div class="navbar-nav mx-auto">
-            <a href="${pageContext.request.contextPath}/Views/HomePage/HomePage.jsp" class="nav-item nav-link active">Home</a>
-            <a href="#" class="nav-item nav-link">About Us</a>
+
+                <%
+                    User user = (User) session.getAttribute("user");
+                    if (user != null) {  // Kiểm tra xem user có null không
+                        String role = String.valueOf(user.getRoleId());
+
+                        if ("1".equals(role)) {
+                %>
+                <a href="${pageContext.request.contextPath}/Views/HomePage/HomePageForAdmin.jsp" class="nav-item nav-link active">Home</a>
+                <%
+                } else if ("2".equals(role)) {
+                %>
+                <a href="${pageContext.request.contextPath}/Views/HomePage/HomePageForTeacher.jsp" class="nav-item nav-link active">Home</a>
+                <%
+                } else if ("3".equals(role)) {
+                %>
+                <a href="${pageContext.request.contextPath}/Views/HomePage/HomePage.jsp" class="nav-item nav-link active">Home</a>
+                <%
+                } else if ("4".equals(role)) {
+                %>
+                <a href="${pageContext.request.contextPath}/Views/HomePage/HomePageForManager.jsp" class="nav-item nav-link active">Home</a>
+                <%
+                } else if ("5".equals(role)) {
+                %>
+                <a href="${pageContext.request.contextPath}/Views/HomePage/HomePageForEnrollment.jsp" class="nav-item nav-link active">Home</a>
+                <%
+                    }
+                } else {
+                %>
+                <a href="${pageContext.request.contextPath}/Views/LandingPage/LandingPage.jsp" class="nav-item nav-link active">Home</a>
+                <%
+                    }
+                %>
+
+                <a href="#" class="nav-item nav-link">About Us</a>
             <a href="#" class="nav-item nav-link">Contact Us</a>
-            
+
         </div>
 
         <ul class="navbar-nav ml-auto" style="font-size: 20px">
             <c:if test="${sessionScope.user != null}">
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/viewprofile">Hello, ${sessionScope.user.fullname}</a>
+                    <a class="nav-link"
+                       href="${pageContext.request.contextPath}/viewprofile">Hello, ${sessionScope.user.fullname}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/logout">Logout</a>
