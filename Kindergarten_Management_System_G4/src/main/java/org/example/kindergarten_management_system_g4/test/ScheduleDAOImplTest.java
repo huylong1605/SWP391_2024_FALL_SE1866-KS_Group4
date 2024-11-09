@@ -1,16 +1,14 @@
 package org.example.kindergarten_management_system_g4.test;
 
+import org.example.kindergarten_management_system_g4.dao.AuthenDAO.LoginDAO;
 import org.example.kindergarten_management_system_g4.dao.scheduledao.implimentation.ScheduleDAOImpl;
 import org.example.kindergarten_management_system_g4.model.Schedule;
-import org.example.kindergarten_management_system_g4.model.ScheduleDAL;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.sql.*;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -29,6 +27,9 @@ class ScheduleDAOImplTest {
 
     private ScheduleDAOImpl scheduleDAO;
 
+
+    private LoginDAO loginDAO;
+
     @BeforeEach
     void setUp() throws SQLException {
         MockitoAnnotations.openMocks(this);
@@ -46,44 +47,20 @@ class ScheduleDAOImplTest {
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
     }
 
-   /* @Test*/
-   /* void testGetScheduleOfStudent() throws SQLException {
-        // Giả lập dữ liệu trả về từ ResultSet
-        when(resultSet.next()).thenReturn(true).thenReturn(false); // Chỉ có 1 bản ghi
-        when(resultSet.getInt("Schedule_ID")).thenReturn(1);
-        when(resultSet.getString("Subject_name")).thenReturn("Math");
-        when(resultSet.getString("Term_name")).thenReturn("Fall 2024");
-        when(resultSet.getString("Slot_name")).thenReturn("Morning Slot");
-        when(resultSet.getString("Start_time")).thenReturn("08:00");
-        when(resultSet.getString("end_time")).thenReturn("09:00");
-        when(resultSet.getString("day_of_week")).thenReturn("Monday");
-        when(resultSet.getString("date")).thenReturn("2024-02-02");
-        when(resultSet.getString("Room_number")).thenReturn("Room 101");
-        when(resultSet.getString("class_name")).thenReturn("Class A");
-        when(resultSet.getString("fullname")).thenReturn("Mr. John");
 
-        // Thực hiện gọi hàm
-        List<ScheduleDAL> scheduleList = scheduleDAO.getScheduleOfStudent(7);
+    @Test
+    public void testGetPassword() throws ClassNotFoundException, SQLException {
+        when(connection.prepareStatement(anyString(), eq(Statement.RETURN_GENERATED_KEYS)))
+                .thenReturn(preparedStatement);
+        when(preparedStatement.executeUpdate()).thenReturn(1); // Giả lập thành công 1 bản ghi
+        when(preparedStatement.getGeneratedKeys()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true); // Có ID mới được tạo
+        when(resultSet.getInt(1)).thenReturn(100);
+       String pass =    loginDAO.getPassword("ok");
+        assertEquals(true, pass);
 
-        // Kiểm tra kết quả
-        assertEquals(1, scheduleList.size());
-        ScheduleDAL schedule = scheduleList.get(0);
-        assertEquals(1, schedule.getScheduleId());
-        assertEquals("Math", schedule.getSubject_name());
-        assertEquals("Fall 2024", schedule.getTermName());
-        assertEquals("Morning Slot", schedule.getSlotName());
-        assertEquals("08:00", schedule.getStartTime());
-        assertEquals("09:00", schedule.getEndTime());
-        assertEquals("Monday", schedule.getDayOfWeek());
-        assertEquals("2024-02-02", schedule.getDateOfDay());
-        assertEquals("Room 101", schedule.getRoom());
-        assertEquals("Class A", schedule.getClassName());
-        assertEquals("Mr. John", schedule.getTeacher());
+    }
 
-        // Kiểm tra các tương tác
-        verify(connection, times(1)).prepareStatement(anyString());
-        verify(preparedStatement, times(1)).executeQuery();
-    }*/
 
     @Test
     void testAddSchedule() throws SQLException {

@@ -116,7 +116,7 @@ public class ChangeSlotTeacher extends HttpServlet {
                 req.setAttribute("listSlot", listSlot);
                 req.setAttribute("slot", slot);
                 req.setAttribute("schedules", schedule);
-                req.setAttribute("dateFalseUpdate", "Không được để ngày trong quá khứ");
+                req.setAttribute("dateFalseUpdate", "Do not leave the date in the past");
                 req.getRequestDispatcher("changeSlot.jsp").forward(req, resp);
                 return;
             }
@@ -137,7 +137,7 @@ public class ChangeSlotTeacher extends HttpServlet {
                 req.setAttribute("listSlot", listSlot);
                 req.setAttribute("slot", slot);
                 req.setAttribute("schedules", schedule);
-                req.setAttribute("ExistSchedule", "Trùng lịch, hãy kiểm tra lại ngày, slot học");
+                req.setAttribute("ExistSchedule", "Due to scheduling conflicts, please check the date and class slot again");
                 req.getRequestDispatcher("changeSlot.jsp").forward(req, resp);
                 return;
             }

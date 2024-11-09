@@ -79,7 +79,7 @@ public class CreateSchedule extends HttpServlet {
             Date currentDate = new Date();
             if (selectedDate.before(currentDate)) {
                 data(req, resp);
-                req.setAttribute("dateFalse", "không được de ngày trong quá khu");
+                req.setAttribute("dateFalse", "Do not leave the date in the past");
                 req.getRequestDispatcher("createSchedule.jsp").forward(req, resp);
                 return;
             }
@@ -106,7 +106,7 @@ public class CreateSchedule extends HttpServlet {
             Boolean isCheckExistSchedule = iScheduleDAO.getSchedule(scheduleCheck);
             if (isCheckExistSchedule == true) {
                 data(req, resp);
-                req.setAttribute("ExistSchedule", "Trùng lịch, hãy kiểm tra lại ngày, lop, slot học");
+                req.setAttribute("ExistSchedule", "Due to scheduling conflicts, please check the date and class slot again");
                 req.getRequestDispatcher("createSchedule.jsp").forward(req, resp);
                 return;
             }
@@ -119,9 +119,9 @@ public class CreateSchedule extends HttpServlet {
             LocalDate endTime = LocalDate.parse(endTimeString);
             if (dateSelect.isBefore(startTime) || dateSelect.isAfter(endTime)) {
                 data(req, resp);
-                req.setAttribute("outOfDateTerm", "Vì kỳ học bạn chọn là " + term.getTermName()
-                        + " - " + term.getYear() + " nên ngày phải nằm trong khoảng từ "
-                        + term.getStartDate() + " đến " + term.getEndDate() + ".");
+                req.setAttribute("outOfDateTerm", "Because the semester you choose is " + term.getTermName()
+                        + " - " + term.getYear() + " so the date must be in the range from "
+                        + term.getStartDate() + " to " + term.getEndDate() + ".");
                 req.getRequestDispatcher("createSchedule.jsp").forward(req, resp);
                 return;
             }
@@ -131,7 +131,7 @@ public class CreateSchedule extends HttpServlet {
             iScheduleDAO.addSchedule(schedule, subjectId);
             data(req, resp);
             LOGGER.info("list schedule: " + schedule);
-            req.setAttribute("AddSuccessfully", "Đăng ký lớp vào lịch học thành công");
+            req.setAttribute("AddSuccessfully", "Registered for the class on the class schedule successfully");
             req.getRequestDispatcher("createSchedule.jsp").forward(req, resp);
             /*HttpSession session = req.getSession();
             // Đặt thông báo thành công vào session

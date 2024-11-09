@@ -114,7 +114,7 @@ public class EditSchedule extends HttpServlet {
                 req.setAttribute("listClass", listClass);
                 req.setAttribute("listSlot", listSlot);
                 req.setAttribute("schedule", schedule); //
-                req.setAttribute("sunday", "không đăng ký lớp vào " + dayOfWeek);
+                req.setAttribute("sunday", "can not add class in " + dayOfWeek);
                 req.getRequestDispatcher("editSchedule.jsp").forward(req, resp);
                 return;
             }
@@ -141,7 +141,7 @@ public class EditSchedule extends HttpServlet {
                 req.setAttribute("listClass", listClass);
                 req.setAttribute("listSlot", listSlot);
                 req.setAttribute("schedule", schedule);
-                req.setAttribute("ExistSchedule", "Trùng lịch, hãy kiểm tra lại ngày, lop, slot học");
+                req.setAttribute("ExistSchedule", "Due to scheduling conflicts, please check the date and class slot again");
                 req.getRequestDispatcher("editSchedule.jsp").forward(req, resp);
                 return;
             }
@@ -167,9 +167,9 @@ public class EditSchedule extends HttpServlet {
                 req.setAttribute("listClass", listClass);
                 req.setAttribute("listSlot", listSlot);
                 req.setAttribute("schedule", schedule);
-                req.setAttribute("outOfDateTerm", "Vì kỳ học bạn chọn là " + term.getTermName()
-                        + " - " + term.getYear() + " nên ngày phải nằm trong khoảng từ "
-                        + term.getStartDate() + " đến " + term.getEndDate() + ".");
+                req.setAttribute("outOfDateTerm", "Because the semester you choose is " + term.getTermName()
+                        + " - " + term.getYear() + " so the date must be in the range from "
+                        + term.getStartDate() + " to " + term.getEndDate() + ".");
                 req.getRequestDispatcher("editSchedule.jsp").forward(req, resp);
                 return;
             }
