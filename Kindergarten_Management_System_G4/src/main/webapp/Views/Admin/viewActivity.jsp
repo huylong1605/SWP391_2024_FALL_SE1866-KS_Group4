@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Admin Manage - Class Levels</title>
+    <title>Admin Manage - activitys</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/sidebar.css">
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -34,7 +34,7 @@
                                         <table class="table align-items-center mb-0">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-center">Activity ID</th>
+                                                    <th class="text-center">#</th>
                                                     <th class="text-center">Activity Name</th>
                                                     <th class="text-center">Date</th>
                                                     <th class="text-center">Start Time</th>
@@ -211,7 +211,7 @@
                 <form action="${pageContext.request.contextPath}/deleteActivity" method="POST">
                     <input type="hidden" id="deleteClassLevelId" name="classLevelId">
                     <div class="modal-header"><h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Delete</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
-                    <div class="modal-body"><p>Are you sure you want to delete this class level?</p></div>
+                    <div class="modal-body"><p>Are you sure you want to delete this activity?</p></div>
                     <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button><button type="submit" class="btn btn-danger">Delete</button></div>
                 </form>
             </div>
@@ -232,7 +232,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header"><h5 class="modal-title" id="successModalLabel">Success</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
-                <div class="modal-body"><p>The Class Level is in use and cannot be deleted.</p></div>
+                <div class="modal-body"><p>The Activity is in use and cannot be deleted.</p></div>
                 <div class="modal-footer"><button type="button" class="btn btn-success" data-bs-dismiss="modal">OK</button></div>
             </div>
         </div>
@@ -284,7 +284,7 @@
             editModal.show();
         }
         function confirmDelete(id) { document.getElementById("deleteClassLevelId").value = id; var deleteModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'), { keyboard: false }); deleteModal.show(); }
-        function confirmAdd() { return confirm("Are you sure you want to add this activity level?"); }
+        function confirmAdd() { return confirm("Are you sure you want to add this activity?"); }
         function showSuccessModal() { var successModal = new bootstrap.Modal(document.getElementById('successModal'), { keyboard: false }); successModal.show(); }
         function showFalseDeleteModal() { var falseDeleteModal = new bootstrap.Modal(document.getElementById('falseDeleteModal'), { keyboard: false }); falseDeleteModal.show(); }
         document.addEventListener('DOMContentLoaded', function () {
@@ -358,7 +358,11 @@
             } else {
                 materialError.style.display = "none";
             }
-
+  if (isValid) {
+            alert("Activity added successfully!"); // Alert box success message
+            // Alternatively, show a custom success message in an HTML element
+            document.getElementById("successMessage").style.display = "block";
+        }
             return isValid;
         }
     </script>
@@ -394,8 +398,6 @@
                 editDateError.innerText = "Date is required.";
                 editDateError.style.display = "block";
                 isValid = false;
-            } else if (editDate.value < today) {
-                editDateError.style.display = "block";
             } else {
                 editDateError.style.display = "none";
             }

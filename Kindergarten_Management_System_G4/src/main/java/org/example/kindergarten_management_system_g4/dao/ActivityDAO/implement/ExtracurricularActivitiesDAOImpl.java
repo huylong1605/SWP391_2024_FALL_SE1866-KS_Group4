@@ -32,7 +32,7 @@ public class ExtracurricularActivitiesDAOImpl extends DBConnection implements Ex
 
     private static final String GET_ALL_ACTIVITIES_QUERY = "SELECT * FROM extracurricular_activities";
     private static final String ADD_ACTIVITY_QUERY = "INSERT INTO extracurricular_activities(activity_name, description, date, start_time, end_time, location, user_id, materials_needed, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    private static final String UPDATE_ACTIVITY_QUERY = "UPDATE extracurricular_activities SET activity_name = ?, description = ?, start_time = ?, end_time = ?, location = ?, user_id = ?, materials_needed = ?, status = ? WHERE activity_id = ?";
+    private static final String UPDATE_ACTIVITY_QUERY = "UPDATE extracurricular_activities SET activity_name = ?, description = ?,date=?, start_time = ?, end_time = ?, location = ?, user_id = ?, materials_needed = ?, status = ? WHERE activity_id = ?";
     private static final String DELETE_ACTIVITY_QUERY = "DELETE FROM extracurricular_activities WHERE activity_id = ?";
     private static final Logger LOGGER = Logger.getLogger(ExtracurricularActivitiesDAOImpl.class.getName());
 
@@ -108,23 +108,35 @@ public class ExtracurricularActivitiesDAOImpl extends DBConnection implements Ex
      */
     @Override
     public void updateActivity(ExtracurricularActivities activity) throws SQLException {
-        String sql = "UPDATE extracurricular_activities SET activity_name = ?, description = ?, start_time = ?, end_time = ?, location = ?, materials_needed = ?, status = ? WHERE activity_id = ?";
+        String sql = "UPDATE extracurricular_activities SET activity_name = ?, description = ?, date = ?, start_time = ?, end_time = ?, location = ?, materials_needed = ?, status = ? WHERE activity_id = ?";
 
         try (Connection connection = getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
+            // Setting parameters for the update statement
             statement.setString(1, activity.getActivity_name());
             statement.setString(2, activity.getDescription());
-            statement.setObject(3, activity.getStart_time()); // Sử dụng setObject cho LocalTime
-            statement.setObject(4, activity.getEnd_time());   // Sử dụng setObject cho LocalTime
-            statement.setString(5, activity.getLocation());
-            statement.setString(6, activity.getMaterials_needed());
-            statement.setString(7, activity.getStatus());
-            statement.setInt(8, activity.getActivity_id());
+            statement.setDate(3, java.sql.Date.valueOf(activity.getDate())); // Assumes 'date' is LocalDate
+            statement.setObject(4, activity.getStart_time()); // Using setObject for LocalTime
+            statement.setObject(5, activity.getEnd_time());   // Using setObject for LocalTime
+            statement.setString(6, activity.getLocation());
+            statement.setString(7, activity.getMaterials_needed());
+            statement.setString(8, activity.getStatus());
+            statement.setInt(9, activity.getActivity_id());
 
-            statement.executeUpdate(); // Thực hiện cập nhật hoạt động
+            // Execute update
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Activity updated successfully.");
+            } else {
+                System.out.println("No activity found with the specified ID.");
+            }
+        } catch (SQLException e) {
+            System.err.println("SQL error during update: " + e.getMessage());
+            throw e; // Rethrow exception for handling by calling code
         }
     }
+
 
     /**
      * Xóa một hoạt động ngoại khóa khỏi cơ sở dữ liệu.
