@@ -34,7 +34,7 @@ public class NotificationDAO extends DBConnection {
      */
     public List<Notification> getAllNotifications() throws SQLException {
         List<Notification> notifications = new ArrayList<>();
-        String query = "SELECT * FROM Notification";
+        String query = "SELECT * FROM Notification order by date desc";
 
         try (Connection connection = getConnection();
              Statement stmt = connection.createStatement();
@@ -65,7 +65,7 @@ public class NotificationDAO extends DBConnection {
      */
     public List<Notification> getNotifications(int offset, int limit) throws SQLException {
         List<Notification> notifications = new ArrayList<>();
-        String query = "SELECT * FROM Notification LIMIT ?, ?";
+        String query = "SELECT * FROM Notification order by date desc LIMIT ?, ? ";
 
         try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
