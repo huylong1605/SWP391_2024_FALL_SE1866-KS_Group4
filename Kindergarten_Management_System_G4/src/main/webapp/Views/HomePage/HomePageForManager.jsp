@@ -41,14 +41,8 @@
         <a href="${pageContext.request.contextPath}/listClass" class="items-nav-manager">
             Manage Class
         </a>
-        <a href="${pageContext.request.contextPath}/listClass" class="items-nav-manager">
-            Manage Term
-        </a>
-        <a href="${pageContext.request.contextPath}/listClass" class="items-nav-manager">
+        <a href="${pageContext.request.contextPath}/Views/Manager/listRoom" class="items-nav-manager">
             Manage Room
-        </a>
-        <a href="${pageContext.request.contextPath}/listClass" class="items-nav-manager">
-            Manage Subject
         </a>
         <a href="${pageContext.request.contextPath}/viewStudentList" class="items-nav-manager">
             View List Student
@@ -59,16 +53,15 @@
         <a href="${pageContext.request.contextPath}/view-extracurricular-activities" class="items-nav-manager">
              Manage Activity
         </a>
-        <%--<a href="${pageContext.request.contextPath}/createSchedule" class="items-nav-manager">--%>
         <a href="${pageContext.request.contextPath}/listSchedule" class="items-nav-manager">
             Manage Schedule
         </a>
-            <a href="${pageContext.request.contextPath}/listClass" class="items-nav-manager">
+        <a href="${pageContext.request.contextPath}/term" class="items-nav-manager">
                 Manage Term
-            </a>
-            <a href="${pageContext.request.contextPath}/listClass" class="items-nav-manager">
+        </a>
+        <a href="${pageContext.request.contextPath}/subject" class="items-nav-manager">
                 Manage Subject
-            </a>
+        </a>
     </div>
     <div class=" aa d-flex justify-content-center align-items-center">
         <div class="admin-page">

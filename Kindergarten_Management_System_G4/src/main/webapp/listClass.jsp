@@ -58,53 +58,7 @@
 <%@include file="/Views/common/header.jsp" %>
 <div class="containerAll">
     <div class="wrapper">
-        <aside id="sidebar" class="expand">
-            <div class="d-flex">
-                <button class="toggle-btn" type="button">
-                    <i class="lni lni-grid-alt"></i>
-                </button>
-                <div class="sidebar-logo">
-                    <a href="#">Manager Management</a>
-                </div>
-            </div>
-            <ul class="sidebar-nav">
-                <li class="sidebar-item">
-                    <a href="${pageContext.request.contextPath}/listClass" class="sidebar-link">
-                        <i class="lni lni-user"></i>
-                        <span>Manage Class</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item">
-                    <a href="${pageContext.request.contextPath}/term" class="sidebar-link">
-                        <i class="lni lni-user"></i>
-                        <span>Manage Term</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item">
-                    <a href="${pageContext.request.contextPath}/Views/Manager/listRoom" class="sidebar-link">
-                        <i class="lni lni-user"></i>
-                        <span>Manage Room</span>
-                    </a>
-                </li>
-
-
-                <li class="sidebar-item">
-                    <a href="${pageContext.request.contextPath}/subject" class="sidebar-link">
-                        <i class="lni lni-user"></i>
-                        <span>Manage Subject</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
-                        <i class="lni lni-user"></i>
-                        <span>View List Student</span>
-                    </a>
-                </li>
-            </ul>
-
-        </aside>
+        <%@include file= "/Views/common/sidebar_manage.jsp"%>
         <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg col-md-10">
             <!-- Navbar -->
             <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
