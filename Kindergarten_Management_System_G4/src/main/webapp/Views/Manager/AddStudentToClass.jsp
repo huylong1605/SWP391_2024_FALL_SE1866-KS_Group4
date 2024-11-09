@@ -272,7 +272,9 @@
       addStudentToClass(studentId, false, targetClassId); // Truyền targetClassId vào hàm
     }
   }
-  function addStudentToClass(studentId, isChange, classId) { // Nhận thêm classId
+
+
+  function addStudentToClass(studentId, isChange, classId) {
     // Gửi yêu cầu đến server bằng AJAX để thêm hoặc chuyển lớp
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '${pageContext.request.contextPath}/Views/Manager/AddStudentToClass', true);
@@ -294,10 +296,10 @@
           }
           successModal.show();
 
-          // Chuyển hướng về trang danh sách học sinh trong lớp học sau khi đóng modal
-          successModal._element.addEventListener('hidden.bs.modal', function () {
-            window.location.href = '${pageContext.request.contextPath}/Views/Manager/listStudentInClass?classId=' + classId; // Đường dẫn tới trang danh sách
-          });
+          // Tự động reload trang sau một khoảng thời gian ngắn (500ms)
+          setTimeout(function () {
+            window.location.href = '${pageContext.request.contextPath}/Views/Manager/AddStudentToClass?classId=' + classId + "&action=add";
+          }, 500); // 500ms để người dùng có thể thấy thông báo
         } else {
           alert(response.message || 'Không thể thực hiện hành động này.');
         }
@@ -312,6 +314,7 @@
 
     xhr.send('studentId=' + studentId + '&isChange=' + isChange + '&classId=' + classId); // Gửi classId
   }
+
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"

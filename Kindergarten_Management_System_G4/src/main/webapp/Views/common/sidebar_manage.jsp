@@ -5,20 +5,20 @@
             <i class="lni lni-grid-alt"></i>
         </button>
         <div class="sidebar-logo">
-            <a href="#">Admin Manage</a>
+            <a href="#">Manager Management</a>
         </div>
     </div>
     <ul class="sidebar-nav">
         <li class="sidebar-item">
-            <a href="${pageContext.request.contextPath}/Views/Admin/accountManage" class="sidebar-link">
+            <a href="${pageContext.request.contextPath}/Views/Manager/listRoom" class="sidebar-link">
                 <i class="lni lni-user"></i>
-                <span>Manage Account</span>
+                <span>Manage Room</span>
             </a>
         </li>
         <li class="sidebar-item">
-            <a href="${pageContext.request.contextPath}/Views/Admin/notifications" class="sidebar-link">
+            <a href="${pageContext.request.contextPath}/listSchedule" class="sidebar-link">
                 <i class="lni lni-agenda"></i>
-                <span>Manage Notification</span>
+                <span>Manage Schedule</span>
             </a>
         </li>
         <li class="sidebar-item">
@@ -30,13 +30,19 @@
         <li class="sidebar-item">
             <a href="${pageContext.request.contextPath}/viewStudentList" class="sidebar-link">
                 <i class="lni lni-graduation"></i>
-                <span>View List Student</span>
+                <span>Manage Student</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a href="${pageContext.request.contextPath}/term" class="sidebar-link">
+                <i class="lni lni-user"></i>
+                <span>Manage Term</span>
             </a>
         </li>
         <li class="sidebar-item">
             <a href="${pageContext.request.contextPath}/listClass" class="sidebar-link">
                 <i class="lni lni-graduation"></i>
-                <span>View list class</span>
+                <span>Manage Class</span>
             </a>
         </li>
         <li class="sidebar-item">
