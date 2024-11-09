@@ -188,7 +188,7 @@ public class SubjectDAO {
      */
     public List<Subject> getAllSubjects() {
         List<Subject> subjects = new ArrayList<>();
-        String sql = "SELECT * FROM Subject";
+        String sql = "SELECT * FROM Subject ";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             ResultSet resultSet = statement.executeQuery();
 
@@ -215,7 +215,7 @@ public class SubjectDAO {
      */
     public List<Subject> parentGetAllSubjects() {
         List<Subject> subjects = new ArrayList<>();
-        String sql = "SELECT * FROM Subject";
+        String sql = "SELECT * FROM Subject where Status = 'active'";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             ResultSet resultSet = statement.executeQuery();
 

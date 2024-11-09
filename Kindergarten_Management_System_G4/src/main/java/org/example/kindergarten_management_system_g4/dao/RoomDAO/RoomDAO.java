@@ -75,7 +75,7 @@ public class RoomDAO implements IRoomDAO {
         }
 
         // Loại bỏ khoảng trắng lần nữa trước khi lưu vào database
-        String trimmedRoomNumber = room.getRoomNumber().trim().replaceAll("\\s+", " "); // Xóa khoảng trắng thừa
+        String trimmedRoomNumber = room.getRoomNumber().trim(); // Xóa khoảng trắng thừa
 
         String sql = "INSERT INTO room (Room_number, Status, Capacity) VALUES (?, ?, ?)";
         try (Connection connection = DBConnection.getConnection();
@@ -209,7 +209,7 @@ public class RoomDAO implements IRoomDAO {
         // Loại bỏ khoảng trắng ở đầu và cuối của RoomNumber
         room.setRoomNumber(room.getRoomNumber().trim());
         // Giới hạn độ dài của RoomNumber (giả sử max là 50 ký tự)
-        if (room.getRoomNumber().length() > 5) {
+        if (room.getRoomNumber().length() > 20) {
             logger.warning("Room number exceeds the maximum length of 50 characters.");
             return false; // Trả về false nếu vượt quá chiều dài
         }

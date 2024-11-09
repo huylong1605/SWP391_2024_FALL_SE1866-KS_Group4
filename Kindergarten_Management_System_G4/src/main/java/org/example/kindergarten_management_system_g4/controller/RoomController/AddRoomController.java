@@ -69,7 +69,7 @@ public class AddRoomController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Lấy giá trị từ request và loại bỏ khoảng trắng ở đầu, cuối và giữa các chuỗi liên tiếp
-        String roomNumber = req.getParameter("roomNumber").replaceAll("\\s+", ""); // Xóa khoảng trắng
+        String roomNumber = req.getParameter("roomNumber")/*.replaceAll("\\s+", "")*/; // Xóa khoảng trắng
         int capacity = Integer.parseInt(req.getParameter("capacity")); // Lấy sức chứa
         int status = Integer.parseInt(req.getParameter("status")); // Lấy trạng thái
 

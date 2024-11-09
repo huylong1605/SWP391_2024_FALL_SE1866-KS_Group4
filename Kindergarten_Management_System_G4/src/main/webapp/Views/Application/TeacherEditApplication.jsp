@@ -25,7 +25,7 @@
         </div>
     </c:if>
 
-    <form action="${pageContext.request.contextPath}/teacher/update-application" method="post">
+    <form action="${pageContext.request.contextPath}/teacher/update-application" method="post" onsubmit="return validateResponse()" >
         <input type="hidden" name="id" value="${application.applicationId}">
 
         <div class="form-group">
@@ -50,8 +50,8 @@
 
         <div class="form-group">
             <label for="applicationResponse">Application Response</label>
-            <textarea class="form-control" id="applicationResponse" name="applicationResponse"
-                      rows="3" required>${application.applicationResponse}</textarea>
+            <textarea class="form-control" id="applicationResponse" name="applicationResponse" rows="3" required>${application.applicationResponse}</textarea>
+            <div class="invalid-feedback">Application Response cannot be empty or contain only whitespace.</div>
         </div>
 
         <button type="submit" class="btn btn-primary">Send</button>
@@ -60,5 +60,20 @@
 <%@include file="../common/footer.jsp" %>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    function validateResponse() {
+        const responseField = document.getElementById("applicationResponse");
+        const response = responseField.value.trim();
+        const isValid = response.length > 0;
+
+        if (!isValid) {
+            responseField.classList.add("is-invalid");
+            return false; // Ngăn chặn gửi form
+        } else {
+            responseField.classList.remove("is-invalid");
+            return true; // Cho phép gửi form
+        }
+    }
+</script>
 </body>
 </html>
