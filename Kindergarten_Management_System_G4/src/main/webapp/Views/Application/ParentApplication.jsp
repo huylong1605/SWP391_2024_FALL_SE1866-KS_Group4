@@ -35,7 +35,7 @@
         </div>
     </c:if>
 
-    <form action="send-application" method="post">
+    <form action="send-application" method="post" onsubmit="return validateContent()">
         <input type="hidden" name="action" value="submitApplication">
 
         <div class="form-group">
@@ -56,8 +56,8 @@
 
         <div class="form-group">
             <label for="applicationContent">Application Content</label>
-            <textarea class="form-control" id="applicationContent" name="applicationContent" rows="4"
-                      required></textarea>
+            <textarea class="form-control" id="applicationContent" name="applicationContent" rows="4" required></textarea>
+            <div class="invalid-feedback">Application Content cannot be empty or contain only whitespace.</div>
         </div>
 
         <button type="submit" class="btn btn-primary">Submit Application</button>
@@ -73,5 +73,20 @@
 <!-- DataTable JS -->
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    function validateContent() {
+        const contentField = document.getElementById("applicationContent");
+        const content = contentField.value.trim();
+        const isValid = content.length > 0;
+
+        if (!isValid) {
+            contentField.classList.add("is-invalid");
+            return false; // Ngăn chặn gửi form
+        } else {
+            contentField.classList.remove("is-invalid");
+            return true; // Cho phép gửi form
+        }
+    }
+</script>
 </body>
 </html>

@@ -34,18 +34,18 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
             "FROM room r\n" +
             "LEFT JOIN class c \n" +
             "ON r.Room_ID = c.Room_ID\n" +
-            "WHERE c.Room_ID IS NULL;";
+            "WHERE r.status = 1 And c.Room_ID IS NULL;";
     private static final String GET_LIST_ROOM_2 = "select r.* \n" +
             "FROM room r\n" +
             "LEFT JOIN class c \n" +
             "ON r.Room_ID = c.Room_ID\n" +
-            "WHERE c.Room_ID IS NULL OR r.Room_ID = ?;";
+            "WHERE r.status = 1 And c.Room_ID IS NULL OR r.Room_ID = ?;";
     private static final String GET_CLASS_BY_ID = "SELECT * from class where Class_ID = ?";
     private static final String GET_LIST_TEACHER = "SELECT u.* \n" +
             "FROM user u\n" +
             "LEFT JOIN class c \n" +
             "ON u.User_id = c.User_id\n" +
-            "WHERE c.User_id IS NULL And u.Role_id = 2;";
+            "WHERE u.status = 1 and c.User_id IS NULL And u.Role_id = 2;";
     private static final String GET_LIST_TEACHER_2 = "SELECT u.* \n" +
             "FROM user u\n" +
             "LEFT JOIN class c \n" +

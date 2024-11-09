@@ -127,13 +127,16 @@
                                                 STT
                                             </th>
                                             <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Room Number
+                                                Room Name
                                             </th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Status
                                             </th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Capacity
+                                            </th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Action
                                             </th>
                                             <th class="text-secondary opacity-7"></th>
                                         </tr>
@@ -161,16 +164,20 @@
                                                     <td class="align-middle text-center">
                                                         <span class="text-secondary text-xs font-weight-bold">${room.capacity}</span>
                                                     </td>
-                                                    <td class="align-middle">
+                                                    <td class="align-middle text-center">
                                                         <a href="${pageContext.request.contextPath}/editRoom?id=${room.roomId}"
-                                                           class="text-secondary font-weight-bold text-xs"
+                                                           class="btn btn-sm btn-outline-primary mx-1"
                                                            data-toggle="tooltip"
-                                                           data-original-title="Edit room">Edit</a>
-                                                        <a href="#" class="text-danger" data-bs-toggle="modal"
-                                                           data-bs-target="#deleteModal"
-                                                           data-room-id="${room.roomId}"
-                                                           data-room-number="${room.roomNumber}">Delete
+                                                           title="Edit Room">
+                                                            <i class="fas fa-edit"></i> Edit
                                                         </a>
+                                                        <button type="button" class="btn btn-sm btn-outline-danger mx-1"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#deleteModal"
+                                                                data-room-id="${room.roomId}"
+                                                                data-room-number="${room.roomNumber}">
+                                                            <i class="fas fa-trash-alt"></i> Delete
+                                                        </button>
                                                     </td>
                                                 </tr>
                                             </c:forEach>

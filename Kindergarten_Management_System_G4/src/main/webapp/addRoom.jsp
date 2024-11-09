@@ -64,7 +64,7 @@
 
     <form action="${pageContext.request.contextPath}/addRoom" method="post">
         <div class="mb-3">
-            <label for="roomNumber" class="form-label">Room Number:</label>
+            <label for="roomNumber" class="form-label">Room Name:</label>
             <input type="text" id="roomNumber" name="roomNumber" class="form-control" required>
         </div>
         <div class="mb-3">
