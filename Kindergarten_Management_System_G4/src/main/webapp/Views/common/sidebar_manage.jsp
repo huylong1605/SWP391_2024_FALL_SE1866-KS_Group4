@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<aside id="sidebar" class="expand">
+<aside id="sidebar" class="expand" style="width: 24%">
     <div class="d-flex">
         <button class="toggle-btn" type="button">
             <i class="lni lni-grid-alt"></i>
@@ -55,6 +55,12 @@
             <a href="${pageContext.request.contextPath}/view-extracurricular-activities" class="sidebar-link">
                 <i class="lni lni-graduation"></i>
                 <span>Manage Activity</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a href="${pageContext.request.contextPath}/Views/Manager/AddStudent_ChangeClass.jsp" class="sidebar-link" >
+                <i class="lni lni-graduation"></i>
+                <span >Add/Change Class For Student</span>
             </a>
         </li>
     </ul>

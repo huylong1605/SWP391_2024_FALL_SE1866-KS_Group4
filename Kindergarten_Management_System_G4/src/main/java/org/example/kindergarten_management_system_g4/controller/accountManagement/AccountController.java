@@ -69,6 +69,93 @@ public class AccountController extends HttpServlet {
         }
     }
 
+
+    /**
+     * Liệt kê danh sách tài khoản với phân trang.
+     * Phương thức này sẽ lấy danh sách tài khoản dựa trên các tham số tìm kiếm
+     * và lọc từ yêu cầu và chuyển tiếp đến trang JSP hiển thị danh sách tài khoản.
+     *
+     * @param req  Đối tượng HttpServletRequest chứa thông tin yêu cầu từ client.
+     * @param resp Đối tượng HttpServletResponse dùng để phản hồi lại client.
+     * @throws ServletException nếu có lỗi xảy ra trong quá trình xử lý yêu cầu.
+     * @throws IOException      nếu có lỗi xảy ra trong quá trình nhập/xuất dữ liệu.
+     */
+
+    // Liet ke danh sach tai khoan voi phan trang
+    private void listAccounts(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int pageSize = 7; // So tai khoan tren moi trang
+        int currentPage = 1; // Trang hien tai
+
+        // Lay so trang tu yeu cau
+        String pageParam = req.getParameter("pageNumber");
+        if (pageParam != null) {
+            try {
+                currentPage = Integer.parseInt(pageParam);
+            } catch (NumberFormatException e) {
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid page number");
+                return;
+            }
+        }
+
+        String searchName = req.getParameter("searchName");
+        String roleIdParam = req.getParameter("roleFilter");
+        Integer roleId = null;
+
+        // Chuyen doi role tu chuoi thanh so nguyen neu co
+        if (roleIdParam != null && !roleIdParam.isEmpty()) {
+            try {
+                roleId = Integer.parseInt(roleIdParam);
+            } catch (NumberFormatException e) {
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid role ID");
+                return;
+            }
+        }
+
+        try {
+            // Lay tong so account va tinh tong so trang
+            int totalAccounts = accountDAO.getAccountCount(searchName, roleId);
+            int totalPages = (int) Math.ceil((double) totalAccounts / pageSize);
+            List<User> accounts = accountDAO.getAccounts(currentPage, pageSize, searchName, roleId);
+
+            // Gui thong tin list account, trang hien tai va tong so trang toi trang JSP
+            req.setAttribute("accounts", accounts);
+            req.setAttribute("currentPage", currentPage);
+            req.setAttribute("totalPages", totalPages);
+            req.setAttribute("searchName", searchName);
+            req.setAttribute("roleFilter", roleIdParam);
+            req.getRequestDispatcher("/Views/Admin/accountManage.jsp").forward(req, resp);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Cannot fetch account list");
+        }
+    }
+
+
+    /**
+     * Hiển thị chi tiết tài khoản dựa trên ID tài khoản.
+     * Phương thức này sẽ lấy thông tin chi tiết tài khoản từ cơ sở dữ liệu
+     * và chuyển tiếp đến trang JSP hiển thị thông tin tài khoản.
+     *
+     * @param req  Đối tượng HttpServletRequest chứa thông tin yêu cầu từ client.
+     * @param resp Đối tượng HttpServletResponse dùng để phản hồi lại client.
+     * @throws ServletException nếu có lỗi xảy ra trong quá trình xử lý yêu cầu.
+     * @throws IOException      nếu có lỗi xảy ra trong quá trình nhập/xuất dữ liệu.
+     */
+    //Hien thi chi tiet tai khoan
+    private void showAccountDetails(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int userId = Integer.parseInt(req.getParameter("userId"));
+        try {
+            // Lay details account theo ID va chuyen tiep toi trang details account
+            User account = accountDAO.getAccountById(userId);
+            req.setAttribute("account", account);
+            req.getRequestDispatcher("/Views/Admin/accountDetail.jsp").forward(req, resp);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to fetch account details");
+        }
+    }
+
+
     /**
      * Xử lý yêu cầu POST từ client.
      * Method này có thể thực hiện nhiều hành động như thay đổi trạng thái tài khoản,
@@ -165,87 +252,4 @@ public class AccountController extends HttpServlet {
         super.doPost(req, resp);
     }
 
-    /**
-     * Liệt kê danh sách tài khoản với phân trang.
-     * Phương thức này sẽ lấy danh sách tài khoản dựa trên các tham số tìm kiếm
-     * và lọc từ yêu cầu và chuyển tiếp đến trang JSP hiển thị danh sách tài khoản.
-     *
-     * @param req  Đối tượng HttpServletRequest chứa thông tin yêu cầu từ client.
-     * @param resp Đối tượng HttpServletResponse dùng để phản hồi lại client.
-     * @throws ServletException nếu có lỗi xảy ra trong quá trình xử lý yêu cầu.
-     * @throws IOException      nếu có lỗi xảy ra trong quá trình nhập/xuất dữ liệu.
-     */
-
-    // Liet ke danh sach tai khoan voi phan trang
-    private void listAccounts(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int pageSize = 7; // So tai khoan tren moi trang
-        int currentPage = 1; // Trang hien tai
-
-        // Lay so trang tu yeu cau
-        String pageParam = req.getParameter("pageNumber");
-        if (pageParam != null) {
-            try {
-                currentPage = Integer.parseInt(pageParam);
-            } catch (NumberFormatException e) {
-                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid page number");
-                return;
-            }
-        }
-
-        String searchName = req.getParameter("searchName");
-        String roleIdParam = req.getParameter("roleFilter");
-        Integer roleId = null;
-
-        // Chuyen doi role tu chuoi thanh so nguyen neu co
-        if (roleIdParam != null && !roleIdParam.isEmpty()) {
-            try {
-                roleId = Integer.parseInt(roleIdParam);
-            } catch (NumberFormatException e) {
-                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid role ID");
-                return;
-            }
-        }
-
-        try {
-            // Lay tong so account va tinh tong so trang
-            int totalAccounts = accountDAO.getAccountCount(searchName, roleId);
-            int totalPages = (int) Math.ceil((double) totalAccounts / pageSize);
-            List<User> accounts = accountDAO.getAccounts(currentPage, pageSize, searchName, roleId);
-
-            // Gui thong tin list account, trang hien tai va tong so trang toi trang JSP
-            req.setAttribute("accounts", accounts);
-            req.setAttribute("currentPage", currentPage);
-            req.setAttribute("totalPages", totalPages);
-            req.setAttribute("searchName", searchName);
-            req.setAttribute("roleFilter", roleIdParam);
-            req.getRequestDispatcher("/Views/Admin/accountManage.jsp").forward(req, resp);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Cannot fetch account list");
-        }
-    }
-
-    /**
-     * Hiển thị chi tiết tài khoản dựa trên ID tài khoản.
-     * Phương thức này sẽ lấy thông tin chi tiết tài khoản từ cơ sở dữ liệu
-     * và chuyển tiếp đến trang JSP hiển thị thông tin tài khoản.
-     *
-     * @param req  Đối tượng HttpServletRequest chứa thông tin yêu cầu từ client.
-     * @param resp Đối tượng HttpServletResponse dùng để phản hồi lại client.
-     * @throws ServletException nếu có lỗi xảy ra trong quá trình xử lý yêu cầu.
-     * @throws IOException      nếu có lỗi xảy ra trong quá trình nhập/xuất dữ liệu.
-     */
-    //Hien thi chi tiet tai khoan
-    private void showAccountDetails(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int userId = Integer.parseInt(req.getParameter("userId"));
-        try {
-            // Lay details account theo ID va chuyen tiep toi trang details account
-            User account = accountDAO.getAccountById(userId);
-            req.setAttribute("account", account);
-            req.getRequestDispatcher("/Views/Admin/accountDetail.jsp").forward(req, resp);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Unable to fetch account details");
-        }
-    }
 }

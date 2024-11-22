@@ -10,7 +10,6 @@
  * <11/3/2024>                 <1.1>           <Vu Viet Chuc>            <Update viewDetailAttendOfChild method>
  */
 
-
 package org.example.kindergarten_management_system_g4.controller.AttendanceController;
 import org.example.kindergarten_management_system_g4.dao.AttendanceDAO.AttendanceDAO;
 import org.example.kindergarten_management_system_g4.dao.AttendanceDAO.IAttendanceDAO;
@@ -25,14 +24,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-
-/**
- * The AttendanceController class handles HTTP requests related to attendance operations
- * for teachers and parents in the kindergarten management system. It extends HttpServlet
- * and processes requests for viewing, exporting, and sending notifications about student
- * attendance. The servlet is mapped to multiple URL patterns to handle various functions.
- */
 @WebServlet( value = {"/Views/Teacher/attendStudent",
         "/Views/Teacher/listAttendanceClass",
         "/Views/Teacher/detailAttendance",
@@ -50,14 +43,7 @@ public class AttendanceController extends HttpServlet {
         attendanceDAO = new AttendanceDAO(); // Khởi tạo AttendanceDAO
     }
 
-    /**
-     * Handles GET requests for various attendance-related operations based on the request path.
-     *
-     * @param request  The HttpServletRequest object that contains the request the client made.
-     * @param response The HttpServletResponse object that contains the response the servlet returns.
-     * @throws ServletException if a servlet-specific error occurs.
-     * @throws IOException if an I/O error occurs.
-     */
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getServletPath();
@@ -79,38 +65,29 @@ public class AttendanceController extends HttpServlet {
                 exportDetailAttendance(request, response);
                 break;
             case "/Views/Teacher/sendAbsenceNotifications":
-                handleSendAbsenceNotifications(request, response); // Thêm xử lý cho chức năng gửi thông báo
+                handleSendAbsenceNotifications(request, response);
                 break;
             case "/Views/Parent/viewChildAttendance":
-                viewDetailAttendOfChild(request, response); // Thêm xử lý cho chức năng gửi thông báo
+                viewDetailAttendOfChild(request, response);
                 break;
             default:
-                response.sendError(HttpServletResponse.SC_NOT_FOUND); // Không tìm thấy
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 break;
         }
     }
 
-    /**
-     * Handles viewing detailed attendance for a child by parents.
-     *
-     * @param request  The HttpServletRequest object.
-     * @param response The HttpServletResponse object.
-     * @throws ServletException if a servlet-specific error occurs.
-     * @throws IOException if an I/O error occurs.
-     */
     private void viewDetailAttendOfChild(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             int userId = Integer.parseInt(request.getParameter("userId"));
 
-            // Lấy thông tin chi tiết điểm danh cho học sinh
+
             List<AttendanceRecord> attendanceDetailsOfChild = attendanceDAO.getChildDetailAttendance(userId);
             AttendanceRecord totalAttendanceOfChild = attendanceDAO.getChildTotalAttendance(userId);
 
-            // Đặt thông tin vào request
             request.setAttribute("attendanceDetails", attendanceDetailsOfChild);
             request.setAttribute("totalAttendance", totalAttendanceOfChild);
             request.setAttribute("userId", userId);
-            // Chuyển hướng tới trang detailAttendance.jsp để hiển thị
+
             request.getRequestDispatcher("/Views/Parent/viewChildAttendance.jsp").forward(request, response);
         } catch (NumberFormatException e) {
             request.setAttribute("errorMessage", "Invalid input data.");
@@ -118,14 +95,6 @@ public class AttendanceController extends HttpServlet {
         }
     }
 
-    /**
-     * Handles sending absence notifications to parents for a specific class and time slot.
-     *
-     * @param request  The HttpServletRequest object.
-     * @param response The HttpServletResponse object.
-     * @throws ServletException if a servlet-specific error occurs.
-     * @throws IOException if an I/O error occurs.
-     */
     private void handleSendAbsenceNotifications(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             int classId = Integer.parseInt(request.getParameter("classId"));
@@ -154,15 +123,6 @@ public class AttendanceController extends HttpServlet {
                 + "&date=" + request.getParameter("date") + "&slotId=" + request.getParameter("slotId")+ "&className=" + request.getParameter("className")+ "&slotName=" + request.getParameter("slotName"));
     }
 
-    /**
-     * Handles the process of displaying the attendance list for a specific class, date, and time slot.
-     * Retrieves attendance data, checks if the attendance is marked, and forwards the data to a JSP for rendering.
-     *
-     * @param request  The HttpServletRequest object containing client request parameters.
-     * @param response The HttpServletResponse object for sending the response to the client.
-     * @throws ServletException if a servlet-specific error occurs.
-     * @throws IOException if an I/O error occurs.
-     */
     private void handleAttendStudent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Lấy thông tin từ request
         int classId = Integer.parseInt(request.getParameter("classId"));
@@ -173,6 +133,7 @@ public class AttendanceController extends HttpServlet {
 
         // Lấy danh sách điểm danh học sinh
         List<StudentAttendance> attendanceList = attendanceDAO.getStudentAttendance(classId, date, slotId);
+        Map<String, Integer> summary = attendanceDAO.getAttendanceSummary1(classId, date, slotId);
         if (attendanceDAO.isAttendanceSaved(classId, date, slotId)) {
             attendanceDAO.markAttendance(classId, date, slotId);
         }
@@ -183,21 +144,13 @@ public class AttendanceController extends HttpServlet {
         request.setAttribute("slotId", slotId);
         request.setAttribute("className", className);
         request.setAttribute("slotName", slotName);
+        request.setAttribute("presentCount", summary.get("present"));
+        request.setAttribute("absentCount", summary.get("absent"));
 
         // Chuyển hướng tới trang JSP để hiển thị
         request.getRequestDispatcher("/Views/Teacher/attendStudent.jsp").forward(request, response);
     }
 
-
-    /**
-     * Handles the retrieval and display of an attendance summary for a specified class.
-     * Fetches attendance summary data and forwards it to a JSP for display.
-     *
-     * @param request  The HttpServletRequest object containing client request parameters.
-     * @param response The HttpServletResponse object for sending the response to the client.
-     * @throws ServletException if a servlet-specific error occurs.
-     * @throws IOException if an I/O error occurs.
-     */
     private void handleListAttendanceClass(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Lấy thông tin từ request
         int classId = Integer.parseInt(request.getParameter("classId"));
@@ -215,15 +168,6 @@ public class AttendanceController extends HttpServlet {
         request.getRequestDispatcher("/Views/Teacher/listAttendanceClass.jsp").forward(request, response);
     }
 
-    /**
-     * Handles the process of retrieving and displaying detailed attendance records for a specific student within a class.
-     * Fetches the attendance details and total attendance data, then forwards this information to a JSP for rendering.
-     *
-     * @param request  The HttpServletRequest object containing client request parameters.
-     * @param response The HttpServletResponse object for sending the response to the client.
-     * @throws ServletException if a servlet-specific error occurs.
-     * @throws IOException if an I/O error occurs.
-     */
     private void handleDetailAttendance(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             int classId = Integer.parseInt(request.getParameter("classId"));
@@ -245,13 +189,6 @@ public class AttendanceController extends HttpServlet {
         }
     }
 
-    /**
-     * Exports the attendance data to a downloadable format (e.g., CSV or PDF) for external use.
-     *
-     * @param request  The HttpServletRequest object containing client request parameters.
-     * @param response The HttpServletResponse object for sending the response to the client.
-     * @throws IOException if an I/O error occurs.
-     */
     private void exportAttendance(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int classId = Integer.parseInt(request.getParameter("classId"));
         String className = request.getParameter("className");
@@ -276,15 +213,6 @@ public class AttendanceController extends HttpServlet {
         writer.close();
     }
 
-    /**
-     * Exports detailed attendance records for a specific student in a class to a CSV file.
-     * The method fetches detailed attendance data and a summary, formats it into CSV format,
-     * and writes the result to the HTTP response for download.
-     *
-     * @param request  The HttpServletRequest object containing client request parameters, including class ID, student ID, and student name.
-     * @param response The HttpServletResponse object for sending the CSV file to the client.
-     * @throws IOException if an I/O error occurs during writing to the response.
-     */
     private void exportDetailAttendance(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int classId = Integer.parseInt(request.getParameter("classId"));
         int studentId = Integer.parseInt(request.getParameter("studentId")); // Lấy studentId từ request

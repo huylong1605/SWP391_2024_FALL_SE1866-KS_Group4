@@ -135,11 +135,18 @@
                     <div class="col-12">
                         <div class="card my-4">
                             <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                                <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                                    <h5 class="text-white text-capitalize ps-3">Class: <span style="font-size: 20px">${className}</span></h5>
-                                    <h5 class="text-white text-capitalize ps-3">Date: <span style="font-size: 20px">${date}</span></h5>
-                                    <h5 class="text-white text-capitalize ps-3">Slot: <span style="font-size: 20px">${slotName}</span></h5>
+                                <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex">
+                                    <div>
+                                        <h5 class="text-white text-capitalize ps-3">Class: <span style="font-size: 20px">${className}</span></h5>
+                                        <h5 class="text-white text-capitalize ps-3">Date: <span style="font-size: 20px">${date}</span></h5>
+                                        <h5 class="text-white text-capitalize ps-3">Slot: <span style="font-size: 20px">${slotName}</span></h5>
+                                    </div>
+                                    <div style="padding-left: 20%">
+                                        <h5 class="text-white text-capitalize ps-3">Present: <span style="font-size: 20px">${presentCount}</span></h5>
+                                        <h5 class="text-white text-capitalize ps-3">Absent: <span style="font-size: 20px">${absentCount}</span></h5>
+                                    </div>
                                 </div>
+
                             </div>
                             <div class="card-body px-0 pb-2">
                                 <div class="table-responsive p-0">

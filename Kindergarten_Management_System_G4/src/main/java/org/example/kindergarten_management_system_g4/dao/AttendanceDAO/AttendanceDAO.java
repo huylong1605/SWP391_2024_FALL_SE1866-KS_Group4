@@ -16,28 +16,11 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.sql.Date;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
-/**
- * The AttendanceDAO class provides data access methods for handling attendance records
- * in a student management system. It extends DBConnection, enabling access to the database
- * and implements the IAttendanceDAO interface to enforce specific attendance-related methods.
- *
- * The class contains SQL query strings and data access methods for:
- * - Retrieving student attendance for a given date and slot (GET_STUDENT_ATTENDANCE)
- * - Saving student attendance with the option to update existing records (SAVE_STUDENT_ATTENDANCE)
- * - Summarizing attendance data including counts of total, present, and absent instances (GET_ATTENDANCE_SUMMARY)
- * - Getting detailed attendance information for a specific student (GET_ATTENDANCE_DETAILS)
- * - Calculating total attendance records for students, incorporating presence and absence counts (GET_TOTAL_ATTENDANCE)
- *
- * The class also employs a logger (LOGGER) for logging actions and potential issues, facilitating
- * easier debugging and monitoring.
- */
 
 public class AttendanceDAO extends DBConnection implements IAttendanceDAO {
     private static final Logger LOGGER = Logger.getLogger(AttendanceDAO.class.getName());
@@ -537,4 +520,53 @@ public class AttendanceDAO extends DBConnection implements IAttendanceDAO {
             }
         }
     }
+
+
+    public Map<String, Integer> getAttendanceSummary1(int classId, String date, int slotId) {
+        int presentCount = 0;
+        int absentCount = 0;
+
+        try (Connection conn = DBConnection.getConnection()) {
+            String query = "SELECT \n" +
+                    "    a.attend_status,\n" +
+                    "    COUNT(*) AS count\n" +
+                    "FROM \n" +
+                    "    Attendance a\n" +
+                    "JOIN \n" +
+                    "    Student s ON a.student_ID = s.student_ID\n" +
+                    "JOIN \n" +
+                    "    Class c ON s.class_id = c.class_ID\n" +
+                    "WHERE \n" +
+                    "    c.class_ID = ?        \n" +
+                    "    AND a.date = ?  \n" +
+                    "    AND a.slotId = ?      \n" +
+                    "GROUP BY \n" +
+                    "    a.attend_status;";
+
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, classId);
+            ps.setString(2, date);
+            ps.setInt(3, slotId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                // Kiểm tra attend_status
+                int attendStatus = rs.getInt("attend_status");
+                if (attendStatus == 1) {  // attend_status = 1 là có mặt
+                    presentCount = rs.getInt("count");
+                } else {  // attend_status = 0 là vắng mặt
+                    absentCount = rs.getInt("count");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        Map<String, Integer> summary = new HashMap<>();
+        summary.put("present", presentCount);
+        summary.put("absent", absentCount);
+
+        return summary;
+    }
+
 }

@@ -39,7 +39,6 @@ public class Student {
     private String className;           // Tên lớp học của học sinh
 
     // Constructor và Getter/Setter
-
     /**
      * Constructor mặc định cho lớp Student.
      */

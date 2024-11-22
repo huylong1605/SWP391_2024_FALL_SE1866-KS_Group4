@@ -13,6 +13,7 @@ package org.example.kindergarten_management_system_g4.dao.AttendanceDAO;
 import org.example.kindergarten_management_system_g4.model.AttendanceRecord;
 import org.example.kindergarten_management_system_g4.model.StudentAttendance;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The IAttendanceDAO interface defines the contract for data access operations related to
@@ -115,6 +116,8 @@ public interface IAttendanceDAO {
       * @return An AttendanceRecord object summarizing the child's total attendance.
       */
      AttendanceRecord getChildTotalAttendance(int userId);
+
+     Map<String, Integer> getAttendanceSummary1(int classId, String date, int slotId);
 }
 
 
