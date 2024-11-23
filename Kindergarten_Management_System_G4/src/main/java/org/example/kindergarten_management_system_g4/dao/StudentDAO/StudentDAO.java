@@ -70,14 +70,16 @@ public class StudentDAO {
     public List<Student> getAllStudents() throws ClassNotFoundException {
         List<Student> students = new ArrayList<>();
 
-        String SELECT_ALL_STUDENTS_WITH_USER =
+        String SELECT_STUDENTS_WITH_CLASS =
                 "SELECT s.Student_ID, s.Date_of_birth, s.gender, s.Student_name, " +
-                        "u.address, u.phoneNumber " +
+                        "u.address, u.phoneNumber, s.class_id " +
                         "FROM student s " +
-                        "JOIN user u ON s.User_id = u.User_id";
+                        "JOIN user u ON s.User_id = u.User_id " +
+                        "WHERE s.class_id IS NOT NULL";
+
 
         try (Connection connection = DBConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_STUDENTS_WITH_USER)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_STUDENTS_WITH_CLASS)) {
 
             ResultSet resultSet = preparedStatement.executeQuery();
 

@@ -70,7 +70,7 @@
                 <%
                 } else if ("4".equals(role)) {
                 %>
-                <a href="${pageContext.request.contextPath}/Views/HomePage/HomePageForManager.jsp" class="nav-item nav-link active">Home</a>
+                <a href="${pageContext.request.contextPath}/Views/HomePage/HomePageForManager" class="nav-item nav-link active">Home</a>
                 <%
                 } else if ("5".equals(role)) {
                 %>

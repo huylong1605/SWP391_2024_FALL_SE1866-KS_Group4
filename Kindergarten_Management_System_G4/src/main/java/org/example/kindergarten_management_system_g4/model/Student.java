@@ -37,9 +37,25 @@ public class Student {
     private String parentAddress;       // Địa chỉ phụ huynh
     private String parentPhone;         // Số điện thoại phụ huynh
     private String className;           // Tên lớp học của học sinh
+    private int classLevelId;           // ID của cấp lớp
+    private String classLevelName;      // Tên của cấp lớp
 
-    // Constructor và Getter/Setter
+    public int getClassLevelId() {
+        return classLevelId;
+    }
 
+    public void setClassLevelId(int classLevelId) {
+        this.classLevelId = classLevelId;
+    }
+
+    public String getClassLevelName() {
+        return classLevelName;
+    }
+
+    public void setClassLevelName(String classLevelName) {
+        this.classLevelName = classLevelName;
+    }
+// Constructor và Getter/Setter
     /**
      * Constructor mặc định cho lớp Student.
      */

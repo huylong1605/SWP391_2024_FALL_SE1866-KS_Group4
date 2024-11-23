@@ -62,123 +62,126 @@
 <div class="containerAll">
     <div class="wrapper">
         <%@include file= "/Views/common/sidebar_manage.jsp"%>
-        <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg col-md-10">
-            <!-- Navbar -->
-            <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
-                 data-scroll="true">
-                <div class="d-flex py-1 px-3 justify-content-between align-items-center" style="width: 100%;">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-                            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark"
-                                                                   href="javascript:;">Pages</a></li>
-                            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Subject</li>
-                        </ol>
-                        <h4 class="font-weight-bolder mb-0">Manage Subject</h4>
-                    </nav>
+        <div class="container">
+            <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg col-md-12">
+                <!-- Navbar -->
+                <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
+                     data-scroll="true">
+                    <div class="d-flex py-1 px-3 justify-content-between align-items-center" style="width: 100%;">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                                <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark"
+                                                                       href="javascript:;">Pages</a></li>
+                                <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Subject</li>
+                            </ol>
+                            <h4 class="font-weight-bolder mb-0">Manage Subject</h4>
+                        </nav>
 
-                </div>
-            </nav>
-            <!-- End Navbar -->
-            <div class="container-fluid py-4">
-                <c:if test="${param.success ne null}">
-                    <div class="alert alert-success d-flex align-items-center" role="alert">
-                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
-                        <div>
-                            Success !
+                    </div>
+                </nav>
+                <!-- End Navbar -->
+                <div class="container-fluid py-4">
+                    <c:if test="${param.success ne null}">
+                        <div class="alert alert-success d-flex align-items-center" role="alert">
+                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                            <div>
+                                Success !
+                            </div>
                         </div>
-                    </div>
-                </c:if>
-                <c:if test="${param.fail ne null}">
-                    <div class="alert alert-danger" role="alert">
-                        Failed!
-                    </div>
-                </c:if>
-                <c:if test="${sessionScope.errorMessage != null}">
-                    <%--        <div class="alert alert-danger" role="alert">--%>
-                    <%--                ${sessionScope.errorMessage}--%>
-                    <%--        </div>--%>
-
-
-                    <div class="alert alert-danger d-flex align-items-center" role="alert">
-                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-                        <div>
-                                ${sessionScope.errorMessage}
+                    </c:if>
+                    <c:if test="${param.fail ne null}">
+                        <div class="alert alert-danger" role="alert">
+                            Failed!
                         </div>
-                    </div>
-                    <%
-                        session.removeAttribute("errorMessage");
-                    %>
-                </c:if>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card my-4">
-                            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                                <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                                    <h6 class="text-white text-capitalize ps-3">Subjects List</h6>
+                    </c:if>
+                    <c:if test="${sessionScope.errorMessage != null}">
+                        <%--        <div class="alert alert-danger" role="alert">--%>
+                        <%--                ${sessionScope.errorMessage}--%>
+                        <%--        </div>--%>
+
+
+                        <div class="alert alert-danger d-flex align-items-center" role="alert">
+                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                            <div>
+                                    ${sessionScope.errorMessage}
+                            </div>
+                        </div>
+                        <%
+                            session.removeAttribute("errorMessage");
+                        %>
+                    </c:if>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card my-4">
+                                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                                        <h6 class="text-white text-capitalize ps-3">Subjects List</h6>
+                                    </div>
+                                </div>
+                                <div class="container table-container">
+                                    <!-- Thanh tìm kiếm và lọc -->
+                                    <table id="subjectTable" class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Subject ID</th>
+                                            <th>Subject Code</th>
+                                            <th>Subject Name</th>
+                                            <th>Description</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <c:forEach var="subject" items="${subjectList}" varStatus="index">
+                                            <tr>
+                                                <td>${index.index + 1}</td>
+                                                <td>${subject.subjectCode}</td>
+                                                <td>${subject.subjectName}</td>
+                                                <td>${subject.description}</td>
+
+
+                                                    <%--                <td>--%>
+                                                    <%--                    <span class="btn btn-success">${subject.status}</span>--%>
+                                                    <%--                </td>--%>
+
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${subject.status == 'active'}">
+                                                            <span style="color: #31c121; font-weight: bold">Active</span>
+                                                        </c:when>
+                                                        <c:when test="${subject.status == 'In active'}">
+                                                            <span style="color: #f00; font-weight: bold">In Active</span>
+                                                        </c:when>
+                                                    </c:choose>
+                                                </td>
+
+
+                                                <td>
+                                                    <div style="display: flex; gap: 5px;">
+                                                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#subjectInfoModal_${subject.subjectId}">Detail</button>
+                                                        <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editsubjectModal_${subject.subjectId}">Edit</button>
+                                                        <a type="button" class="btn btn-danger btn-sm" href="subject?action=delete&subjectId=${subject.subjectId}" onclick="return confirm('Are you sure to delete this subject?')">Delete</a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                            <div class="container table-container">
-                                <!-- Thanh tìm kiếm và lọc -->
-                                <table id="subjectTable" class="table table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th>Subject ID</th>
-                                        <th>Subject Code</th>
-                                        <th>Subject Name</th>
-                                        <th>Description</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <c:forEach var="subject" items="${subjectList}" varStatus="index">
-                                        <tr>
-                                            <td>${index.index + 1}</td>
-                                            <td>${subject.subjectCode}</td>
-                                            <td>${subject.subjectName}</td>
-                                            <td>${subject.description}</td>
-
-
-                                                <%--                <td>--%>
-                                                <%--                    <span class="btn btn-success">${subject.status}</span>--%>
-                                                <%--                </td>--%>
-
-                                            <td>
-                                                <c:choose>
-                                                    <c:when test="${subject.status == 'active'}">
-                                                        <span style="color: #31c121; font-weight: bold">Active</span>
-                                                    </c:when>
-                                                    <c:when test="${subject.status == 'In active'}">
-                                                        <span style="color: #f00; font-weight: bold">In Active</span>
-                                                    </c:when>
-                                                </c:choose>
-                                            </td>
-
-
-                                            <td>
-                                                <div style="display: flex; gap: 5px;">
-                                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#subjectInfoModal_${subject.subjectId}">Detail</button>
-                                                    <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editsubjectModal_${subject.subjectId}">Edit</button>
-                                                    <a type="button" class="btn btn-danger btn-sm" href="subject?action=delete&subjectId=${subject.subjectId}" onclick="return confirm('Are you sure to delete this subject?')">Delete</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
-                                    </tbody>
-                                </table>
-                            </div>
+                        </div>
+                        <div class="action-bar">
+                            <a href="listClass" type="button" class="btn btn-primary mb-3">
+                                Back
+                            </a>
+                            <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addsubjectModal">Add subject</button>
                         </div>
                     </div>
-                    <div class="action-bar">
-                        <a href="listClass" type="button" class="btn btn-primary mb-3">
-                            Back
-                        </a>
-                        <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addsubjectModal">Add subject</button>
-                    </div>
-                </div>
 
-            </div>
-        </main>
+                </div>
+            </main>
+        </div>
+
 
     </div>
 </div>

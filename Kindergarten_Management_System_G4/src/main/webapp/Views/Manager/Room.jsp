@@ -70,177 +70,180 @@
 <div class="containerAll">
     <div class="wrapper">
         <%@include file= "/Views/common/sidebar_manage.jsp"%>
-        <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg col-md-10">
-            <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
-                 data-scroll="true">
-                <div class="d-flex py-1 px-3 justify-content-between align-items-center" style="width: 100%;">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-                            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark"
-                                                                   href="javascript:;">Pages</a></li>
-                            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Room Management
-                            </li>
-                        </ol>
-                        <h4 class="font-weight-bolder mb-0">Manage Rooms</h4>
-                    </nav>
-                    <div class="btn-search" style="margin-top: 20px;">
-                        <form action="${pageContext.request.contextPath}/searchRoom" method="get">
-                            <input type="text" name="searchNumber" placeholder="Search by Room"
-                                   value="${param.searchNumber}">
-                            <input type="hidden" name="action" value="search">
-                            <button type="submit">Search</button>
-                        </form>
-                    </div>
-                    <div class="btn-search" style="margin-top: 20px;">
-                        <form action="${pageContext.request.contextPath}/filterRoomByStatus" method="get">
-                            <label for="status">Filter by Status:</label>
-                            <select name="status" id="status">
-                                <option value="">Status</option> <!-- Hiển thị tất cả các phòng -->
-                                <option value="1" ${param.status == '1' ? 'selected' : ''}>Active</option>
-                                <option value="0" ${param.status == '0' ? 'selected' : ''}>Inactive</option>
-                            </select>
-                            <button type="submit">Filter</button>
-                        </form>
-                    </div>
+        <div class="container">
+            <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg col-md-12">
+                <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
+                     data-scroll="true">
+                    <div class="d-flex py-1 px-3 justify-content-between align-items-center" style="width: 100%;">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                                <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark"
+                                                                       href="javascript:;">Pages</a></li>
+                                <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Room Management
+                                </li>
+                            </ol>
+                            <h4 class="font-weight-bolder mb-0">Manage Rooms</h4>
+                        </nav>
+                        <div class="btn-search" style="margin-top: 20px;">
+                            <form action="${pageContext.request.contextPath}/searchRoom" method="get">
+                                <input type="text" name="searchNumber" placeholder="Search by Room"
+                                       value="${param.searchNumber}">
+                                <input type="hidden" name="action" value="search">
+                                <button type="submit">Search</button>
+                            </form>
+                        </div>
+                        <div class="btn-search" style="margin-top: 20px;">
+                            <form action="${pageContext.request.contextPath}/filterRoomByStatus" method="get">
+                                <label for="status">Filter by Status:</label>
+                                <select name="status" id="status">
+                                    <option value="">Status</option> <!-- Hiển thị tất cả các phòng -->
+                                    <option value="1" ${param.status == '1' ? 'selected' : ''}>Active</option>
+                                    <option value="0" ${param.status == '0' ? 'selected' : ''}>Inactive</option>
+                                </select>
+                                <button type="submit">Filter</button>
+                            </form>
+                        </div>
 
-                    <div class="text-end">
-                        <a href="${pageContext.request.contextPath}/addRoom.jsp" class="btn btn-primary">Create Room</a>
+                        <div class="text-end">
+                            <a href="${pageContext.request.contextPath}/addRoom.jsp" class="btn btn-primary">Create Room</a>
+                        </div>
                     </div>
-                </div>
-            </nav>
+                </nav>
 
-            <div class="container-fluid py-4">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card my-4">
-                            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                                <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                                    <h6 class="text-white text-capitalize ps-3">Rooms</h6>
+                <div class="container-fluid py-4">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card my-4">
+                                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                                        <h6 class="text-white text-capitalize ps-3">Rooms</h6>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="card-body px-0 pb-2">
-                                <div class="table-responsive p-0">
-                                    <table class="table align-items-center mb-0">
-                                        <thead>
-                                        <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                STT
-                                            </th>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Room Name
-                                            </th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Status
-                                            </th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Capacity
-                                            </th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Action
-                                            </th>
-                                            <th class="text-secondary opacity-7"></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <c:if test="${not empty rooms}">
-                                            <c:forEach var="room" items="${rooms}">
-                                                <tr>
-                                                    <td><p class="text-xs font-weight-bold mb-0">${room.roomId}</p></td>
-                                                    <td>
-                                                        <div class="d-flex px-2 py-1">
-                                                            <div class="d-flex flex-column justify-content-center">
-                                                                <h6 class="mb-0 text-sm">${room.roomNumber}</h6>
+                                <div class="card-body px-0 pb-2">
+                                    <div class="table-responsive p-0">
+                                        <table class="table align-items-center mb-0">
+                                            <thead>
+                                            <tr>
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                    STT
+                                                </th>
+                                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                    Room Name
+                                                </th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                    Status
+                                                </th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                    Capacity
+                                                </th>
+                                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                    Action
+                                                </th>
+                                                <th class="text-secondary opacity-7"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <c:if test="${not empty rooms}">
+                                                <c:forEach var="room" items="${rooms}">
+                                                    <tr>
+                                                        <td><p class="text-xs font-weight-bold mb-0">${room.roomId}</p></td>
+                                                        <td>
+                                                            <div class="d-flex px-2 py-1">
+                                                                <div class="d-flex flex-column justify-content-center">
+                                                                    <h6 class="mb-0 text-sm">${room.roomNumber}</h6>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="align-middle text-center">
+                                                        </td>
+                                                        <td class="align-middle text-center">
                                                             <span class="text-secondary text-xs font-weight-bold">
                                                                 <c:choose>
                                                                     <c:when test="${room.status == 1}">Active</c:when>
                                                                     <c:otherwise>Inactive</c:otherwise>
                                                                 </c:choose>
                                                             </span>
-                                                    </td>
-                                                    <td class="align-middle text-center">
-                                                        <span class="text-secondary text-xs font-weight-bold">${room.capacity}</span>
-                                                    </td>
-                                                    <td class="align-middle text-center">
-                                                        <a href="${pageContext.request.contextPath}/editRoom?id=${room.roomId}"
-                                                           class="btn btn-sm btn-outline-primary mx-1"
-                                                           data-toggle="tooltip"
-                                                           title="Edit Room">
-                                                            <i class="fas fa-edit"></i> Edit
-                                                        </a>
-                                                        <button type="button" class="btn btn-sm btn-outline-danger mx-1"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#deleteModal"
-                                                                data-room-id="${room.roomId}"
-                                                                data-room-number="${room.roomNumber}">
-                                                            <i class="fas fa-trash-alt"></i> Delete
-                                                        </button>
-                                                    </td>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <span class="text-secondary text-xs font-weight-bold">${room.capacity}</span>
+                                                        </td>
+                                                        <td class="align-middle text-center">
+                                                            <a href="${pageContext.request.contextPath}/editRoom?id=${room.roomId}"
+                                                               class="btn btn-sm btn-outline-primary mx-1"
+                                                               data-toggle="tooltip"
+                                                               title="Edit Room">
+                                                                <i class="fas fa-edit"></i> Edit
+                                                            </a>
+                                                            <button type="button" class="btn btn-sm btn-outline-danger mx-1"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#deleteModal"
+                                                                    data-room-id="${room.roomId}"
+                                                                    data-room-number="${room.roomNumber}">
+                                                                <i class="fas fa-trash-alt"></i> Delete
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </c:if>
+                                            <c:if test="${empty rooms}">
+                                                <tr>
+                                                    <td colspan="5" class="text-center text-danger">No rooms found</td>
                                                 </tr>
-                                            </c:forEach>
+                                            </c:if>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="pagination">
+                                        <c:if test="${currentPage > 1}">
+                                            <a href="?page=${currentPage - 1}&searchNumber=${param.searchNumber}">&laquo;
+                                                Previous</a>
                                         </c:if>
-                                        <c:if test="${empty rooms}">
-                                            <tr>
-                                                <td colspan="5" class="text-center text-danger">No rooms found</td>
-                                            </tr>
+
+                                        <c:forEach var="i" begin="1" end="${totalPages}">
+                                            <c:choose>
+                                                <c:when test="${i == currentPage}">
+                                                    <span>${i}</span> <!-- Current page -->
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <a href="?page=${i}&searchNumber=${param.searchNumber}">${i}</a> <!-- Other pages -->
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:forEach>
+
+                                        <c:if test="${currentPage < totalPages}">
+                                            <a href="?page=${currentPage + 1}&searchNumber=${param.searchNumber}">Next
+                                                &raquo;</a>
                                         </c:if>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="pagination">
-                                    <c:if test="${currentPage > 1}">
-                                        <a href="?page=${currentPage - 1}&searchNumber=${param.searchNumber}">&laquo;
-                                            Previous</a>
-                                    </c:if>
-
-                                    <c:forEach var="i" begin="1" end="${totalPages}">
-                                        <c:choose>
-                                            <c:when test="${i == currentPage}">
-                                                <span>${i}</span> <!-- Current page -->
-                                            </c:when>
-                                            <c:otherwise>
-                                                <a href="?page=${i}&searchNumber=${param.searchNumber}">${i}</a> <!-- Other pages -->
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </c:forEach>
-
-                                    <c:if test="${currentPage < totalPages}">
-                                        <a href="?page=${currentPage + 1}&searchNumber=${param.searchNumber}">Next
-                                            &raquo;</a>
-                                    </c:if>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- Modal for Confirm Delete -->
-            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            Are you sure you want to delete room number <strong id="roomNumber"></strong>?
-                        </div>
-                        <div class="modal-footer">
-                            <form id="deleteRoomForm"
-                                  action="${pageContext.request.contextPath}/deleteRoom?action=delete" method="post">
-                                <input type="hidden" name="id" id="roomId"/>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
+                <!-- Modal for Confirm Delete -->
+                <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure you want to delete room number <strong id="roomNumber"></strong>?
+                            </div>
+                            <div class="modal-footer">
+                                <form id="deleteRoomForm"
+                                      action="${pageContext.request.contextPath}/deleteRoom?action=delete" method="post">
+                                    <input type="hidden" name="id" id="roomId"/>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </main>
+            </main>
+        </div>
+
     </div>
 </div>
 
