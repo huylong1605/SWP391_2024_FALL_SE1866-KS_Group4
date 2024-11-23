@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -92,38 +93,61 @@ public class StudentClassManagementController extends HttpServlet {
 
 
 
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(); // Lấy session
         String[] selectedStudentIds = request.getParameterValues("studentIds"); // Lấy danh sách học sinh được chọn
-        String selectedClassIdStr = request.getParameter("classId"); // Lấy ID lớp học được chọn
+        String selectedClassIdStr = request.getParameter("classId"); // Lấy ID lớp học được
+        String selectedClassLevel = request.getParameter("classLevelId");
 
         if (selectedStudentIds != null && selectedClassIdStr != null) {
             try {
                 int classId = Integer.parseInt(selectedClassIdStr);
+                String className = studentClassManageDAO.getClassNameById(classId); // Lấy tên lớp từ DB
                 List<Integer> studentIds = new ArrayList<>();
 
                 for (String studentId : selectedStudentIds) {
                     studentIds.add(Integer.parseInt(studentId));
                 }
 
-                // Gọi phương thức assignStudentsToClass để thêm học sinh vào lớp
-                studentClassManageDAO.assignStudentsToClass(studentIds, classId);
+                // Kiểm tra số lượng học sinh hiện tại trong lớp
+                int currentStudentCount = studentClassManageDAO.countStudentsInClass(classId);
 
-                // Gửi thông báo thành công
-                request.setAttribute("message", "Add Student To Class Successfully!");
+                if (currentStudentCount + studentIds.size() > 30) {
+                    // Hiển thị thông báo lỗi với số lượng học sinh hiện tại
+                    String errorMessage = String.format(
+                            "The class '%s' already has %d students. You cannot add %d more students as it exceeds the limit of 30.",
+                            className,
+                            currentStudentCount,
+                            studentIds.size()
+                    );
+                    session.setAttribute("error", errorMessage);
+                } else {
+                    // Gọi phương thức assignStudentsToClass để thêm học sinh vào lớp
+                    studentClassManageDAO.assignStudentsToClass(studentIds, classId);
+
+                    // Gửi thông báo thành công
+                    String successMessage = String.format(
+                            "Added %d student to the class '%s' successfully! Current class size: %d students.",
+                            studentIds.size(),
+                            className,
+                            currentStudentCount + studentIds.size()
+                    );
+                    session.setAttribute("message", successMessage);
+                }
 
             } catch (NumberFormatException e) {
                 e.printStackTrace();
-                request.setAttribute("error", "Lỗi định dạng ID học sinh hoặc lớp học.");
+                request.setAttribute("error", "Invalid student or class ID format.");
             }
         } else {
             request.setAttribute("error", "Please choose at least one student and one class.");
         }
 
         // Load lại danh sách classLevels, classesByLevel, studentsByLevel
-        doGet(request, response); // Quay lại phương thức doGet để hiển thị danh sách
+        response.sendRedirect(request.getContextPath() + "/Views/Manager/StudentDontHaveClass?classLevelId=" + selectedClassLevel);
     }
+
 
 }
 

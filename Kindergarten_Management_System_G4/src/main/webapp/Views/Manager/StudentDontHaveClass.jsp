@@ -51,11 +51,17 @@
             <h2 class="text-center">List Student Dont Have Class</h2>
 
             <!-- Hiển thị thông báo thành công hoặc lỗi -->
-            <c:if test="${not empty message}">
-                <div class="alert alert-success">${message}</div>
+            <c:if test="${not empty sessionScope.message}">
+                <div class="alert alert-success">${sessionScope.message}</div>
+                <%
+                    session.removeAttribute("message"); // Xóa thông báo sau khi hiển thị
+                %>
             </c:if>
-            <c:if test="${not empty error}">
-                <div class="alert alert-danger">${error}</div>
+            <c:if test="${not empty sessionScope.error}">
+                <div class="alert alert-danger">${sessionScope.error}</div>
+                <%
+                    session.removeAttribute("error"); // Xóa thông báo sau khi hiển thị
+                %>
             </c:if>
 
             <div class="d-flex justify-content-around">
@@ -96,6 +102,7 @@
             <!-- Danh sách học sinh -->
             <c:if test="${not empty studentsByLevel}">
                 <form method="post" action="StudentDontHaveClass">
+                    <input type="hidden" name="classLevelId" value="${selectedClassLevel}">
                     <table class="table table-bordered text-center" style="">
                         <thead class="table-dark text-light">
                         <tr>

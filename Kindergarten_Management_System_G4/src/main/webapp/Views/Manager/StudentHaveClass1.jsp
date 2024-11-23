@@ -63,20 +63,20 @@
       <div class="d-flex justify-content-around">
         <!-- Form chọn cấp lớp -->
         <form method="get" class="mb-4">
-          <%--          <div class="row">--%>
-          <%--            <div class="col-md-6">--%>
-          <label for="classLevelId" class="form-label">Class Level:</label>
-          <select name="classLevelId" id="classLevelId" class="form-select" style="width: 100px" onchange="this.form.submit()">
-            <c:forEach var="classLevel" items="${classLevels}">
-              <option value="${classLevel.classLevelId}" ${classLevel.classLevelId == selectedClassLevel ? 'selected' : ''}>
-                  ${classLevel.classLevelName}</option>
-            </c:forEach>
-          </select>
-          <%--            </div>--%>
-          <%--            <div class="col-md-6 align-self-end" style="margin-top: 30px">--%>
-          <%--              <button type="submit" class="btn btn-primary">Choose</button>--%>
-          <%--            </div>--%>
-          <%--          </div>--%>
+<%--          <div class="row">--%>
+<%--            <div class="col-md-6">--%>
+              <label for="classLevelId" class="form-label">Class Level:</label>
+              <select name="classLevelId" id="classLevelId" class="form-select" style="width: 100px" onchange="this.form.submit()">
+                <c:forEach var="classLevel" items="${classLevels}">
+                  <option value="${classLevel.classLevelId}" ${classLevel.classLevelId == selectedClassLevel ? 'selected' : ''}>
+                      ${classLevel.classLevelName}</option>
+                </c:forEach>
+              </select>
+<%--            </div>--%>
+<%--            <div class="col-md-6 align-self-end" style="margin-top: 30px">--%>
+<%--              <button type="submit" class="btn btn-primary">Choose</button>--%>
+<%--            </div>--%>
+<%--          </div>--%>
         </form>
 
         <!-- Form tìm kiếm -->
@@ -95,13 +95,12 @@
 
       <!-- Danh sách học sinh -->
       <c:if test="${not empty studentsByLevel}">
-        <form method="post" action="StudentHaveClass">
+        <form method="post" action="StudentDontHaveClass">
           <input type="hidden" name="classLevelId" value="${selectedClassLevel}">
           <table class="table table-bordered text-center" style="">
             <thead class="table-dark text-light">
             <tr>
-              <th><input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)" style="width: 25px; height: 25px"></th>
-              <th>STT</th>
+              <th><input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)"></th>
               <th>Name student</th>
               <th>Gender</th>
               <th>Age</th>
