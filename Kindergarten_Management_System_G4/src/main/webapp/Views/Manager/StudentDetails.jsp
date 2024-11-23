@@ -43,24 +43,7 @@
 <%@include file="../common/header.jsp"%>
 <div class="containerAll">
     <div class="wrapper">
-        <aside id="sidebar" class="expand">
-            <div class="d-flex">
-                <button class="toggle-btn" type="button">
-                    <i class="lni lni-grid-alt"></i>
-                </button>
-                <div class="sidebar-logo">
-                    <a href="#">Manager Manage</a>
-                </div>
-            </div>
-            <ul class="sidebar-nav">
-                <li class="sidebar-item">
-                    <a href="${pageContext.request.contextPath}/listClass" class="sidebar-link">
-                        <i class="lni lni-user"></i>
-                        <span>Manage Class</span>
-                    </a>
-                </li>
-            </ul>
-        </aside>
+        <%@include file= "/Views/common/sidebar_manage.jsp"%>
         <div class="main-content position-relative max-height-vh-100 h-100">
             <!-- Navbar -->
             <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">

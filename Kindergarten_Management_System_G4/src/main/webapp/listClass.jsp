@@ -59,124 +59,126 @@
 <div class="containerAll">
     <div class="wrapper">
         <%@include file= "/Views/common/sidebar_manage.jsp"%>
-        <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg col-md-10">
-            <!-- Navbar -->
-            <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
-                 data-scroll="true">
-                <div class="d-flex py-1 px-3 justify-content-between align-items-center" style="width: 100%;">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-                            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark"
-                                                                   href="javascript:;">Pages</a></li>
-                            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Account</li>
-                        </ol>
-                        <h4 class="font-weight-bolder mb-0">Manage Class</h4>
-                    </nav>
+        <div class="container">
+            <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg col-md-12">
+                <!-- Navbar -->
+                <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
+                     data-scroll="true">
+                    <div class="d-flex py-1 px-3 justify-content-between align-items-center" style="width: 100%;">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                                <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark"
+                                                                       href="javascript:;">Pages</a></li>
+                                <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Account</li>
+                            </ol>
+                            <h4 class="font-weight-bolder mb-0">Manage Class</h4>
+                        </nav>
 
-                    <div class="action-bar">
+                        <div class="action-bar">
 
-                        <!-- Form tìm kiếm và lọc -->
-                        <form class="filter-form d-flex" method="get" action="listClass">
-                            <input type="text" id="search" name="search" class="form-control"
-                                   placeholder="Search by class name..."
-                                   value="${param.search}" onchange="this.form.submit()">
+                            <!-- Form tìm kiếm và lọc -->
+                            <form class="filter-form d-flex" method="get" action="listClass">
+                                <input type="text" id="search" name="search" class="form-control"
+                                       placeholder="Search by class name..."
+                                       value="${param.search}" onchange="this.form.submit()">
 
-                            <select name="filterLevel" class="form-select" onchange="this.form.submit()">
-                                <option value="0">All Levels</option>
-                                <c:forEach var="classLevel" items="${listClassLevel}">
-                                    <option value="${classLevel.classLevelId}"
-                                            <c:if test="${classLevel.classLevelId == param.filterLevel}">selected</c:if>>
-                                            ${classLevel.classLevelName}
-                                    </option>
-                                </c:forEach>
-                            </select>
-
-                            <%-- <button type="submit" class="btn btn-secondary">Search</button>--%>
-                        </form>
-                    </div>
-                </div>
-
-            </nav>
-            <!-- End Navbar -->
-            <div class="container-fluid py-4">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card my-4">
-                            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                                <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                                    <h6 class="text-white text-capitalize ps-3">Class List</h6>
-                                </div>
-                            </div>
-                            <div class="container table-container">
-                                <h2 class="text-center">List of Classes</h2>
-
-                                <% if (request.getAttribute("deleteSuccessful") != null) { %>
-                                <div class="alert alert-success">
-                                    <%= request.getAttribute("deleteSuccessful") %>
-                                </div>
-
-                                </p>
-                                <% } %>
-                                <% if (request.getAttribute("updateSuccessful") != null) { %>
-                                <div class="alert alert-success"><%= request.getAttribute("updateSuccessful") %>
-                                </div>
-                                <% } %>
-                                <% if (request.getAttribute("createSuccessful") != null) { %>
-                                <div class="alert alert-success"><%= request.getAttribute("createSuccessful") %>
-                                </div>
-                                <% } %>
-
-                                <% if (request.getAttribute("deleteFalse") != null) { %>
-                                <div class="alert alert-danger"><%= request.getAttribute("deleteFalse") %>
-                                </div>
-                                <% } %>
-
-                                <!-- Thanh tìm kiếm và lọc -->
-                                <div class="action-bar">
-                                    <a href="createClass" class="btn btn-primary">Create New Class</a>
-                                    <!-- Form tìm kiếm và lọc -->
-                                </div>
-
-                                <table class="table table-bordered table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>Class Name</th>
-                                        <th>Class Level</th>
-                                        <th>Teacher</th>
-                                        <th>Room</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <!-- Duyệt qua danh sách lớp học -->
-                                    <c:forEach var="classes" items="${listClass}">
-                                        <tr>
-                                            <td>
-                                                <a href="${pageContext.request.contextPath}/Views/Manager/listStudentInClass?classId=${classes.classId}">${classes.className}</a>
-                                            </td>
-                                            <td>${classes.classLevelName}</td>
-                                            <td>${classes.fullname}</td>
-                                            <td>${classes.roomNumber}</td>
-                                            <td>
-                                                <a href="updateClass?classId=${classes.classId}"
-                                                   class="btn btn-warning btn-sm">Edit</a>
-                                                <a href="classDetail?classId=${classes.classId}"
-                                                   class="btn btn-warning btn-sm">Detail</a>
-                                                <a href="#" class="btn btn-danger btn-sm"
-                                                   onclick="deleteClass(${classes.classId})">Delete</a>
-                                            </td>
-                                        </tr>
+                                <select name="filterLevel" class="form-select" onchange="this.form.submit()">
+                                    <option value="0">All Levels</option>
+                                    <c:forEach var="classLevel" items="${listClassLevel}">
+                                        <option value="${classLevel.classLevelId}"
+                                                <c:if test="${classLevel.classLevelId == param.filterLevel}">selected</c:if>>
+                                                ${classLevel.classLevelName}
+                                        </option>
                                     </c:forEach>
-                                    </tbody>
-                                </table>
-                            </div>
+                                </select>
+
+                                <%-- <button type="submit" class="btn btn-secondary">Search</button>--%>
+                            </form>
                         </div>
                     </div>
 
-                </div>
+                </nav>
+                <!-- End Navbar -->
+                <div class="container-fluid py-4">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card my-4">
+                                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                                        <h6 class="text-white text-capitalize ps-3">Class List</h6>
+                                    </div>
+                                </div>
+                                <div class="container table-container">
+                                    <h2 class="text-center">List of Classes</h2>
 
-            </div>
-        </main>
+                                    <% if (request.getAttribute("deleteSuccessful") != null) { %>
+                                    <div class="alert alert-success">
+                                        <%= request.getAttribute("deleteSuccessful") %>
+                                    </div>
+
+                                    </p>
+                                    <% } %>
+                                    <% if (request.getAttribute("updateSuccessful") != null) { %>
+                                    <div class="alert alert-success"><%= request.getAttribute("updateSuccessful") %>
+                                    </div>
+                                    <% } %>
+                                    <% if (request.getAttribute("createSuccessful") != null) { %>
+                                    <div class="alert alert-success"><%= request.getAttribute("createSuccessful") %>
+                                    </div>
+                                    <% } %>
+
+                                    <% if (request.getAttribute("deleteFalse") != null) { %>
+                                    <div class="alert alert-danger"><%= request.getAttribute("deleteFalse") %>
+                                    </div>
+                                    <% } %>
+
+                                    <!-- Thanh tìm kiếm và lọc -->
+                                    <div class="action-bar">
+                                        <a href="createClass" class="btn btn-primary">Create New Class</a>
+                                        <!-- Form tìm kiếm và lọc -->
+                                    </div>
+
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>Class Name</th>
+                                            <th>Class Level</th>
+                                            <th>Teacher</th>
+                                            <th>Room</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <!-- Duyệt qua danh sách lớp học -->
+                                        <c:forEach var="classes" items="${listClass}">
+                                            <tr>
+                                                <td>
+                                                    <a href="${pageContext.request.contextPath}/Views/Manager/listStudentInClass?classId=${classes.classId}">${classes.className}</a>
+                                                </td>
+                                                <td>${classes.classLevelName}</td>
+                                                <td>${classes.fullname}</td>
+                                                <td>${classes.roomNumber}</td>
+                                                <td>
+                                                    <a href="updateClass?classId=${classes.classId}"
+                                                       class="btn btn-warning btn-sm">Edit</a>
+                                                    <a href="classDetail?classId=${classes.classId}"
+                                                       class="btn btn-warning btn-sm">Detail</a>
+                                                    <a href="#" class="btn btn-danger btn-sm"
+                                                       onclick="deleteClass(${classes.classId})">Delete</a>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </main>
+        </div>
 
     </div>
 </div>

@@ -150,7 +150,7 @@ public class LoginController extends HttpServlet { // lớp LoginController đ�
         } else if (user.getRoleId() == 1) {      //Id = 1 điều hướng người dùng đến trang  homepage của Admin
             req.getRequestDispatcher("/Views/HomePage/HomePageForAdmin.jsp").forward(req, resp);
         } else if (user.getRoleId() == 4) {      //Id = 1 điều hướng người dùng đến trang  homepage của Manager
-            req.getRequestDispatcher("/Views/HomePage/HomePageForManager.jsp").forward(req, resp);
+            resp.sendRedirect(req.getContextPath() + "/Views/HomePage/HomePageForManager");
         } else if (user.getRoleId() == 2) {      //Id = 1 điều hướng người dùng đến trang  homepage của teacher
             req.getRequestDispatcher("/Views/HomePage/HomePageForTeacher.jsp").forward(req, resp);
         }else if (user.getRoleId() == 5) {      //Id = 1 điều hướng người dùng đến trang  homepage của teacher

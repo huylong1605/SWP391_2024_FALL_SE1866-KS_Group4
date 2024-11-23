@@ -54,181 +54,161 @@
 <% } %>
 <div class="containerAll">
     <div class="wrapper">
-        <aside id="sidebar" class="expand">
-            <div class="d-flex">
-                <button class="toggle-btn" type="button">
-                    <i class="lni lni-grid-alt"></i>
-                </button>
-                <div class="sidebar-logo">
-                    <a href="#">Teacher Manage</a>
-                </div>
-            </div>
-            <ul class="sidebar-nav">
-                <li class="sidebar-item">
-                    <a href="${pageContext.request.contextPath}/Views/Teacher/teacherSchedule?teacherId=${sessionScope.user.userID}" class="sidebar-link">
-                        <i class="lni lni-user"></i>
-                        <span>View Schedule</span>
-                    </a>
-                    <a href="${pageContext.request.contextPath}/Views/Teacher/listAttendanceClass?classId=${teachingSchedules[0].classId}&className=${teachingSchedules[0].className}" class="sidebar-link">
-                        <i class="lni lni-user"></i>
-                        <span>View list attendance</span>
-                    </a>
-                </li>
-            </ul>
-        </aside>
+        <%@include file= "/Views/common/sidebar_manage.jsp"%>
+        <div class="container">
+            <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg col-md-12">
+                <!-- Navbar -->
+                <c:if test="${not empty sessionScope.successMessage}">
+                    <div id="success-alert-create" style="width: 93%; background-color: #06bf06" class="alert alert-success text-light text-center mx-auto" role="alert">
+                            ${sessionScope.successMessage}
+                        <c:remove var="successMessage" scope="session" />
+                    </div>
+                </c:if>
+                <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
+                    <div class="d-flex py-1 px-3 justify-content-between align-items-center" style="width: 100%;">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                                <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
+                                <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Teacher</li>
+                            </ol>
+                            <h4 class="font-weight-bolder mb-0">Teacher Schedule</h4>
+                        </nav>
 
-        <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg col-md-10">
-            <!-- Navbar -->
-            <c:if test="${not empty sessionScope.successMessage}">
-                <div id="success-alert-create" style="width: 93%; background-color: #06bf06" class="alert alert-success text-light text-center mx-auto" role="alert">
-                        ${sessionScope.successMessage}
-                    <c:remove var="successMessage" scope="session" />
-                </div>
-            </c:if>
-            <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
-                <div class="d-flex py-1 px-3 justify-content-between align-items-center" style="width: 100%;">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-                            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-                            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Teacher</li>
-                        </ol>
-                        <h4 class="font-weight-bolder mb-0">Teacher Schedule</h4>
-                    </nav>
+                    </div>
+                </nav>
 
-                </div>
-            </nav>
-
-            <!-- End Navbar -->
-            <div class="container-fluid py-4">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card my-4">
-                            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                                <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                                    <h5 class="text-white text-capitalize ps-3">Class: <span style="font-size: 30px">${teachingSchedules[0].className}</span></h5>
-                                    <h5 class="text-white text-capitalize ps-3">Room: <span style="font-size: 30px">${teachingSchedules[0].room}</span></h5>
+                <!-- End Navbar -->
+                <div class="container-fluid py-4">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card my-4">
+                                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                                    <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                                        <h5 class="text-white text-capitalize ps-3">Class: <span style="font-size: 30px">${teachingSchedules[0].className}</span></h5>
+                                        <h5 class="text-white text-capitalize ps-3">Room: <span style="font-size: 30px">${teachingSchedules[0].room}</span></h5>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="card-body px-0 pb-2">
-                                <div class="table-responsive p-0">
-                                    <c:choose>
-                                        <c:when test="${empty teachingSchedules}">
-                                            <div class="text-center text-danger">
-                                                <p>Dont have any schedule !!!</p>
-                                            </div>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <table class="table align-items-center mb-0 table-responsive">
-                                                <thead>
-                                                <tr>
-                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date</th>
-                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Day Of Week</th>
-                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Subject</th>
-                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Slot</th>
-                                                    <th class="text-secondary opacity-7"></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <c:forEach var="schedule" items="${teachingSchedules}" varStatus="status">
-                                                    <tr style="font-weight: bold">
-                                                        <td class="text-center">${schedule.date}</td>
-                                                        <td class="text-center">${schedule.dayOfWeek}</td>
-                                                        <td class="text-center">${schedule.subjectName}</td>
-                                                        <c:if test="${schedule.slotId == 1}">
-                                                            <td class="text-center"><span style="color: #0af40a">${schedule.slotName}</span>
-                                                                <div class="time-range">(${schedule.startTime} - ${schedule.endTime})</div>
-                                                            </td>
-                                                        </c:if>
-                                                        <c:if test="${schedule.slotId == 2}">
-                                                            <td class="text-center"><span style="color: #f60d0d">${schedule.slotName}</span>
-                                                                <div class="time-range">(${schedule.startTime} - ${schedule.endTime})</div>
-                                                            </td>
-                                                        </c:if>
-                                                        <td class="align-middle">
-                                                            <a href="${pageContext.request.contextPath}/changeSlotTeacher?schedulesId=${schedule.scheduleID}" class="text-light font-weight-bold text-xs"
-                                                               style="background-color: #5151ff; padding: 5px; color: white; border-radius: 10px; margin-right: 5px"
-                                                               data-toggle="tooltip" data-original-title="View Details">
-                                                                Change Slot
-                                                            </a>
-                                                            <input type="hidden" id="currentDate" value="${currentDate}">
-                                                            <c:if test="${schedule.date <= currentDate}">
-                                                                <c:choose>
-                                                                    <c:when test="${schedule.attendanceMarked}">
-                                                                        <a href="${pageContext.request.contextPath}/Views/Teacher/attendStudent?classId=${schedule.classId}&date=${schedule.date}&slotId=${schedule.slotId}&className=${schedule.className}&slotName=${schedule.slotName}"
-                                                                           class="text-light font-weight-bold text-xs"
-                                                                           style="background-color: #05a605; padding: 5px; color: white; border-radius: 10px"
-                                                                           data-toggle="tooltip" data-original-title="Mark Attendance">
-                                                                            Edit Attendance
-                                                                        </a>
-                                                                    </c:when>
-                                                                    <c:otherwise>
-                                                                        <a href="${pageContext.request.contextPath}/Views/Teacher/attendStudent?classId=${schedule.classId}&date=${schedule.date}&slotId=${schedule.slotId}&className=${schedule.className}&slotName=${schedule.slotName}"
-                                                                           class="text-light font-weight-bold text-xs"
-                                                                           style="background-color: #ff2525; padding: 5px; color: white; border-radius: 10px"
-                                                                           data-toggle="tooltip" data-original-title="Mark Attendance">
-                                                                            Attendance
-                                                                        </a>
-                                                                    </c:otherwise>
-                                                                </c:choose>
-                                                            </c:if>
-                                                            <c:if test="${schedule.date > currentDate}">
-                                                                <span class="text-light font-weight-bold text-xs" style="background-color: #d3d3d3; padding: 5px; border-radius: 10px;">Attendance</span>
-                                                            </c:if>
-                                                        </td>
+                                <div class="card-body px-0 pb-2">
+                                    <div class="table-responsive p-0">
+                                        <c:choose>
+                                            <c:when test="${empty teachingSchedules}">
+                                                <div class="text-center text-danger">
+                                                    <p>Dont have any schedule !!!</p>
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <table class="table align-items-center mb-0 table-responsive">
+                                                    <thead>
+                                                    <tr>
+                                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date</th>
+                                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Day Of Week</th>
+                                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Subject</th>
+                                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Slot</th>
+                                                        <th class="text-secondary opacity-7"></th>
                                                     </tr>
-                                                </c:forEach>
+                                                    </thead>
+                                                    <tbody>
+                                                    <c:forEach var="schedule" items="${teachingSchedules}" varStatus="status">
+                                                        <tr style="font-weight: bold">
+                                                            <td class="text-center">${schedule.date}</td>
+                                                            <td class="text-center">${schedule.dayOfWeek}</td>
+                                                            <td class="text-center">${schedule.subjectName}</td>
+                                                            <c:if test="${schedule.slotId == 1}">
+                                                                <td class="text-center"><span style="color: #0af40a">${schedule.slotName}</span>
+                                                                    <div class="time-range">(${schedule.startTime} - ${schedule.endTime})</div>
+                                                                </td>
+                                                            </c:if>
+                                                            <c:if test="${schedule.slotId == 2}">
+                                                                <td class="text-center"><span style="color: #f60d0d">${schedule.slotName}</span>
+                                                                    <div class="time-range">(${schedule.startTime} - ${schedule.endTime})</div>
+                                                                </td>
+                                                            </c:if>
+                                                            <td class="align-middle">
+                                                                <a href="${pageContext.request.contextPath}/changeSlotTeacher?schedulesId=${schedule.scheduleID}" class="text-light font-weight-bold text-xs"
+                                                                   style="background-color: #5151ff; padding: 5px; color: white; border-radius: 10px; margin-right: 5px"
+                                                                   data-toggle="tooltip" data-original-title="View Details">
+                                                                    Change Slot
+                                                                </a>
+                                                                <input type="hidden" id="currentDate" value="${currentDate}">
+                                                                <c:if test="${schedule.date <= currentDate}">
+                                                                    <c:choose>
+                                                                        <c:when test="${schedule.attendanceMarked}">
+                                                                            <a href="${pageContext.request.contextPath}/Views/Teacher/attendStudent?classId=${schedule.classId}&date=${schedule.date}&slotId=${schedule.slotId}&className=${schedule.className}&slotName=${schedule.slotName}"
+                                                                               class="text-light font-weight-bold text-xs"
+                                                                               style="background-color: #05a605; padding: 5px; color: white; border-radius: 10px"
+                                                                               data-toggle="tooltip" data-original-title="Mark Attendance">
+                                                                                Edit Attendance
+                                                                            </a>
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            <a href="${pageContext.request.contextPath}/Views/Teacher/attendStudent?classId=${schedule.classId}&date=${schedule.date}&slotId=${schedule.slotId}&className=${schedule.className}&slotName=${schedule.slotName}"
+                                                                               class="text-light font-weight-bold text-xs"
+                                                                               style="background-color: #ff2525; padding: 5px; color: white; border-radius: 10px"
+                                                                               data-toggle="tooltip" data-original-title="Mark Attendance">
+                                                                                Attendance
+                                                                            </a>
+                                                                        </c:otherwise>
+                                                                    </c:choose>
+                                                                </c:if>
+                                                                <c:if test="${schedule.date > currentDate}">
+                                                                    <span class="text-light font-weight-bold text-xs" style="background-color: #d3d3d3; padding: 5px; border-radius: 10px;">Attendance</span>
+                                                                </c:if>
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
 
-                                                </tbody>
-                                            </table>
-                                        </c:otherwise>
-                                    </c:choose>
+                                                    </tbody>
+                                                </table>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
                                 </div>
                             </div>
+                            <a href="${pageContext.request.contextPath}/Views/Teacher/listAttendanceClass?classId=${teachingSchedules[0].classId}&className=${teachingSchedules[0].className}" class="btn btn-primary">View list attendance</a>
                         </div>
-                        <a href="${pageContext.request.contextPath}/Views/Teacher/listAttendanceClass?classId=${teachingSchedules[0].classId}&className=${teachingSchedules[0].className}" class="btn btn-primary">View list attendance</a>
                     </div>
                 </div>
-            </div>
 
-            <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm deletion</h5>
-                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Are you sure you want to delete this student?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-danger" id="confirmDeleteButton">Delete</button>
+                <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm deletion</h5>
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure you want to delete this student?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-danger" id="confirmDeleteButton">Delete</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="modal fade" id="deleteSuccessModal" tabindex="-1" role="dialog" aria-labelledby="deleteSuccessModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="deleteSuccessModalLabel">Successfully</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            This student delete successfully
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                <div class="modal fade" id="deleteSuccessModal" tabindex="-1" role="dialog" aria-labelledby="deleteSuccessModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteSuccessModalLabel">Successfully</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                This student delete successfully
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </main>
+            </main>
+        </div>
     </div>
 </div>
 

@@ -87,128 +87,110 @@
 <%@include file="../common/header.jsp"%>
 <div class="containerAll">
     <div class="wrapper">
-        <aside id="sidebar" class="expand">
-            <div class="d-flex">
-                <button class="toggle-btn" type="button">
-                    <i class="lni lni-grid-alt"></i>
-                </button>
-                <div class="sidebar-logo">
-                    <a href="#">Teacher Manage</a>
-                </div>
-            </div>
-            <ul class="sidebar-nav">
-                <li class="sidebar-item">
-                    <a href="${pageContext.request.contextPath}/Views/Teacher/teacherSchedule?teacherId=${sessionScope.user.userID}" class="sidebar-link">
-                        <i class="lni lni-user"></i>
-                        <span>View Schedule</span>
-                    </a>
-                    <a href="${pageContext.request.contextPath}/Views/Teacher/listAttendanceClass?classId=${classId}&className=${className}" class="sidebar-link">
-                        <i class="lni lni-user"></i>
-                        <span>View list attendance</span>
-                    </a>
-                </li>
-            </ul>
-        </aside>
-        <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg col-md-10">
-            <!-- Navbar -->
-            <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
-                <div class="d-flex py-1 px-3 justify-content-between align-items-center" style="width: 100%;">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-                            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-                            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Teacher</li>
-                        </ol>
-                        <h4 class="font-weight-bolder mb-0">Teacher Attendance</h4>
-                    </nav>
+        <%@include file= "/Views/common/sidebar_manage.jsp"%>
+        <div class="container">
+            <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg col-md-12">
+                <!-- Navbar -->
+                <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" data-scroll="true">
+                    <div class="d-flex py-1 px-3 justify-content-between align-items-center" style="width: 100%;">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                                <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
+                                <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Teacher</li>
+                            </ol>
+                            <h4 class="font-weight-bolder mb-0">Teacher Attendance</h4>
+                        </nav>
 
-                </div>
-            </nav>
-            <!-- End Navbar -->
-            <div class="container-fluid py-4">
-                <div class="row">
-                    <form action="${pageContext.request.contextPath}/Views/Teacher/attendStudent" method="post">
-                        <input type="hidden" name="classId" value="${classId}">
-                        <input type="hidden" name="date" value="${date}">
-                        <input type="hidden" name="slotId" value="${slotId}">
-                        <input type="hidden" name="className" value="${className}"> <!-- Thêm dòng này -->
-                        <input type="hidden" name="slotName" value="${slotName}">
-                    <div class="col-12">
-                        <div class="card my-4">
-                            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-                                <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex">
-                                    <div>
-                                        <h5 class="text-white text-capitalize ps-3">Class: <span style="font-size: 20px">${className}</span></h5>
-                                        <h5 class="text-white text-capitalize ps-3">Date: <span style="font-size: 20px">${date}</span></h5>
-                                        <h5 class="text-white text-capitalize ps-3">Slot: <span style="font-size: 20px">${slotName}</span></h5>
-                                    </div>
-                                    <div style="padding-left: 20%">
-                                        <h5 class="text-white text-capitalize ps-3">Present: <span style="font-size: 20px">${presentCount}</span></h5>
-                                        <h5 class="text-white text-capitalize ps-3">Absent: <span style="font-size: 20px">${absentCount}</span></h5>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="card-body px-0 pb-2">
-                                <div class="table-responsive p-0">
-
-                                    <c:choose>
-                                        <c:when test="${empty attendanceList}">
-                                            <div class="text-center text-danger">
-                                                <p>Dont have any schedule !!!</p>
+                    </div>
+                </nav>
+                <!-- End Navbar -->
+                <div class="container-fluid py-4">
+                    <div class="row">
+                        <form action="${pageContext.request.contextPath}/Views/Teacher/attendStudent" method="post">
+                            <input type="hidden" name="classId" value="${classId}">
+                            <input type="hidden" name="date" value="${date}">
+                            <input type="hidden" name="slotId" value="${slotId}">
+                            <input type="hidden" name="className" value="${className}"> <!-- Thêm dòng này -->
+                            <input type="hidden" name="slotName" value="${slotName}">
+                            <div class="col-12">
+                                <div class="card my-4">
+                                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                                        <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex">
+                                            <div>
+                                                <h5 class="text-white text-capitalize ps-3">Class: <span style="font-size: 20px">${className}</span></h5>
+                                                <h5 class="text-white text-capitalize ps-3">Date: <span style="font-size: 20px">${date}</span></h5>
+                                                <h5 class="text-white text-capitalize ps-3">Slot: <span style="font-size: 20px">${slotName}</span></h5>
                                             </div>
-                                        </c:when>
-                                        <c:otherwise>
+                                            <div style="padding-left: 20%">
+                                                <h5 class="text-white text-capitalize ps-3">Present: <span style="font-size: 20px">${presentCount}</span></h5>
+                                                <h5 class="text-white text-capitalize ps-3">Absent: <span style="font-size: 20px">${absentCount}</span></h5>
+                                            </div>
+                                        </div>
 
-                                            <table class="table align-items-center mb-0 table-responsive">
-                                                <thead>
-                                                <tr>
-                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">STT</th>
-<%--                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Student ID</th>--%>
-                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Student Name</th>
-                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Date of Birth</th>
-                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Attendance Status</th>
-                                                    <th class="text-secondary opacity-7"></th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <c:forEach var="student" items="${attendanceList}" varStatus="status">
-                                                    <tr style="font-weight: bold">
-                                                        <td class="text-center">${status.index + 1}</td>
-<%--                                                        <td class="text-center">${student.studentId}</td>--%>
-                                                        <td class="text-center">${student.studentName}</td>
-                                                        <td class="text-center">${student.dateOfBirth}</td>
-                                                        <td class="text-center">
+                                    </div>
+                                    <div class="card-body px-0 pb-2">
+                                        <div class="table-responsive p-0">
+
+                                            <c:choose>
+                                                <c:when test="${empty attendanceList}">
+                                                    <div class="text-center text-danger">
+                                                        <p>Dont have any schedule !!!</p>
+                                                    </div>
+                                                </c:when>
+                                                <c:otherwise>
+
+                                                    <table class="table align-items-center mb-0 table-responsive">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">STT</th>
+                                                                <%--                                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Student ID</th>--%>
+                                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Student Name</th>
+                                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Date of Birth</th>
+                                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Attendance Status</th>
+                                                            <th class="text-secondary opacity-7"></th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <c:forEach var="student" items="${attendanceList}" varStatus="status">
+                                                            <tr style="font-weight: bold">
+                                                                <td class="text-center">${status.index + 1}</td>
+                                                                    <%--                                                        <td class="text-center">${student.studentId}</td>--%>
+                                                                <td class="text-center">${student.studentName}</td>
+                                                                <td class="text-center">${student.dateOfBirth}</td>
+                                                                <td class="text-center">
                                                             <span id="statusText_${student.studentId}" style="color: ${student.attendStatus ? 'green' : 'red'};">
                                                                     ${student.attendStatus ? 'Present' : 'Absent'}
                                                             </span>
-                                                            <input type="hidden" id="attendStatus_${student.studentId}" name="attendStatus" value="${student.attendStatus}">
-                                                            <input type="hidden" name="studentId" value="${student.studentId}">
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <button style="margin-top: 15px; font-size: 10px" type="button" class="btn btn-warning" onclick="toggleAttendance(${student.studentId})">
-                                                                Take Attendance
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                </c:forEach>
-                                                </tbody>
-                                            </table>
+                                                                    <input type="hidden" id="attendStatus_${student.studentId}" name="attendStatus" value="${student.attendStatus}">
+                                                                    <input type="hidden" name="studentId" value="${student.studentId}">
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <button style="margin-top: 15px; font-size: 10px" type="button" class="btn btn-warning" onclick="toggleAttendance(${student.studentId})">
+                                                                        Take Attendance
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                        </tbody>
+                                                    </table>
 
-                                        </c:otherwise>
-                                    </c:choose>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            <div class="text-center d-flex align-content-around">
+                                <a href="${pageContext.request.contextPath}/Views/Teacher/teacherSchedule?teacherId=${sessionScope.user.userID}" class="btn btn-primary">Back To Schedule</a>
+                                <button type="submit" class="btn btn-primary" style="background-color: #4b4bff; margin-left: 15px">Save Attendance</button>
+                                <a href="${pageContext.request.contextPath}/Views/Teacher/sendAbsenceNotifications?classId=${classId}&date=${date}&slotId=${slotId}&className=${className}&slotName=${slotName}" class="btn btn-primary" style="background-color: red; margin-left: 15px">Notification Parent</a>
+                            </div>
+                        </form>
                     </div>
-                    <div class="text-center d-flex align-content-around">
-                        <a href="${pageContext.request.contextPath}/Views/Teacher/teacherSchedule?teacherId=${sessionScope.user.userID}" class="btn btn-primary">Back To Schedule</a>
-                        <button type="submit" class="btn btn-primary" style="background-color: #4b4bff; margin-left: 15px">Save Attendance</button>
-                        <a href="${pageContext.request.contextPath}/Views/Teacher/sendAbsenceNotifications?classId=${classId}&date=${date}&slotId=${slotId}&className=${className}&slotName=${slotName}" class="btn btn-primary" style="background-color: red; margin-left: 15px">Notification Parent</a>
-                    </div>
-                    </form>
                 </div>
-            </div>
-        </main>
+            </main>
+        </div>
+
     </div>
 </div>
 

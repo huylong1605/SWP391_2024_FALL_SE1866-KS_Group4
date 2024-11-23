@@ -60,7 +60,7 @@
 <%@ include file="/Views/common/header.jsp" %>
 <div class="hero_area">
     <!-- slider section -->
-    <section class=" slider_section position-relative">
+    <section class="slider_section position-relative">
         <div class="container row">
             <div id="carouselExampleIndicators" class="carousel slide col-md-6" data-ride="carousel" style="padding-top: 30px">
                 <div class="parent-items">
