@@ -134,11 +134,11 @@ public class StudentHadClassController extends HttpServlet {
                     } else {
                         // Thực hiện chuyển học sinh
                         studentClassManageDAO.updateStudentClass(studentIdList, newClassId);
-                        request.getSession().setAttribute("message", "Chuyển lớp thành công.");
+                        request.getSession().setAttribute("message", "transfer successful.");
                     }
                 } else if ("delete".equals(action)) {
                     studentClassManageDAO.removeStudentsFromClass(studentIdList);
-                    request.getSession().setAttribute("message", "Xóa học sinh thành công.");
+                    request.getSession().setAttribute("message", "Delete successful.");
                 }
             }
 
