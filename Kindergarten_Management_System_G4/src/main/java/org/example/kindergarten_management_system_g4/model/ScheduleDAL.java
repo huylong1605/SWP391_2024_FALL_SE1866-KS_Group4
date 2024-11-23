@@ -15,7 +15,25 @@ public class ScheduleDAL {
     private String teacher;
     private String start_Date;
     private String end_Date;
+    private String attendance;
     public ScheduleDAL() {
+    }
+
+    public ScheduleDAL(int scheduleId, String subject_name, String termName, String slotName, String startTime, String endTime, String dayOfWeek, String dateOfDay, String className, String room, String teacher, String start_Date, String end_Date, String attendance) {
+        this.scheduleId = scheduleId;
+        this.subject_name = subject_name;
+        this.termName = termName;
+        this.slotName = slotName;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.dayOfWeek = dayOfWeek;
+        this.dateOfDay = dateOfDay;
+        this.className = className;
+        this.room = room;
+        this.teacher = teacher;
+        this.start_Date = start_Date;
+        this.end_Date = end_Date;
+        this.attendance = attendance;
     }
 
     public ScheduleDAL(int scheduleId, String subject_name, String termName, String slotName, String startTime, String endTime, String dayOfWeek, String dateOfDay, String className, String room, String teacher) {
@@ -134,6 +152,14 @@ public class ScheduleDAL {
 
     public void setEnd_Date(String end_Date) {
         this.end_Date = end_Date;
+    }
+
+    public String getAttendance() {
+        return attendance;
+    }
+
+    public void setAttendance(String attendance) {
+        this.attendance = attendance;
     }
 
     @Override

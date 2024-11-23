@@ -50,7 +50,7 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
             "FROM user u\n" +
             "LEFT JOIN class c \n" +
             "ON u.User_id = c.User_id\n" +
-            "WHERE c.User_id IS NULL OR u.User_id = ? And u.Role_id = 2;";
+            "WHERE u.status = 1 and u.Role_id = 2 and c.User_id IS NULL OR u.User_id = ?  ;";
     private static final String GET_LIST_CLASS_LEVEL = "SELECT * from class_level";
     private static final String GET_CLASS_NAME = "SELECT Class_name from class where Class_name = ?";
     private static final String GET_CLASS_NAME_UPDATE = "SELECT Class_name from class where Class_name = ? AND Class_ID != ?";
@@ -76,6 +76,7 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
     private static final String GET_LIST_CLASS = "SELECT \n" +
             "    c.Class_ID, \n" +
             "    c.Class_name, \n" +
+            "    cl.description, \n" +
             "    cl.Class_level_name, \n" +
             "    u.Fullname, \n" +
             "    r.Room_number\n" +
@@ -92,6 +93,7 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
     private static final String GET_LIST_CLASS_FILTER = "SELECT \n" +
             "    c.Class_ID, \n" +
             "    c.Class_name, \n" +
+            "    cl.description, \n" +
             "    cl.Class_level_name, \n" +
             "    u.Fullname, \n" +
             "    r.Room_number\n" +
@@ -108,6 +110,7 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
     private static final String GET_LIST_CLASS_SEARCH_FILTER = "SELECT \n" +
             "    c.Class_ID, \n" +
             "    c.Class_name, \n" +
+            "    cl.description, \n" +
             "    cl.Class_level_name, \n" +
             "    u.Fullname, \n" +
             "    r.Room_number\n" +
@@ -124,6 +127,7 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
     private static final String GET_LIST_CLASS_SEARCH = "SELECT \n" +
             "    c.Class_ID, \n" +
             "    c.Class_name, \n" +
+            "    cl.description, \n" +
             "    cl.Class_level_name, \n" +
             "    u.Fullname, \n" +
             "    r.Room_number\n" +
@@ -186,6 +190,7 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
                 classDAL.setClassLevelName(resultSet.getString("Class_level_name"));
                 classDAL.setFullname(resultSet.getString("Fullname"));
                 classDAL.setRoomNumber(resultSet.getString("Room_number"));
+                classDAL.setDescription(resultSet.getString("description"));
 
                 // Thêm đối tượng vào danh sách
                 classList.add(classDAL);
@@ -235,6 +240,7 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
                 classDAL.setClassLevelName(resultSet.getString("Class_level_name"));
                 classDAL.setFullname(resultSet.getString("Fullname"));
                 classDAL.setRoomNumber(resultSet.getString("Room_number"));
+                classDAL.setDescription(resultSet.getString("description"));
 
                 // Thêm đối tượng vào danh sách
                 classSearchFilterList.add(classDAL);
@@ -520,6 +526,7 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
                 classDAL.setClassLevelName(resultSet.getString("Class_level_name"));
                 classDAL.setFullname(resultSet.getString("Fullname"));
                 classDAL.setRoomNumber(resultSet.getString("Room_number"));
+                classDAL.setDescription(resultSet.getString("description"));
 
                 // Thêm đối tượng vào danh sách
                 classFilterList.add(classDAL);
@@ -569,6 +576,7 @@ public class ClassDAOImpl extends DBConnection implements IClassDAO {
                 classDAL.setClassLevelName(resultSet.getString("Class_level_name"));
                 classDAL.setFullname(resultSet.getString("Fullname"));
                 classDAL.setRoomNumber(resultSet.getString("Room_number"));
+                classDAL.setDescription(resultSet.getString("description"));
 
                 // Thêm đối tượng vào danh sách
                 classSearchList.add(classDAL);

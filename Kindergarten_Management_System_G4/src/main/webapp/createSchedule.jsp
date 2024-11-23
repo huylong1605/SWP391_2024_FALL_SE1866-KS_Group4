@@ -64,7 +64,7 @@
                             <option value="" disabled selected>Select term</option>
                             <c:forEach var="term" items="${listTerm}">
                                 <option value="${term.termId}" <c:if test="${term.termId == param.term_id}">selected</c:if>>
-                                        ${term.termName} - ${term.year}
+                                        ${term.termName}
                                 </option>
                             </c:forEach>
                         </select>

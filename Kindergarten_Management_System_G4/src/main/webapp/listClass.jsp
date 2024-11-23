@@ -142,6 +142,7 @@
                                     <tr>
                                         <th>Class Name</th>
                                         <th>Class Level</th>
+                                        <th>Age</th>
                                         <th>Teacher</th>
                                         <th>Room</th>
                                         <th>Actions</th>
@@ -154,7 +155,8 @@
                                             <td>
                                                 <a href="${pageContext.request.contextPath}/Views/Manager/listStudentInClass?classId=${classes.classId}">${classes.className}</a>
                                             </td>
-                                            <td>${classes.classLevelName}</td>
+                                            <td>${classes.classLevelName} </td>
+                                            <td>${classes.description} </td>
                                             <td>${classes.fullname}</td>
                                             <td>${classes.roomNumber}</td>
                                             <td>

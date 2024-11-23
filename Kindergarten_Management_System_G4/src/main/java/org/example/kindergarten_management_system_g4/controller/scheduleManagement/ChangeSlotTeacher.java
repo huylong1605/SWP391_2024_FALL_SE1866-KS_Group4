@@ -97,6 +97,11 @@ public class ChangeSlotTeacher extends HttpServlet {
         int schedulesId = Integer.parseInt(req.getParameter("scheduleIdd"));
         String dateOfDay = req.getParameter("dateChange");
         int slotId = Integer.parseInt(req.getParameter("slotChange"));
+        String classIdParam = req.getParameter("classIds");
+        int classId = 0;
+        if (classIdParam != null) {
+             classId = Integer.parseInt(classIdParam);
+        }
 
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
@@ -121,9 +126,9 @@ public class ChangeSlotTeacher extends HttpServlet {
                 return;
             }
 
-            Schedule scheduleCheck = new Schedule(schedulesId, dateOfDay, slotId);
+            Schedule scheduleCheck = new Schedule(schedulesId, dateOfDay, classId, slotId);
             Boolean isCheckExistSchedule = iScheduleDAO.getSchedule2(scheduleCheck);
-            if (isCheckExistSchedule) {
+            if (isCheckExistSchedule == true) {
                 // Đảm bảo `data` không cam kết phản hồi
                 Schedule schedule = iScheduleDAO.getScheduleById(schedulesId);
                 Slot slot = iScheduleDAO.getSlotByScheduleId(schedulesId);

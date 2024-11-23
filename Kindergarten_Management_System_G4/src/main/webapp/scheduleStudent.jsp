@@ -94,10 +94,23 @@
             <input type="hidden" name="parentId" value="${param.parentId}"/>
             <select id="weekSelector" name="weekSelector" class="form-control" onchange="this.form.submit()">
                 <c:forEach var="week" items="${weeks}">
-                    <!-- Kiểm tra nếu tuần hiện tại trùng với tùy chọn, thì chọn mặc định -->
-                    <option value="${week}" <c:if test="${week == currentWeek}">selected</c:if>>${week}</option>
+                    <!-- Kiểm tra nếu tuần hiện tại hoặc tuần đã chọn khớp -->
+                    <option value="${week}" <c:if test="${selectedWeek == null ? week == currentWeek : week ==  selectedWeek }">selected</c:if>>
+                            ${week}
+                    </option>
                 </c:forEach>
             </select>
+
+
+           <%-- <select id="term" name="term" class="form-control" onchange="this.form.submit()">
+                <c:forEach var="term" items="${terms}">
+                    <option value="${term.termId}"
+                            <c:if test="${listScheduleStudent[0].termName == term.termName || selectedTerm == term.termId}">selected</c:if>>
+                            ${term.termName}
+                    </option>
+                </c:forEach>
+            </select>--%>
+
         </form>
 
     </div>
@@ -118,6 +131,7 @@
                 <th>Subject</th>
                 <th>Slot Time</th>
                 <th>Date</th>
+                <th>Attendance</th>
             </tr>
             </thead>
             <tbody id="scheduleTable">
@@ -130,10 +144,29 @@
                         <div class="time-range">(${schedule.startTime} - ${schedule.endTime})</div>
                     </td>
                     <td>${schedule.dateOfDay}</td>
+                    <td>
+                        <c:choose>
+
+                            <c:when test="${schedule.attendance == 1}">
+                                <span style="color: green;">Present</span>
+                            </c:when>
+
+                            <c:when test="${schedule.attendance == 0}">
+                                <span style="color: red;">Absent</span>
+                            </c:when>
+
+                            <c:otherwise>
+                                <span style="color: gray;">Not Yet</span>
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>
         </table>
+        <div class="text-right mt-3">
+            <a href="${pageContext.request.contextPath}/Views/HomePage/HomePage.jsp" class="btn btn-primary">Back to Home Page</a>
+        </div>
     </div>
 </div>
 <%@ include file="/Views/common/footer.jsp" %>

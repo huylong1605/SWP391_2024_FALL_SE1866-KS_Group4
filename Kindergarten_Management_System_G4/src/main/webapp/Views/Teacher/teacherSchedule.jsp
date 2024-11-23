@@ -145,7 +145,7 @@
                                                             </td>
                                                         </c:if>
                                                         <td class="align-middle">
-                                                            <a href="${pageContext.request.contextPath}/changeSlotTeacher?schedulesId=${schedule.scheduleID}" class="text-light font-weight-bold text-xs"
+                                                            <a href="${pageContext.request.contextPath}/changeSlotTeacher?schedulesId=${schedule.scheduleID}&classIds=${schedule.classId}" class="text-light font-weight-bold text-xs"
                                                                style="background-color: #5151ff; padding: 5px; color: white; border-radius: 10px; margin-right: 5px"
                                                                data-toggle="tooltip" data-original-title="View Details">
                                                                 Change Slot

@@ -17,7 +17,7 @@ import java.util.List;
 
 public interface IScheduleDAO {
 
-    List<ScheduleDAL> getScheduleOfStudent(int parentId, String startDate, String endDate) throws SQLException;
+    List<ScheduleDAL> getScheduleOfStudent(int parentId, String startDate, String endDate, String termId) throws SQLException;
 
     List<Term> getListTerm() throws SQLException;
 

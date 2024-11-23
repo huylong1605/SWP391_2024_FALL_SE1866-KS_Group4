@@ -54,7 +54,7 @@
 
     <form action="changeSlotTeacher" method="post">
         <input type="hidden" name="scheduleIdd" value="${param.scheduleIdd != null ? param.scheduleIdd : schedules.scheduleId}"/>
-
+        <input type="hidden" name="classIds" value="${param.classIds != null ? param.classIds : schedules.classId}">
         <div class="row">
             <!-- Left Column - Display current details -->
             <div class="col-md-5">

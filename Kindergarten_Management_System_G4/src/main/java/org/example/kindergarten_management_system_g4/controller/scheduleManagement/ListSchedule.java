@@ -1,11 +1,13 @@
 package org.example.kindergarten_management_system_g4.controller.scheduleManagement;
 
+import org.example.kindergarten_management_system_g4.dao.TermDAO.TermDAO;
 import org.example.kindergarten_management_system_g4.dao.classDAO.IClassDAO;
 import org.example.kindergarten_management_system_g4.dao.classDAO.impliment.ClassDAOImpl;
 import org.example.kindergarten_management_system_g4.dao.scheduledao.IScheduleDAO;
 import org.example.kindergarten_management_system_g4.dao.scheduledao.implimentation.ScheduleDAOImpl;
 import org.example.kindergarten_management_system_g4.model.Classes;
 import org.example.kindergarten_management_system_g4.model.ScheduleDAL;
+import org.example.kindergarten_management_system_g4.model.Term;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,8 +27,10 @@ import java.util.logging.Logger;
 public class ListSchedule extends HttpServlet {
 
     private static final Logger LOGGER = Logger.getLogger(ListSchedule.class.getName());
-    private IScheduleDAO iScheduleDAO; // Interface cho các phương thức quản lý lớp học
+    private IScheduleDAO iScheduleDAO;
+     // Interface cho các phương thức quản lý lớp học
     private IClassDAO iClassDAO;
+
 
     /**
      * Phương thức init được gọi khi servlet được khởi tạo.
@@ -37,6 +41,7 @@ public class ListSchedule extends HttpServlet {
         super.init();
         iScheduleDAO = new ScheduleDAOImpl();
         iClassDAO = new ClassDAOImpl();
+
     }
 
     @Override
@@ -65,11 +70,14 @@ public class ListSchedule extends HttpServlet {
             }
             HttpSession session = req.getSession();
             String EditScheduleSuccessful = (String) session.getAttribute("EditScheduleSuccessful");
-
+            if (EditScheduleSuccessful != null) {
+                req.setAttribute("EditScheduleSuccessful", EditScheduleSuccessful);
+                session.removeAttribute("EditScheduleSuccessful");
+            }
             req.setAttribute("dates", dates);
             req.setAttribute("Classes", classDALList);
             req.setAttribute("schedules", scheduleDALS);
-            req.setAttribute("EditScheduleSuccessful", EditScheduleSuccessful);
+
             req.getRequestDispatcher("listScheduleManagement.jsp").forward(req, resp);
         } catch (SQLException e) {
             req.getRequestDispatcher("error.jsp").forward(req, resp);

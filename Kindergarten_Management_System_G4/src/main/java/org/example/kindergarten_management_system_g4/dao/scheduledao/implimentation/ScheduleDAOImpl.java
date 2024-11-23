@@ -13,18 +13,17 @@ import java.util.logging.Logger;
 public class ScheduleDAOImpl extends DBConnection implements IScheduleDAO {
     private static final String GET_SCHEDULE_FOR_STUDENT = "SELECT \n" +
             "    ss.Schedule_ID,\n" +
-            "    s.Subject_name ,\n" +
+            "    s.Subject_name,\n" +
             "    cl.Class_name,\n" +
             "    r.Room_number,\n" +
-            " teacher.fullname,\n" +
-            "    t.Term_name ,\n" +
-            "    sl.Slot_name ,\n" +
-            "    sl.Start_time ,\n" +
-            "    \n" +
-            "    sl.end_time ,\n" +
-            "    sch.date ,\n" +
-            "    \n" +
-            "    sch.day_of_week \n" +
+            "    teacher.fullname,\n" +
+            "    t.Term_name,\n" +
+            "    sl.Slot_name,\n" +
+            "    sl.Start_time,\n" +
+            "    sl.end_time,\n" +
+            "    sch.date,\n" +
+            "    sch.day_of_week,\n" +
+            " at.attend_status  \n"+
             "FROM \n" +
             "    Student st\n" +
             "JOIN \n" +
@@ -40,18 +39,24 @@ public class ScheduleDAOImpl extends DBConnection implements IScheduleDAO {
             "JOIN \n" +
             "    Slot sl ON sch.SlotId = sl.slot_id\n" +
             "JOIN \n" +
-            "     Class cl on  sch.class_id = cl.Class_ID \n" +
+            "    Class cl ON sch.class_id = cl.Class_ID\n" +
             "JOIN \n" +
-            "     room r on  cl.Room_ID = r.Room_ID\n" +
+            "    room r ON cl.Room_ID = r.Room_ID\n" +
+            "LEFT JOIN \n" +
+            "    attendance at               \n" +
+            "    ON at.student_ID = st.student_ID\n" +
+            "    AND at.slotId = sl.slot_id \n" +
+            "    AND at.date = sch.date\n"+
             "JOIN \n" +
-            "     User teacher on  cl.user_id = teacher.user_id\n" +
+            "    User teacher ON cl.user_id = teacher.user_id\n" +
             "WHERE \n" +
             "    u.User_id = ?\n" +
-            "AND ( " +
-            "    (sch.date BETWEEN ? AND ?) " +
-            "    OR (? IS NULL AND ? IS NULL) " +
-            ") " +
-            "ORDER BY sch.date;";
+            "AND \n" +
+            "    (sch.date BETWEEN ? AND ? OR (? IS NULL AND ? IS NULL))\n" +
+            "AND \n" +
+            "    (sch.Term_ID = ? OR ? IS NULL)\n" +
+            "ORDER BY \n" +
+            "    sch.date;\n";
     private static final String GET_ALL_TERM = "SELECT * FROM term;";
     private static final String GET_TERM_BY_ID = "SELECT * FROM term where term_ID = ?;";
     private static final String GET_ALL_SUBJECT = "SELECT * FROM subject where status = 'Active';";
@@ -69,7 +74,7 @@ public class ScheduleDAOImpl extends DBConnection implements IScheduleDAO {
     private static final String GET_EXIST_SCHEDULE = "SELECT * FROM schedule where date = ? " +
             "AND class_id = ? AND slotId = ? and schedule_ID != ?;";
     private static final String GET_EXIST_SCHEDULE_2 = "SELECT * FROM schedule where date = ? " +
-            "AND slotId = ? and schedule_ID != ?;";
+            "AND class_id = ? AND slotId = ? and schedule_ID != ? ;";
 
     private static final String GET_SLOT_BY_SCHEDULE_ID = "SELECT * FROM slot s join " +
             "schedule sch on sch.slotId =  s.slot_id where sch.schedule_ID = ? ;\n" +
@@ -99,7 +104,7 @@ public class ScheduleDAOImpl extends DBConnection implements IScheduleDAO {
     private static final Logger LOGGER = Logger.getLogger(ScheduleDAOImpl.class.getName());
 
     @Override
-    public List<ScheduleDAL> getScheduleOfStudent(int parentId, String startDate, String endDate) throws SQLException {
+    public List<ScheduleDAL> getScheduleOfStudent(int parentId, String startDate, String endDate, String termId) throws SQLException {
         List<ScheduleDAL> listSchedule = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -110,22 +115,35 @@ public class ScheduleDAOImpl extends DBConnection implements IScheduleDAO {
             LOGGER.log(Level.INFO, "Connecting to database...");
             preparedStatement = connection.prepareStatement(GET_SCHEDULE_FOR_STUDENT);
             preparedStatement.setInt(1, parentId);
+
+// Set Start Date
             if (startDate == null || startDate.isEmpty()) {
-                preparedStatement.setNull(2, java.sql.Types.DATE); // Nếu startDate là null hoặc rỗng, set NULL
-                preparedStatement.setNull(4, java.sql.Types.DATE); // Tương tự cho điều kiện kiểm tra NULL
+                preparedStatement.setNull(2, java.sql.Types.DATE);
+                preparedStatement.setNull(4, java.sql.Types.DATE); // Tham số kiểm tra NULL
             } else {
                 preparedStatement.setDate(2, java.sql.Date.valueOf(startDate));
-                preparedStatement.setDate(4, java.sql.Date.valueOf(startDate));
+                preparedStatement.setDate(4, java.sql.Date.valueOf(startDate)); // Tham số kiểm tra NULL
             }
 
-
+// Set End Date
             if (endDate == null || endDate.isEmpty()) {
-                preparedStatement.setNull(3, java.sql.Types.DATE); // Nếu endDate là null hoặc rỗng, set NULL
-                preparedStatement.setNull(5, java.sql.Types.DATE); // Tương tự cho điều kiện kiểm tra NULL
+                preparedStatement.setNull(3, java.sql.Types.DATE);
+                preparedStatement.setNull(5, java.sql.Types.DATE); // Tham số kiểm tra NULL
             } else {
                 preparedStatement.setDate(3, java.sql.Date.valueOf(endDate));
-                preparedStatement.setDate(5, java.sql.Date.valueOf(endDate));
+                preparedStatement.setDate(5, java.sql.Date.valueOf(endDate)); // Tham số kiểm tra NULL
             }
+
+// Set Term ID
+            if (termId == null || termId.isEmpty()) {
+                preparedStatement.setNull(6, java.sql.Types.INTEGER);
+                preparedStatement.setNull(7, java.sql.Types.INTEGER); // Tham số kiểm tra NULL
+            } else {
+                preparedStatement.setInt(6, Integer.parseInt(termId));
+                preparedStatement.setNull(7, java.sql.Types.INTEGER); // Không cần kiểm tra NULL nếu có giá trị
+            }
+
+
             resultSet = preparedStatement.executeQuery();
 
 
@@ -142,6 +160,7 @@ public class ScheduleDAOImpl extends DBConnection implements IScheduleDAO {
                 schedule.setRoom(resultSet.getString("Room_number"));
                 schedule.setClassName(resultSet.getString("class_name"));
                 schedule.setTeacher(resultSet.getString("fullname"));
+                schedule.setAttendance(resultSet.getString("attend_status"));
 
                 // Thêm đối tượng vào danh sách
                 listSchedule.add(schedule);
@@ -417,9 +436,10 @@ public class ScheduleDAOImpl extends DBConnection implements IScheduleDAO {
             preparedStatement = connection.prepareStatement(GET_EXIST_SCHEDULE_2);
 
             preparedStatement.setString(1, schedule.getDateOfDay());
+            preparedStatement.setInt(2, schedule.getClassId());
+            preparedStatement.setInt(3, schedule.getSlotId());
+            preparedStatement.setInt(4, schedule.getScheduleId());
 
-            preparedStatement.setInt(2, schedule.getSlotId());
-            preparedStatement.setInt(3, schedule.getScheduleId());
 
             LOGGER.log(Level.INFO, "Executing query to check schedule (change slot) existence: {0}", preparedStatement);
 

@@ -1,8 +1,10 @@
 package org.example.kindergarten_management_system_g4.controller.scheduleManagement;
 
+import org.example.kindergarten_management_system_g4.dao.TermDAO.TermDAO;
 import org.example.kindergarten_management_system_g4.dao.scheduledao.IScheduleDAO;
 import org.example.kindergarten_management_system_g4.dao.scheduledao.implimentation.ScheduleDAOImpl;
 import org.example.kindergarten_management_system_g4.model.ScheduleDAL;
+import org.example.kindergarten_management_system_g4.model.Term;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,16 +24,22 @@ public class ScheduleListOfStudent extends HttpServlet {
 
     private static final Logger LOGGER = Logger.getLogger(ScheduleListOfStudent.class.getName());
     private IScheduleDAO iScheduleDAO;
-
+    private TermDAO termDAO;
     @Override
     public void init() throws ServletException {
         super.init();
         iScheduleDAO = new ScheduleDAOImpl();
+        termDAO = new TermDAO();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String parentIds = req.getParameter("parentId");
+        String selectedTerm = req.getParameter("term");
+        String termId = null;
+        if(selectedTerm!=null){
+            termId = selectedTerm;
+        }
 
         // Lấy giá trị tuần vừa chọn từ combobox weekSelector
         String selectedWeek = req.getParameter("weekSelector");
@@ -90,19 +98,21 @@ public class ScheduleListOfStudent extends HttpServlet {
 
         // Đưa danh sách tuần và tuần hiện tại vào request attribute để sử dụng trong JSP
         req.setAttribute("weeks", weeks);
+        req.setAttribute("selectedTerm", selectedTerm);
+        req.setAttribute("selectedWeek", selectedWeek);
         req.setAttribute("currentWeek", currentWeek); // tuần hiện tại để chọn mặc định
         req.setAttribute("startDate", startDate); // truyền startDate vào JSP
         req.setAttribute("endDate", endDate); // truyền endDate vào JSP
 
         try {
-
-            List<ScheduleDAL> listScheduleStudent = iScheduleDAO.getScheduleOfStudent(Integer.parseInt(parentIds), startDate, endDate);
+            List<Term> terms = termDAO.getAllTerms();
+            List<ScheduleDAL> listScheduleStudent = iScheduleDAO.getScheduleOfStudent(Integer.parseInt(parentIds), startDate, endDate, termId);
             req.setAttribute("listScheduleStudent", listScheduleStudent);
-
+            req.setAttribute("terms", terms);
             // Forward request và response tới trang JSP
             req.getRequestDispatcher("scheduleStudent.jsp").forward(req, resp);
         } catch (SQLException e) {
-            req.getRequestDispatcher("error.jsp").forward(req, resp);
+            /*req.getRequestDispatcher("error.jsp").forward(req, resp);*/
             throw new RuntimeException(e);
         }
     }

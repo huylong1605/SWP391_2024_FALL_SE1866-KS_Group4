@@ -116,7 +116,7 @@ public class TermDAO {
      */
     public List<Term> getAllTerms() {
         List<Term> terms = new ArrayList<>();
-        String sql = "SELECT * FROM Term";
+        String sql = "SELECT * FROM Term order by start_Date ";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             ResultSet resultSet = statement.executeQuery();
 
