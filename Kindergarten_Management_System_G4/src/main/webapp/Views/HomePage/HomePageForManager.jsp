@@ -61,11 +61,8 @@
 <div class="hero_area">
     <!-- slider section -->
     <div class="text-center"><h2>Welcome Manager</h2></div>
-    <div class="text-center">
-        <h2>The number of students without a class: ${studentCountWithoutClass}</h2> <!-- Hiển thị tổng số học sinh chưa có lớp -->
-        <c:if test="${empty studentCountWithoutClass}">
-            <p>No data available</p>
-        </c:if>
+    <div class="text-center d-flex justify-content-center">
+        <h2 class="text-center" style="border: 1px solid white; width: 600px">The number of students without a class: <span style="color: red">${studentCountWithoutClass}</span> </h2> <!-- Hiển thị tổng số học sinh chưa có lớp -->
     </div>
     <section class=" slider_section position-relative" style="padding-bottom: 200px">
         <div class="container row">
@@ -119,7 +116,7 @@
                 </div>
             </div>
             <div class=" col-md-6">
-                <img src="${pageContext.request.contextPath}/img/slider-bg.jpg" style="width: 800px;" alt="">
+                <img src="${pageContext.request.contextPath}/img/AdobeStock_181872075-2048x1365.jpeg" style="width: 800px; height: 450px; border-radius: 10px" alt="">
             </div>
         </div>
     </section>

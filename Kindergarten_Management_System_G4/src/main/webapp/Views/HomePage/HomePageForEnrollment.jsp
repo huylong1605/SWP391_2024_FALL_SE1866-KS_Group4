@@ -61,7 +61,7 @@
 <div class="hero_area">
     <!-- slider section -->
     <div class="text-center"><h2>Welcome Teacher</h2></div>
-    <section class=" slider_section position-relative">
+    <section class=" slider_section position-relative" style="padding-bottom: 100px">
         <div class="container row">
             <div id="carouselExampleIndicators" class="carousel slide col-md-6" data-ride="carousel" style="">
                 <div class="parent-items">
@@ -73,7 +73,7 @@
                 </div>
             </div>
             <div class=" col-md-6">
-                <img src="${pageContext.request.contextPath}/img/slider-bg.jpg" style="width: 800px;" alt="">
+                <img src="${pageContext.request.contextPath}/img/kinder-banner-scaled-scaled.jpg" style="width: 800px;height: 450px; border-radius: 10px" alt="">
             </div>
         </div>
     </section>
